@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>Categories: 测试 | yzljyのBlog</title>
+    <title>琉锦の日记本 | yzljyのBlog</title>
     <meta name="author" content="yzljy" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -42,6 +42,10 @@
 
 
 <script src="/js/lib/preview.js"></script>
+
+
+
+
 
 
 
@@ -159,38 +163,20 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        
-        <span>
-            <a href="/categories/OI/" style="background: #ffa400">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                OI
-            </a>
+            <div class="article">
+    <div>
+        <h1>琉锦の日记本</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/10/31
         </span>
         
-        
-        
-        <span>
-            <a href="/categories/%E6%B5%8B%E8%AF%95/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                测试
-            </a>
-        </span>
-        
-        
-        
-        
-        
-        <span>
-            <a href="/categories/%E7%94%9F%E6%B4%BB/" style="background: #979a9a">
+        <span class="category">
+            <a href="/categories/%E7%94%9F%E6%B4%BB/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
@@ -199,45 +185,121 @@
         </span>
         
         
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/%E6%9D%82%E9%A1%B9/" style="color: #a5ff4d">
+                    杂项
+                </a>
+            </span>
+            
+        </span>
+        
     </div>
     
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2024/7/26</div>
-            <a href="/%E6%B5%8B%E8%AF%95/%E8%BF%99%E5%8F%AA%E6%98%AF%E4%B8%80%E4%B8%AA%E4%B8%BA%E4%BA%86%E5%BB%BA%E7%AB%99%E8%80%8C%E5%BB%BA%E7%9A%84%E6%96%87%E7%AB%A0awa/">
-                <h3>这只是一个为了建站而建的文章awa</h3>
-            </a>
-            <div class="info">
-                
-                <span class="category">
-                    <a href="/categories/%E6%B5%8B%E8%AF%95/">
-                        <span class="icon">
-                            <i class="fa-solid fa-bookmark fa-fw"></i>
-                        </span>
-                        测试
-                    </a>
-                </span>
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </span>
-                    
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/%E5%95%A5%E9%83%BD%E6%B2%A1%E6%9C%89/" style="color: #a5ff4d">
-                            啥都没有
-                        </a>
-                    </span>
-                    
-                </span>
-                
-            </div>
-        </div>
+    <div class="content" v-pre>
+        <h2 id="前言">前言</h2>
+<p>2024-10-30 日晚 22：50 分左右，琉锦突发奇想，决定每天晚上的最后 <span
+class="math inline">\(30\)</span>
+分钟拿出来写写日记，可能会总结一天的学习情况，说说心里话，发发恼骚之类的
+uwu。</p>
+<h2 id="section">2024-10-31</h2>
+<p>今天是记日记的第一天，我认为也许需要规定一下格式之类的？想了想还是算了，自由点，想到啥写点啥好了uwu。</p>
+<p>那就先说说今天的学习吧，今天做了这些题：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P10838">P10838 『FLA -
+I』庭中有奇树</a><br />
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P10537">P10537 [APIO2024]
+九月</a></li>
+</ul>
+<p>大致描述一下这两道题的做法：</p>
+<h3 id="庭中有奇树">庭中有奇树</h3>
+<p>这道题乍一看是一个博弈论的题，但其实稍微想想可以发现，如果小 G
+能开挂，肯定就尽量开挂，当然如果走树边的答案比开挂更优，那就走树边，还有注意如果这两种情况都大于了
+<span class="math inline">\(1e9\)</span>，那么直接强制开挂即可。</p>
+<p>因为只能开挂一次，所以预处理 S 和 T 点到所有点的距离，记为 <span
+class="math inline">\(dis_{s,i}\)</span> 和 <span
+class="math inline">\(dis_{t,i}\)</span> 那么小 G 所需的金币数量就是
+<span class="math inline">\(dis_{s,i}+dis_{t,j}+k\)</span> 当然得满足
+<span class="math inline">\(i,j\)</span> 不相邻。因为小 Y
+很正义，所以他就需要把上面这个式子中的前 <span
+class="math inline">\(m\)</span> 小封印掉，那么其实最终答案就是第 <span
+class="math inline">\(m\)</span> 小的 <span
+class="math inline">\(dis_{s,i}+dis_{t,j}+k\)</span></p>
+<p>这个的话，其实就是经典的 <span
+class="math inline">\(a_{i}+b_{j}\)</span> 的第 <span
+class="math inline">\(k\)</span> 大的问题，将 <span
+class="math inline">\(a\)</span> 或者 <span
+class="math inline">\(b\)</span>
+排序，然后二分答案即可。假如当前枚举的答案是 <span
+class="math inline">\(val\)</span>，设比 <span
+class="math inline">\(val\)</span> 小的 <span
+class="math inline">\(dis_{s,i}+dis_{t,j}+k\)</span> 的数量为 <span
+class="math inline">\(cnt\)</span>，那么当 <span
+class="math inline">\(m\le cnt\)</span> 时，<span
+class="math inline">\(r=mid\)</span>，否则 <span
+class="math inline">\(l=mid+1\)</span>，求 <span
+class="math inline">\(cnt\)</span> 的话，枚举每一个 <span
+class="math inline">\(dis_{s,i}\)</span>，在 <span
+class="math inline">\(dis_{t,i}\)</span> 上二分找到小于等于 <span
+class="math inline">\(val-dis_{s,i}\)</span> 的数量，全部加起来就是
+<span class="math inline">\(cnt\)</span>。<br />
+注意在这道题中 <span class="math inline">\(i,j\)</span> 不能相邻，所以
+<span class="math inline">\(cnt\)</span>
+再减去相邻的多统计了的即可。</p>
+<p>时间复杂度 <span class="math inline">\(O(n\log n \log
+V)\)</span>。</p>
+<h3 id="九月">九月</h3>
+<p>这是一道交互题。</p>
+<p>交互格式在这里就不说了。</p>
+<p>考虑到：若 <span class="math inline">\([l,r]\)</span>
+这个区间是合法的，那么因为 <span class="math inline">\([1,l]\)</span>
+是合法的，所以 <span class="math inline">\([1,r]\)</span>
+是合法的，所以问题转化为，有多少个前缀是合法的。</p>
+<p>对于一段区间，若所有的数要么出现 <span
+class="math inline">\(0\)</span> 次，要么出现了 <span
+class="math inline">\(M\)</span>
+次，那么这就是合法的条件之一（要么都没记录，要么全记录）。这个可以用桶来实现。</p>
+<p>还有就是掉叶子是否合法。假如这段区间中，存在一个非叶子节点的儿子没有掉完，并且他自己要掉，那么就是非法的，这个可以通过记录每个点的未掉的儿子个数，以及这个点是否需要掉来解决。</p>
+<p>当满足以上两个条件时，这个前缀便是合法的，将答案 <span
+class="math inline">\(+1\)</span> 即可。</p>
+<p>时间复杂度 <span class="math inline">\(O(NM)\)</span>。</p>
+<hr />
+<p>今天早上的考试也是唐 xwx，最终是 <span
+class="math inline">\(0+45+5+28\)</span>，不知道为什么 <span
+class="math inline">\(T2\)</span>
+挂了xwx。可能和最近的状态有点关系吧。</p>
+<p>最近的状态十分的抽象
+qwq，大致说来就是：想要做题，愿意做题，愿意卷，但是无论如何都想不出来题的抽象状态
+xwx。感觉应该是找不到正确解法的方向？但是经常想了很久后，看了
+tj，或者问了旁边的学长 gwx 后，又恍然大悟。</p>
+<p>可能是瓶颈期之类的？也可能是心里累了吧 qwq。</p>
+<p>希望可以早点恢复以前的状态吧呜呜 qwq。</p>
+<p>（ps：以下是小牢骚：<br />
+明早似乎又要考试，真服了，一周考了 <span
+class="math inline">\(4\)</span> 次 xwx，而且每次还要改 <span
+class="math inline">\(1mol\)</span>
+的题，虽然现在改题这个已经比以前好多了，不会再强迫要求改了。但某教练也是不好评价（，可以说是不了解学生内心的想法吧，我们和他之间也基本没法好好的沟通，他似乎只知道要让我们学好，没有怎么真的想过我们内心的感受？算了，毕竟是老师，还是不说太多比较好
+uwu。</p>
+<p>今天的日记就先到这里吧 awa，明天再见（？</p>
+
     </div>
+    
+    
+    
+    
+    <div id="comment">
+        <div id="giscus-container" class="giscus"></div>
+    </div>
+    
+    
+    
     
 </div>
 
@@ -269,6 +331,29 @@
         
     </div>
     <script src="/js/main.js"></script>
+    
+    
+<script
+    src="https://giscus.app/client.js"
+    data-repo="yzljyawa/yzljyawa.github.io"
+    data-repo-id="R_kgDOMbAUfA"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOMbAUfM4CiQYe"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin
+    async
+></script>
+
+
+
+
+
     
 </body>
 </html>
