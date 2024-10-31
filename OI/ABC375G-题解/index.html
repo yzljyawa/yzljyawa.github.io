@@ -193,21 +193,21 @@
             
             <span class="tag">
                 
-                <a href="/tags/ABC/" style="color: #ffa400">
+                <a href="/tags/ABC/" style="color: #a5ff4d">
                     ABC
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/Tarjan/" style="color: #e74c3c">
+                <a href="/tags/Tarjan/" style="color: #979a9a">
                     Tarjan
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E5%9B%BE%E8%AE%BA/" style="color: #a5ff4d">
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/" style="color: #e74c3c">
                     图论
                 </a>
             </span>
@@ -232,19 +232,28 @@ target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc375/tasks/ab
 <p>给定一张 <span class="math inline">\(n\)</span> 个点，<span
 class="math inline">\(m\)</span>
 条边的有权无向图，对每条边进行询问，当前询问的是第 <span
-class="math inline">\(i (1 \le i \le m)\)</span> 条边，询问如下：<br />
-+ 令 <span class="math inline">\(dis\)</span> 为从 <span
+class="math inline">\(i (1 \le i \le m)\)</span> 条边，询问如下：</p>
+<ul>
+<li>令 <span class="math inline">\(dis\)</span> 为从 <span
 class="math inline">\(1\)</span> 号点到 <span
-class="math inline">\(n\)</span> 号点的最短路长度， + 令 <span
-class="math inline">\(dis&#39;\)</span> 为删掉第 <span
-class="math inline">\(i\)</span> 条边后的最短路长度， + 若 <span
-class="math inline">\(dis \not ={dis&#39;}\)</span> 则输出
-<code>Yes</code>，否则输出 <code>No</code>。</p>
+class="math inline">\(n\)</span> 号点的最短路长度，<br />
+</li>
+<li>令 <span class="math inline">\(dis&#39;\)</span> 为删掉第 <span
+class="math inline">\(i\)</span> 条边后的最短路长度，<br />
+</li>
+<li>若 <span class="math inline">\(dis \not ={dis&#39;}\)</span> 则输出
+<code>Yes</code>，否则输出 <code>No</code>。</li>
+</ul>
 <p>（若原本可以到达，现在不可以到达也输出 <code>Yes</code>。）<br />
 每次询问独立。</p>
-<p>数据范围：<br />
-+ <span class="math inline">\(2 \le n \le 2 \times 10^{5}\)</span> +
-<span class="math inline">\(1 \le m \le 2 \times 10^{5}\)</span></p>
+<p>数据范围：</p>
+<ul>
+<li><span class="math inline">\(2 \le n \le 2 \times
+10^{5}\)</span><br />
+</li>
+<li><span class="math inline">\(1 \le m \le 2 \times
+10^{5}\)</span></li>
+</ul>
 <h2 id="思路">思路</h2>
 <p>因为 <span class="math inline">\(m\)</span> 最大可以到 <span
 class="math inline">\(2 \times
