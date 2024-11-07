@@ -1,0 +1,584 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>2024-11-4 MX NOIP 模拟 | yzljyのBlog</title>
+    <meta name="author" content="yzljy" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/yzljy.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>YZLJYのBLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;首页</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;关于</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;归档</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;分类</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;标签</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;YZLJYのBLOG</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">首页</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">关于</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">归档</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">分类</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">标签</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>2024-11-4 MX NOIP 模拟</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/11/5
+        </span>
+        
+        <span class="category">
+            <a href="/categories/OI/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                OI
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #00beff">
+                    题解
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/DP/" style="color: #ffa400">
+                    DP
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/DP%E7%9A%84%E4%BC%98%E5%8C%96/" style="color: #00beff">
+                    DP的优化
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E6%A8%A1%E6%8B%9F%E8%B5%9B/" style="color: #979a9a">
+                    模拟赛
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E8%B4%AA%E5%BF%83/" style="color: #00beff">
+                    贪心
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>ps：四道题都找到了原题 xwx<br />
+<a target="_blank" rel="noopener" href="https://vjudge.net/problem/Gym-103634B">T1</a> <a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P8162">T2</a> <a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P9522">T3</a> <a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P10656">T4</a></p>
+<h2 id="t1">T1</h2>
+<h3 id="思路">思路</h3>
+<p>贪心，我现在依然不会证明（<br />
+考虑凑出所有位都是 <span
+class="math inline">\(1\)</span>，然后计算有多少个，算一下就好了。</p>
+<h3 id="代码">代码</h3>
+<pre class="cpp"><code>#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+int read()&#123;
+    int res=0,f=1;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;)&#123;
+        if(ch==&#39;-&#39;) f=-1;
+        ch=getchar();
+    &#125;
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;)&#123;
+        res=res*10+ch-&#39;0&#39;;
+        ch=getchar();
+    &#125;
+    return res*f;
+&#125;
+const int MAXN=1e5+10;
+const int mod=1e9+7;
+const int inv2=500000004;
+
+int n,m,t;
+
+signed main()&#123;
+    freopen(&quot;testdata.in&quot;,&quot;r&quot;,stdin);
+    freopen(&quot;testdata.out&quot;,&quot;w&quot;,stdout);
+//  freopen(&quot;t1_2.in&quot;,&quot;r&quot;,stdin);
+//  freopen(&quot;t1_2.out&quot;,&quot;w&quot;,stdout);
+    t=read();
+    while(t--)&#123;
+        m=read();n=read();
+        if(m==1) cout&lt;&lt;0&lt;&lt;&#39;\n&#39;;
+        else&#123;
+            for(int i=1;i&lt;=40;i++) m|=(m&gt;&gt;1);
+            m%=mod;
+            int val=n-1-(n%2==0);
+            val+=2;
+            val=val*((n-1)/2)%mod*inv2%mod;
+            if(n%2==0) val=(val+n/2)%mod;
+            cout&lt;&lt;val*m%mod&lt;&lt;&#39;\n&#39;;
+        &#125;
+    &#125;
+    return 0;
+&#125;</code></pre>
+<h2 id="t2">T2</h2>
+<h3 id="思路-1">思路</h3>
+<p>首先可以证明，多个人一起干一件事情，会比分开干更优。<br />
+这个我当时稍微小小的算了一下，更多的是感性证明 xwx。</p>
+<p>然后可以想到去枚举最后有几个帮手，假设枚举的是 <span
+class="math inline">\(i\)</span>。而且我们肯定是先得到这几个帮手，再去完成剩下的任务。</p>
+<p>考虑按照 <span class="math inline">\(b_{i}\)</span>
+来排序，不一定选前 <span class="math inline">\(i\)</span> 个的 <span
+class="math inline">\(b_{i}\)</span> 是最优的，因此可以考虑 DP。<br />
+设 <span class="math inline">\(dp_{i,j,k}\)</span> 表示当前在考虑第
+<span class="math inline">\(i\)</span> 个，算上这个位置已经选了 <span
+class="math inline">\(j\)</span> 个没有帮手的，和 <span
+class="math inline">\(k\)</span> 个有帮手的。转移是简单的。状态 <span
+class="math inline">\(O(n^{3})\)</span>，转移 <span
+class="math inline">\(O(1)\)</span>，要做 <span
+class="math inline">\(O(n)\)</span> 次 DP，时间复杂度 <span
+class="math inline">\(O(n^{4})\)</span></p>
+<p>这样的时间复杂度是没有办法接受的。我们需要优化。</p>
+<p>我们可以发现，按照 <span class="math inline">\(b_{i}\)</span>
+来排序后，最后一个 <span class="math inline">\(b_{i}\)</span>
+之前的所有位置，肯定至少是会选上的，不一定会选上帮手。那么我们可以优化掉第二维，因为我们在确定了哪一个位置，前面已经有多少个是选了帮手的，可以直接确定后面还需要的时间的。<br />
+而这个时间是可以预处理的。<br />
+那么时间复杂度就成功地优化到了 <span
+class="math inline">\(O(n^{3})\)</span>，可以通过。</p>
+<h3 id="代码-1">代码</h3>
+<p><strong>注意</strong>，像我这么预处理一定要用
+<strong>stable_sort</strong>！！！！！<br />
+具体原因可以自己思考一下，我因为这个调了好久呜呜qwq。</p>
+<pre class="cpp"><code>#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int MAXN=500+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x)&#123;
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+&#125;
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y)&#123;
+    read(x),read(y...);
+&#125;
+
+int n,m,sum[MAXN][MAXN];
+double ans,dp[MAXN][MAXN];
+struct node&#123;
+    int a,b;
+&#125;p[MAXN];
+
+bool cmp1(node n1,node n2)&#123;
+    return n1.b&lt;n2.b;
+&#125;
+
+bool cmp2(node n1,node n2)&#123;
+    return n1.a&lt;n2.a;
+&#125;
+
+signed main()&#123;
+    // freopen(&quot;mechanic.in&quot;,&quot;r&quot;,stdin);
+    // freopen(&quot;mechanic.out&quot;,&quot;w&quot;,stdout);
+    read(n,m);
+    for(int i=1;i&lt;=n;i++) read(p[i].a,p[i].b);
+    for(int i=1;i&lt;=n;i++) p[i].b=(p[i].b==-1?1e9:p[i].b);
+    for(int i=1;i&lt;=n;i++)&#123;
+        stable_sort(p+1,p+n+1,cmp1);
+        stable_sort(p+i,p+n+1,cmp2);
+        for(int j=i;j&lt;=n;j++) sum[i][j-i+1]=sum[i][j-i]+p[j].a;
+    &#125;
+    ans=1e9;
+    sort(p+1,p+n+1,cmp1);
+    for(int i=0;i&lt;n;i++)&#123;
+        memset(dp,0x7f,sizeof(dp));
+        dp[0][0]=0;
+        for(int j=1;j&lt;=n;j++)&#123;
+            for(int k=0;k&lt;=i;k++)&#123;
+                dp[j][k]=dp[j-1][k]+1.0*p[j].a/(i+1);
+                if(k) dp[j][k]=min(dp[j][k],dp[j-1][k-1]+1.0*p[j].b/k);
+            &#125;
+        &#125;
+        for(int j=i;j&lt;=m;j++) ans=min(ans,dp[j][i]+1.0*sum[j+1][m-j]/(i+1));
+    &#125;
+    printf(&quot;%.9f&quot;,ans);
+    return 0;
+&#125;</code></pre>
+<h2 id="t3">T3</h2>
+<p>全场唯一有分的捏 awa</p>
+<h3 id="思路-2">思路</h3>
+<h4 id="暴力">暴力</h4>
+<p>先说暴力，因为暴力都是需要思考一下的（<br />
+如果纯粹地去枚举每个位置填什么字母的话，再暴力判断是否合法，时间复杂度是
+<span class="math inline">\(O(nm26^{n})\)</span>
+的。连暴力分都拿不到……</p>
+<p>观察一下题目的性质，发现如果 <span class="math inline">\(a_{i} &lt;
+b_{i}\)</span>，那么这个区间要合法，需要满足以下两个条件任一：</p>
+<ul>
+<li>存在一个 <span class="math inline">\(pos \in
+[a_{i},b_{i})\)</span>，使得 <span class="math inline">\(s_{pos}&gt;
+s_{pos+1}\)</span>，并且在 <span
+class="math inline">\([a_{i},pos)\)</span> 间都为 <span
+class="math inline">\(s_{pos}=s_{pos+1}\)</span>，</li>
+<li>所有的 <span class="math inline">\(pos \in [a_{i},b_{i})\)</span>
+均满足 <span class="math inline">\(s_{pos}=s_{pos+1}\)</span>，</li>
+</ul>
+<p>若 <span class="math inline">\(a_{i} &gt; b_{i}\)</span>
+其实类似，对于 <span class="math inline">\(a_{i} = b_{i}\)</span>
+的情况不用管。</p>
+<p><span class="math inline">\(a_{i} &gt; b_{i}\)</span>
+称为第一类区间。 <span class="math inline">\(a_{i} &lt; b_{i}\)</span>
+称为第二类区间。</p>
+<p>那么我们就可以只需要枚举 <span class="math inline">\(3\)</span>
+种状态即可。最后用一个 DP 统计方案数，时间复杂度 <span
+class="math inline">\(O(3^{n}n26)\)</span>。</p>
+<h4 id="正解">正解</h4>
+<p>我们把所有可以放 大于号 或者 小于号 的位置拿出来，发现假如 <span
+class="math inline">\(pos\)</span>
+位置可以放。设上一个可以放的最远位置为 <span
+class="math inline">\(pos&#39;\)</span>，那么在 <span
+class="math inline">\([pos&#39;,pos)\)</span>
+这个区间内都是可以放的。</p>
+<p>设 <span class="math inline">\(dp_{i,j}\)</span> 表示 <span
+class="math inline">\(i\)</span> 这个位置放 <span
+class="math inline">\(j\)</span> 这个字符，然后枚举这一段是
+大于，等于，还是小于 前一段。使用前缀和优化，可以做到 <span
+class="math inline">\(O(26)\)</span> 转移。</p>
+<ul>
+<li>等于：直接转移即可。</li>
+<li>小于：那么这一个点可以满足所有约束区间，并且不能存在包含了这个点第二类区间。因此其实
+<span class="math inline">\(pos\)</span>
+就是当前最右的第二类区间的左端点。这个可以使用 set 维护。</li>
+<li>大于：类似于小于。</li>
+</ul>
+<p>最终时间复杂度 <span class="math inline">\(O(26n\log n
+)\)</span>。</p>
+<h3 id="代码-2">代码</h3>
+<pre class="cpp"><code>#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int MAXN=5e5+10;
+const int mod=1e9+7;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x)&#123;
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+&#125;
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y)&#123;
+    read(x),read(y...);
+&#125;
+
+int n,m,ans,dp[MAXN][26],z[26];
+vector&lt;int&gt; l1[MAXN],r1[MAXN],l2[MAXN],r2[MAXN];
+multiset&lt;int&gt; s1,s2;
+
+signed main()&#123;
+    freopen(&quot;girl.in&quot;,&quot;r&quot;,stdin);
+    freopen(&quot;girl.out&quot;,&quot;w&quot;,stdout);
+    read(n,m);
+    for(int i=1;i&lt;=m;i++)&#123;
+        int a,b;
+        read(a,b);
+        //话说a=b的时候应该没影响的吧……continue了就行了吧？
+        if(a==b) continue;
+        if(a&lt;b)&#123;
+            l1[a].push_back(b-1);
+            r1[b-1].push_back(a);
+        &#125;
+        else&#123;
+            l2[b].push_back(a-1);
+            r2[a-1].push_back(b);
+        &#125;//左右端点一一对应
+    &#125;
+    s1.insert(0);s2.insert(0);
+    for(int i:l1[1]) s1.insert(1);
+    for(int i:l2[1]) s2.insert(1);
+    for(int i=0;i&lt;26;i++) dp[1][i]=1;
+    for(int i=2;i&lt;=n;i++)&#123;
+        for(int j=0;j&lt;26;j++) dp[i][j]=(dp[i][j]+dp[i-1][j])%mod;
+        // &lt;
+        int pos=*prev(s1.end()),sum=0;
+        for(int j=0;j&lt;26;j++) z[j]=(dp[i-1][j]-dp[pos][j]+mod)%mod;
+        for(int j=0;j&lt;26;j++)&#123;//靠，上面这里j打成i看了好久
+            dp[i][j]=(dp[i][j]+sum)%mod;
+            sum=(sum+z[j])%mod;
+        &#125;
+        // &gt;
+        pos=*prev(s2.end()),sum=0;
+        for(int j=0;j&lt;26;j++) z[j]=(dp[i-1][j]-dp[pos][j]+mod)%mod;
+        for(int j=25;j&gt;=0;j--)&#123;
+            dp[i][j]=(dp[i][j]+sum)%mod;
+            sum=(sum+z[j])%mod;
+        &#125;
+        for(int j:r1[i-1]) s1.erase(s1.find(j));
+        for(int j:r2[i-1]) s2.erase(s2.find(j));
+        for(int j:l1[i]) s1.insert(i);
+        for(int j:l2[i]) s2.insert(i);
+    &#125;
+    for(int i=0;i&lt;26;i++) ans=(ans+dp[n][i])%mod;
+    cout&lt;&lt;ans;
+    return 0;
+&#125;</code></pre>
+<h2 id="t4">T4</h2>
+<p>考试是想到了 <span class="math inline">\(55pts\)</span>
+的一种复杂做法，但是其实只需要把过程倒过来就很容易了。最后写了一个 <span
+class="math inline">\(O(n^{4})\)</span> 的暴力，本来只能拿 <span
+class="math inline">\(15pts\)</span> ，但不知道为什么拿到了和 <span
+class="math inline">\(O(n^3)\)</span> 一样的 <span
+class="math inline">\(30pts\)</span>（乐</p>
+<p>正解比较抽象，就不说了xwx</p>
+<p>可以自行查阅题解，题目链接放在最开始那里的。</p>
+
+    </div>
+    
+    
+    
+    
+    <div id="comment">
+        <div id="giscus-container" class="giscus"></div>
+    </div>
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2024 yzljyのBlog
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;yzljy
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+<script
+    src="https://giscus.app/client.js"
+    data-repo="yzljyawa/yzljyawa.github.io"
+    data-repo-id="R_kgDOMbAUfA"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOMbAUfM4CiQYe"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin
+    async
+></script>
+
+
+
+
+
+    
+</body>
+</html>

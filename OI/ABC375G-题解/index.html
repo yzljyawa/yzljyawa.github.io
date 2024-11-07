@@ -1,0 +1,547 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>ABC375G 题解 | yzljyのBlog</title>
+    <meta name="author" content="yzljy" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/yzljy.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>YZLJYのBLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;首页</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;关于</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;归档</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;分类</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;标签</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;YZLJYのBLOG</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">首页</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">关于</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">归档</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">分类</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">标签</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>ABC375G 题解</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/10/13
+        </span>
+        
+        <span class="category">
+            <a href="/categories/OI/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                OI
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #979a9a">
+                    题解
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/Tarjan/" style="color: #ffa400">
+                    Tarjan
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/" style="color: #e74c3c">
+                    图论
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF/" style="color: #a5ff4d">
+                    最短路
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>人生中第一次场切 G 题<br />
+这次的 ABC 似乎有点太简单了？<br />
+<a
+target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc375/tasks/abc375_g">题目传送门</a></p>
+<h2 id="题意简述">题意简述</h2>
+<p>给定一张 <span class="math inline">\(n\)</span> 个点，<span
+class="math inline">\(m\)</span>
+条边的有权无向图，对每条边进行询问，当前询问的是第 <span
+class="math inline">\(i (1 \le i \le m)\)</span> 条边，询问如下：</p>
+<ul>
+<li>令 <span class="math inline">\(dis\)</span> 为从 <span
+class="math inline">\(1\)</span> 号点到 <span
+class="math inline">\(n\)</span> 号点的最短路长度，<br />
+</li>
+<li>令 <span class="math inline">\(dis&#39;\)</span> 为删掉第 <span
+class="math inline">\(i\)</span> 条边后的最短路长度，<br />
+</li>
+<li>若 <span class="math inline">\(dis \not ={dis&#39;}\)</span> 则输出
+<code>Yes</code>，否则输出 <code>No</code>。</li>
+</ul>
+<p>（若原本可以到达，现在不可以到达也输出 <code>Yes</code>。）<br />
+每次询问独立。</p>
+<p>数据范围：</p>
+<ul>
+<li><span class="math inline">\(2 \le n \le 2 \times
+10^{5}\)</span><br />
+</li>
+<li><span class="math inline">\(1 \le m \le 2 \times
+10^{5}\)</span></li>
+</ul>
+<h2 id="思路">思路</h2>
+<p>因为 <span class="math inline">\(m\)</span> 最大可以到 <span
+class="math inline">\(2 \times
+10^{5}\)</span>，假如每次都暴力做，每次去掉一条边，重新建图，跑一次最短路，再检查是否相等，视实现方法不同，时间复杂度会是
+<span class="math inline">\(O(mn^{2})\)</span>，<span
+class="math inline">\(O(m^{2}\log{m})\)</span>
+以及其他复杂度，这显然是没法通过的，我们需要更优的方法。</p>
+<p>我们来看这个样例：</p>
+<pre><code>4 6
+2 3 1
+2 4 1
+3 4 1
+1 2 1
+1 3 1
+1 4 2</code></pre>
+<p>建出图后长这样：（这里我用红色标注边权）<br />
+<img
+src="https://cdn.luogu.com.cn/upload/image_hosting/5ifn7926.png" /></p>
+<p>很明显，从 <span class="math inline">\(1\)</span> 号点到 <span
+class="math inline">\(n\)</span> 号点的最短路为 <span
+class="math inline">\(2\)</span>，而且不止有一条从 <span
+class="math inline">\(1\)</span> 到 <span
+class="math inline">\(n\)</span> 的路径的长度为 <span
+class="math inline">\(2\)</span>。<br />
+我们将所有从 <span class="math inline">\(1\)</span> 到 <span
+class="math inline">\(n\)</span> 的长度为 <span
+class="math inline">\(2\)</span> 的路径拿出来，是这样的：<br />
+<img
+src="https://cdn.luogu.com.cn/upload/image_hosting/onbj2bcd.png" /></p>
+<p>我们可以从中发现，如果一条边不在<strong>所有</strong>最短路径上，那么将这条边删去后，最短路的值<strong>不会</strong>发生变化。<br />
+那么如果在最短路上呢？</p>
+<p>再来看一个样例：</p>
+<pre><code>5 5
+1 2 1
+1 3 1
+2 4 1
+3 4 1
+4 5 1</code></pre>
+<p>很显然，连边后是这样的：<br />
+<img
+src="https://cdn.luogu.com.cn/upload/image_hosting/jdisofu0.png" /><br />
+也很显然的，从 <span class="math inline">\(1\)</span> 号点到 <span
+class="math inline">\(n\)</span> 号点的最短路为 <span
+class="math inline">\(3\)</span>，将所有最短路径拿出来后的图也是长这样的。</p>
+<p>发现将 <span class="math inline">\((1,2),(2,4),(1,3),(3,4)\)</span>
+这几条边删去后，并不会影响最短路的长度。<br />
+而将 <span class="math inline">\((4,5)\)</span>
+这条边删去后，就直接变得不连通了。</p>
+<p>而这样删去后，会对答案造成影响的，是什么样的边呢？<br />
+其实就是所有最短路径都必须要经过的边，也就是所有最短路径构成的一张新图（这张图也叫做最短路图）中的<strong>割边</strong>。<br />
+而更一般的，删去这些<strong>割边</strong>中的一条或者多条后，要么使得两点不连通，要么使新的最短路变大。</p>
+<p>那现在思路就很明确了，先找到所有的最短路径，再找最短路图中的割边即可。<br />
+如果一条边是割边，那么删去后最短路就会发生变化，也就该输出
+<code>Yes</code>。否则的话，就不会发生变化，也就输出
+<code>No</code>。</p>
+<p>时间复杂度会在实现的部分分析。</p>
+<h2 id="实现">实现</h2>
+<p>我们首先需要找出所有的最短路径，这是容易的。</p>
+<p>我们首先求出 <span class="math inline">\(1\)</span>
+号点到所有点的最短路，记为 <span
+class="math inline">\(dis_{1,i}\)</span>。<br />
+再求出从 <span class="math inline">\(n\)</span>
+号点到所有点的最短路，记为 <span
+class="math inline">\(dis_{n,i}\)</span>。<br />
+这一部分可以使用任何优化（比如优先队列优化，堆优化）过的 Dijkstra
+算法。（大概率是会卡 SPFA 的）<br />
+这会是 <span class="math inline">\(O(m \log m)\)</span> 或是 <span
+class="math inline">\(O(n \log n)\)</span>
+之类的。（根据具体的实现方法不同）下面就以我写的优先队列优化的为例。</p>
+<p>接下来遍历所有的边，设当前遍历的边为第 <span
+class="math inline">\(i\)</span> 条边，这条边的两个端点分别是 <span
+class="math inline">\(u\)</span> 和 <span
+class="math inline">\(v\)</span>，这条边的边权是 <span
+class="math inline">\(w\)</span>。<br />
+若 <span class="math inline">\(dis_{1,u} + dis_{n,v} + w =
+dis_{1,n}\)</span>，第 <span class="math inline">\(i\)</span>
+条边就是所有最短路径中的一条边。<br />
+因为这里是无向边，所以当 <span class="math inline">\(dis_{1,v} +
+dis_{n,u} + w = dis_{1,n}\)</span> 时，第 <span
+class="math inline">\(i\)</span> 条边也是所有最短路径中的一条边。<br />
+（若是有向边，就要注意一下方向的问题了）<br />
+这一部分是 <span class="math inline">\(O(m)\)</span> 的。</p>
+<p>我们建出这一个新图后，再找出图中的所有割边就行啦，这一部分可以使用
+Tarjan 来实现，时间复杂度会是 <span
+class="math inline">\(O(n+m)\)</span> 的。</p>
+<p>总的时间复杂度是 <span class="math inline">\(O(m \log m)\)</span>
+的，可以轻松通过。</p>
+<h2 id="代码">代码</h2>
+<pre class="cpp"><code>// Problem: G - Road Blocked 2
+// Contest: AtCoder - Panasonic Programming Contest 2024（AtCoder Beginner Contest 375）
+// URL: https://atcoder.jp/contests/abc375/tasks/abc375_g
+// Memory Limit: 1024 MB
+// Time Limit: 3000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int MAXN=2e5+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x)&#123;
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+&#125;
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y)&#123;
+    read(x),read(y...);
+&#125;
+
+int n,m,k,k2,head[MAXN],head2[MAXN],dis[2][MAXN],y[MAXN&lt;&lt;1];
+int low[MAXN],dfn[MAXN],times;
+bool vis[MAXN],cut_edge[MAXN&lt;&lt;1];
+struct node&#123;
+    int to,next,val;
+&#125;edge[MAXN&lt;&lt;1],edge2[MAXN&lt;&lt;1];
+
+struct node2&#123;
+    int to,val;
+    friend bool operator &lt; (node2 n1,node2 n2)&#123;
+        return n1.val&gt;n2.val;
+    &#125;
+&#125;;
+
+struct node3&#123;
+    int u,v,w;
+&#125;e[MAXN];
+
+void build(int u,int v,int w)&#123;
+    edge[++k].to=v;
+    edge[k].next=head[u];
+    edge[k].val=w;
+    head[u]=k;
+&#125;
+
+void build2(int u,int v,int w)&#123;
+    edge2[++k2].to=v;
+    edge2[k2].next=head2[u];
+    edge2[k2].val=w;
+    head2[u]=k2;
+&#125;
+
+void dij(int s,bool type)&#123;
+    for(int i=1;i&lt;=n;i++) vis[i]=false;
+    for(int i=1;i&lt;=n;i++) dis[type][i]=1e18;
+    priority_queue&lt;node2&gt; q;
+    dis[type][s]=0;
+    q.push((node2)&#123;s,0&#125;);
+    while(!q.empty())&#123;
+        int u=q.top().to;
+        q.pop();
+        if(vis[u]) continue;
+        vis[u]=true;
+        for(int i=head[u];i;i=edge[i].next)&#123;
+            int v=edge[i].to;
+            if(vis[v]) continue;
+            if(dis[type][v]&gt;dis[type][u]+edge[i].val)&#123;
+                dis[type][v]=min(dis[type][v],dis[type][u]+edge[i].val);
+                q.push((node2)&#123;v,dis[type][v]&#125;);
+            &#125;
+        &#125;
+    &#125;
+&#125;
+
+void tarjan(int u,int fa)&#123;
+    dfn[u]=low[u]=++times;
+    for(int i=head2[u];i;i=edge2[i].next)&#123;
+        //在最短路图上找割边，而不是在原图上找
+        int v=edge2[i].to;
+        if(v==fa) continue;
+        if(dfn[v]==0)&#123;
+            tarjan(v,u);
+            low[u]=min(low[u],low[v]);
+            if(dfn[u]&lt;low[v])&#123;
+                cut_edge[i]=true;
+                cut_edge[i%2==0?i-1:i+1]=true;
+                //反向边也要标记为割边
+            &#125;
+        &#125;
+        else low[u]=min(low[u],low[v]);
+    &#125;
+&#125;
+
+signed main()&#123;
+    read(n,m);
+    for(int i=1;i&lt;=m;i++)&#123;
+        int u,v,w;
+        read(u,v,w);
+        e[i].u=u;e[i].v=v;e[i].w=w;
+        build(u,v,w);
+        build(v,u,w);
+    &#125;
+    dij(1,false);
+    dij(n,true);
+    for(int i=1;i&lt;=m;i++)&#123;
+        int val1=dis[0][e[i].u]+dis[1][e[i].v]+e[i].w;
+        int val2=dis[0][e[i].v]+dis[1][e[i].u]+e[i].w;
+        if(val1==dis[0][n]||val2==dis[0][n])&#123;
+            y[i]=k2+1;
+            build2(e[i].u,e[i].v,e[i].w);
+            build2(e[i].v,e[i].u,e[i].w);
+        &#125;
+    &#125;
+    for(int i=1;i&lt;=n;i++) vis[i]=false;
+    for(int i=1;i&lt;=n;i++) if(dfn[i]==0) tarjan(i,0);
+    for(int i=1;i&lt;=m;i++)&#123;
+        if(cut_edge[y[i]]) cout&lt;&lt;&quot;Yes\n&quot;;
+        else cout&lt;&lt;&quot;No\n&quot;;
+    &#125;
+    return 0;
+&#125;</code></pre>
+
+    </div>
+    
+    
+    
+    
+    <div id="comment">
+        <div id="giscus-container" class="giscus"></div>
+    </div>
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2024 yzljyのBlog
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;yzljy
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+<script
+    src="https://giscus.app/client.js"
+    data-repo="yzljyawa/yzljyawa.github.io"
+    data-repo-id="R_kgDOMbAUfA"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOMbAUfM4CiQYe"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin
+    async
+></script>
+
+
+
+
+
+    
+</body>
+</html>

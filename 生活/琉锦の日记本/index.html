@@ -1,0 +1,485 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>琉锦の日记本 | yzljyのBlog</title>
+    <meta name="author" content="yzljy" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/yzljy.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>YZLJYのBLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;首页</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;关于</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;归档</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;分类</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;标签</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;YZLJYのBLOG</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">首页</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">关于</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">归档</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">分类</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">标签</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>琉锦の日记本</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/10/31
+        </span>
+        
+        <span class="category">
+            <a href="/categories/%E7%94%9F%E6%B4%BB/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                生活
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/%E6%9D%82%E9%A1%B9/" style="color: #979a9a">
+                    杂项
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h2 id="前言">前言</h2>
+<p>2024-10-30 日晚 22：50 分左右，琉锦突发奇想，决定每天晚上的最后 <span
+class="math inline">\(30\)</span>
+分钟拿出来写写日记，可能会总结一天的学习情况，说说心里话，发发恼骚之类的
+uwu。</p>
+<h2 id="section">2024-10-31</h2>
+<p>今天是记日记的第一天，我认为也许需要规定一下格式之类的？想了想还是算了，自由点，想到啥写点啥好了uwu。</p>
+<p>那就先说说今天的学习吧，今天做了这些题：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P10838">P10838 『FLA -
+I』庭中有奇树</a><br />
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P10537">P10537 [APIO2024]
+九月</a></li>
+</ul>
+<p>大致描述一下这两道题的做法：<br />
+<a href="">庭中有奇树</a><br />
+<a href="">九月</a></p>
+<p>今天早上的考试也是唐 xwx，最终是 <span
+class="math inline">\(0+45+5+28\)</span>，不知道为什么 T2
+挂了xwx。可能和最近的状态有点关系吧。</p>
+<p>最近的状态十分的抽象
+qwq，大致说来就是：想要做题，愿意做题，愿意卷，但是无论如何都想不出来题的抽象状态
+xwx。感觉应该是找不到正确解法的方向？但是经常想了很久后，看了
+tj，或者问了旁边的学长 gwx 后，又恍然大悟。</p>
+<p>可能是瓶颈期之类的？也可能是心里累了吧 qwq。</p>
+<p>希望可以早点恢复以前的状态吧呜呜 qwq。</p>
+<p>（ps：以下是小牢骚：<br />
+明早似乎又要考试，真服了，一周考了 <span
+class="math inline">\(4\)</span> 次 xwx，而且每次还要改 <span
+class="math inline">\(1mol\)</span>
+的题，虽然现在改题这个已经比以前好多了，不会再强迫要求改了。但某教练也是不好评价（，可以说是不了解学生内心的想法吧，我们和他之间也基本没法好好的沟通，他似乎只知道要让我们学好，没有怎么真的想过我们内心的感受？算了，毕竟是老师，还是不说太多比较好
+uwu。</p>
+<p>今天的日记就先到这里吧
+awa，（应该没什么要说了的吧？有的话明天再补好了xwx）明天再见（？</p>
+<h2 id="section-1">2024-11-01</h2>
+<p>今早改题 xwx</p>
+<p><a
+target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/2024-10-31-MX-NOIP-%E6%A8%A1%E6%8B%9F/">改题链接</a></p>
+<p>然后下午就在写改题，五点就放假了 awa，但是到家已经都 8 点了
+qwq，路上还突然发现没有带手套（首）<br />
+话说我那一天忘的事情是真的多啊，早上忘记吃钙片，又忘记拿给了钱的特仑苏，从宿舍出来的时候忘了提垃圾，晚上又忘了带手套
+xwx。</p>
+<p>晚上到家后，洗了个澡，玩了亿会儿，3 点才睡觉 uwu</p>
+<h2 id="section-2">2024-11-02</h2>
+<p>今天是放假的一天捏
+nwn。本来说是去成都打<strong>乌蒙地插</strong>的，但是忘带手套了
+qwq，没去。<br />
+早上于是 10 点才起床，又躺在床上看 B站 看到了 11
+点（，所以没有吃早饭，被说了
+qwq。下午玩了会儿手机版的沙<sub>威</sub>玛~<br />
+下午五点左右，找 gwx 玩
+mc。然后刚玩，他就吃饭去了……过了一会儿我也吃饭去了 awa。<br />
+吃完饭回来他去打 黄叶绿豆（荒野乱斗） 了。所以我就在那里等 ABC（AtCoder
+Beginner Contest）。八点开始。</p>
+<p>这次 ABC 的题还挺简单的，除了 G 题 xwx<br />
+具体的题解我后面会写。<br />
+（2024-11-5 upd ：今天下午终于写完了xwx <a
+target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/ABC378-%E9%A2%98%E8%A7%A3%E6%8A%A5%E5%91%8A/">这里awa</a>）</p>
+<p>然后晚上随便玩了会儿就睡觉了w（好吧，还是 2 点才睡的）</p>
+<p>明天就回学校了 xwx</p>
+<h2 id="section-3">2024-11-03</h2>
+<p>今天早上 10:30 的车捏。<br />
+虽然本来让 9 点前到校，但我真的没办法，就请了假，下午 2 点左右到。</p>
+<p>本来以为最迟 12:20 就能到，结果司机先是送了其他三个学校的人，才送我
+xwx，而且一开始还把地点弄错了 qwq。</p>
+<p>等到学校已经都 1 点了，在外面随便吃了点啥，就进校了，下午应该是要考
+MX 的 NOIP 模拟。</p>
+<p>最后到宿舍都已经 2 点了，还要铺床之类的 qwq。</p>
+<p>最后 2:30 左右才到机房，其他同学都考了 30 分钟了xwx</p>
+<p>拿到题后，先看了一下整体情况，T1 感觉并不是很难，30
+分钟不到就做出来了，一开始以为是 <span class="math inline">\(O(T \log
+n)\)</span> 之类的。结果确实 <span class="math inline">\(O(T)\)</span>
+的（虽然也可以说是 <span class="math inline">\(O(T \log V)\)</span>
+的，具体后面会说）</p>
+<p>T2
+感觉有点抽象，先打了一个感觉很对的贪心，结果最后一个大样例没过，想了想发现有点小问题，花
+1 个小时左右改了一下。发现还是有点小问题呜呜 qwq。就没管了（</p>
+<p>T3 看到就感觉暴力都不是很好打，硬要打是 <span
+class="math inline">\(O(nm26^{n})\)</span>
+的，显然连暴力分都拿不到，就先没管，去看 T4 了，此时还剩 1 小时。</p>
+<p>T4 暴力倒是很一眼，就想了想优化，感觉想出来一个 <span
+class="math inline">\(O(nm+n)\)</span>
+的，打的过程中发现有点小问题，最终就先写了 <span
+class="math inline">\(O(n^{2}m^{2})\)</span> 的暴力。想到了可以优化成
+<span class="math inline">\(O(n^{2}m)\)</span>
+的，但是写挂了。后来发现是自己太唐了xwx</p>
+<p>回去看 T3，发现状态不需要枚举所有 <span
+class="math inline">\(26\)</span> 个小写英文字母，只需要枚举 <span
+class="math inline">\(3\)</span> 种状态即可，然后对于每种 check
+一下，再用一个 DP 统计方案，时间复杂度就变成了 <span
+class="math inline">\(O(n3^{n}26^{2})\)</span> 的，可以拿到暴力分XDD</p>
+<p>最终保守估计的话，是 <span
+class="math inline">\(100+15+15+15=145\)</span> 还是挺低的qwq。</p>
+<p>考完后已经都 6:30 了，食堂是早就没饭了的，所以我们的 onehui
+给我们点了神秘盒饭，真的不好评价，又贵，又挺难吃的
+xwx，还不如让我们和以前一样自己出去吃。</p>
+<p>实际上 <span class="math inline">\(100+20+15+30=165\)</span> xwx</p>
+<p>然后不知道在干啥时间就到了 8:30 左右。<br />
+似乎是聊了会儿天？<br />
+然后去题单里面随便找了道题：</p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P10643">P10643 [NordicOI
+2022] 嬉皮爵士 Hipster Jazz</a></p>
+<p>这里是大致<a href="">讲解</a></p>
+<p>做完这道题的时候是 9 点左右，然后似乎就又磨磨蹭蹭完了时间。</p>
+<h2 id="section-4">2024-11-04</h2>
+<p>今天上午是改题时间。改的是昨天的题。<br />
+改题链接在<a
+target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/2024-11-4-MX-NOIP-%E6%A8%A1%E6%8B%9F/">这里</a>
+awa。</p>
+<p>上午看见 Luogu
+群里在说似乎今天下午就可以查复赛成绩了，我本来记得说是明天下午，但还是去看了一下官网，发现真的变成了今天下午
+1 点。然后就感觉突然紧张了（</p>
+<p>中午吃完饭急忙忙赶到机房，等到 1 点。<br />
+5，4，3，2，1，点进去！<br />
+《成绩单尚未发布，请稍后再试》<br />
+……………………………………………………………………………………………………………………………………</p>
+<p>过了 5 分钟左右还是这样，再过一会儿后发现时间调整成了下午 4
+点。<br />
+Luogu 群里传来了问候声（</p>
+<p>下午依然焦急的等到了 4 点（<br />
+然后因为做题忘记了时间，想起来的时候是 4 点 4
+分左右，再点进去一看。<br />
+《成绩单尚未发布，请稍后重试》<br />
+…………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………</p>
+<p>又延迟到了 5 点 30（（<br />
+Luogu 群里二次出现了问候声（（（（</p>
+<p>有人推测：<br />
+假如每一次延后时间是上一次的一半，那么我们会在 7 点知道成绩。<br />
+还有人推测:<br />
+假如第 <span class="math inline">\(i\)</span> 次延后时间为 <span
+class="math inline">\(\frac{3}{i}\)</span>，那么我们这辈子都看不到成绩了qwq。<br />
+（ps：<span class="math inline">\(\sum^{\infin}_{i=1}
+\frac{1}{i}\)</span> 不是收敛的。</p>
+<p>5 点的时候过了一道题：<br />
+<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P10297">P10297 [CCC 2024 S3]
+Swipe</a></p>
+<p>不想等那么久，再说万一又延迟了呢（<br />
+于是到 5 点 25 左右就去吃饭了。</p>
+<p>吃完饭回来，还是十分的紧张。回来一看，旁边的 gwx 已经查了，<span
+class="math inline">\(100+100+100+20=320\)</span> 没有挂分。<br />
+手抖着点开</p>
+<p><span class="math inline">\(100+10+40+0\)</span> T3 挂了 <span
+class="math inline">\(60\)</span>，倒是 T2 多了 <span
+class="math inline">\(10\)</span> 分。<br />
+有点小小的难过，虽然知道这其实不重要，但还是感觉有点失望。T2
+本来是很简单的，考场上想复杂了，虽然倒序枚举，改成顺序枚举就可以了，但考场上就是没想起来啊
+QAQ。<br />
+T3 莫名挂了 <span
+class="math inline">\(60\)</span>，后来洛谷上跑了一下，又是 WA，又是
+AC，又是 TLE
+的。跑了一下大样例，发现怎么都过不了。现在想想应该是当时没注意到，倒数第二个数据没过，当时以为过了吧。</p>
+<p>过都过了，还是好好准备 NOIP 吧，这才是真正重要的东西。</p>
+<p>晚上又做了一道题：</p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P10678">P10678 『STA -
+R6』月</a> 后面我会跟上大致讲解。</p>
+<h2 id="section-5">2024-11-05</h2>
+<p>今早考试，相关信息放在<a href="">这里</a>了。<br />
+（ps：目前还没写 xwx</p>
+<p><del>中午依然放松了一下</del><br />
+下午是改题时间~<br />
+然后很快速的把 T1 改了，然后就在和 gwx 比赛卡常比赛了一下午
+XDD。最终我凭借评测机波动的力量，成功比他快了 8ms XDD<br />
+然后一个下午就过去了……</p>
+<p>晚上做了一道题： <a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P11202">P11202 [JOIG 2024] 名前 /
+Name</a></p>
+<p>讲解依然后面再补（</p>
+<p>然后就没有然后了……</p>
+<p>哦对了，今天是米国大选（</p>
+<h2 id="section-6">2024-11-06</h2>
+<p>今天纯做题，一共做了这些：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P11079">P11079 「FSLOI
+Round I」山峦</a><br />
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P11013">P11013 「ALFR
+Round 4」C 粉碎</a><br />
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P10997">P10997
+【MX-J3-T4】Partition</a><br />
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P11037">P11037
+【MX-X3-T4】「RiOI-4」上课</a></li>
+</ul>
+<p>一样的，题解后面再补（（</p>
+<p>似乎最后依然是 川普
+当选了，不知道以后怎么样吧，咱也不懂，也不发表什么看法 uwu</p>
+<h2 id="section-7">2024-11-07</h2>
+<p>今早考试，具体的在<a href="">这里</a><br />
+(ps:现在没有链接xwx</p>
+<p>但还是想吐槽，谁家 NOIP 模拟赛，紫黑黑黑啊？？？你这是 NOIP
+模拟，不是 省选 模拟也不是 NOI 模拟啊啊啊xwx</p>
+<p>然后的话，感觉一直都是水着水着时间就过去了？<br />
+做了两道题：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P9923">P9923 [POI
+2023/2024 R1] Przyciski</a><br />
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P11146">P11146 「SFMOI
+Round I」Strange Train Game</a></li>
+</ul>
+<p>话说今天一天真的唐完了（<br />
+第一题因为两处 <span class="math inline">\(2*n\)</span> 打成 <span
+class="math inline">\(n\)</span>，一处忘输出，一处 continue 打成 return
+看了好久 xwx<br />
+然后第二道，因为空间开小，一直 TLE，还一直以为是被卡常了 qwq。</p>
+<p>今天教练再次强调了如果我进队了奖励我 2w 这件事（<br />
+觉得为了自己的梦想，为了自己的爱好，为了自己的未来，为了自己的家庭，还是拼尽全力冲一下吧！<br />
+就是现在还是好菜啊呜呜qwq。</p>
+<p>晚上的话，补了一下前面未写的博客。但还是有一些没写xwx。以后找时间写吧。</p>
+
+    </div>
+    
+    
+    
+    
+    <div id="comment">
+        <div id="giscus-container" class="giscus"></div>
+    </div>
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2024 yzljyのBlog
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;yzljy
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+<script
+    src="https://giscus.app/client.js"
+    data-repo="yzljyawa/yzljyawa.github.io"
+    data-repo-id="R_kgDOMbAUfA"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOMbAUfM4CiQYe"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin
+    async
+></script>
+
+
+
+
+
+    
+</body>
+</html>

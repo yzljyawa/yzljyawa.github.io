@@ -1,0 +1,419 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>CSP-S 复赛游记~ | yzljyのBlog</title>
+    <meta name="author" content="yzljy" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/yzljy.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>YZLJYのBLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;首页</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;关于</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;归档</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;分类</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;标签</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;YZLJYのBLOG</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">首页</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">关于</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">归档</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">分类</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">标签</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>CSP-S 复赛游记~</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/10/28
+        </span>
+        
+        <span class="category">
+            <a href="/categories/OI/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                OI
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/%E6%B8%B8%E8%AE%B0/" style="color: #979a9a">
+                    游记
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h2 id="day--6">Day -6</h2>
+<p>S组考试前一周，我们的 flhuang
+开了一个小会，大致就是说一下考试注意事项啊，放假安排啊
+<del>（这个是正文）</del> 之类的。</p>
+<p>晚上交流课的时候，让报名后面几天的运动会项目，我不知道哪里来的自信报了个1000米（</p>
+<h2 id="day--5">Day -5</h2>
+<p>感觉临近考试比以前更放松 <del>（水）</del>
+了，打了打一些树剖水题，基本就是为了消磨时间才打的。<br />
+打了这些题：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3313">P3313 [SDOI2014]
+旅行</a><br />
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/SP11985">GOT - Gao on a
+tree</a><br />
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_abc133_f">[ABC133F]
+Colorful Tree</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/UVA12424">Answering
+Queries on a Tree</a></li>
+</ul>
+<p>（感谢来自 <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/551100">Hoks</a>
+的好题，虽然我没做多少，而且全捡的是一些没营养的题
+xwx。大家可以去看看他的<a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/training/440258">题单</a>，题都挺好的。）</p>
+<p>这些题基本都是一个套图，就是动态开点维护多棵线段树。当时本来不打算打第四道的，然后后面
+lhy 说这题卡常，我就花了 30
+分钟打出来了，然后过了，还和他理论了半天，最后得出结论：是 UVA
+的锅（</p>
+<h2 id="day--4--3">Day -4 &amp;&amp; -3</h2>
+<p>试图打大模拟来划水，打了个简单的<a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P7075">儒略日</a>。还被奆佬 gwx
+<del>（飞踢的傻兜）</del> 骂太菜了qwq
+<del>（虽然他天天说我菜）</del>。打算打<a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2482">猪国杀</a>未果。</p>
+<p>晚上去参加了一下第二天的运动会的大致彩排，没啥意思uwu。</p>
+<h2 id="day--2">Day -2</h2>
+<p><strong>激动人心的运动会.gif</strong></p>
+<p>开幕式.gif<br />
+一块块的人走过去.gif<br />
+神奇节目.gif<br />
+罚坐 * 42.jpg<br />
+坐不住 * ？.gif<br />
+到处走.gif</p>
+<p>上午在乱逛中过去了（<br />
+然后因为一些历史の原因，又emo了xwx，和一些朋友聊了一会儿后好点了。</p>
+<p>中午在机房睡了大概半个小时，感觉是睡的最舒服的一次。</p>
+<p>下午两点再到班级集合点，不久后就是1000米了，当时已经在心跳加速了。毕竟确实我上次跑1000米，已经是一年前的初三运动会了xwx。不知道这次还能不能有上次那么好。（上次是3分13秒）</p>
+<p>虽说比赛安排表上是 3：50 开始。但是不知道为啥大概在 3：35
+左右吧（当时把手表取了），就开始了。我还是第一组 xwx。</p>
+<p>煎熬.gif。我现在都不知道我是怎么把最后 400
+米跑完的，从来没有跑过如此累的一次 1000 米。第一次感觉到了
+“脚像灌了铅一样” 的感觉。</p>
+<p>可能是太久没跑了吧？可能是体重增长了吧？可能是策略上的问题吧？最终3分35秒遗憾退场。还没有初中跑得快qwq。</p>
+<p>后面知道，高二的第一名的成绩是2分46秒！！我都惊了（世界纪录的话，是2分11秒）。原高中校记录是2分59秒（很奇怪的，初中校记录是2分57秒）。<br />
+（插一嘴，个人感觉很遗憾的还有另一个人，他也是竞赛班的，是物理竞赛的，昨年当时就差一秒破初中校纪录，这次却只跑了3分16秒左右，他听力有一定的问题，这也就导致表达时口齿不清，但这并不影响他的强大。）</p>
+<p>后面没项目了，跑完1000米脚也差不多感觉废了xwx。和一些同学玩狼人杀去了（（（</p>
+<p><del>晚上继续在机房颓</del></p>
+<h2 id="day--1">Day -1</h2>
+<p>神秘的跑操.gif<br />
+神秘的八字跳绳.gif</p>
+<p>但是高二竞赛班方队我只看见了 zns <del>（贼嗯爱死）</del>。没有看见
+gwx 和 yxz <del>（装肯）</del> 。后来问
+gwx，他说他在方队里面，但是我们几个都没看见（（</p>
+<p>后来感觉我们方队跑得挺好的。</p>
+<p>早上继续玩狼人杀.gif</p>
+<p>快12点的时候是 25（人）*30（米）
+接力赛。我们去给我们班的加油鼓气。<br />
+我们班只有 4 个女生，但是要 10 个女生，所以我们把一个女生分成了 2.5
+份（不是）。<br />
+所以他们从其他班借来了几个女生，是的，借（<br />
+因为一些原因，我们一开始就比别人慢起跑了 15
+米。本以为大概率会是倒数第一了，但最后居然只比第一慢了一点点！！这就是团队的力量么。</p>
+<p>下午继续玩狼人杀awa，后面有个神奇的项目叫做
+“旋风快跑”，似乎我们班还得了第一，真的就是团结の力量。</p>
+<p>插一嘴，从这两天一共六七局狼人杀，全部都是狼人赢（（（，还出现了传奇女巫之不救人，然后赌错
+1/12
+的概率，预言家第一晚就寄掉。以及传奇女巫2号之临死之前丢个毒毒死一只狼。还有第一个白天跳出5个预言家，其中三个平民，一个狼人，一个预言家。最后狼人成功获得信任，这局狼人最后仅损失一只（其实本来完全可以不损失的）获得胜利。还有一局第一个白天没人跳预言家（（（（。更有传奇预言家：我编不下去了。还有传奇法官记错东西等等等等……</p>
+<p>下午四点左右开完了运动会，但是我们说是五点放学（只有我们信息的放了）。于是快乐的又在机房玩了一个小时（（，gwx
+在旁边玩火（影）。</p>
+<p>放学后和 zlk <del>（鱼干sir）</del> 去他家住，没啥事情发生uwu。</p>
+<h2 id="day-0">Day 0</h2>
+<p>到考试这天了，我却一点都不慌（，反倒玩起了O神（不知道为啥就玩起来了）。中午很早就去了考点，结果两点才允许进场xwx，还走错门了xwx。</p>
+<p>正式考试的时候还是有点小紧张的。进考点的机房后感觉挺好的，桌子虽是两人桌，但是只有一个人，电脑键盘也挺好用的。总之挺好的。</p>
+<p>先简单测试了一下，打了缺省源后，就休息了一会儿。</p>
+<p>数据发下来后，稍微先打了一下输入，然后又没啥事干xwx。于是随便找了道题看看数据，正好就拿中了
+T1
+。看了两个小样例后，发现答案刚好是众数的个数，开玩笑似的打了一下，然后跑了一下大样例，发现就过了？？？本来还以为值域会很大，还开了
+map。结果拿道题后发现只有 <span
+class="math inline">\(1e5\)</span>，果断改成桶，虽然没啥必要。也感性的证明了一下结论的正确性（</p>
+<p>T2
+看了一眼，感觉第一个小问挺简单，拿个二分就行了，注意一下精度即可，那么问题就转化成了很经典的“最少点覆盖”问题，想了一下，发现感觉没啥好思路，只记得应该是贪心，但忘了怎么贪心xwx。就去看
+T3 了。</p>
+<p>T3 看了一下，没抱太多希望能做出来，先想着写一个 <span
+class="math inline">\(O(n^2)\)</span>
+的暴力DP，发现写不出来，只写出了一个 <span
+class="math inline">\(O(n^2)\)</span> 状态，<span
+class="math inline">\(O(n)\)</span> 转移的DP。时间还早，当时看了一下
+T4，感觉不太可做，就想着优化成 <span
+class="math inline">\(O(n^2)\)</span> 吧。<br />
+发现有个地方在转移的过程中就可以求出来了，不必每次转移的时候都算一遍，于是优化成了，状态
+<span class="math inline">\(O(n)\)</span> ，转移 <span
+class="math inline">\(O(n)\)</span>
+的DP，本来想着就行了吧，但突然发现这个似乎可以用线段树来优化一下，因为是一个求
+<span class="math inline">\(max\)</span>
+的式子。就往线段树方向想了一下。<br />
+本来想的是可以开 “值域”
+这么多棵线段树，然后正好是动态开点，前面几天才打了那么多（。打着打着突然发现没有必要，只需要一棵值域线段树即可，于是
+40 分钟左右改了一下，调出来了。 <span class="math inline">\(O(n \log
+V)\)</span> 能过（<span class="math inline">\(V\)</span>是值域）。</p>
+<p>兴冲冲地以为自己这次能够 300+，于是去看 T2。</p>
+<p>考试经验告诉我 T2
+一般而言不会太难（一般xwx）。我只记得最后这一步十分的典，但是又想不起来怎么做了qwq。只依稀记得先要按照右端点来排序，然后再啊吧啊吧……xwx，记不起来了。于是倒序枚举了，发现错的，就没管了……<br />
+赛后在 bhx <del>（中国第一rapper）</del>
+的话中，我才想起来是正序枚举……，痛失 100 分。</p>
+<p>当时本来是想 T2 应该很快就可以打出来，然后 T4 再打一点部分分，就快乐
+300+ 了，可 T4 看了一眼，感觉暴力都不会，就走了xwx</p>
+<p>最终预估是 100-0-100-0 共 200 分，唐完了xwx。</p>
+<p>晚上回家的时候，又遇见修路，绕路的路也在修路（？，就一直到了晚上 9
+点才到家，都要被饿死了qwq。<br />
+晚上吃了冒菜，玩了挺久才睡觉。</p>
+<h2 id="day-1">Day 1</h2>
+<p>考试后第二天！这次放了一个整天的假！</p>
+<p>原打算是早上早点去成都，去看看 icpc
+那边怎么样，顺便面面基，他们参加比赛的大多也没有多少时间，毕竟是来打比赛的，又不是来旅游的。然后下午愉快进行乌蒙地插的游玩（awmc）。晚上回去再玩一会儿，第二天就回学校了xwx。</p>
+<p>结果我妈似乎不太想让我出去，想让我在家里呆着，我以“你们以前要我出去，我不出去，我现在要出去了，你又不要我出去了”为由尝逝说服妈妈让我出去，但她以“这么短的假期”拒绝了我qwq。</p>
+<p>但第二天早上我拖到了 12
+点，还是先买了去成都的动车票，然后给妈妈说，这叫做“先斩后奏”（确信。妈妈还是让我去了awa。</p>
+<p>等到达目的地后，已经是下午1点了，可我还没吃饭xwx。找到了先前说好面基的朋友
+<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/280015">Star_Cried</a>
+这个链接指向的是他的洛谷首页，<a
+target="_blank" rel="noopener" href="https://starcried.github.io/">这个链接</a>是他的博客。<br />
+我和他聊了挺多，从oi聊到竞赛，从学校聊到未来，从学习聊到生活。<br />
+ps：他现在大三，就读于上海交通大学，他这次是作为教练的身份带队来成都这边参加
+icpc，所以才有时间出来和我见面。</p>
+<p>我很感激他，他给我了许多指引。后来我们一起吃完中午饭后，他要去带他们的队伍，我也就和他道了别。</p>
+<p>ps：本来当时是打算再面一位的，是这位：<a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/26673">Sooke</a>。但因为时间原因，没有面上xwx</p>
+<p>本来想找一些在成都的朋友玩一下之类的，但都有事，我就跑去机厅玩乌蒙地插了（（（</p>
+<p>到机厅的时候已经是下午四点了。惊奇的发现，两台乌蒙地插，居然只有一个人在游玩。爽爽霸机到六点，就打算回家了。一共开了8pc。</p>
+<p>晚上没啥uwu。</p>
+<h2 id="day-2infin">Day 2~<span
+class="math inline">\(\infin\)</span></h2>
+<p>详见我的<a
+target="_blank" rel="noopener" href="https://yzljyawa.github.io/%E7%94%9F%E6%B4%BB/%E7%90%89%E9%94%A6%E3%81%AE%E6%97%A5%E8%AE%B0%E6%9C%AC/">日记</a>。</p>
+
+    </div>
+    
+    
+    
+    
+    <div id="comment">
+        <div id="giscus-container" class="giscus"></div>
+    </div>
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2024 yzljyのBlog
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;yzljy
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+<script
+    src="https://giscus.app/client.js"
+    data-repo="yzljyawa/yzljyawa.github.io"
+    data-repo-id="R_kgDOMbAUfA"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOMbAUfM4CiQYe"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin
+    async
+></script>
+
+
+
+
+
+    
+</body>
+</html>
