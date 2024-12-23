@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>categories | yzljyのBlog</title>
+    <title>k短路学习笔记 | yzljyのBlog</title>
     <meta name="author" content="yzljy" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -42,6 +42,10 @@
 
 
 <script src="/js/lib/preview.js"></script>
+
+
+
+
 
 
 
@@ -159,14 +163,20 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            <div id="archives">
-    
-    <div class="categories-tags">
+            <div class="article">
+    <div>
+        <h1>k短路学习笔记</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/12/23
+        </span>
         
-        
-        
-        <span>
-            <a href="/categories/OI/" style="background: #ffa400">
+        <span class="category">
+            <a href="/categories/OI/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
@@ -175,29 +185,58 @@
         </span>
         
         
-        
-        <span>
-            <a href="/categories/%E7%94%9F%E6%B4%BB/" style="background: #a5ff4d">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                生活
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/" style="color: #979a9a">
+                    图论
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="color: #a5ff4d">
+                    数据结构
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #ffa400">
+                    学习指南
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%8F%AF%E6%8C%81%E4%B9%85%E5%8C%96%E5%8F%AF%E5%B9%B6%E5%A0%86/" style="color: #a5ff4d">
+                    可持久化可并堆
+                </a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%B5%8B%E8%AF%95/" style="background: #00beff">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                测试
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        
+
+    </div>
+    
+    
+    
+    
+    <div id="comment">
+        <div id="giscus-container" class="giscus"></div>
+    </div>
+    
+    
+    
     
 </div>
 
@@ -229,6 +268,29 @@
         
     </div>
     <script src="/js/main.js"></script>
+    
+    
+<script
+    src="https://giscus.app/client.js"
+    data-repo="yzljyawa/yzljyawa.github.io"
+    data-repo-id="R_kgDOMbAUfA"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOMbAUfM4CiQYe"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin
+    async
+></script>
+
+
+
+
+
     
 </body>
 </html>
