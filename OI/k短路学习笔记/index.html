@@ -193,28 +193,28 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%9B%BE%E8%AE%BA/" style="color: #a5ff4d">
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/" style="color: #979a9a">
                     图论
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="color: #e74c3c">
+                <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="color: #00beff">
                     数据结构
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #a5ff4d">
+                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #979a9a">
                     学习指南
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E5%8F%AF%E6%8C%81%E4%B9%85%E5%8C%96%E5%8F%AF%E5%B9%B6%E5%A0%86/" style="color: #979a9a">
+                <a href="/tags/%E5%8F%AF%E6%8C%81%E4%B9%85%E5%8C%96%E5%8F%AF%E5%B9%B6%E5%A0%86/" style="color: #a5ff4d">
                     可持久化可并堆
                 </a>
             </span>
@@ -224,7 +224,26 @@
     </div>
     
     <div class="content" v-pre>
-        
+        <h2 id="是什么">是什么</h2>
+<p><del>字面意思</del><br />
+一种用于求解有向图上从某一起点到某一终点的所有可行路径中第 <span
+class="math inline">\(k\)</span> 小（大）的算法。</p>
+<h2 id="怎么做">怎么做</h2>
+<p>首先把模板放在 <a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2483">这里</a><br />
+<del>其实我并不知道还有没有其他应用</del></p>
+<h3 id="a">A*</h3>
+<blockquote>
+<p>注：对于 <span class="math inline">\(k\)</span> 短路问题，A*
+算法的最坏时间复杂度是 <span class="math inline">\(O(nk \log n)\)</span>
+的。虽然 A* 算法可以通过本题原版数据，但可以构造数据，使得 A*
+算法在原题的数据范围内无法通过。事实上，存在使用可持久化可并堆的算法可以做到在
+<span class="math inline">\(O((n+m) \log n + k \log k)\)</span>
+的时间复杂度解决 <span class="math inline">\(k\)</span> 短路问题。详情见
+<a target="_blank" rel="noopener" href="https://oi-wiki.org/graph/kth-path/">OI-Wiki</a>。</p>
+</blockquote>
+<p>（摘自 Luogu k短路 模板题的题目背景）</p>
+<p>想要直接学 可持久化可并堆 做法的可以跳过这里。</p>
 
     </div>
     
