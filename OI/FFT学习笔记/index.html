@@ -207,7 +207,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #979a9a">
+                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #ffa400">
                     学习指南
                 </a>
             </span>
@@ -240,11 +240,12 @@ class="math inline">\(i\)</span>表示<br />
 &gt;&gt;&gt;&gt; <span class="math inline">\(i=\sqrt{-1}\)</span></p>
 <p><span class="math inline">\(\omega _{n}^{k}(\cos \cfrac{k}{n} 2\pi
 ,\sin \cfrac{k}{n} 2\pi )\)</span> (简单的三角函数（））<br />
-复数为 $ 2 +i 2 $<br />
-~<del>cpp typedef complex<double> fs; const double pi=acos(-1);
-omega[k]=fs(cos(k/n<em>2</em>pi),sin(k/n<em>2</em>pi));
-inv[k]=conj(omega[k]);//omega[k]的共轭复数(即复数的虚部取反),当复数模长为1时，结果等于原复数的倒数</del>~
-有：</p>
+复数为 $ 2 +i 2 $</p>
+<pre class="cpp"><code>typedef complex&lt;double&gt; fs;
+const double pi=acos(-1);
+omega[k]=fs(cos(k/n*2*pi),sin(k/n*2*pi));
+inv[k]=conj(omega[k]);//omega[k]的共轭复数(即复数的虚部取反),当复数模长为1时，结果等于原复数的倒数</code></pre>
+<p>有：</p>
 <p><span class="math display">\[
 \large
 \begin{aligned}
@@ -255,13 +256,17 @@ f(x)&amp;=a_{0}+a_{1}x+a_{2}x^{2}+a_{3}x^{3}+\dots +a_{n-1}x^{n-1}\\
 +a_{n-2}x^{n-2})+(a_{1}x+a_{3}x^{3}+a_{5}x^{5}+\dots +a_{n-1}x^{n-1})\\
 \omega^{n}_{n}&amp;=1\\
 \end{aligned}
-\]</span> 令: <span class="math display">\[
+\]</span></p>
+<p>令:</p>
+<p><span class="math display">\[
 \large
 \begin{aligned}
 f1(x)&amp;=(a_{0}+a_{2}x+a_{4}x^{2}+\dots +a_{n-2}x^{\frac{n}{2}})\\
 f2(x)&amp;=(a_{1}+a_{3}x+a_{5}x^{2}+\dots +a_{n-1}x^{\frac{n}{2}})\\
 \end{aligned}
-\]</span> 则有： <span class="math display">\[
+\]</span></p>
+<p>则有：</p>
+<p><span class="math display">\[
 \large
 \begin{aligned}
 f(x)&amp;=f1(x^{2})+x\cdot f2(x^{2})\\
@@ -283,7 +288,9 @@ f2(\omega _{\frac{n}{2} }^{k}\cdot 1)\\
 &amp;=f1(\omega _{\frac{n}{2} }^{k})-\omega _{n}^{k}\cdot f2(\omega
 _{\frac{n}{2} }^{k})\\
 \end{aligned}
-\]</span> 综上： <span class="math display">\[
+\]</span></p>
+<p>综上：</p>
+<p><span class="math display">\[
 \Large
 f(\omega ^{k}_{n})=
 \left\{\begin{matrix}
@@ -294,13 +301,14 @@ f(\omega ^{k}_{n})=
 _{n}^{k-\frac{n}{2}}\cdot f2(\omega _{\frac{n}{2}
 }^{k-\frac{n}{2}})(\frac{n}{2}\le k&lt;n)\\
 \end{matrix}\right.
-\]</span> 可是若直接这样进行递归，会较慢<br />
+\]</span></p>
+<p>可是若直接这样进行递归，会较慢<br />
 可以先预处理出所有 <span class="math inline">\(\omega_{n}^{k}\)</span>
 和 <span class="math inline">\(\omega_{n}^{-k}\)</span><br />
 可是这样依然较慢（会快一点，但不多（））<br />
 所以我就没有预处理（</p>
-<p>我们发现递归时转移是这样的（以8个为例）<br />
-<span class="math display">\[
+<p>我们发现递归时转移是这样的（以8个为例）</p>
+<p><span class="math display">\[
 \omega^{0}_{8}\omega^{1}_{8}\omega^{2}_{8}\omega^{3}_{8}\omega^{4}_{8}\omega^{5}_{8}\omega^{6}_{8}\omega^{7}_{8}\\
 ↓\\
 \omega^{0}_{8}\omega^{2}_{8}\omega^{4}_{8}\omega^{6}_{8}│\omega^{1}_{8}\omega^{3}_{8}\omega^{5}_{8}\omega^{7}_{8}\\
@@ -308,8 +316,10 @@ _{n}^{k-\frac{n}{2}}\cdot f2(\omega _{\frac{n}{2}
 \omega^{0}_{8}\omega^{4}_{8}┇\omega^{2}_{8}\omega^{6}_{8}│\omega^{1}_{8}\omega^{5}_{8}┇\omega^{3}_{8}\omega^{7}_{8}\\
 ↓\\
 \omega^{0}_{8}┇\omega^{4}_{8}│\omega^{2}_{8}┇\omega^{6}_{8}║\omega^{1}_{8}┇\omega^{5}_{8}│\omega^{3}_{8}┇\omega^{7}_{8}\\
-\]</span> 可能看不出什么<br />
-换成二进制看看 <span class="math display">\[
+\]</span></p>
+<p>可能看不出什么<br />
+换成二进制看看</p>
+<p><span class="math display">\[
 000┆001┆010┆011┆100┆101┆110┆111\\
 ↓\\
 000┆010┆100┆110│001┆011┆101┆111\\
@@ -317,17 +327,18 @@ _{n}^{k-\frac{n}{2}}\cdot f2(\omega _{\frac{n}{2}
 000┆100│010┆110║001┆101│011┆111\\
 ↓\\
 000│100║010│110║║001│101║011│111  
-\]</span> 这下可以看出<br />
+\]</span></p>
+<p>这下可以看出<br />
 对于任意一个数 <span class="math inline">\(a\)</span>
 ，它在转移时，最终会被转移到它的二进制数倒转后对应的十进制数的位置<br />
 这样说可能有点绕</p>
-<p>eg：<br />
-<span class="math display">\[
+<p>eg：</p>
+<p><span class="math display">\[
 6_{(10)}=110_{(2)}\\
 110_{(2)}\to 011_{(2)}\\
 011_{(2)}=3_{(10)}
-\]</span> 故原来的 <code>6</code> 经过转移后到了原来 <code>3</code>
-的位置</p>
+\]</span></p>
+<p>故原来的 <code>6</code> 经过转移后到了原来 <code>3</code> 的位置</p>
 <p>那么怎么进行二进制翻转呢？</p>
 <h2 id="一朴素法">一、朴素法</h2>
 <p>对于每一个数对应的二进制数<br />
@@ -356,7 +367,8 @@ $ $的值居然就是原来 <span class="math inline">\(R(x)\)</span>
 故：$R(x)= +2^{k-1}*x $<br />
 其中 <span class="math inline">\(k\)</span> 为二进制数的长度，即 <span
 class="math inline">\(\log{n}\)</span><br />
-eg: <span class="math display">\[
+eg:</p>
+<p><span class="math display">\[
 \begin{aligned}
 已知R(3)&amp;=6\\
 R(6)&amp;=\left \lfloor \cfrac{ R(\left \lfloor \frac{6}{2}  \right
@@ -367,7 +379,8 @@ R(6)&amp;=\left \lfloor \cfrac{ R(\left \lfloor \frac{6}{2}  \right
 &amp;=\left \lfloor \frac{6}{2} \right \rfloor \\
 &amp;=3\\
 \end{aligned}
-\]</span> 代码如下：</p>
+\]</span></p>
+<p>代码如下：</p>
 <pre class="cpp"><code>for(int i=0;i&lt;n;i++)&#123;
     r[i]=r[i/2]/2+pow(2,log2(n)-1)*(i&amp;1);
 &#125;</code></pre>
@@ -393,8 +406,8 @@ class="math inline">\(f1\)</span><br />
 后 <span class="math inline">\(\cfrac{k}{2}\)</span> 个数对应的 <span
 class="math inline">\(f\)</span> 就是原来所说的 <span
 class="math inline">\(f2\)</span><br />
-再根据先前的结论<br />
-<span class="math display">\[
+再根据先前的结论</p>
+<p><span class="math display">\[
 \Large
 f(\omega ^{k}_{n})=
 \left\{\begin{matrix}
@@ -405,7 +418,8 @@ f(\omega ^{k}_{n})=
 _{n}^{k-\frac{n}{2}}\cdot f2(\omega _{\frac{n}{2}
 }^{k-\frac{n}{2}})(\cfrac{n}{2}\le k&lt;n)\\
 \end{matrix}\right.
-\]</span> 可以将这 <span class="math inline">\(k\)</span>
+\]</span></p>
+<p>可以将这 <span class="math inline">\(k\)</span>
 个数转移到新的位置上<br />
 代码如下</p>
 <pre class="cpp"><code>for(int k=2;k&lt;=n;k*=2)&#123;

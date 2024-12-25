@@ -193,14 +193,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%9B%BE%E8%AE%BA/" style="color: #979a9a">
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/" style="color: #00beff">
                     图论
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="color: #00beff">
+                <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="color: #ffa400">
                     数据结构
                 </a>
             </span>
@@ -244,6 +244,54 @@ target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2483">这
 </blockquote>
 <p>（摘自 Luogu k短路 模板题的题目背景）</p>
 <p>想要直接学 可持久化可并堆 做法的可以跳过这里。</p>
+<p>虽然时间复杂度假了，但是依然可以作为 A* 算法的一个入门练习。<br />
+这里放一个可以使用 A* 通过的模板题 <a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2901">链接</a></p>
+<h4 id="具体做法">具体做法</h4>
+<p>什么，你连 Dijkstra 都不会？那快去学你的入门课（<br />
+或者看看 <a href="">我的</a>？</p>
+<p>我们在使用 Dijkstra 的堆优版本求解 <strong>最短路</strong>
+问题时，是这样写的：（这里只写了关键代码）</p>
+<pre class="cpp"><code>struct node&#123;
+    int to,dis;
+        friend bool operator &lt; (node n1,node n2)&#123;
+        return n1.dis&gt;n2.dis;
+    &#125;
+&#125;;
+
+void dij(int s)&#123;
+    for(int i=1;i&lt;=n;i++) dis[i]=inf;
+    dis[s]=0;
+    priority_queue&lt;node&gt; q;
+    q.push((node)&#123;s,0&#125;);
+    while(!q.empty())&#123;
+        int u=q.top().to;
+        q.pop();
+        if(sure[u]) continue;
+        sure[u]=true;
+        for(int i=head[u];i;i=edge[i].next)&#123;
+            int v=edge[i].to;
+            if(sure[v]) continue;
+            if(dis[v]&gt;dis[u]+edge[i].val)&#123;
+                dis[v]=dis[u]+edge[i].val;
+                q.push((node)&#123;v,dis[v]&#125;);
+            &#125;
+        &#125;
+    &#125;
+&#125;</code></pre>
+<p>我们可以看出，在 Dijkstra 中，每个点最多只会用于一次松弛操作</p>
+<h3 id="可持久化可并堆">可持久化可并堆</h3>
+<p><del>正解！</del></p>
+<p>可以去看 <a
+target="_blank" rel="noopener" href="https://www.docin.com/p-1387370338.html">俞鼎力大牛的课件</a>，其实讲解还是很详细的（？），至少我是从这个原课件看懂的（</p>
+<p>那么首先，你至少得会 <a href="">可并堆（左偏树）</a>
+不然从何谈起（<br />
+不会也没事，点击链接可以跳转到学习地址（</p>
+<blockquote>
+<p>ps：上面放的是我未来会写的内容 <del>（咕咕咕）</del>，在这条 ps
+还在的时候，你可以看 <a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/article/uoeyv3gq">这个</a></p>
+</blockquote>
 
     </div>
     
