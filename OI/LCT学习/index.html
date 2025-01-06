@@ -193,14 +193,21 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="color: #00beff">
+                <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="color: #ffa400">
                     数据结构
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/LCT/" style="color: #ffa400">
+                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #a5ff4d">
+                    学习指南
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/LCT/" style="color: #e74c3c">
                     LCT
                 </a>
             </span>
@@ -214,15 +221,8 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/" style="color: #a5ff4d">
+                <a href="/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/" style="color: #ffa400">
                     平衡树
-                </a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #ffa400">
-                    学习指南
                 </a>
             </span>
             
@@ -282,16 +282,8 @@ class="math inline">\(i\)</span> 节点为根的子树大小</p>
 <p>先将 LCT 模板题放在 <a
 target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3690">这里</a><br />
 其实 LCT 的码量并不算太大，但是就比较难理解</p>
-<p>前置芝士：<a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91">二叉搜索树</a>
-<a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#splay">Splay</a><br />
-<del>哪里不会点哪里</del><br />
-<a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#lct">跳过</a></p>
+<p>前置芝士：二叉搜索树，Splay</p>
 <h2 id="二叉搜索树">二叉搜索树</h2>
-<p><a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%80%8E%E4%B9%88%E5%81%9A">返回</a></p>
 <p>我们在对一个序列进行各种操作的时候，<br />
 可能会遇见让你插入某个数，删除某个数，还需要让你随时都保证有序，<br />
 假如我们对一个普通的数组这样操作的话，如果从中间插入和删除之类的，需要用到
@@ -402,9 +394,7 @@ void del(int v)&#123;
 <li>查询 <span class="math inline">\(v\)</span> 这个值的后继</li>
 </ul>
 <p>请读者自行尝试或者查阅，因为普通的二叉搜索树容易被卡，因此在后文讲解
-<a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%9B%B4%E5%A4%9A%E6%93%8D%E4%BD%9C-1">Splay的更多操作</a>
-时具体讲解</p>
+Splay 时具体讲解。</p>
 <h3 id="复杂度分析">复杂度分析</h3>
 <p>空间复杂度：</p>
 <blockquote>
@@ -426,10 +416,7 @@ class="math inline">\(O(n)\)</span>。</p>
 </blockquote>
 <p>总之，普通的二叉搜索树没法保证时间复杂度，我们需要优化。</p>
 <h2 id="splay">Splay</h2>
-<p><a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%80%8E%E4%B9%88%E5%81%9A">返回</a></p>
-<p>Splay 是一种自平衡的 <a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91">二叉搜索树</a>。<br />
+<p>Splay 是一种自平衡的 二叉搜索树。<br />
 （ps：关于更多平衡树，以后会讲）</p>
 <p>Splay 通过一种叫做 <code>Splay</code>
 的操作，防止二叉搜索树退化为链，保证了树高为 <span
@@ -447,20 +434,13 @@ bool get(int x)&#123;
     return x==son[fa[x]][1];
 &#125;//得到点x属于fa[x]的左儿子还是右儿子</code></pre>
 <h3 id="旋转操作">旋转操作</h3>
-<p>若你学过 Treap 之类的带旋平衡树，这一部分可以选择<a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#splay%E6%93%8D%E4%BD%9C">略过</a>（建议不要略过）。</p>
+<p>若你学过 Treap
+之类的带旋平衡树，这一部分可以选择略过（建议不要略过）。</p>
 <p>由中序遍历的性质：同一种中序遍历对应的二叉树不止一棵。<br />
 我们可以通过一些操作，在保证中序遍历不变的前提下，来使树高变低。<br />
 这种操作就称作 <code>旋转操作</code>，函数一般叫做
 <code>rotate</code>。</p>
-<p>为什么要旋转 请从下文开看<br />
-旋转部分讲解 <a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%97%8B%E8%BD%AC%E8%BF%87%E7%A8%8B%E8%AE%B2%E8%A7%A3">点这里</a><br />
-直接看代码 <a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E4%BB%A3%E7%A0%81">点这里</a></p>
 <h4 id="为什么要旋转">为什么要旋转</h4>
-<p><a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%97%8B%E8%BD%AC%E6%93%8D%E4%BD%9C">返回</a></p>
 <p>对于这么一棵二叉树。</p>
 <p><img src="/images/LCT1.png" /></p>
 <p>我们要将其转成这样：</p>
@@ -496,8 +476,6 @@ class="math inline">\(4\)</span> 降到 <span
 class="math inline">\(3\)</span>。<br />
 因此旋转操作是可以有效降低树高的。</p>
 <h4 id="旋转过程讲解">旋转过程讲解</h4>
-<p><a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%97%8B%E8%BD%AC%E6%93%8D%E4%BD%9C">返回</a></p>
 <p>我们令要进行 <code>rotate</code> 操作的点为 <span
 class="math inline">\(x\)</span>。<br />
 令:<br />
@@ -527,8 +505,6 @@ class="math inline">\(son_{x,ch \oplus 1}\)</span><br />
 </ul>
 <p>最后再处理一下先后执行顺序，就可以写出旋转操作的代码啦~~</p>
 <h4 id="代码">代码</h4>
-<p><a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%97%8B%E8%BD%AC%E6%93%8D%E4%BD%9C">返回</a></p>
 <pre class="cpp"><code>void rotate(int x)&#123;
     int y=fa[x],z=fa[y];bool ch=get(x);
     son[y][ch]=son[x][ch^1];
@@ -1033,7 +1009,7 @@ int main()&#123;
     <div id="footer-wrap">
         <div>
             &copy;
-            2022 - 2025 yzljyのBlog
+            2024 - 2025 yzljyのBlog
             <span id="footer-icon">
                 <i class="fa-solid fa-font-awesome fa-fw"></i>
             </span>
