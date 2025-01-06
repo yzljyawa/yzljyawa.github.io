@@ -193,28 +193,28 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="color: #a5ff4d">
+                <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="color: #00beff">
                     数据结构
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/LCT/" style="color: #00beff">
+                <a href="/tags/LCT/" style="color: #ffa400">
                     LCT
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E6%A0%91%E9%93%BE%E5%89%96%E5%88%86/" style="color: #e74c3c">
+                <a href="/tags/%E6%A0%91%E9%93%BE%E5%89%96%E5%88%86/" style="color: #979a9a">
                     树链剖分
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/" style="color: #979a9a">
+                <a href="/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/" style="color: #a5ff4d">
                     平衡树
                 </a>
             </span>
@@ -233,9 +233,10 @@
     <div class="content" v-pre>
         <h1 id="是什么">是什么</h1>
 <p>Link-Cut-Tree<br />
-一般称作
-<code>LCT</code>/<code>动态树</code>/<code>虚实链剖分</code><br />
-由著名巨佬 Tarjan 发明（对，又是他）
+一般称作 <code>LCT</code>/<code>虚实链剖分</code><br />
+ps： LCT 不能称作 <code>动态树</code>，<code>动态树</code>
+指的是一类问题。<br />
+由著名巨佬 Tarjan 发明（对，又是他）<br />
 用于解决动态的树上路径/子树问题（统称为<strong>动态树</strong>问题）<br />
 对于普通的树上问题，比如：</p>
 <blockquote>
@@ -262,20 +263,20 @@ class="math inline">\(u,v\)</span> 不在同一连通块内）</p>
 <blockquote>
 <p><span class="math inline">\(root\)</span> 表示树的根<br />
 <span class="math inline">\(tot\)</span> 表示当前树的节点个数<br />
-<span class="math inline">\(val[i]\)</span> 表示 <span
+<span class="math inline">\(val_{i}\)</span> 表示 <span
 class="math inline">\(i\)</span> 节点的权值<br />
-<span class="math inline">\(son[i][0]\)</span> 表示 <span
+<span class="math inline">\(son_{i,0}\)</span> 表示 <span
 class="math inline">\(i\)</span> 节点的左儿子<br />
-<span class="math inline">\(son[i][1]\)</span> 表示 <span
+<span class="math inline">\(son_{i,1}\)</span> 表示 <span
 class="math inline">\(i\)</span> 节点的右儿子<br />
-<span class="math inline">\(fa[i]\)</span> 表示 <span
+<span class="math inline">\(fa_{i}\)</span> 表示 <span
 class="math inline">\(i\)</span> 节点的父亲<br />
-<span class="math inline">\(tag[i]\)</span> 表示 <span
+<span class="math inline">\(tag_{i}\)</span> 表示 <span
 class="math inline">\(i\)</span> 节点的翻转标记<br />
-<span class="math inline">\(cnt[i]\)</span> 表示 <span
+<span class="math inline">\(cnt_{i}\)</span> 表示 <span
 class="math inline">\(i\)</span>
 节点存储的数量（同样的值放在同一个节点）<br />
-<span class="math inline">\(siz[i]\)</span> 表示以 <span
+<span class="math inline">\(siz_{i}\)</span> 表示以 <span
 class="math inline">\(i\)</span> 节点为根的子树大小</p>
 </blockquote>
 <p>先将 LCT 模板题放在 <a
@@ -291,40 +292,40 @@ target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%
 <h2 id="二叉搜索树">二叉搜索树</h2>
 <p><a
 target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%80%8E%E4%B9%88%E5%81%9A">返回</a></p>
-<p>我们在对一个序列进行各种操作的时候<br />
-可能会遇见让你插入某个数，删除某个数，还需要让你随时都保证有序<br />
+<p>我们在对一个序列进行各种操作的时候，<br />
+可能会遇见让你插入某个数，删除某个数，还需要让你随时都保证有序，<br />
 假如我们对一个普通的数组这样操作的话，如果从中间插入和删除之类的，需要用到
-<span class="math inline">\(O(n)\)</span> 的时间来维护序列的有序<br />
-这样显然无法接受，我们需要优化时间复杂度<br />
-考虑将序列转移到一颗二叉树上</p>
+<span class="math inline">\(O(n)\)</span> 的时间来维护序列的有序，<br />
+这样显然无法接受，我们需要优化时间复杂度。<br />
+考虑将序列转移到一颗二叉树上。</p>
 <h3 id="输出">输出</h3>
-<p>我们让二叉树的中序遍历的结果，就是原先的序列</p>
+<p>我们让二叉树的中序遍历的结果，就是原先的序列。</p>
 <p>那么怎么维护有序？假设我们需要维护单调递增的序列，对于每个节点 <span
 class="math inline">\(i\)</span> 都满足 <span
-class="math inline">\(val[son[i][0]] &lt; val[i] &lt;
-val[son[i][1]]\)</span> 即可</p>
-<p>这样的话，经过中序遍历后得到的结果，就是单调递增的原序列了</p>
+class="math inline">\(val_{son_{i,0}} &lt; val_{i} &lt;
+val_{son_{i,1}}\)</span> 即可。</p>
+<p>这样的话，经过中序遍历后得到的结果，就是单调递增的原序列了。</p>
 <h3 id="插入">插入</h3>
-<p>设插入的值为 <span class="math inline">\(v\)</span><br />
-根据前面所讲的输出方式，我们在插入的时候，使二叉树依然满足性质即可。
-最开始令 <span class="math inline">\(pos \gets root\)</span> （ps：<span
-class="math inline">\(a \gets b\)</span> 表示将 <span
+<p>设插入的值为 <span class="math inline">\(v\)</span>。<br />
+根据前面所讲的输出方式，我们在插入的时候，使二叉树依然满足性质即可。<br />
+最开始令 <span class="math inline">\(pos \gets root\)</span>。<br />
+（ps：<span class="math inline">\(a \gets b\)</span> 表示将 <span
 class="math inline">\(b\)</span> 的值赋给 <span
 class="math inline">\(a\)</span>）<br />
 一直重复下面这个式子，直到 <span
-class="math inline">\(pos=0\)</span></p>
+class="math inline">\(pos=0\)</span>。</p>
 <p><span class="math display">\[
 \left\{\begin{matrix}
-  pos \gets son[pos][0](v&lt;val[pos])\\
-  pos \gets son[pos][1](v&gt;val[pos])
+  pos \gets son_{pos,0}(v&lt;val_{pos})\\
+  pos \gets son_{pos,1}(v&gt;val_{pos})
 \end{matrix}\right.
 \]</span></p>
 <p><span class="math inline">\(pos=0\)</span> 后，我们就可以将 <span
 class="math inline">\(tot \gets tot+1\)</span> 并将新的这个权值 <span
 class="math inline">\(v\)</span> 赋给 <span
-class="math inline">\(val[tot]\)</span><br />
-记住插入后要更新 <span class="math inline">\(fa[tot]\)</span> 和 <span
-class="math inline">\(son[fa[tot]][0/1]\)</span>
+class="math inline">\(val_{tot}\)</span><br />
+记住插入后要更新 <span class="math inline">\(fa_{tot}\)</span> 和 <span
+class="math inline">\(son_{fa_{tot},0/1}\)</span><br />
 这样插入操作就完成了！<br />
 代码如下：</p>
 <pre class="cpp"><code>void insert(int v)&#123;
@@ -347,9 +348,9 @@ class="math inline">\(son[fa[tot]][0/1]\)</span>
 &#125;</code></pre>
 <h3 id="查找某个值所在的位置">查找某个值所在的位置</h3>
 <p>设需要查找的值为 <span class="math inline">\(v\)</span>（保证 <span
-class="math inline">\(v\)</span> 存在）<br />
+class="math inline">\(v\)</span> 存在）。<br />
 那么就和插入操作很类似了，只是我们当 <span
-class="math inline">\(v=val[pos]\)</span> 的时候，直接返回 <span
+class="math inline">\(v=val_{pos}\)</span> 的时候，直接返回 <span
 class="math inline">\(pos\)</span> 即可<br />
 代码如下：</p>
 <pre class="cpp"><code>int selpos(int v)&#123;
@@ -360,9 +361,9 @@ class="math inline">\(pos\)</span> 即可<br />
     &#125;
 &#125;</code></pre>
 <h3 id="删除">删除</h3>
-<p>设需要删除的值为 <span class="math inline">\(v\)</span><br />
+<p>设需要删除的值为 <span class="math inline">\(v\)</span>。<br />
 删除操作需要先找到 <span class="math inline">\(v\)</span>
-的位置，删除后，合并他的左右两颗子树即可<br />
+的位置，删除后，合并他的左右两颗子树即可。<br />
 代码如下：</p>
 <pre class="cpp"><code>void clear(int pos)&#123;
     val[pos]=son[pos][0]=son[pos][1]=fa[pos]=0;
@@ -405,31 +406,35 @@ void del(int v)&#123;
 target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%9B%B4%E5%A4%9A%E6%93%8D%E4%BD%9C-1">Splay的更多操作</a>
 时具体讲解</p>
 <h3 id="复杂度分析">复杂度分析</h3>
-<p>空间复杂度：<br />
-我们每次在插入时只会多一个，因此空间复杂度为 <span
+<p>空间复杂度：</p>
+<blockquote>
+<p>我们每次在插入时只会多一个，因此空间复杂度为 <span
 class="math inline">\(O(n)\)</span></p>
-<p>时间复杂度：<br />
-理想情况下， <span class="math inline">\(n\)</span>
+</blockquote>
+<p>时间复杂度：</p>
+<blockquote>
+<p>理想情况下，<span class="math inline">\(n\)</span>
 个数据构成的二叉树的高度为 <span class="math inline">\(\log{n}\)</span>
 因此在插入删除时均最多跳 <span class="math inline">\(\log{n}\)</span>
 次，最优时间复杂度为 <span
-class="math inline">\(O(\log{n})\)</span><br />
+class="math inline">\(O(\log{n})\)</span>。<br />
 但是我们可以通过构造如 <code>1 2 3 4 5</code>
 这样单调的数据，来使树高变为 <span
 class="math inline">\(O(n)\)</span>，此时二叉搜索树退化为<strong>链</strong>，插入和删除时最多会跳
 <span class="math inline">\(n\)</span> 次，最劣时间复杂度为 <span
-class="math inline">\(O(n)\)</span></p>
-<p>总之，普通的二叉搜索树没法保证时间复杂度，我们需要优化</p>
+class="math inline">\(O(n)\)</span>。</p>
+</blockquote>
+<p>总之，普通的二叉搜索树没法保证时间复杂度，我们需要优化。</p>
 <h2 id="splay">Splay</h2>
 <p><a
 target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%80%8E%E4%B9%88%E5%81%9A">返回</a></p>
 <p>Splay 是一种自平衡的 <a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91">二叉搜索树</a><br />
+target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91">二叉搜索树</a>。<br />
 （ps：关于更多平衡树，以后会讲）</p>
 <p>Splay 通过一种叫做 <code>Splay</code>
 的操作，防止二叉搜索树退化为链，保证了树高为 <span
 class="math inline">\(O(\log{n})\)</span> 级别，保证了各个操作的 <span
-class="math inline">\(O(\log{n})\)</span> 时间复杂度</p>
+class="math inline">\(O(\log{n})\)</span> 时间复杂度。</p>
 <h3 id="基础操作">基础操作</h3>
 <p>直接上代码吧：</p>
 <pre class="cpp"><code>void clear(int x)&#123;
@@ -443,50 +448,58 @@ bool get(int x)&#123;
 &#125;//得到点x属于fa[x]的左儿子还是右儿子</code></pre>
 <h3 id="旋转操作">旋转操作</h3>
 <p>若你学过 Treap 之类的带旋平衡树，这一部分可以选择<a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#splay%E6%93%8D%E4%BD%9C">略过</a>（建议不要略过）</p>
-<p>由中序遍历的性质：同一种中序遍历对应的二叉树不止一颗<br />
-我们可以通过一些操作，在保证中序遍历不变的前提下，来使树高变低<br />
-这种操作就称作 <code>旋转操作</code>，一般函数名为
-<code>rotate</code></p>
-<p>为什么要旋转从下文开看<br />
-旋转部分讲解<a
+target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#splay%E6%93%8D%E4%BD%9C">略过</a>（建议不要略过）。</p>
+<p>由中序遍历的性质：同一种中序遍历对应的二叉树不止一棵。<br />
+我们可以通过一些操作，在保证中序遍历不变的前提下，来使树高变低。<br />
+这种操作就称作 <code>旋转操作</code>，函数一般叫做
+<code>rotate</code>。</p>
+<p>为什么要旋转 请从下文开看<br />
+旋转部分讲解 <a
 target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%97%8B%E8%BD%AC%E8%BF%87%E7%A8%8B%E8%AE%B2%E8%A7%A3">点这里</a><br />
-直接看代码<a
+直接看代码 <a
 target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E4%BB%A3%E7%A0%81">点这里</a></p>
 <h4 id="为什么要旋转">为什么要旋转</h4>
 <p><a
 target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%97%8B%E8%BD%AC%E6%93%8D%E4%BD%9C">返回</a></p>
-<p>对于这么一棵二叉树</p>
+<p>对于这么一棵二叉树。</p>
 <p><img src="/images/LCT1.png" /></p>
 <p>我们要将其转成这样：</p>
 <p><img src="/images/LCT2.png" /></p>
-<p>当然也可以转回来<br />
-这样进行一次旋转后，x的高度提高了一层<br />
-看似对总的高度没有影响<br />
+<p>当然也可以转回来，<br />
+这样进行一次旋转后，x的高度提高了一层。<br />
+看似对总的高度没有影响，<br />
 但对于这样的退化成链的情况时：</p>
 <p><img src="/images/LCT3.png" /></p>
-<p>我们可以通过如下操作，将高度降低</p>
-<p>1.对点 <span class="math inline">\(1\)</span> 进行旋转操作<br />
-会变成这样：</p>
+<p>我们可以通过如下操作，将高度降低。</p>
+<ol type="1">
+<li>对点 <span class="math inline">\(1\)</span>
+进行旋转操作，会变成这样：</li>
+</ol>
 <p><img src="/images/LCT4.png" /></p>
-<p>2.再对点 <span class="math inline">\(1\)</span> 进行旋转操作<br />
-会变成这样：</p>
+<ol start="2" type="1">
+<li>再对点 <span class="math inline">\(1\)</span>
+进行旋转操作，会变成这样：</li>
+</ol>
 <p><img src="/images/LCT5.png" /></p>
-<p>3.继续对点 <span class="math inline">\(1\)</span> 进行旋转操作
-会变成这样：</p>
+<ol start="3" type="1">
+<li>继续对点 <span class="math inline">\(1\)</span>
+进行旋转操作，会变成这样：</li>
+</ol>
 <p><img src="/images/LCT6.png" /></p>
-<p>4.最后对点 <span class="math inline">\(3\)</span> 进行旋转操作
-会变成这样：</p>
+<ol start="4" type="1">
+<li>最后对点 <span class="math inline">\(3\)</span>
+进行旋转操作，会变成这样：</li>
+</ol>
 <p><img src="/images/LCT7.png" /></p>
 <p>至此，我们成功地通过旋转操作将高度从 <span
 class="math inline">\(4\)</span> 降到 <span
-class="math inline">\(3\)</span><br />
-因此旋转操作是必须的</p>
+class="math inline">\(3\)</span>。<br />
+因此旋转操作是可以有效降低树高的。</p>
 <h4 id="旋转过程讲解">旋转过程讲解</h4>
 <p><a
 target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%97%8B%E8%BD%AC%E6%93%8D%E4%BD%9C">返回</a></p>
 <p>我们令要进行 <code>rotate</code> 操作的点为 <span
-class="math inline">\(x\)</span><br />
+class="math inline">\(x\)</span>。<br />
 令:<br />
 <span class="math inline">\(y \gets fa[x]\)</span><br />
 <span class="math inline">\(z \gets fa[y]\)</span><br />
@@ -500,19 +513,19 @@ class="math inline">\(a\)</span> 异或 <span
 class="math inline">\(b\)</span>"）<br />
 （此时的 <span class="math inline">\(ch=0\)</span>）</p>
 <ul>
-<li><span class="math inline">\(son[x][ch]\)</span> 没有发生变化<br />
+<li><span class="math inline">\(son_{x,ch}\)</span> 没有发生变化<br />
 </li>
-<li><span class="math inline">\(son[x][ch \oplus 1]\)</span> 变成了
+<li><span class="math inline">\(son_{x,ch \oplus 1}\)</span> 变成了
 <span class="math inline">\(y\)</span><br />
 </li>
-<li><span class="math inline">\(son[y][ch]\)</span> 从 <span
+<li><span class="math inline">\(son_{y,ch}\)</span> 从 <span
 class="math inline">\(x\)</span> 变成了 <span
-class="math inline">\(son[x][ch \oplus 1]\)</span><br />
+class="math inline">\(son_{x,ch \oplus 1}\)</span><br />
 </li>
 <li>对应的 <span class="math inline">\(fa\)</span>
 的的值也会随之变化</li>
 </ul>
-<p>最后再处理一下先后执行顺序，就可以写出旋转操作的代码啦~</p>
+<p>最后再处理一下先后执行顺序，就可以写出旋转操作的代码啦~~</p>
 <h4 id="代码">代码</h4>
 <p><a
 target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%97%8B%E8%BD%AC%E6%93%8D%E4%BD%9C">返回</a></p>
@@ -529,59 +542,59 @@ target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%
 &#125;</code></pre>
 <h3 id="splay操作">Splay操作</h3>
 <p>Splay 规定，每次操作后，都要将操作的点转到根上，这样的操作就被称为
-<code>Splay操作</code></p>
-<p>怎么转移到根上？暴力一次次往上旋转即可</p>
+<code>Splay操作</code>。<br />
+怎么转移到根上？暴力一次次往上旋转即可。</p>
 <h4 id="单旋splay">单旋Splay</h4>
-<p>如果只是像上文那样旋转，也就是从下往上一次转，这样的被称为
-<code>单旋Splay</code><br />
+<p>如果只是像上文那样旋转，也就是从下往上依次转，这样的被称为
+<code>单旋Splay</code>。<br />
 当出现 <span class="math inline">\(x,y,z\)</span>
-三点共线时，我们发现，依此转完后，树高是没有变化的，这样就没法保证时间复杂度（见下面几张图理解）</p>
+三点共线时，我们发现，依此转完后，树高是没有变化的，这样就没法保证时间复杂度（见下面几张图理解）。</p>
 <p><img src="/images/LCT8.png" /></p>
-<p>我们需要将 <span class="math inline">\(1\)</span> 号点转到根去</p>
+<p>我们需要将 <span class="math inline">\(1\)</span> 号点转到根上。</p>
 <p>那么我们只需要旋转四次 <span class="math inline">\(1\)</span>
-号点就可以了<br />
+号点就可以了。<br />
 转的过程如下：</p>
 <p><img src="/images/LCT9.png" /></p>
 <p><img src="/images/LCT10.png" /></p>
 <p><img src="/images/LCT11.png" /></p>
 <p><img src="/images/LCT12.png" /></p>
-<p>这样的话，就是“如转”<br />
+<p>这样的话，就是“如转”。<br />
 我们虽然将 <span class="math inline">\(1\)</span>
-号点转到了根上，但是高度并没有降低<br />
-因此当树退化为一条链的时候<br />
-<code>单旋Splay</code> 也就没法保证时间复杂度了</p>
-<p>这时候我们就需要用到 <code>双旋Splay</code></p>
+号点转到了根上，但是高度并没有降低。<br />
+因此当树退化为一条链的时候。<br />
+<code>单旋Splay</code> 也就没法保证时间复杂度了。</p>
+<p>这时候我们就需要用到 <code>双旋Splay</code>。</p>
 <h4 id="双旋splay">双旋Splay</h4>
 <p><code>双旋Splay</code> 其实就是在 <code>单旋Splay</code>
 的基础上，特殊处理了一下 <span class="math inline">\(u,v,z\)</span>
 三点共线的情况<br />
 在遇到三点共线的情况时，我们只需要先旋转 <span
-class="math inline">\(fa[u]\)</span> 也就是 <span
-class="math inline">\(v\)</span> 点，再旋转一次 <span
-class="math inline">\(u\)</span> 点即可<br />
+class="math inline">\(fa_{u}\)</span> 也就是 <span
+class="math inline">\(v\)</span> 点，再旋转 <span
+class="math inline">\(u\)</span> 点即可。<br />
 因为我们在旋转某个点的时候，这个点的整个子树都会一起上升 <span
-class="math inline">\(1\)</span> 层<br />
+class="math inline">\(1\)</span> 层。<br />
 因此我们先转 <span class="math inline">\(v\)</span>，后转 <span
-class="math inline">\(u\)</span> 是可行的<br />
+class="math inline">\(u\)</span> 是合法的。<br />
 （见下图模拟，我们依然需要将 <span class="math inline">\(1\)</span>
 号点转到根上）</p>
 <p><img src="/images/LCT8.png" /></p>
 <p><span class="math inline">\(1,2,3\)</span> 号点共线，因此先转 <span
 class="math inline">\(2\)</span> 号点，再转 <span
-class="math inline">\(1\)</span> 号点</p>
+class="math inline">\(1\)</span> 号点。</p>
 <p><img src="/images/LCT13.png" /></p>
 <p><img src="/images/LCT14.png" /></p>
 <p><span class="math inline">\(1,4,5\)</span> 号点共线，因此先转 <span
 class="math inline">\(4\)</span> 号点，再转 <span
-class="math inline">\(1\)</span> 号点</p>
+class="math inline">\(1\)</span> 号点。</p>
 <p><img src="/images/LCT15.png" /></p>
 <p><img src="/images/LCT16.png" /></p>
-<p>可见，<code>双旋Splay</code> 不仅将我们需要的点转到了根上<br />
-而且将原来的不优美的链，变得优美了一些些<br />
-高度也就降低了<br />
-因此 <code>双旋Splay</code> 更优</p>
+<p>可见，<code>双旋Splay</code> 不仅将我们需要的点转到了根上。<br />
+而且将原来的不优美的链，变得优美了一些些。<br />
+高度也就降低了。<br />
+因此 <code>双旋Splay</code> 更优。</p>
 <p>代码如下：</p>
-<pre class="cpp"><code>void splay(int x)&#123;
+<pre class="cpp"><code>void Splay(int x)&#123;
     for(int f=fa[x];f;f=fa[x])&#123;
         if(fa[f]!=0) rotate(get(x)==get(f)?f:x);
         rotate(x);
@@ -589,11 +602,11 @@ class="math inline">\(1\)</span> 号点</p>
 &#125;
 //忘记了 get 函数是做什么的，去前面看看吧xwx</code></pre>
 <p>现在我们学会了
-<code>Splay操作</code>，那么其实也就很简单了，只需要像普通的二叉搜索树一样进行操作基本就行了，记住每次操作完后，将最后操作的点通过
-<code>Splay操作</code> 转到根上去就可以了</p>
+<code>Splay操作</code>，那么其实也就很简单了，只需要像普通的二叉搜索树一样进行操作基本就行了，记住每次操作完后，将最后找到的点通过
+<code>Splay操作</code> 转到根上去就可以了。</p>
 <h3 id="插入-1">插入</h3>
 <p>因为 <code>Splay</code>
-本质上也是二叉搜索树，因此它满足二叉搜索树有的所有性质<br />
+本质上也是二叉搜索树，因此它满足二叉搜索树有的所有性质。<br />
 插入方式和普通二叉搜索树一样，记住最后将插入的那个点旋转到根上即可~</p>
 <p>代码如下：</p>
 <pre class="cpp"><code>void insert(int x)&#123;
@@ -610,7 +623,7 @@ class="math inline">\(1\)</span> 号点</p>
             cnt[pos]++;
             pushup(pos);
             pushup(f);
-            splay(pos);//记住splay！！！
+            Splay(pos);//记住Splay操作！！！
             return;
         &#125;
         f=pos;
@@ -622,29 +635,174 @@ class="math inline">\(1\)</span> 号点</p>
             son[f][x&gt;val[f]]=tot;
             pushup(tot);
             pushup(f);
-            splay(tot);//记住splay！！！
+            Splay(tot);//记住Splay操作！！！
             return;
         &#125;
     &#125;
 &#125;</code></pre>
+<h3 id="查询排名">查询排名</h3>
+<p>设当前访问到的点是 <span class="math inline">\(pos\)</span>，答案为
+<span class="math inline">\(ans\)</span>，最开始 <span
+class="math inline">\(ans \gets 1\)</span>（因为排名至少为 <span
+class="math inline">\(1\)</span>）。<br />
+查询 <span class="math inline">\(x\)</span>
+这个值的排名可以分为三种情况：</p>
+<ol type="1">
+<li><span class="math inline">\(x &gt; val_{pos}\)</span>：<br />
+说明 <span class="math inline">\(pos\)</span> 这个点的左子树的所有值和
+<span class="math inline">\(pos\)</span> 这个点的值都小于 <span
+class="math inline">\(x\)</span><br />
+那么排名至少为 <span
+class="math inline">\(cnt_{son_{pos,0}}+cnt_{pos}\)</span><br />
+即 <span class="math inline">\(ans \gets
+ans+cnt_{son_{pos,0}}+cnt_{pos}\)</span><br />
+然后继续到右子树中计算答案，即 <span class="math inline">\(pos \gets
+son_{pos,1}\)</span><br />
+</li>
+<li><span class="math inline">\(x = val_{pos}\)</span>：<br />
+说明 <span class="math inline">\(pos\)</span> 的左子树的所有值都小于
+<span class="math inline">\(x\)</span><br />
+并且 <span class="math inline">\(pos\)</span> 这个点的值刚好等于 <span
+class="math inline">\(x\)</span><br />
+因此排名就应该是 <span class="math inline">\(ans \gets
+ans+siz_{son_{pos,0}}\)</span><br />
+</li>
+<li><span class="math inline">\(x &lt; val_{pos}\)</span>：<br />
+说明 <span class="math inline">\(pos\)</span> 的左子树有比 <span
+class="math inline">\(x\)</span> 大的值。<br />
+因此此时不能对答案进行计算。<br />
+需要继续到左子树中计算答案，即 <span class="math inline">\(pos \gets
+son_{pos,1}\)</span></li>
+</ol>
+<p>代码如下：</p>
+<pre class="cpp"><code>int selrank(int x)&#123;
+    int res=0,pos=root;
+    while(true)&#123;
+        if(x==val[pos])&#123;
+            Splay(pos);//将pos转到根后，其左子树就是答案，其实和前文表述是一样的
+            return siz[pos[son][0]]+1;
+        &#125;
+        if(now==0) break;
+        if(x&lt;val[pos]) pos=son[pos][0];
+        else&#123;
+            res+=siz[son[pos][0]]+cnt[pos];
+            pos=son[pos][1];
+        &#125;
+    &#125;
+    return res+1;   
+&#125;</code></pre>
+<h3 id="查询排名对应的值">查询排名对应的值</h3>
+<p>查询排名对应的值其实和查询值对应的排名很像。<br />
+设当前访问到的点是 <span class="math inline">\(pos\)</span>，要找排名为
+<span class="math inline">\(x\)</span> 的值。<br />
+一样分为3种情况：</p>
+<ol type="1">
+<li><span class="math inline">\(x &gt;
+siz_{son_{pos,0}}+cnt_{pos}\)</span>：<br />
+说明答案在 <span class="math inline">\(pos\)</span> 的右子树中。<br />
+因此将 <span class="math inline">\(x \gets
+x-(siz_{son_{pos,0}}+cnt_{pos})\)</span><br />
+再到右子树（<span class="math inline">\(pos \gets
+son_{pos,1}\)</span>）中寻找答案即可。<br />
+</li>
+<li><span class="math inline">\(siz_{son_{pos,0}} &lt; x \le
+siz_{son_{pos,0}}+cnt_{pos}\)</span>：<br />
+说明答案就是 <span class="math inline">\(val_{pos}\)</span><br />
+直接返回答案即可。<br />
+</li>
+<li><span class="math inline">\(x \le siz_{son_{pos,0}}\)</span>：<br />
+说明答案在 <span class="math inline">\(pos\)</span> 的左子树。<br />
+到左子树（<span class="math inline">\(pos \gets
+son_{pos,0}\)</span>）中继续寻找答案即可。</li>
+</ol>
+<p>代码如下：</p>
+<pre class="cpp"><code>int selval(int x)&#123;
+    int pos=root;
+    while(true)&#123;
+        if(x&lt;=siz[son[pos][0]])&#123;
+            pos=son[pos][0];
+            continue;
+        &#125;
+        x-=siz[son[pos][0]]+cnt[pos];
+        if(x&lt;=0)&#123;
+            Splay(pos);//记住Splay操作！！！
+            return val[pos];
+        &#125;
+        pos=son[pos][1];
+    &#125;
+&#125;</code></pre>
+<h3 id="查询前驱">查询前驱</h3>
+<p>前驱被定义为比 <span class="math inline">\(x\)</span>
+小的数中最大的数。<br />
+因此我们只需要从根的左子树开始，一直跳右儿子即可。</p>
+<p>代码如下：</p>
+<pre class="cpp"><code>int selpre()&#123;
+    int pos=son[root][0];
+    while(son[pos][1]!=0) pos=son[pos][1];
+    Splay(pos);//记住Splay操作！！！
+    return pos;
+&#125;</code></pre>
+<p>注意：这个是找的是当前<strong>根所对应的值</strong>的前驱，如果需要查找任意一个数的前驱，可以先插入这个数，查完后再删除即可。</p>
+<p>也就是：</p>
+<pre class="cpp"><code>int selpre_val(int x)&#123;
+    int res;
+    insert(x);
+    res=val[selpre()];
+    del(x);
+    return res;
+&#125;</code></pre>
+<h3 id="查询后继">查询后继</h3>
+<p>查找后继和前驱基本一致，只是开始从根的左儿子变成了右儿子，跳左儿子变成了跳右儿子。</p>
+<pre class="cpp"><code>int selnext()&#123;
+    int pos=son[root][1];
+    while(son[pos][0]!=0) pos=son[pos][0];
+    Splay(pos);//记住Splay操作！！！
+    return pos;
+&#125;</code></pre>
+<p>查找任意一个数的后继和查找任意一个数的前驱是同样的道理：</p>
+<pre class="cpp"><code>int selpre_val(int x)&#123;
+    int res;
+    insert(x);
+    res=val[selnext()];
+    del(x);
+    return res;
+&#125;</code></pre>
+<h3 id="合并两颗splay树">合并两颗Splay树</h3>
+<p>两颗 <code>Splay树</code>
+想要快速合并，前提条件是一棵树的最大值小于另一棵树的最小值，否则无法做到快速合并。</p>
+<p>合并分为三种情况:</p>
+<ol type="1">
+<li>两棵子树均为空，不用管。<br />
+</li>
+<li>一棵子树为空，直接把不为空的子树的根作为合并后的根即可。<br />
+</li>
+<li>两边子树均不为空，将第一棵子树的最大值转到根上，将左儿子设为另一颗树的根，<span
+class="math inline">\(fa\)</span>
+数组也跟着更新即可，最后合并出的根就是第一棵子树的根。</li>
+</ol>
+<p>为什么要将一棵树的最大值转到根后再合并？因为这样才能保证第一棵子树的右儿子是空的，才能够合并上去。</p>
+<p>代码如下：</p>
+<pre class="cpp"><code>int merge(int x,int y)&#123;//这里传的是两个树的根，返回值是合并后的根
+    if(x==0||y==0) return x+y;
+    int pos=x;
+    while(son[pos][1]!=0) pos=son[pos][1];
+    Splay(pos);//记住Splay操作！！！
+    son[pos][1]=y;
+    fa[y]=pos;
+    pushup(pos);
+    return pos;
+&#125;</code></pre>
 <h3 id="删除-1">删除</h3>
-<p>删除操作相对比较复杂<br />
-需要先将要删的这个点转到根上<br />
+<p>删除操作相对比较复杂。<br />
+因此放在最后面来讲 需要先将要删的这个点转到根上。<br />
 如果这个点的 <span class="math inline">\(cnt\)</span> 值大于 <span
 class="math inline">\(1\)</span>，那么直接将 <span
-class="math inline">\(cnt[pos] \gets  cnt[pos]-1\)</span> 即可
-然后再找到这个点的前驱<br />
-将前驱作为新的根，合并两颗子树</p>
-<p>建议先去学习：</p>
-<ul>
-<li><a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%9F%A5%E8%AF%A2%E5%89%8D%E9%A9%B1">查询
-<span class="math inline">\(v\)</span> 这个值的前驱</a><br />
-</li>
-<li><a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E5%90%88%E5%B9%B6%E4%B8%A4%E9%A2%97%E5%AD%90%E6%A0%91">怎么合并
-<span class="math inline">\(u,v\)</span> 这两棵子树</a></li>
-</ul>
+class="math inline">\(cnt_{pos} \gets  cnt_{pos}-1\)</span> 即可。
+然后再找到这个点的前驱。<br />
+将前驱作为新的根，合并两颗子树。</p>
+<p>为什么要找前驱？<br />
+因为在当前你要删除的这个点的右子树中，只有前驱可以<strong>保证</strong>没有右儿子。<br />
+合并两棵子树也就是 <span class="math inline">\(O(1)\)</span> 的了。</p>
 <p>代码如下：</p>
 <pre class="cpp"><code>void del(int x)&#123;
     selrank(x);//这里的作用是将x转到根上
@@ -673,199 +831,12 @@ target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%
         return;
     &#125;
     int past=root;
-    int pos=selpre();//此时的pos已经成为根了，所以不用splay操作了
+    int pos=selpre();//此时的pos已经成为根了，所以不用Splay操作了
     fa[son[past][1]]=pos;
     son[pos][1]=son[past][1];
     clear(past);
     pushup(root);
 &#125;</code></pre>
-<h3 id="更多操作-1">更多操作</h3>
-<p>比如：</p>
-<ul>
-<li><a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%9F%A5%E8%AF%A2%E6%8E%92%E5%90%8D">查询
-<span class="math inline">\(v\)</span> 这个值的排名</a><br />
-</li>
-<li><a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%9F%A5%E8%AF%A2%E6%8E%92%E5%90%8D%E5%AF%B9%E5%BA%94%E7%9A%84%E5%80%BC">查询
-<span class="math inline">\(x\)</span> 这个排名的值</a><br />
-</li>
-<li><a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%9F%A5%E8%AF%A2%E5%89%8D%E9%A9%B1">查询
-<span class="math inline">\(v\)</span> 这个值的前驱</a><br />
-</li>
-<li><a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%9F%A5%E8%AF%A2%E5%90%8E%E7%BB%A7">查询
-<span class="math inline">\(v\)</span> 这个值的后继</a><br />
-</li>
-<li><a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E5%90%88%E5%B9%B6%E4%B8%A4%E9%A2%97splay%E6%A0%91">怎么合并
-<span class="math inline">\(u,v\)</span> 这两棵子树</a><br />
-</li>
-<li>……………………</li>
-</ul>
-<h4 id="查询排名">查询排名</h4>
-<p><a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%9B%B4%E5%A4%9A%E6%93%8D%E4%BD%9C-1">返回</a></p>
-<p>查询 <span class="math inline">\(x\)</span>
-这个值的排名可以分为三种情况：<br />
-设当前访问到的点是 <span class="math inline">\(pos\)</span>，答案为
-<span class="math inline">\(ans\)</span>，最开始 <span
-class="math inline">\(ans \gets 1\)</span>（因为排名至少为 <span
-class="math inline">\(1\)</span>）</p>
-<ol type="1">
-<li><span class="math inline">\(x &gt; val[pos]\)</span>：说明 <span
-class="math inline">\(pos\)</span> 这个点的左子树和 <span
-class="math inline">\(pos\)</span> 这个点的值都小于 <span
-class="math inline">\(x\)</span>，那么排名至少为 <span
-class="math inline">\(cnt[son[pos][0]]+cnt[pos]\)</span>，即 <span
-class="math inline">\(ans \gets ans+cnt[son[pos][0]]+cnt[pos]\)</span>
-然后继续向右子树递归答案，则 <span class="math inline">\(pos \gets
-son[pos][1]\)</span><br />
-</li>
-<li><span class="math inline">\(x = val[pos]\)</span>：说明 <span
-class="math inline">\(pos\)</span> 的左子树的值都小于 <span
-class="math inline">\(x\)</span>，并且 <span
-class="math inline">\(pos\)</span> 这个点的值刚好等于 <span
-class="math inline">\(x\)</span>，因此排名就应该是 <span
-class="math inline">\(ans \gets ans+siz[son[pos][0]]\)</span><br />
-</li>
-<li><span class="math inline">\(x &lt; val[pos]\)</span>：说明 <span
-class="math inline">\(pos\)</span> 的左子树都有比 <span
-class="math inline">\(x\)</span>
-大的值，因此此时不能对答案进行贡献，继续递归左子树求解，即 <span
-class="math inline">\(pos \gets son[pos][1]\)</span></li>
-</ol>
-<p>代码如下：</p>
-<pre class="cpp"><code>int selrank(int x)&#123;
-    int res=0,pos=root;
-    while(true)&#123;
-        if(x==val[pos])&#123;
-            splay(pos);//将pos转到根后，其左子树就是答案，其实和前文表述是一样的
-            return siz[pos[son][0]]+1;
-        &#125;
-        if(now==0) break;
-        if(x&lt;val[pos]) pos=son[pos][0];
-        else&#123;
-            res+=siz[son[pos][0]]+cnt[pos];
-            pos=son[pos][1];
-        &#125;
-    &#125;
-    return res+1;   
-&#125;</code></pre>
-<h4 id="查询排名对应的值">查询排名对应的值</h4>
-<p><a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%9B%B4%E5%A4%9A%E6%93%8D%E4%BD%9C-1">返回</a></p>
-<p>查询排名对应的值其实和查询值对应的排名很相像<br />
-设当前访问到的点是 <span class="math inline">\(pos\)</span>，要找排名为
-<span class="math inline">\(x\)</span> 的值<br />
-一样分为3种情况：</p>
-<ol type="1">
-<li><span class="math inline">\(x &gt;
-siz[son[pos][0]]+cnt[pos]\)</span>：说明答案在 <span
-class="math inline">\(pos\)</span> 的右子树，因此将 <span
-class="math inline">\(x \gets
-x-(siz[son[pos][0]]+cnt[pos])\)</span>，再递归右子树（<span
-class="math inline">\(pos \gets son[pos][1]\)</span>）即可<br />
-</li>
-<li><span class="math inline">\(siz[son[pos][0]] &lt; x \le
-siz[son[pos][0]]+cnt[pos]\)</span>：说明答案就是 <span
-class="math inline">\(val[pos]\)</span> 直接返回答案即可<br />
-</li>
-<li><span class="math inline">\(x \le
-siz[son[pos][0]]\)</span>：说明答案在 <span
-class="math inline">\(pos\)</span> 的左子树，递归左子树（<span
-class="math inline">\(pos \gets son[pos][0]\)</span>）继续求解即可</li>
-</ol>
-<p>代码如下：</p>
-<pre class="cpp"><code>int selval(int x)&#123;
-    int pos=root;
-    while(true)&#123;
-        if(x&lt;=siz[son[pos][0]])&#123;
-            pos=son[pos][0];
-            continue;
-        &#125;
-        x-=siz[son[pos][0]]+cnt[pos];
-        if(x&lt;=0)&#123;
-            splay(pos);//记住splay！！！
-            return val[pos];
-        &#125;
-        pos=son[pos][1];
-    &#125;
-&#125;</code></pre>
-<h4 id="查询前驱">查询前驱</h4>
-<p><a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%9B%B4%E5%A4%9A%E6%93%8D%E4%BD%9C-1">返回</a></p>
-<p><a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E5%88%A0%E9%99%A4-1">返回删除操作</a></p>
-<p>前驱被定义为比 <span class="math inline">\(x\)</span>
-小的数中最大的数<br />
-因此我们只需要从根的左子树开始，一直跳右儿子即可</p>
-<p>代码如下：</p>
-<pre class="cpp"><code>int selpre()&#123;
-    int pos=son[root][0];
-    while(son[pos][1]!=0) pos=son[pos][1];
-    splay(pos);//记住splay！！！
-    return pos;
-&#125;</code></pre>
-<p>注意：这个是找的是当前<strong>根所对应的值</strong>的前驱，如果需要查找任意一个数的前驱，可以先插入这个数，查完后再删除即可</p>
-<p>注意2：删除操作用的是上面的找<strong>根所对应的值</strong>的前驱，因此并不会出现：调用
-<code>del</code> 又调用 <code>selpre</code> 又调用 <code>del</code>
-这种死循环情况</p>
-<p>也就是：</p>
-<pre class="cpp"><code>int selpre_val(int x)&#123;
-    int res;
-    insert(x);
-    res=val[selpre()];
-    del(x);
-    return res;
-&#125;</code></pre>
-<h4 id="查询后继">查询后继</h4>
-<p><a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%9B%B4%E5%A4%9A%E6%93%8D%E4%BD%9C-1">返回</a></p>
-<p>查找后继和前驱基本一致，只是开始从根的左儿子变成了右儿子，跳左儿子变成了跳右儿子</p>
-<pre class="cpp"><code>int selnext()&#123;
-    int pos=son[root][1];
-    while(son[pos][0]!=0) pos=son[pos][0];
-    splay(pos);//记住splay！！！
-    return pos;
-&#125;</code></pre>
-<p>查找任意一个数的后继和查找任意一个数的前驱是同样的道理：</p>
-<pre class="cpp"><code>int selpre_val(int x)&#123;
-    int res;
-    insert(x);
-    res=val[selnext()];
-    del(x);
-    return res;
-&#125;</code></pre>
-<h4 id="合并两颗splay树">合并两颗Splay树</h4>
-<p><a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E6%9B%B4%E5%A4%9A%E6%93%8D%E4%BD%9C-1">返回</a></p>
-<p><a
-target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/#%E5%88%A0%E9%99%A4-1">返回删除操作</a></p>
-<p>两颗 <code>Splay树</code>
-想要合并，前提条件是一颗树的最大值小于另一棵树的最大值，否则不能合并</p>
-<p>合并分为三种情况</p>
-<ol type="1">
-<li>两边子树均为空，不用管</li>
-<li>一边子树为空，直接把不为空的子树的根作为合并后的根即可</li>
-<li>两边子树均不为空，将第一颗子树的最大值转到根上，将左儿子设为另一颗树的根，<span
-class="math inline">\(fa\)</span>
-数组也跟着更新即可，最后合并出的根就是第一颗子树的根</li>
-</ol>
-<p>为什么要将一棵树的最大值转到根后再合并？因为这样才能保证第一颗子树的右儿子是空的，才能够合并上去</p>
-<p>代码如下：</p>
-<pre class="cpp"><code>int merge(int x,int y)&#123;//这里传的是两个树的根，返回值是合并后的根
-    if(x==0||y==0) return x+y;
-    int pos=x;
-    while(son[pos][1]!=0) pos=son[pos][1];
-    splay(pos);
-    son[pos][1]=y;
-    fa[y]=pos;
-    pushup(pos);
-    return pos;
-&#125;</code></pre>
-<p>ps：在删除操作的时候，一般直接把合并操作也写在删除操作中，似乎除了删除操作就不会用到合并操作了？</p>
 <h3 id="代码-1">代码</h3>
 <p>至此，你已经会了 Splay 的绝大多数操作了<br />
 <a
@@ -1040,8 +1011,9 @@ int main()&#123;
 &#125;</code></pre>
 <p>接下来，就正式进入 <code>LCT</code> 的部分了~</p>
 <h2 id="lct">LCT</h2>
-<p>现在，你应该已经掌握了所有的前置
-芝士，是时候真正进入LCT的部分了！！！</p>
+<p>现在，你应该已经掌握了所有的前置芝士，是时候真正进入LCT的部分了！！！</p>
+<h3 id="section"></h3>
+<p>首先，</p>
 
     </div>
     
@@ -1061,7 +1033,7 @@ int main()&#123;
     <div id="footer-wrap">
         <div>
             &copy;
-            2022 - 2024 yzljyのBlog
+            2022 - 2025 yzljyのBlog
             <span id="footer-icon">
                 <i class="fa-solid fa-font-awesome fa-fw"></i>
             </span>
