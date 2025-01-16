@@ -1,0 +1,600 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>FFT学习笔记 | yzljyのBlog</title>
+    <meta name="author" content="yzljy" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/yzljy.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>YZLJYのBLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;首页</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;关于</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;归档</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;分类</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;标签</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;YZLJYのBLOG</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">首页</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">关于</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">归档</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">分类</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">标签</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>FFT学习笔记</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/7/27
+        </span>
+        
+        <span class="category">
+            <a href="/categories/OI/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                OI
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/%E6%95%B0%E5%AD%A6/" style="color: #e74c3c">
+                    数学
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%A4%9A%E9%A1%B9%E5%BC%8F/" style="color: #a5ff4d">
+                    多项式
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #979a9a">
+                    学习指南
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h2 id="定理">定理：</h2>
+<p>把多项式 <span class="math inline">\(A(x)\)</span>
+的离散傅里叶变换结果作为另一个多项式 <span
+class="math inline">\(B(x)\)</span> 的系数<br />
+取单位根的倒数即 <span
+class="math inline">\(\omega^{0}_{n},\omega^{-1}_{n},\omega^{-2}_{n},\dots
+,\omega^{-(n-1)}_{n}\)</span> 作为x代入 <span
+class="math inline">\(B(x)\)</span><br />
+得到的每个数再除以 <span class="math inline">\(n\)</span> ，得到的是
+<span class="math inline">\(A(x)\)</span> 的各项系数。<br />
+(我并不想证明)(挺显然的其实(挨打))<br />
+&gt;
+单位根：将一个单位圆等分为几分后所得的几个点的值(是一个数，高端表达:
+<span class="math inline">\(\in\mathbb{C}\)</span>)<br />
+&gt;&gt; 单位圆：半径为1的圆<br />
+&gt;&gt; 复数：由实部和虚部组成<br />
+&gt;&gt;&gt; 实部：实数部分<br />
+&gt;&gt;&gt; 虚部：虚数部分<br />
+&gt;&gt;&gt;&gt; 虚数：理论中的数，由<span
+class="math inline">\(i\)</span>表示<br />
+&gt;&gt;&gt;&gt; <span class="math inline">\(i=\sqrt{-1}\)</span></p>
+<p><span class="math inline">\(\omega _{n}^{k}(\cos \cfrac{k}{n} 2\pi
+,\sin \cfrac{k}{n} 2\pi )\)</span> (简单的三角函数（））<br />
+复数为 $ 2 +i 2 $</p>
+<pre class="cpp"><code>typedef complex&lt;double&gt; fs;
+const double pi=acos(-1);
+omega[k]=fs(cos(k/n*2*pi),sin(k/n*2*pi));
+inv[k]=conj(omega[k]);//omega[k]的共轭复数(即复数的虚部取反),当复数模长为1时，结果等于原复数的倒数</code></pre>
+<p>有：</p>
+<p><span class="math display">\[
+\large
+\begin{aligned}
+\omega ^{k+\frac{n}{2} }_{n}&amp;=- \omega ^{k}_{n}\\
+\omega^{k}_{n}&amp;=\omega^{k}_{\frac{n}{2}}（结合图形思考）\\
+f(x)&amp;=a_{0}+a_{1}x+a_{2}x^{2}+a_{3}x^{3}+\dots +a_{n-1}x^{n-1}\\
+&amp;=(a_{0}+a_{2}x^{2}+a_{4}x^{4}+\dots
++a_{n-2}x^{n-2})+(a_{1}x+a_{3}x^{3}+a_{5}x^{5}+\dots +a_{n-1}x^{n-1})\\
+\omega^{n}_{n}&amp;=1\\
+\end{aligned}
+\]</span></p>
+<p>令:</p>
+<p><span class="math display">\[
+\large
+\begin{aligned}
+f1(x)&amp;=(a_{0}+a_{2}x+a_{4}x^{2}+\dots +a_{n-2}x^{\frac{n}{2}})\\
+f2(x)&amp;=(a_{1}+a_{3}x+a_{5}x^{2}+\dots +a_{n-1}x^{\frac{n}{2}})\\
+\end{aligned}
+\]</span></p>
+<p>则有：</p>
+<p><span class="math display">\[
+\large
+\begin{aligned}
+f(x)&amp;=f1(x^{2})+x\cdot f2(x^{2})\\
+f(\omega ^{k}_{n})&amp;=f1(\omega ^{2k}_{n})+\omega
+_{n}^{k+\frac{n}{2}}\cdot f2(\omega ^{2k}_{n})\\
+&amp;=f1(\omega ^{k}_{\frac{n}{2} })+\omega _{n}^{k}\cdot f2(\omega
+^{k}_{\frac{n}{2} })\\
+f(\omega _{n}^{k+\frac{n}{2} })&amp;=f1(\omega _{n}^{2k+n})+\omega
+_{n}^{k+\frac{n}{2}}\cdot f2(\omega _{n}^{2k+n})\\
+&amp;=f1(\omega^{2k}_{n}\cdot \omega^{n}_{n})+\omega
+_{n}^{k+\frac{n}{2}}\cdot f2(\omega^{2k}_{n}\cdot \omega^{n}_{n})\\
+&amp;=f1(\omega _{\frac{n}{2} }^{k}\cdot \omega _{n}^{n})+\omega
+_{n}^{k+\frac{n}{2}}\cdot f2(\omega _{\frac{n}{2} }^{k}\cdot \omega
+_{n}^{n})\\
+&amp;=f1(\omega _{\frac{n}{2} }^{k}\cdot \omega _{n}^{n})-\omega
+_{n}^{k}\cdot f2(\omega _{\frac{n}{2} }^{k}\cdot \omega _{n}^{n})\\
+&amp;=f1(\omega _{\frac{n}{2} }^{k}\cdot 1)-\omega _{n}^{k}\cdot
+f2(\omega _{\frac{n}{2} }^{k}\cdot 1)\\
+&amp;=f1(\omega _{\frac{n}{2} }^{k})-\omega _{n}^{k}\cdot f2(\omega
+_{\frac{n}{2} }^{k})\\
+\end{aligned}
+\]</span></p>
+<p>综上：</p>
+<p><span class="math display">\[
+\Large
+f(\omega ^{k}_{n})=
+\left\{\begin{matrix}
+  f1(\omega ^{k}_{\frac{n}{2} })+\omega _{n}^{k}\cdot f2(\omega
+^{k}_{\frac{n}{2} })(0\le k&lt; \frac{n}{2} )\\
+  \\
+  f1(\omega _{\frac{n}{2} }^{k-\frac{n}{2}})-\omega
+_{n}^{k-\frac{n}{2}}\cdot f2(\omega _{\frac{n}{2}
+}^{k-\frac{n}{2}})(\frac{n}{2}\le k&lt;n)\\
+\end{matrix}\right.
+\]</span></p>
+<p>可是若直接这样进行递归，会较慢<br />
+可以先预处理出所有 <span class="math inline">\(\omega_{n}^{k}\)</span>
+和 <span class="math inline">\(\omega_{n}^{-k}\)</span><br />
+可是这样依然较慢（会快一点，但不多（））<br />
+所以我就没有预处理（</p>
+<p>我们发现递归时转移是这样的（以8个为例）</p>
+<p><span class="math display">\[
+\omega^{0}_{8}\omega^{1}_{8}\omega^{2}_{8}\omega^{3}_{8}\omega^{4}_{8}\omega^{5}_{8}\omega^{6}_{8}\omega^{7}_{8}\\
+↓\\
+\omega^{0}_{8}\omega^{2}_{8}\omega^{4}_{8}\omega^{6}_{8}│\omega^{1}_{8}\omega^{3}_{8}\omega^{5}_{8}\omega^{7}_{8}\\
+↓\\
+\omega^{0}_{8}\omega^{4}_{8}┇\omega^{2}_{8}\omega^{6}_{8}│\omega^{1}_{8}\omega^{5}_{8}┇\omega^{3}_{8}\omega^{7}_{8}\\
+↓\\
+\omega^{0}_{8}┇\omega^{4}_{8}│\omega^{2}_{8}┇\omega^{6}_{8}║\omega^{1}_{8}┇\omega^{5}_{8}│\omega^{3}_{8}┇\omega^{7}_{8}\\
+\]</span></p>
+<p>可能看不出什么<br />
+换成二进制看看</p>
+<p><span class="math display">\[
+000┆001┆010┆011┆100┆101┆110┆111\\
+↓\\
+000┆010┆100┆110│001┆011┆101┆111\\
+↓\\
+000┆100│010┆110║001┆101│011┆111\\
+↓\\
+000│100║010│110║║001│101║011│111  
+\]</span></p>
+<p>这下可以看出<br />
+对于任意一个数 <span class="math inline">\(a\)</span>
+，它在转移时，最终会被转移到它的二进制数倒转后对应的十进制数的位置<br />
+这样说可能有点绕</p>
+<p>eg：</p>
+<p><span class="math display">\[
+6_{(10)}=110_{(2)}\\
+110_{(2)}\to 011_{(2)}\\
+011_{(2)}=3_{(10)}
+\]</span></p>
+<p>故原来的 <code>6</code> 经过转移后到了原来 <code>3</code> 的位置</p>
+<p>那么怎么进行二进制翻转呢？</p>
+<h2 id="一朴素法">一、朴素法</h2>
+<p>对于每一个数对应的二进制数<br />
+我们可以一位一位地进行翻转</p>
+<p>优点：方便理解，也方便打<br />
+缺点：较慢 <span class="math inline">\(O(n\log{n})\)</span></p>
+<h2 id="二递推法">二、递推法</h2>
+<p><del>我觉得很<strong>人类智慧</strong></del></p>
+<p>设 <span class="math inline">\(R(x)\)</span> 为 <span
+class="math inline">\(x\)</span> 所对应的二进制数翻转后的结果<br />
+如：<span class="math inline">\(R(6)=3\)</span>
+(不知道为啥的话，见上文eg处)<br />
+因为我们是从小到大推的<br />
+所以我们在算 <span class="math inline">\(R(x)\)</span> 时，已经算过了
+<span class="math inline">\(R(\left \lfloor \frac{x}{2}  \right \rfloor
+)\)</span><br />
+我们可以由 <span class="math inline">\(R{(\left \lfloor
+\frac{x}{2}  \right \rfloor )}\)</span> 转移到 <span
+class="math inline">\(R(x)\)</span><br />
+我们在得出 <span class="math inline">\(R{(\left \lfloor
+\frac{x}{2}  \right \rfloor )}\)</span> 后，会
+<del><strong>惊奇的</strong></del> 发现
+<del>(这怎么发现的啊qwq)</del>：<br />
+$ $的值居然就是原来 <span class="math inline">\(R(x)\)</span>
+只有最低位没有翻转后的结果，所以我们只需要再处理一下即可<br />
+故：$R(x)= +2^{k-1}*x $<br />
+其中 <span class="math inline">\(k\)</span> 为二进制数的长度，即 <span
+class="math inline">\(\log{n}\)</span><br />
+eg:</p>
+<p><span class="math display">\[
+\begin{aligned}
+已知R(3)&amp;=6\\
+R(6)&amp;=\left \lfloor \cfrac{ R(\left \lfloor \frac{6}{2}  \right
+\rfloor )}{2} \right \rfloor +2^{3-1}*6\bmod 2\\
+&amp;=\left \lfloor \frac{ R(3)}{2} \right \rfloor +2^{2}*0\\
+&amp;=\left \lfloor \frac{ R(011_{(2)})}{2} \right \rfloor +0\\
+&amp;=\left \lfloor \frac{110_{(2)}}{2} \right \rfloor \\
+&amp;=\left \lfloor \frac{6}{2} \right \rfloor \\
+&amp;=3\\
+\end{aligned}
+\]</span></p>
+<p>代码如下：</p>
+<pre class="cpp"><code>for(int i=0;i&lt;n;i++)&#123;
+    r[i]=r[i/2]/2+pow(2,log2(n)-1)*(i&amp;1);
+&#125;</code></pre>
+<p>ps：这个序列（注意，只是这个序列！！！）可以作为预处理来处理，因为进行
+FFT 时， <span class="math inline">\(n\)</span> 是不发生改变的</p>
+<p>优点：较快 <span class="math inline">\(O(n)\)</span><br />
+缺点：比较难理解</p>
+<p>这样的话，我们就可以写出递推，而不是递归<br />
+效率就会高很多<br />
+好，那我们怎么进行递推来得出答案呢？<br />
+<del>参见oi-wiki<a
+target="_blank" rel="noopener" href="https://oi-wiki.org/math/poly/fft/#%E8%9D%B6%E5%BD%A2%E8%BF%90%E7%AE%97%E4%BC%98%E5%8C%96">蝶形运算优化</a></del></p>
+<p>根据这个方法的性质<br />
+我们知道它是从小区间转移到大的区间 <span class="math inline">\((2\to
+4\to 8\to \dots \to n)\)</span></p>
+<p>所以我们 <del>考虑区间DP</del> 利用区间DP的思想（可以这么说吧）<br />
+设当前小区间的长度为 <span class="math inline">\(k\)</span><br />
+先枚举每个小区间的起点<br />
+每个小区间内:<br />
+前 <span class="math inline">\(\cfrac{k}{2}\)</span> 个数对应的 <span
+class="math inline">\(f\)</span> 就是原来所说的 <span
+class="math inline">\(f1\)</span><br />
+后 <span class="math inline">\(\cfrac{k}{2}\)</span> 个数对应的 <span
+class="math inline">\(f\)</span> 就是原来所说的 <span
+class="math inline">\(f2\)</span><br />
+再根据先前的结论</p>
+<p><span class="math display">\[
+\Large
+f(\omega ^{k}_{n})=
+\left\{\begin{matrix}
+  f1(\omega ^{k}_{\frac{n}{2} })+\omega _{n}^{k}\cdot f2(\omega
+^{k}_{\frac{n}{2} })(0\le k&lt; \cfrac{n}{2} )\\  
+  \\
+  f1(\omega _{\frac{n}{2} }^{k-\frac{n}{2}})-\omega
+_{n}^{k-\frac{n}{2}}\cdot f2(\omega _{\frac{n}{2}
+}^{k-\frac{n}{2}})(\cfrac{n}{2}\le k&lt;n)\\
+\end{matrix}\right.
+\]</span></p>
+<p>可以将这 <span class="math inline">\(k\)</span>
+个数转移到新的位置上<br />
+代码如下</p>
+<pre class="cpp"><code>for(int k=2;k&lt;=n;k*=2)&#123;
+    fs omega=fs(cos(2*pi/k),sin(z*2*pi/k));
+    for(int i=0;i&lt;n;i+=k)&#123;
+        fs w=fs(1,0);
+        for(int j=i;j&lt;i+k/2;j++)&#123;
+            fs zs=w*c[j+k/2];
+            c[j+k/2]=c[j]-zs;
+            c[j]+=zs;
+            w*=omega;
+        &#125;
+    &#125;
+&#125;</code></pre>
+<p>ps:在 IDFT（快速傅里叶逆变换）的时候，要乘上 <span
+class="math inline">\(-1\)</span> 即：</p>
+<pre class="cpp"><code>if(z==-1)&#123;//z是判断是否为IDFT的变量，当z==-1是则当前为IDFT
+    for(int i=0;i&lt;n;i++)&#123;
+        c[i].real(c[i].real()/n);
+    &#125;
+&#125;</code></pre>
+<p>最后只需要</p>
+<pre class="cpp"><code>fft(a,1);//将a数进行FFT
+fft(b,1);//将b数进行FFT
+for(int i=0;i&lt;n;i++) a[i]*=b[i];//相乘
+fft(a,-1);//将所得到的a进行逆FFT(IDFT)</code></pre>
+<p>最后的最后，只需要把 <span class="math inline">\(a\)</span>
+数组的答案输出就行了</p>
+<pre class="cpp"><code>for(int i=0;i&lt;n;i++)&#123;
+    ans[i]+=a[i].real()+0.5;
+    ans[i+1]+=ans[i]/10;
+    ans[i]%=10;
+&#125;</code></pre>
+<p>注意 <span class="math inline">\(ans\)</span>
+数组是倒着来的，需要倒着输出<br />
+而且因为 <span class="math inline">\(n\)</span> 的值必须为
+<code>2</code> 的整数次幂<br />
+所以会有前导零，需要去掉(我的方法较笨，不太美观，这里是可以优化的)<br />
+代码如下：</p>
+<pre class="cpp"><code>int q;
+for(int i=n-1;i&gt;=0;i--)&#123;
+    if(ans[i]!=0)&#123;
+        q=i;
+        break;
+    &#125;
+&#125;
+for(int i=q;i&gt;=0;i--) cout&lt;&lt;ans[i];</code></pre>
+<p>好，到这里就结束了<br />
+<code>AC</code> 代码如下：</p>
+<pre class="cpp"><code>#include&lt;bits/stdc++.h&gt;
+using namespace std;
+
+const int MAXN=4e6+10;
+const double pi=acos(-1);
+typedef complex&lt;double&gt; fs;
+
+char sa[MAXN],sb[MAXN];
+double n=1;
+int lena,lenb,r[MAXN&lt;&lt;1],ans[MAXN&lt;&lt;1];
+fs a[MAXN],b[MAXN];
+
+void fft(fs c[],int z)&#123;
+    for(int i=0;i&lt;n;i++) if(i&lt;r[i]) swap(c[i],c[r[i]]);
+    for(int k=2;k&lt;=n;k*=2)&#123;
+        fs omega=fs(cos(2*pi/k),sin(z*2*pi/k));
+        for(int i=0;i&lt;n;i+=k)&#123;
+            fs w=fs(1,0);
+            for(int j=i;j&lt;i+k/2;j++)&#123;
+                fs zs=w*c[j+k/2];
+                c[j+k/2]=c[j]-zs;
+                c[j]+=zs;
+                w*=omega;
+            &#125;
+        &#125;
+    &#125;
+    if(z==-1)&#123;
+        for(int i=0;i&lt;n;i++)&#123;
+            c[i].real(c[i].real()/n);
+        &#125;
+    &#125;
+&#125;
+
+int main()&#123;
+    cin&gt;&gt;sa&gt;&gt;sb;
+    lena=strlen(sa);
+    lenb=strlen(sb);
+    while(n&lt;lena+lenb) n*=2;
+    for(int i=0;i&lt;n;i++) r[i]=r[i/2]/2+pow(2,log2(n)-1)*(i&amp;1);
+    for(int i=0;i&lt;lena;i++) a[i].real(sa[lena-i-1]-&#39;0&#39;);
+    for(int i=0;i&lt;lenb;i++) b[i].real(sb[lenb-i-1]-&#39;0&#39;);
+    fft(a,1);
+    fft(b,1);
+    for(int i=0;i&lt;n;i++) a[i]*=b[i];
+    fft(a,-1);
+    for(int i=0;i&lt;n;i++)&#123;
+        ans[i]+=a[i].real()+0.5;
+        ans[i+1]+=ans[i]/10;
+        ans[i]%=10;
+    &#125;
+    int q;
+    for(int i=n-1;i&gt;=0;i--)&#123;
+        if(ans[i]!=0)&#123;
+            q=i;
+            break;
+        &#125;
+    &#125;
+    for(int i=q;i&gt;=0;i--) cout&lt;&lt;ans[i];
+    return 0;
+&#125;</code></pre>
+
+    </div>
+    
+    
+    
+    
+    <div id="comment">
+        <div id="giscus-container" class="giscus"></div>
+    </div>
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2024 - 2025 yzljyのBlog
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;yzljy
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+<script
+    src="https://giscus.app/client.js"
+    data-repo="yzljyawa/yzljyawa.github.io"
+    data-repo-id="R_kgDOMbAUfA"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOMbAUfM4CiQYe"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin
+    async
+></script>
+
+
+
+
+
+    
+</body>
+</html>

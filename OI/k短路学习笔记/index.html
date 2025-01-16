@@ -1,0 +1,363 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>k短路学习笔记 | yzljyのBlog</title>
+    <meta name="author" content="yzljy" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/yzljy.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>YZLJYのBLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;首页</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;关于</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;归档</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;分类</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;标签</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;YZLJYのBLOG</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">首页</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">关于</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">归档</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">分类</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">标签</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>k短路学习笔记</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/12/23
+        </span>
+        
+        <span class="category">
+            <a href="/categories/OI/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                OI
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/" style="color: #979a9a">
+                    图论
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="color: #a5ff4d">
+                    数据结构
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #e74c3c">
+                    学习指南
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%8F%AF%E6%8C%81%E4%B9%85%E5%8C%96%E5%8F%AF%E5%B9%B6%E5%A0%86/" style="color: #a5ff4d">
+                    可持久化可并堆
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h2 id="是什么">是什么</h2>
+<p><del>字面意思</del><br />
+一种用于求解有向图上从某一起点到某一终点的所有可行路径中第 <span
+class="math inline">\(k\)</span> 小（大）的算法。</p>
+<h2 id="怎么做">怎么做</h2>
+<p>首先把模板放在 <a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2483">这里</a><br />
+<del>其实我并不知道还有没有其他应用</del></p>
+<h3 id="a">A*</h3>
+<blockquote>
+<p>注：对于 <span class="math inline">\(k\)</span> 短路问题，A*
+算法的最坏时间复杂度是 <span class="math inline">\(O(nk \log n)\)</span>
+的。虽然 A* 算法可以通过本题原版数据，但可以构造数据，使得 A*
+算法在原题的数据范围内无法通过。事实上，存在使用可持久化可并堆的算法可以做到在
+<span class="math inline">\(O((n+m) \log n + k \log k)\)</span>
+的时间复杂度解决 <span class="math inline">\(k\)</span> 短路问题。详情见
+<a target="_blank" rel="noopener" href="https://oi-wiki.org/graph/kth-path/">OI-Wiki</a>。</p>
+</blockquote>
+<p>（摘自 Luogu k短路 模板题的题目背景）</p>
+<p>想要直接学 可持久化可并堆 做法的可以跳过这里。</p>
+<p>虽然时间复杂度假了，但是依然可以作为 A* 算法的一个入门练习。<br />
+这里放一个可以使用 A* 通过的模板题 <a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2901">链接</a></p>
+<h4 id="具体做法">具体做法</h4>
+<p>什么，你连 Dijkstra 都不会？那快去学你的入门课（<br />
+或者看看 <a href="">我的</a>？</p>
+<p>我们在使用 Dijkstra 的堆优版本求解 <strong>最短路</strong>
+问题时，是这样写的：（这里只写了关键代码）</p>
+<pre class="cpp"><code>struct node&#123;
+    int to,dis;
+        friend bool operator &lt; (node n1,node n2)&#123;
+        return n1.dis&gt;n2.dis;
+    &#125;
+&#125;;
+
+void dij(int s)&#123;
+    for(int i=1;i&lt;=n;i++) dis[i]=inf;
+    dis[s]=0;
+    priority_queue&lt;node&gt; q;
+    q.push((node)&#123;s,0&#125;);
+    while(!q.empty())&#123;
+        int u=q.top().to;
+        q.pop();
+        if(sure[u]) continue;
+        sure[u]=true;
+        for(int i=head[u];i;i=edge[i].next)&#123;
+            int v=edge[i].to;
+            if(sure[v]) continue;
+            if(dis[v]&gt;dis[u]+edge[i].val)&#123;
+                dis[v]=dis[u]+edge[i].val;
+                q.push((node)&#123;v,dis[v]&#125;);
+            &#125;
+        &#125;
+    &#125;
+&#125;</code></pre>
+<p>我们可以看出，在 Dijkstra 中，每个点最多只会用于一次松弛操作</p>
+<h3 id="可持久化可并堆">可持久化可并堆</h3>
+<p><del>正解！</del></p>
+<p>可以去看 <a
+target="_blank" rel="noopener" href="https://www.docin.com/p-1387370338.html">俞鼎力大牛的课件</a>，其实讲解还是很详细的（？），至少我是从这个原课件看懂的（</p>
+<p>那么首先，你至少得会 <a href="">可并堆（左偏树）</a>
+不然从何谈起（<br />
+不会也没事，点击链接可以跳转到学习地址（</p>
+<blockquote>
+<p>ps：上面放的是我未来会写的内容 <del>（咕咕咕）</del>，在这条 ps
+还在的时候，你可以看 <a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/article/uoeyv3gq">这个</a></p>
+</blockquote>
+
+    </div>
+    
+    
+    
+    
+    <div id="comment">
+        <div id="giscus-container" class="giscus"></div>
+    </div>
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2024 - 2025 yzljyのBlog
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;yzljy
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+<script
+    src="https://giscus.app/client.js"
+    data-repo="yzljyawa/yzljyawa.github.io"
+    data-repo-id="R_kgDOMbAUfA"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOMbAUfM4CiQYe"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin
+    async
+></script>
+
+
+
+
+
+    
+</body>
+</html>

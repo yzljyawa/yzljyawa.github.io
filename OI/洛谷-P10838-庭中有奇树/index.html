@@ -1,0 +1,420 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>洛谷 P10838 庭中有奇树 | yzljyのBlog</title>
+    <meta name="author" content="yzljy" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/yzljy.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>YZLJYのBLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;首页</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;关于</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;归档</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;分类</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;标签</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;YZLJYのBLOG</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">首页</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">关于</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">归档</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">分类</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">标签</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>洛谷 P10838 庭中有奇树</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/11/6
+        </span>
+        
+        <span class="category">
+            <a href="/categories/OI/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                OI
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #e74c3c">
+                    题解
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E4%BA%8C%E5%88%86/" style="color: #ffa400">
+                    二分
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E6%A0%91%E8%AE%BA/" style="color: #979a9a">
+                    树论
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P10838">题目传送门</a></p>
+<h2 id="思路">思路</h2>
+<p>这道题乍一看是一个博弈论的题，但其实稍微想想可以发现，如果小 G
+能开挂，肯定就尽量开挂，当然如果走树边的答案比开挂更优，那就走树边，还有注意如果这两种情况都大于了
+<span class="math inline">\(1e9\)</span>，那么直接强制开挂即可。</p>
+<p>因为只能开挂一次，所以预处理 S 和 T 点到所有点的距离，记为 <span
+class="math inline">\(dis_{s,i}\)</span> 和 <span
+class="math inline">\(dis_{t,i}\)</span> 那么小 G 所需的金币数量就是
+<span class="math inline">\(dis_{s,i}+dis_{t,j}+k\)</span> 当然得满足
+<span class="math inline">\(i,j\)</span> 不相邻。因为小 Y
+很正义，所以他就需要把上面这个式子中的前 <span
+class="math inline">\(m\)</span> 小封印掉，那么其实最终答案就是第 <span
+class="math inline">\(m\)</span> 小的 <span
+class="math inline">\(dis_{s,i}+dis_{t,j}+k\)</span></p>
+<p>这个的话，其实就是经典的 <span
+class="math inline">\(a_{i}+b_{j}\)</span> 的第 <span
+class="math inline">\(k\)</span> 大的问题，将 <span
+class="math inline">\(a\)</span> 或者 <span
+class="math inline">\(b\)</span>
+排序，然后二分答案即可。假如当前枚举的答案是 <span
+class="math inline">\(val\)</span>，设比 <span
+class="math inline">\(val\)</span> 小的 <span
+class="math inline">\(dis_{s,i}+dis_{t,j}+k\)</span> 的数量为 <span
+class="math inline">\(cnt\)</span>，那么当 <span
+class="math inline">\(m\le cnt\)</span> 时，<span
+class="math inline">\(r=mid\)</span>，否则 <span
+class="math inline">\(l=mid+1\)</span>，求 <span
+class="math inline">\(cnt\)</span> 的话，枚举每一个 <span
+class="math inline">\(dis_{s,i}\)</span>，在 <span
+class="math inline">\(dis_{t,i}\)</span> 上二分找到小于等于 <span
+class="math inline">\(val-dis_{s,i}\)</span> 的数量，全部加起来就是
+<span class="math inline">\(cnt\)</span>。<br />
+注意在这道题中 <span class="math inline">\(i,j\)</span> 不能相邻，所以
+<span class="math inline">\(cnt\)</span>
+再减去相邻的多统计了的即可。</p>
+<p>时间复杂度 <span class="math inline">\(O(n\log n \log
+V)\)</span>。</p>
+<h2 id="代码">代码</h2>
+<pre class="cpp"><code>// Problem: P10838 『FLA - I』庭中有奇树
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/P10838
+// Memory Limit: 512 MB
+// Time Limit: 1000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int MAXN=1e5+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x)&#123;
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+&#125;
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y)&#123;
+    read(x),read(y...);
+&#125;
+
+int n,m,s,t,k,K,head[MAXN],dis[2][MAXN],Dis[MAXN];
+bool vis[MAXN];
+struct node&#123;
+    int to,next,val;
+&#125;edge[MAXN&lt;&lt;1];
+
+void build(int u,int v,int w)&#123;
+    edge[++K].to=v;
+    edge[K].next=head[u];
+    edge[K].val=w;
+    head[u]=K;
+&#125;
+
+void dfs(int u,int f)&#123;
+    vis[u]=true;
+    for(int i=head[u];i;i=edge[i].next)&#123;
+        int v=edge[i].to;
+        if(vis[v]) continue;
+        dis[f==t][v]=dis[f==t][u]+edge[i].val;
+        dfs(v,f);
+    &#125;
+&#125;
+
+int chk(int val)&#123;
+    int sum=0;
+    for(int i=1;i&lt;=n;i++)&#123;
+        int z=val-dis[0][i];
+        int pos=upper_bound(Dis+1,Dis+n+1,z)-Dis-1;
+        sum+=pos;
+        for(int j=head[i];j;j=edge[j].next)&#123;
+            int v=edge[j].to;
+            if(dis[0][i]+dis[1][v]&lt;=val) sum--;
+        &#125;
+    &#125;
+    // cout&lt;&lt;val&lt;&lt;&quot; &quot;&lt;&lt;sum&lt;&lt;endl;
+    return sum;
+&#125;
+
+signed main()&#123;
+    read(n,m,k,s,t);
+    for(int i=1;i&lt;n;i++)&#123;
+        int u,v,w;
+        read(u,v,w);
+        build(u,v,w);
+        build(v,u,w);
+    &#125;
+    dfs(s,s);
+    for(int i=1;i&lt;=n;i++) vis[i]=false;
+    dfs(t,t);
+    for(int i=1;i&lt;=n;i++) Dis[i]=dis[1][i];
+    sort(Dis+1,Dis+n+1);
+    // for(int i=1;i&lt;=n;i++) cout&lt;&lt;dis[0][i]&lt;&lt;&quot; &quot;&lt;&lt;dis[1][i]&lt;&lt;endl;
+    int l=0,r=1e9;m++;
+    while(l&lt;r)&#123;
+        int mid=(l+r)&gt;&gt;1;
+        if(chk(mid)&gt;=m) r=mid;
+        else l=mid+1;
+    &#125;
+    cout&lt;&lt;min(&#123;dis[0][t],l+k,1000000000ll&#125;);
+    return 0;
+&#125;</code></pre>
+
+    </div>
+    
+    
+    
+    
+    <div id="comment">
+        <div id="giscus-container" class="giscus"></div>
+    </div>
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2024 - 2025 yzljyのBlog
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;yzljy
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+<script
+    src="https://giscus.app/client.js"
+    data-repo="yzljyawa/yzljyawa.github.io"
+    data-repo-id="R_kgDOMbAUfA"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOMbAUfM4CiQYe"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin
+    async
+></script>
+
+
+
+
+
+    
+</body>
+</html>
