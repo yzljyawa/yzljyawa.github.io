@@ -1,0 +1,1536 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>矩乘优化/状压DP选题讲解 | yzljyのBlog</title>
+    <meta name="author" content="yzljy" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/yzljy.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>YZLJYのBLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;首页</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;关于</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;归档</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;分类</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;标签</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;YZLJYのBLOG</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">首页</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">关于</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">归档</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">分类</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">标签</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>矩乘优化/状压DP选题讲解</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/2/19
+        </span>
+        
+        <span class="category">
+            <a href="/categories/OI/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                OI
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/DP/" style="color: #00beff">
+                    DP
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/DP%E4%BC%98%E5%8C%96/" style="color: #e74c3c">
+                    DP优化
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9/" style="color: #00beff">
+                    状态压缩
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E7%9F%A9%E4%B9%98%E4%BC%98%E5%8C%96/" style="color: #ffa400">
+                    矩乘优化
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>标题均是超链接，点击直接就可以跳转到对应题目。<br />
+折叠块，点一下可以展开，再点一下可以收起。<br />
+代码的作用是用来给你们思考细节的，不是用来抄或者贺的。</p>
+<h1 id="矩乘优化">矩乘优化</h1>
+<p>在正式开始讲状压DP前，我们先讲一下<code>矩乘优化</code>。因为我选的第一道题要用到，这个也是一个挺重要的DP优化。</p>
+<p>矩乘优化一般用于线性递推的转移方程。</p>
+<h2 id="矩阵乘法">矩阵乘法</h2>
+<p>首先，我并不知道你们当前对于矩阵有什么了解程度，因此我就先从矩阵乘法开始讲起。<br />
+矩阵乘法，顾名思义就是对矩阵进行乘法运算。</p>
+<p>我们定义：只有当第一个矩阵的列数，等于第二个矩阵的行数时，这两个矩阵才能相乘。</p>
+<p>简单地说，其实就是答案矩阵的第 <span
+class="math inline">\((i,j)\)</span> 元素，等于第一个矩阵第 <span
+class="math inline">\(i\)</span> 行的元素，依次乘上第二个矩阵第 <span
+class="math inline">\(j\)</span> 列的元素的和。<br />
+写成数学形式，也就是： <span class="math display">\[
+C_{i,j}=\sum_{k=1}^{n}A_{i,k}B_{k,j}
+\]</span></p>
+<p>代码实现起来也很容易，也就是下面这样：<br />
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>for(int i=1;i&lt;=n;i++){
+    for(int j=1;j&lt;=n;j++){
+        for(int k=1;k&lt;=n;k++){
+            res.val[i][j]+=A.val[i][k]*B.val[k][j];
+        }
+    }
+}</code></pre>
+
+    </div>
+</div></p>
+<p>容易发现，矩阵乘法是有交换律的，也就是 <span
+class="math inline">\(A\times B=B\times A\)</span>。<br />
+因此 <span class="math inline">\(A\times \underbrace{B\times B\times
+B\dotsb\times B}_{n个B}=A\times(B\times B\times B\dotsb\times B)=A\times
+B^{n}\)</span><br />
+而 <span class="math inline">\(B^{n}\)</span> 是可以快速幂的。</p>
+<p>写起来就是这样的：<br />
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>while(y){
+    if(y&amp;1) res=res*A;
+    A=A*A;
+    y&gt;&gt;=1;
+}</code></pre>
+
+    </div>
+</div><br />
+你会发现形式其实和普通的快速幂是很像的。</p>
+<hr />
+<p>好了，那现在就正式进入<code>矩乘优化</code>。<br />
+我们拿这道典题开始。</p>
+<h2 id="p1962-斐波那契数列"><a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1962">P1962
+斐波那契数列</a></h2>
+<p>题目就是让你求斐波那契数列的第 <span class="math inline">\(n\)</span>
+项对 <span class="math inline">\(10^{9}+7\)</span> 取模的值。<br />
+<span class="math inline">\(1\le n &lt;2^{63}\)</span>。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>我们先写出斐波那契数列的递推式： <span class="math display">\[
+F_n = \left\{
+    \begin{aligned}
+    1 \space (n \le 2) \\
+    F_{n-1}+F_{n-2} \space (n\ge 3)
+    \end{aligned}\right.
+\]</span> 于是我们就可以写出矩乘的形式： <span class="math display">\[
+\begin{bmatrix}  
+  F_{i-1} &amp; F_{i}  
+\end{bmatrix}
+\times
+\begin{bmatrix}  
+  0&amp; 1\\  
+  1&amp; 1
+\end{bmatrix}
+=
+\begin{bmatrix}  
+  F_{i} &amp; F_{i+1}
+\end{bmatrix}   
+\]</span> <span class="math display">\[
+\begin{bmatrix}  
+  F_{i-2} &amp; F_{i-1}  
+\end{bmatrix}
+\times
+\begin{bmatrix}  
+  1&amp; 1\\  
+  1&amp; 2
+\end{bmatrix}
+=
+\begin{bmatrix}  
+  F_{i+1} &amp; F_{i+2}
+\end{bmatrix}   
+\]</span> 那么就直接矩阵快速幂就完了。</p>
+<p>我们可以具体地说说怎么样写出来这么个矩乘。<br />
+还是先拿出递推式。 <span class="math display">\[
+F_{n}=F_{i-1}+F_{i-2}
+\]</span> 我们发现要想求出 <span class="math inline">\(F_{i}\)</span>
+这一项，至少需要前面两项，所以我们可以先写出一个矩阵为：<span
+class="math inline">\(\begin{bmatrix}  F_{i-2} &amp;
+F_{i-1}  \end{bmatrix}\)</span>。这两项之和为 <span
+class="math inline">\(F_{i}\)</span>，为了和前面地矩阵形式保持一致，我们需要再添一项。<br />
+那么我们可以添加 <span
+class="math inline">\(F_{i-1}\)</span>，也可以添加 <span
+class="math inline">\(F_{i+1}\)</span>，然后按照手动模拟一下矩乘，集合一下递推式，把中间的转移矩阵填充出来，可以得到一下两种矩乘。<br />
+<span class="math display">\[
+\begin{bmatrix}  
+  F_{i-1} &amp; F_{i}  
+\end{bmatrix}
+\times
+\begin{bmatrix}  
+  0&amp; 1\\  
+  1&amp; 1
+\end{bmatrix}
+=
+\begin{bmatrix}  
+  F_{i} &amp; F_{i+1}
+\end{bmatrix}   
+\]</span> <span class="math display">\[
+\begin{bmatrix}  
+  F_{i-2} &amp; F_{i-1}  
+\end{bmatrix}
+\times
+\begin{bmatrix}  
+  1&amp; 1\\  
+  1&amp; 2
+\end{bmatrix}
+=
+\begin{bmatrix}  
+  F_{i+1} &amp; F_{i+2}
+\end{bmatrix}   
+\]</span></p>
+<p>哪个是正确的呢？<br />
+答案是都是正确的，但如果你手动推一下，会发现，第一个推起来会更轻松一点。实际上，第二个的转移矩阵等于第一个的转移矩阵的平方。或者说，连续运用两次第一种转移后，化简一下过程，就是第二个转移式。<br />
+我们一般在写转移矩阵的时候，选择自己推起来更简单的那种来推。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int mod=1e9+7;
+long long n;
+struct mat{
+    long long a[2][2];
+    mat(){memset(a,0,sizeof(a));}
+    mat operator*(mat t){
+        mat res;
+        for(int i=0;i&lt;2;i++){
+            for(int j=0;j&lt;2;j++){
+                for(int k=0;k&lt;2;k++){
+                    res.a[i][j]+=a[i][k]*t.a[k][j];
+                    res.a[i][j]%=mod;
+                }
+            }
+        }
+        return res;
+    }
+    mat operator^(long long x){
+        mat res,base;
+        x--;
+        for(int i=0;i&lt;2;i++)
+            for(int j=0;j&lt;2;j++)
+                base.a[i][j]=res.a[i][j]=a[i][j]%mod;
+        while(x!=0){
+            if(x&amp;1) res=res*base;
+            base=base*base;
+            x&gt;&gt;=1;
+        }
+        return res;
+    }
+}T,cs,ans;
+int main(){
+    cin&gt;&gt;n;
+    if(n&lt;=2){
+        cout&lt;&lt;1;
+        return 0;
+    }
+    cs.a[0][0]=0;
+    cs.a[0][1]=1;
+    T.a[0][0]=0;
+    T.a[0][1]=1;
+    T.a[1][0]=1;
+    T.a[1][1]=1;
+    ans=cs*(T^n);
+    cout&lt;&lt;ans.a[0][0];
+    return 0;
+}</code></pre>
+
+    </div>
+</div>
+<p>我们再来一道题，练习一下。</p>
+<h2 id="p3216-hnoi2011-数学作业"><a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3216">P3216 [HNOI2011]
+数学作业</a></h2>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        题面
+    </div>
+    <div class='spoiler-content'>
+        <p>给定一个数 <span class="math inline">\(n\)</span>，求将 <span
+class="math inline">\(1\)</span> 到 <span
+class="math inline">\(n\)</span> 连接起来后的数字对 <span
+class="math inline">\(m\)</span> 取模后的值。</p>
+<p>数据范围：<br />
+<span class="math inline">\(1\le n \le 10^{18}\)</span>，<span
+class="math inline">\(1\le m \le 10^9\)</span>。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint1
+    </div>
+    <div class='spoiler-content'>
+        <p>注意到 <span class="math inline">\(n\)</span> 很大，有 <span
+class="math inline">\(10^{18}\)</span> 的级别。<br />
+先尝试写出递推式。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint2
+    </div>
+    <div class='spoiler-content'>
+        <p>能写出矩乘形式吗？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>令数字 <span class="math inline">\(i\)</span> 的位数为 <span
+class="math inline">\(w\)</span>。 先写出递推式： <span
+class="math display">\[
+dp_{i}=(dp_{i-1}\times 10^{w}+i)\mod m
+\]</span> 然后就可以写出矩乘形式： <span class="math display">\[
+\begin{bmatrix}  
+  dp_{i-1} &amp; i &amp; 1  
+\end{bmatrix}
+\times
+\begin{bmatrix}  
+  1&amp; 0&amp; 0\\  
+  1&amp; 1&amp; 0\\
+  0&amp; 1&amp; 1
+\end{bmatrix}
+=
+\begin{bmatrix}  
+  dp_{i} &amp; i+1 &amp; 1  
+\end{bmatrix}   
+\]</span> 你可能在写的过程中没有写出 <span
+class="math inline">\(1\)</span>
+这一项，导致最后没有写出来，但是我们可以发现 <span
+class="math inline">\(i+1=i \;\; + \;\; 1\)</span>，所以 <span
+class="math inline">\(1\)</span> 这一项也是需要补上的。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>#include&lt;bits/stdc++.h&gt;
+#define int unsigned long long
+using namespace std;
+const int MAXN=100+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x){
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+}
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y){
+    read(x),read(y...);
+}
+
+int n,mod;
+struct matrix{
+    int n,val[MAXN][MAXN];
+    void init(){
+        for(int i=1;i&lt;=n;i++) for(int j=1;j&lt;=n;j++) val[i][j]=0;
+    }
+    matrix operator *(matrix B){
+        matrix res;res.n=n;res.init();
+        for(int i=1;i&lt;=n;i++){
+            for(int j=1;j&lt;=n;j++){
+                for(int k=1;k&lt;=n;k++){
+                    res.val[i][j]=(res.val[i][j]+val[i][k]*B.val[k][j]%mod)%mod;
+                }
+            }
+        }
+        return res;
+    }
+    matrix operator ^(int y){
+        matrix res,x;x.n=res.n=n;res.init();
+        for(int i=1;i&lt;=n;i++) res.val[i][i]=1;
+        for(int i=1;i&lt;=n;i++) for(int j=1;j&lt;=n;j++) x.val[i][j]=val[i][j];
+        while(y){
+            if(y&amp;1) res=res*x;
+            x=x*x;
+            y&gt;&gt;=1;
+        }
+        return res;
+    }
+    void print(){
+        for(int i=1;i&lt;=n;i++){
+            for(int j=1;j&lt;=n;j++) cout&lt;&lt;val[i][j]&lt;&lt;&quot; &quot;;
+            cout&lt;&lt;endl;
+        }
+        cout&lt;&lt;endl;
+    }
+}A,T,Z;
+
+signed main(){
+    read(n,mod);
+    A.n=T.n=Z.n=3;A.init();T.init();Z.init();
+    A.val[1][1]=0;A.val[1][2]=1;A.val[1][3]=1;
+    T.val[1][1]=1;T.val[1][2]=0;T.val[1][3]=0;
+    T.val[2][1]=1;T.val[2][2]=1;T.val[2][3]=0;
+    T.val[3][1]=0;T.val[3][2]=1;T.val[3][3]=1;
+    int val=1;
+    while(n&gt;=val){
+        val*=10;
+        T.val[1][1]=(T.val[1][1]*10)%mod;
+        Z=T^min(val/10*9,n-val/10+1);
+        A=A*Z;
+    }
+    cout&lt;&lt;A.val[1][1];
+    return 0;
+}</code></pre>
+
+    </div>
+</div>
+<h1 id="状压dp">状压DP</h1>
+<h2 id="p5255-jsoi2013-美丽家园"><a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5255">P5255 [JSOI2013]
+美丽家园</a></h2>
+<p>先来一道比较简单的题起手。<br />
+相信你们很快就能切了。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        题面
+    </div>
+    <div class='spoiler-content'>
+        <p>将一块 <span class="math inline">\(N\times M\)</span>
+的矩形涂上黑色或者白色，定义一种涂色方案是<strong>美的</strong>，当且仅当对于当前的涂色方案，所有的大小为
+<span class="math inline">\(2\times2\)</span>
+的子矩形中，没有一块子矩形的颜色是单一的。求总的涂色方案数，对 <span
+class="math inline">\(P\)</span> 取模。</p>
+<p>数据范围：<br />
+<span class="math inline">\(1\le N\le10^{100}\)</span> ，<span
+class="math inline">\(1\le M\le5\)</span> ，<span
+class="math inline">\(1\le P\le10000\)</span><br />
+时空限制：<br />
+<span class="math inline">\(1.00\)</span>s，<span
+class="math inline">\(62.50\)</span>MB</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint1
+    </div>
+    <div class='spoiler-content'>
+        <p>注意到 <span class="math inline">\(n\)</span> 很大，有 <span
+class="math inline">\(10^{100}\)</span> 的级别。<br />
+假如 <span class="math inline">\(n\)</span> 很小，比如 <span
+class="math inline">\(n\le1000\)</span> 可以怎么做？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint2
+    </div>
+    <div class='spoiler-content'>
+        <p>普通的<code>状压DP</code>是平凡的。<br />
+枚举一行状态，<span class="math inline">\(m\)</span> 最大只有 <span
+class="math inline">\(5\)</span>，一行的状态数不超过 <span
+class="math inline">\(2^{5}=32\)</span>，而两行的状态数则有 <span
+class="math inline">\(2^{10}=1024\)</span>。<br />
+假如你现在是枚举了两行的状态，试着写一写只枚举一行状态的转移方程？<br />
+如果你现在已经写出的是枚举一行的转移方程，那么可以试着写成矩阵乘法的形式。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint3
+    </div>
+    <div class='spoiler-content'>
+        <p>我们令一行的总状态数为 <span
+class="math inline">\(tot=2^{m}-1\)</span>
+写出来的递推式应该可能长这样：<br />
+<span class="math display">\[
+dp_{i,j}=\sum_{k=0}^{tot}dp_{i-1,k}[f(j,k)]
+\]</span><br />
+其中 <span class="math inline">\(i\)</span> 表示当前枚举到第 <span
+class="math inline">\(i\)</span> 行，<span
+class="math inline">\(j\)</span> 表示当前枚举的这行的状态，<span
+class="math inline">\(k\)</span> 表示当前枚举的上一行的状态，<span
+class="math inline">\(f(j,k)\)</span> 是判断是否合法。<br />
+尝试写出<code>矩乘</code>的形式？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>在不考虑 <span class="math inline">\(n\)</span>
+的情况下，容易写出转移式，也就是上文所说。<br />
+<span class="math inline">\(n\)</span> 如此大，但是 <span
+class="math inline">\(\log{n}\le\log{10^{100}}\approx332.19\)</span><br />
+所以我们就可以考虑<code>矩阵快速幂</code><br />
+由转移式可以轻易的写出矩乘的形式： <span class="math display">\[
+\begin{bmatrix}  
+  dp_{i-1,0}&amp;dp_{i-1,1}&amp;\cdots  &amp;dp_{i-1,tot}
+\end{bmatrix}
+\times
+\begin{bmatrix}  
+  f(0,0) &amp; f(1,0) &amp; \cdots &amp; f(tot,0) \\  
+  f(0,1) &amp; f(1,1) &amp; \cdots &amp; f(tot,1) \\  
+  \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\  
+  f(0,tot) &amp; f(1,tot) &amp; \cdots &amp; f(tot,tot)  
+\end{bmatrix}
+=
+\begin{bmatrix}  
+  dp_{i,0}&amp;dp_{i,1}&amp;\cdots  &amp;dp_{i,tot}
+\end{bmatrix}   
+\]</span><br />
+中间的转移矩阵是不会发生变化的，因此可以使用矩阵快速幂来进行优化。<br />
+可能会有一些小细节，你们可以好好想想。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int MAXN=200+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x){
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+}
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y){
+    read(x),read(y...);
+}
+
+string s;
+int n[MAXN],len,m,p,ans;
+struct matrix{
+    int n,val[MAXN][MAXN];
+    void init(){
+        for(int i=1;i&lt;=n;i++) for(int j=1;j&lt;=n;j++) val[i][j]=0;
+    }
+    matrix operator *(matrix B){
+        matrix res;res.n=n;res.init();
+        for(int i=1;i&lt;=n;i++){
+            for(int j=1;j&lt;=n;j++){
+                for(int k=1;k&lt;=n;k++){
+                    res.val[i][j]=(res.val[i][j]+val[i][k]*B.val[k][j]%p)%p;
+                }
+            }
+        }
+        return res;
+    }
+    matrix operator ^(int *y){
+        matrix res,x;res.n=x.n=n;res.init();
+        for(int i=1;i&lt;=n;i++) res.val[i][i]=1;
+        for(int i=1;i&lt;=n;i++) for(int j=1;j&lt;=n;j++) x.val[i][j]=val[i][j];
+        while(len){
+            if(y[0]%2) res=res*x;
+            x=x*x;
+            for(int i=len-1;i&gt;=0;i--){
+                if(y[i]%2) y[i-1]+=10;
+                y[i]/=2;
+                if(i==len-1&amp;&amp;y[i]==0) len--;
+            }
+        }
+        return res;
+    }
+    void print(){
+        for(int i=1;i&lt;=n;i++){
+            for(int j=1;j&lt;=n;j++) cout&lt;&lt;val[i][j]&lt;&lt;&quot; &quot;;
+            cout&lt;&lt;endl;
+        }
+    }
+}S,T;
+
+signed main(){
+    cin&gt;&gt;s&gt;&gt;m&gt;&gt;p;len=s.length();
+    for(int i=0,j=len-1;i&lt;j;i++,j--) swap(s[i],s[j]);
+    for(int i=0;i&lt;len;i++) n[i]=s[i]-&#39;0&#39;;
+    n[0]--;
+    for(int i=0;i&lt;len;i++){
+        if(n[i]==0&amp;&amp;i==len-1) len--;
+        if(n[i]&lt;0){
+            n[i+1]--;
+            n[i]+=10;
+        }
+        else break;
+    }
+    S.n=T.n=(1&lt;&lt;m);
+    for(int i=1;i&lt;=(1&lt;&lt;m);i++) S.val[1][i]=1;
+    for(int i=0;i&lt;(1&lt;&lt;m);i++){
+        for(int j=0;j&lt;(1&lt;&lt;m);j++){
+            bool judge=false;
+            for(int a=0;a&lt;m-1;a++){
+                bool c1=!!(i&amp;(1&lt;&lt;a));
+                bool c2=!!(i&amp;(1&lt;&lt;a+1));
+                bool c3=!!(j&amp;(1&lt;&lt;a));
+                bool c4=!!(j&amp;(1&lt;&lt;a+1));
+                judge=(c1==c2&amp;&amp;c2==c3&amp;&amp;c3==c4);
+                if(judge) break;
+            }
+            T.val[i+1][j+1]=!judge;
+        }
+    }
+    // T.print();
+    T=T^n;
+    S=S*T;
+    for(int i=1;i&lt;=(1&lt;&lt;m);i++) ans=(ans+S.val[1][i])%p;
+    cout&lt;&lt;ans;
+    return 0;
+}</code></pre>
+
+    </div>
+</div>
+<h2 id="p2396-yyy-loves-maths-vii"><a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2396">P2396 yyy loves Maths
+VII</a></h2>
+<p>著名奆佬 gwx 说这就是卡常题。<br />
+<img src="/images/gwxの话.png" /><br />
+我因为太菜没有正确分析 <code>时间复杂度</code>，还被嘲讽了/kk<br />
+那你们就可以作为一种卡常方法吧awa。<br />
+这道题比上道还简单，你们应该切的更快吧awa</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        题面
+    </div>
+    <div class='spoiler-content'>
+        <p>有 <span class="math inline">\(n\)</span> 张卡片，卡片上有数字，第
+<span class="math inline">\(i\)</span> 张卡片上数字是 <span
+class="math inline">\(a_{i}\)</span>，每次可以丢掉第 <span
+class="math inline">\(i\)</span> 张卡片，然后向前走 <span
+class="math inline">\(a_{i}\)</span> 步，没有卡片的时候就赢了。有 <span
+class="math inline">\(m\)</span>
+个不能走到的位置，走到这个位置就失败了。问有多少种方案能赢，对 <span
+class="math inline">\(10^9+7\)</span> 取模。</p>
+<p>数据范围：<br />
+<span class="math inline">\(n \le 24\)</span>，<span
+class="math inline">\(0\le m\le 2\)</span>，<span
+class="math inline">\(1\le a_i,b_i\le 10^9\)</span>。<br />
+时空限制：<br />
+<span class="math inline">\(1.00\)</span>s，<span
+class="math inline">\(222.66\)</span>MB</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint1
+    </div>
+    <div class='spoiler-content'>
+        <p>原题中，有 <span class="math inline">\(10\%\)</span> 的数据 <span
+class="math inline">\(n \leq
+10\)</span>，这个显然是用来给你暴力枚举所有状况，然后判断是否合法，时间复杂度
+<span class="math inline">\(O(n!n)\)</span>。<br />
+当然我们是讲<code>状压DP</code>所以你们就先想想<code>状压DP</code>的转移方程吧。awa</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint2
+    </div>
+    <div class='spoiler-content'>
+        <p>你是否发现了一些问题？你的复杂度允许你通过吗？<br />
+<span class="math inline">\(2^{24}\approx1.6\times10^{7}\)</span></p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint3
+    </div>
+    <div class='spoiler-content'>
+        <p>我们在进行转移的时候，真的需要枚举每一位吗？是否有更优的方法来枚举？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>普通的<code>状压DP</code>的转移式依然是平凡的。<br />
+大概就是这样：<br />
+<span class="math display">\[
+dp_{i}=\sum_{j\in i}dp_{j \oplus i}
+\]</span><br />
+当然，如果 <span class="math inline">\(i\)</span>
+这种状态，所走的距离刚好是不能走到的，那么就不能转移。<br />
+那么我们现在有两种方法来解决：</p>
+<ol type="1">
+<li>枚举 <span class="math inline">\(j\)</span>，如果 <span
+class="math inline">\(j\in i\)</span>，那么就将 <span
+class="math inline">\(dp_{j \oplus i}\)</span> 的方案数，加到 <span
+class="math inline">\(dp_{i}\)</span> 上。<br />
+</li>
+<li>枚举 <span class="math inline">\(j\)</span>，如果 <span
+class="math inline">\(j\notin i\)</span>，那么就将 <span
+class="math inline">\(dp_{i}\)</span> 的方案数，加到 <span
+class="math inline">\(dp_{j \oplus i}\)</span> 上。</li>
+</ol>
+<p>但是目前我们的<code>时间复杂度</code>都是 <span
+class="math inline">\(n2^{n}\)</span> 的，<span
+class="math inline">\(24\times2^{24}\approx4\times10^{8}\)</span>，时限只有
+<span
+class="math inline">\(1\)</span>s，考虑到常数之类的，多半是要炸掉的。<br />
+发现我们真正在意的其实只有位置为 <span class="math inline">\(1\)</span>
+的地方，因此我们只需要使用 lowbit 就可以每次 <span
+class="math inline">\(O(1)\)</span> 找到最低的 <span
+class="math inline">\(1\)</span> 的位置。<br />
+此时<code>时间复杂度</code>变成 <span
+class="math inline">\(O(\sum_{i=0}^{2^{n}}\sum_{j=0}^{n}[j\in
+i])\)</span> 可以计算得到 <span
+class="math inline">\(O(n2^{n-1})\)</span><br />
+虽然计算得到 <span
+class="math inline">\(24\times2^{23}\approx2\times10^{8}\)</span>，但其实是可以通过的。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int MAXN=1e5+10;
+const int mod=1e9+7;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x){
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+}
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y){
+    read(x),read(y...);
+}
+
+int n,m,e1,e2,a[MAXN],pos[(1&lt;&lt;24)],dp[(1&lt;&lt;24)];
+
+int lowbit(int val){
+    return val&amp;(-val);
+}
+
+signed main(){
+    read(n);
+    for(int i=0;i&lt;24;i++) pos[(1&lt;&lt;i)]=i;
+    for(int i=1;i&lt;=n;i++) read(a[i]);
+    read(m);
+    if(m&gt;=1) read(e1);
+    if(m==2) read(e2);
+    dp[0]=1;
+    for(int i=1;i&lt;(1&lt;&lt;n);i++){
+        int now=i,sum=0;
+        while(now){
+            int low=lowbit(now);
+            sum+=a[pos[low]+1];
+            now-=low;
+        }
+        if((sum==e1&amp;&amp;m&gt;=1)||(sum==e2&amp;&amp;m==2)) continue;
+        now=i;
+        int q=i;
+        while(now){
+            int low=lowbit(now);
+            q-=low;
+            now-=low;
+            dp[i]=dp[i]+dp[q];
+            dp[i]=dp[i]&gt;=mod?dp[i]-mod:dp[i];
+            q+=low;
+        }
+    }
+    cout&lt;&lt;dp[(1&lt;&lt;n)-1];
+    return 0;
+}</code></pre>
+
+    </div>
+</div>
+<h2 id="p2150-noi2015-寿司晚宴"><a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2150">P2150 [NOI2015]
+寿司晚宴</a></h2>
+<p>这题很有意思啊。<br />
+是 NOI2015 D2T2<br />
+大家都比我强qwq，应该很快也能切掉。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        题面
+    </div>
+    <div class='spoiler-content'>
+        <p>有 <span class="math inline">\(n−1\)</span> 种不同的寿司，编号 <span
+class="math inline">\(1,2,3,\ldots,n-1\)</span>，其中第 <span
+class="math inline">\(i\)</span> 种寿司的美味度为 <span
+class="math inline">\(i+1\)</span>。（即寿司的美味度为从 <span
+class="math inline">\(2\)</span> 到 <span
+class="math inline">\(n\)</span>）</p>
+<p>现在小 G 和小 W
+希望每人选一些寿司种类来品尝，他们规定一种品尝方案为不和谐的当且仅当：小
+G 品尝的寿司种类中存在一种美味度为 <span
+class="math inline">\(x\)</span> 的寿司，小 W
+品尝的寿司中存在一种美味度为 <span class="math inline">\(y\)</span>
+的寿司，而 <span class="math inline">\(x\)</span> 与 <span
+class="math inline">\(y\)</span> 不互质。</p>
+<p>现在小 G 和小 W
+希望统计一共有多少种和谐的品尝寿司的方案（对给定的正整数 <span
+class="math inline">\(p\)</span>
+取模）。注意一个人可以不吃任何寿司。</p>
+<p>数据范围：<br />
+<span class="math inline">\(2\le n \le 500\)</span>，<span
+class="math inline">\(0\le p\le 10^{9}\)</span>。<br />
+时空限制：<br />
+<span class="math inline">\(1.00\)</span>s，<span
+class="math inline">\(125.00\)</span>MB</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint1
+    </div>
+    <div class='spoiler-content'>
+        <p><span class="math inline">\(n\)</span> 这么大，显然不可以 <span
+class="math inline">\(2^{n}\)</span>
+来暴力枚举，有没有更优秀的枚举方法？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint2
+    </div>
+    <div class='spoiler-content'>
+        <p>令小 G 品尝的寿司的美味度质因数分解后的集合为 <span
+class="math inline">\(S\)</span>，小 W
+品尝的寿司的美味度质因数分解后的集合为 <span
+class="math inline">\(T\)</span>。 发现合法的情况其实就是 <span
+class="math inline">\(S\cap T=\varnothing\)</span>。<br />
+令小于 <span class="math inline">\(n\)</span> 的质数个数为 <span
+class="math inline">\(w\)</span>，此时时间复杂度就是 <span
+class="math inline">\(O(n2^{2w})\)</span>，可以通过 <span
+class="math inline">\(n\le30\)</span> 的前三个点。<br />
+怎么继续优化？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint3
+    </div>
+    <div class='spoiler-content'>
+        <p>真的有必要把每个小于 <span class="math inline">\(n\)</span>
+的质数都塞进状态里面吗？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint4
+    </div>
+    <div class='spoiler-content'>
+        <p>怎么解决 <span class="math inline">\(S\cap
+T=\varnothing\)</span>？怎么做到方案数不重不漏？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>发现 <span
+class="math inline">\(\sqrt{500}\approx22.36\)</span>，因此对于每一种美味度，大于等于
+<span class="math inline">\(23\)</span>
+的质因数最多只会出现一次，并且它一定是最大的质因数。对于这种质因数，我们就没有必要压缩进状态了。思考一下为什么小于
+<span class="math inline">\(22\)</span>
+的质因数就必须得压缩进状态。<br />
+因为小于 <span class="math inline">\(22\)</span>
+的质因数，并不一定是最大的质因数，如果你只考虑这一个质因数，那么比它大的质因数就没有考虑到，就会导致答案错误。<br />
+所以我们考虑多记录两个数组，<span class="math inline">\(dp_{1}\)</span>
+和 <span
+class="math inline">\(dp_{2}\)</span>，用来记录这一种大质因子，到底是让谁来选。<br />
+寿司的排列不影响对答案的计算。因此我们可以先按照每个数的大质因数排个序。<br />
+那么每次当进入一个大质因数的区间时，我们将原本的 <span
+class="math inline">\(dp\)</span> 数组复制到 <span
+class="math inline">\(dp_{1}\)</span> 和 <span
+class="math inline">\(dp_{2}\)</span>，再对它俩分别处理。从这个区间出来的时候，就再贡献回
+<span class="math inline">\(dp\)</span> 数组，也就是： <span
+class="math display">\[
+dp=dp_{1}+dp_{2}-dp
+\]</span> 为什么要减去一个 <span
+class="math inline">\(dp\)</span>？因为我们求出的 <span
+class="math inline">\(dp1\)</span> 和 <span
+class="math inline">\(dp2\)</span>
+中，是算上了不选的方案数，因此直接加起来的话，就计算了两次小 G 和小 W
+都不选的方案数，而这个方案数恰好又是原来的 <span
+class="math inline">\(dp\)</span> 值。<br />
+具体来说，还有一些细节，这些你们自己打代码的时候再考虑~<br />
+小于 <span class="math inline">\(23\)</span> 的质数只有 <span
+class="math inline">\(8\)</span> 个，因此时间复杂度就是 <span
+class="math inline">\(O(n2^{16})\)</span>。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int MAXN=5e2+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x){
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+}
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y){
+    read(x),read(y...);
+}
+
+int n,p,ans,prime[9]={0,2,3,5,7,11,13,17,19},dp[MAXN][MAXN],dp1[MAXN][MAXN],dp2[MAXN][MAXN];
+struct node{
+    int val,small,big;
+    void pre(){
+        int now=val;
+        for(int i=1;i&lt;=8;i++){
+            if(now%prime[i]==0){
+                small|=(1&lt;&lt;i-1);
+                while(now%prime[i]==0) now/=prime[i];
+            }
+        }
+        if(now!=1) big=now;
+        else big=-1;
+    }
+}val[MAXN];
+
+bool cmp(node n1,node n2){
+    return n1.big&lt;n2.big;
+}
+
+signed main(){
+    read(n,p);
+    for(int i=2;i&lt;=n;i++) val[i].val=i;
+    for(int i=2;i&lt;=n;i++) val[i].pre();
+    sort(val+2,val+n+1,cmp);
+    dp[0][0]=1;
+    for(int i=2;i&lt;=n;i++){
+        if(i==2||val[i].big==-1||val[i].big!=val[i-1].big){
+            for(int j=0;j&lt;256;j++){
+                for(int k=0;k&lt;256;k++){
+                    dp1[j][k]=dp2[j][k]=dp[j][k];
+                }
+            }
+        }
+        for(int j=255;j&gt;=0;j--){
+            for(int k=255;k&gt;=0;k--){
+                if(j&amp;k) continue;
+                if((val[i].small&amp;j)==0) dp2[j][k|val[i].small]=(dp2[j][k|val[i].small]+dp2[j][k])%p;
+                if((val[i].small&amp;k)==0) dp1[j|val[i].small][k]=(dp1[j|val[i].small][k]+dp1[j][k])%p;
+            }
+        }
+        if(i==n||val[i].big==-1||val[i].big!=val[i+1].big){
+            for(int j=0;j&lt;256;j++){
+                for(int k=0;k&lt;256;k++){
+                    if(j&amp;k) continue;
+                    dp[j][k]=((dp1[j][k]+dp2[j][k])%p+p-dp[j][k])%p;
+                }
+            }
+        }
+    }
+    for(int j=0;j&lt;256;j++) for(int k=0;k&lt;256;k++) ans=(ans+dp[j][k])%p;
+    cout&lt;&lt;ans;
+    return 0;
+}</code></pre>
+
+    </div>
+</div>
+<h2 id="cf1569f-palindromic-hamiltonian-path"><a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF1569F">CF1569F Palindromic
+Hamiltonian Path</a></h2>
+<p>最后一道题喽。<br />
+比较难哦awa</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        题面
+    </div>
+    <div class='spoiler-content'>
+        <p>有一个 <span class="math inline">\(n\)</span> 个点的 DAG，<span
+class="math inline">\(n\)</span>
+是偶数。你要在每个顶点上写一个字符。每个字符都应该是小写拉丁字母表中的前
+<span class="math inline">\(k\)</span> 之一。（比如 <span
+class="math inline">\(k=3\)</span> 的话，也就是
+<code>a</code>,<code>b</code>,<code>c</code> 这三种字符）</p>
+<p>对于图上的一条路径，如果恰好访问每个顶点一次，则称其为哈密顿路径。<br />
+对于一个长度为 <span class="math inline">\(n\)</span>
+的字符串，若满足以下条件，则称其是“好的”：</p>
+<ul>
+<li>字符串中的每个字符都是小写拉丁字母表中的前 <span
+class="math inline">\(k\)</span> 之一；</li>
+<li>如果将字符串的第 <span class="math inline">\(i\)</span>
+个字符写在图中编号为 <span class="math inline">\(i\)</span>
+的顶点上，则图中会<strong>存在</strong>一条回文哈密顿路径。
+请注意，路径不必按 <span class="math inline">\(1,2,\dotsb,n\)</span>
+的编号顺序穿过顶点。</li>
+</ul>
+<p>计算“好的”字符串的数量。</p>
+<p>数据范围：<br />
+<span class="math inline">\(2\le n\le12\)</span>，<span
+class="math inline">\(0\le m\le\frac{n\times(n-1)}{2}\)</span>，<span
+class="math inline">\(1\le k\le12\)</span>。<br />
+时空限制：<br />
+<span class="math inline">\(5.00\)</span>s，<span
+class="math inline">\(250.00\)</span>MB</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint1
+    </div>
+    <div class='spoiler-content'>
+        <p>先不考虑时间复杂度，你能写出一个<code>状压DP</code>的状态转移方程吗？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint2
+    </div>
+    <div class='spoiler-content'>
+        <p>回文串是不是有点不好处理？考虑从两端一起同时处理。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint3
+    </div>
+    <div class='spoiler-content'>
+        <p>此时时间复杂度是多少？<br />
+我们需要枚举所有状态，这个是 <span
+class="math inline">\(O(2^{n})\)</span>
+的，然后我们需要枚举两个端点，这个是 <span
+class="math inline">\(O(n^{2})\)</span>
+的，接着我们需要枚举转移到哪两个点，这个也是 <span
+class="math inline">\(O(n^{2})\)</span> 的，看起来这个是 <span
+class="math inline">\(O(2^{n}n^{4})\)</span>
+的复杂度。但实际上，你需要记录当前这个串是什么样子，因为不是问方案数，而是问哪些串合法。因此时间复杂度实际上是
+<span class="math inline">\(O(2^{n}n^{4}k^{n})\)</span> 的。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint4
+    </div>
+    <div class='spoiler-content'>
+        <p>想一想能怎么优化？对于一条哈密顿路径，都可以产生一些答案，因此我们可以考虑先把哈密顿路径找出来，再尝试统计答案。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint5
+    </div>
+    <div class='spoiler-content'>
+        <p>肯定是不能暴力枚举所有字符串，来判断是否合法。有更好的方法可以统计答案吗？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint6
+    </div>
+    <div class='spoiler-content'>
+        <p>发现比如 <code>aabccb</code> 和 <code>aacddc</code>
+有着类似的结构，我们不妨将这种称为 <code>112332</code> 结构。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint7
+    </div>
+    <div class='spoiler-content'>
+        <p>发现其实本质不同的字符串的数量是很少的，上限大概只有 <span
+class="math inline">\(203\)</span>。这个上限的估算和第二类斯特林数有关，我太菜了，并不会证明/kk。那么你怎么最后统计答案呢？怎么做到不重不漏？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint8
+    </div>
+    <div class='spoiler-content'>
+        <p>一条合法路径的本质是 <span class="math inline">\(n\)</span>
+个点两两配对。因此我们可以枚举配对情况。本质不同的配对情况也是很少的，第一个数有
+<span class="math inline">\(n−1\)</span> 种选择，去掉第一次的 <span
+class="math inline">\(x,y\)</span> 之后第二个数又有 <span
+class="math inline">\(n−3\)</span> 种选择，以此类推，总方案数为 <span
+class="math inline">\((n−1)(n−3)…2\times1\le10395\)</span>。乘上先前本质不同字符串的数量，总共枚举的情况数也就只有
+<span
+class="math inline">\(10395\times203\approx2.1\times10^{6}\)</span>
+种。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint9
+    </div>
+    <div class='spoiler-content'>
+        <p>思考一下这样为什么可以不重不漏的算出答案，以及怎样不重不漏的算出答案。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>前面已经说得差不多了，最后讲解一下怎么不重不漏的算出答案。<br />
+我们对于一种字符串结构，比如<code>112332</code>式，我们钦定其必须使用
+<span class="math inline">\(3\)</span>
+种不同的字符。求这样的方案数是简单的，也就是 <span
+class="math inline">\(A_{k}^{3}\)</span>
+种。既然<code>112332</code>式都是合法的，那么<code>111111</code>式或者是<code>112222</code>式肯定都是合法的，而且我们肯定都是能找到的，这就保证了不重不漏。<br />
+而我们在找所有的哈密顿路径的时候，因为一条哈密顿路径的配对情况是唯一的，因此我们遍历所有配对情况，可以找出所有的哈密顿路径。而判断一种配对情况是否合法，可以用状压DP简单地求出来。<br />
+你可能也会说对于一种字符串结构，也可能对应多条哈密顿路径，但是因为可能的字符串结构很少，所以我们完全可以使用
+set 之类的来去重。<br />
+对于更多细节，可以看看代码。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>// Problem: Palindromic Hamiltonian Path
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/CF1569F
+// Memory Limit: 250 MB
+// Time Limit: 5000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int MAXN=12+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x){
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+}
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y){
+    read(x),read(y...);
+}
+
+int n,m,k,ans,A[MAXN][MAXN];
+bool graph[MAXN][MAXN],vis[MAXN],dp[1&lt;&lt;6][MAXN][MAXN];
+pair&lt;int,int&gt; p[MAXN];
+set&lt;vector&lt;int&gt; &gt; s;
+vector&lt;int&gt; v;
+
+bool chk(){
+    memset(dp,false,sizeof(dp));
+    for(int i=1;i&lt;=n/2;i++){
+        if(graph[p[i].first][p[i].second]){
+            dp[1&lt;&lt;i-1][p[i].first][p[i].second]=
+            dp[1&lt;&lt;i-1][p[i].second][p[i].first]=true;
+        }
+    }
+    for(int i=1;i&lt;(1&lt;&lt;n/2);i++){
+        for(int a=1;a&lt;=n;a++){
+            for(int b=1;b&lt;=n;b++){
+                if(!dp[i][a][b]) continue;
+                for(int j=1;j&lt;=n/2;j++){
+                    int fu=p[j].first,fv=p[j].second;
+                    if(i&amp;(1&lt;&lt;j-1)) continue;
+                    if(graph[a][fu]&amp;&amp;graph[fv][b]){
+                        dp[i|(1&lt;&lt;j-1)][fu][fv]=dp[i|(1&lt;&lt;j-1)][fv][fu]=true;
+                    }
+                }
+            }
+        }
+    }
+    for(int i=1;i&lt;=n/2;i++)
+        if(dp[(1&lt;&lt;n/2)-1][p[i].first][p[i].second])
+            return true;
+    return false;
+}
+
+void dfs2(int pos,int maxval){
+    if(pos*2&gt;n){
+        s.insert(v);
+        return;
+    }
+    for(int i=1;i&lt;=maxval+1;i++){
+        v[p[pos].first-1]=v[p[pos].second-1]=i;
+        dfs2(pos+1,max(i,maxval));
+    }
+}
+
+void dfs1(int pos){
+    if(pos*2&gt;n){
+        if(chk()) dfs2(1,0);
+        return;
+    }
+    for(int i=1;i&lt;n;i++){
+        if(!vis[i]){
+            vis[i]=true;
+            for(int j=i+1;j&lt;=n;j++){
+                if(!vis[j]){
+                    vis[j]=true;
+                    p[pos]={i,j};
+                    dfs1(pos+1);
+                    vis[j]=false;
+                }
+            }
+            vis[i]=false;
+            break;
+        }
+    }
+}
+
+signed main(){
+    read(n,m,k);
+    v.resize(n);
+    for(int i=1;i&lt;=m;i++){
+        int u,v;
+        read(u,v);
+        graph[u][v]=graph[v][u]=true;
+    }
+    for(int i=1;i&lt;=k;i++){
+        A[i][0]=1;
+        for(int j=1;j&lt;=i;j++) A[i][j]=A[i][j-1]*(i-j+1);
+    }
+    dfs1(1);
+    for(auto i:s){
+        int maxval=0;
+        for(int j:i) maxval=max(maxval,j);
+        ans+=A[k][maxval];
+    }
+    cout&lt;&lt;ans;
+    return 0;
+}</code></pre>
+
+    </div>
+</div>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+    
+    
+    
+    
+    <div id="comment">
+        <div id="giscus-container" class="giscus"></div>
+    </div>
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2024 - 2025 yzljyのBlog
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;yzljy
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+<script
+    src="https://giscus.app/client.js"
+    data-repo="yzljyawa/yzljyawa.github.io"
+    data-repo-id="R_kgDOMbAUfA"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOMbAUfM4CiQYe"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin
+    async
+></script>
+
+
+
+
+
+    
+</body>
+</html>
