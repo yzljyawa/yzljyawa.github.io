@@ -193,28 +193,28 @@
             
             <span class="tag">
                 
-                <a href="/tags/DP/" style="color: #ffa400">
+                <a href="/tags/DP/" style="color: #e74c3c">
                     DP
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/DP%E4%BC%98%E5%8C%96/" style="color: #a5ff4d">
+                <a href="/tags/DP%E4%BC%98%E5%8C%96/" style="color: #00beff">
                     DP优化
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9/" style="color: #979a9a">
+                <a href="/tags/%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9/" style="color: #e74c3c">
                     状态压缩
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E7%9F%A9%E4%B9%98%E4%BC%98%E5%8C%96/" style="color: #00beff">
+                <a href="/tags/%E7%9F%A9%E4%B9%98%E4%BC%98%E5%8C%96/" style="color: #979a9a">
                     矩乘优化
                 </a>
             </span>
@@ -327,7 +327,7 @@ class="math inline">\(F_{i-1}\)</span>，也可以添加 <span
 class="math inline">\(F_{i+1}\)</span>，然后按照手动模拟一下矩乘，集合一下递推式，把中间的转移矩阵填充出来，可以得到一下两种矩乘。<br />
 <span class="math display">\[
 \begin{bmatrix}  
-  F_{i-1} &amp; F_{i}  
+  F_{i-2} &amp; F_{i-1}  
 \end{bmatrix}
 \times
 \begin{bmatrix}  
@@ -336,7 +336,7 @@ class="math inline">\(F_{i+1}\)</span>，然后按照手动模拟一下矩乘，
 \end{bmatrix}
 =
 \begin{bmatrix}  
-  F_{i} &amp; F_{i+1}
+  F_{i-1} &amp; F_{i}
 \end{bmatrix}   
 \]</span> <span class="math display">\[
 \begin{bmatrix}  
@@ -349,7 +349,7 @@ class="math inline">\(F_{i+1}\)</span>，然后按照手动模拟一下矩乘，
 \end{bmatrix}
 =
 \begin{bmatrix}  
-  F_{i+1} &amp; F_{i+2}
+  F_{i} &amp; F_{i+1}
 \end{bmatrix}   
 \]</span></p>
 <p>哪个是正确的呢？<br />
@@ -661,10 +661,10 @@ class="math inline">\(\log{n}\le\log{10^{100}}\approx332.19\)</span><br />
 \end{bmatrix}
 \times
 \begin{bmatrix}  
-  f(0,0) &amp; f(1,0) &amp; \cdots &amp; f(tot,0) \\  
-  f(0,1) &amp; f(1,1) &amp; \cdots &amp; f(tot,1) \\  
+  f(0,0) &amp; f(0,1) &amp; \cdots &amp; f(0,tot) \\  
+  f(1,0) &amp; f(1,1) &amp; \cdots &amp; f(1,tot) \\  
   \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\  
-  f(0,tot) &amp; f(1,tot) &amp; \cdots &amp; f(tot,tot)  
+  f(tot,0) &amp; f(tot,1) &amp; \cdots &amp; f(tot,tot)  
 \end{bmatrix}
 =
 \begin{bmatrix}  
@@ -1291,7 +1291,7 @@ class="math inline">\(203\)</span>。这个上限的估算和第二类斯特林�
 <span class="math inline">\(n−1\)</span> 种选择，去掉第一次的 <span
 class="math inline">\(x,y\)</span> 之后第二个数又有 <span
 class="math inline">\(n−3\)</span> 种选择，以此类推，总方案数为 <span
-class="math inline">\((n−1)(n−3)…2\times1\le10395\)</span>。乘上先前本质不同字符串的数量，总共枚举的情况数也就只有
+class="math inline">\((n−1)(n−3)…1\le10395\)</span>。乘上先前本质不同字符串的数量，总共枚举的情况数也就只有
 <span
 class="math inline">\(10395\times203\approx2.1\times10^{6}\)</span>
 种。</p>
