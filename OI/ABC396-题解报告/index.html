@@ -1,0 +1,857 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>ABC396 题解报告 | yzljyのBlog</title>
+    <meta name="author" content="yzljy" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/yzljy.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>YZLJYのBLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;首页</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;关于</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;归档</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;分类</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;标签</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;YZLJYのBLOG</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">首页</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">关于</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">归档</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">分类</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">标签</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>ABC396 题解报告</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/3/9
+        </span>
+        
+        <span class="category">
+            <a href="/categories/OI/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                OI
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #e74c3c">
+                    题解
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E6%AF%94%E8%B5%9B/" style="color: #a5ff4d">
+                    比赛
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h2 id="闲话">闲话</h2>
+<p>这次评分如下：<br />
+<span
+class="math inline">\(\text{NaN}-25-384-645-1358-1455-2124\)</span><br />
+知道什么意思了吧（</p>
+<h2 id="t1">T1</h2>
+<p><a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_abc396_a">洛谷传送门</a><br />
+<a
+target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc396/tasks/abc396_a">AT传送门</a></p>
+<p>没看题</p>
+<h2 id="t2">T2</h2>
+<p><a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_abc396_b">洛谷传送门</a><br />
+<a
+target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc396/tasks/abc396_b">AT传送门</a></p>
+<p>没看题</p>
+<h2 id="t3">T3</h2>
+<p><a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_abc396_c">洛谷传送门</a><br />
+<a
+target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc396/tasks/abc396_c">AT传送门</a></p>
+<p>没看题</p>
+<h2 id="t4">T4</h2>
+<p><a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_abc396_d">洛谷传送门</a><br />
+<a
+target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc396/tasks/abc396_d">AT传送门</a></p>
+<h3 id="题意">题意</h3>
+<p>给你一张联通的 DAG，每条边有权值，求从 <span
+class="math inline">\(1\)</span> 到 <span
+class="math inline">\(N\)</span>
+号点的所有简单路径上的权值的的最小异或和。</p>
+<h3 id="数据范围">数据范围</h3>
+<p><span class="math inline">\(2\le N\le 10\)</span><br />
+<span class="math inline">\(N-1\le M\le\frac{N(N-1)}{2}\)</span><br />
+<span class="math inline">\(0\le w_{i}&lt;2^{60}\)</span></p>
+<h3 id="思路">思路</h3>
+<p>首先如果你没有看见数据范围，默认当成 <span class="math inline">\(1\le
+N\le2\times10^{5}\)</span>
+的话，可能会想很久。所以这件事告诉我们一定要先看数据范围。</p>
+<p><span class="math inline">\(N\)</span> 只有 <span
+class="math inline">\(10\)</span>，一般就会往 <span
+class="math inline">\(2^{n},n!,3^{n},4^{n}\)</span>
+之类的复杂度的算法去想。</p>
+<p>可能一眼会认为
+状压DP，但仔细想一想，要求的是<strong>异或和最小</strong>，但是当前你所在的这种状态的最小值，在后面异或后，可能并不是最小的了，比如
+<span class="math inline">\(2&lt;3\)</span>，但是 <span
+class="math inline">\(2\oplus5&gt;3\oplus5\)</span>。这并不是很好维护的（可能存在做法，如果是可行的，请告诉我，谢谢）。<br />
+那么状压行不通，<span class="math inline">\(N\)</span>
+这么小，那么我们就可以直接暴力枚举所有可能的情况，最多有 <span
+class="math inline">\((N-1)!\)</span> 种可能（因为必须从 <span
+class="math inline">\(1\)</span> 号点开始），这道题中也就是 <span
+class="math inline">\(9!=362880\)</span> 种，每次还需要 <span
+class="math inline">\(O(n)\)</span> 判断是否合法和计算
+异或和，因此总时间复杂度也就是 <span
+class="math inline">\(O(n!n)\)</span>。</p>
+<p>注意，当走到 <span class="math inline">\(N\)</span>
+的时候就<strong>不能</strong>继续走了。</p>
+<h3 id="代码">代码</h3>
+<pre class="cpp"><code>// Problem: D - Minimum XOR Path
+// Contest: AtCoder - AtCoder Beginner Contest 396
+// URL: https://atcoder.jp/contests/abc396/tasks/abc396_d
+// Memory Limit: 1024 MB
+// Time Limit: 2000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int MAXN=100+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x)&#123;
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+&#125;
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y)&#123;
+    read(x),read(y...);
+&#125;
+
+int n,m,ans=inf_long,p[MAXN],g[MAXN][MAXN];
+bool vis[MAXN];
+
+void dfs(int pos)&#123;
+    if(p[pos-1]==n)&#123;
+        int sum=0;
+        bool flag=false;
+        for(int i=2;i&lt;pos;i++)&#123;
+            if(g[p[i-1]][p[i]]!=-1) sum^=g[p[i-1]][p[i]];
+            else&#123;
+                flag=true;
+                break;
+            &#125;
+        &#125;
+        if(!flag) ans=min(ans,sum);
+        return;
+    &#125;
+    if(pos==n+1) return;
+    for(int i=1;i&lt;=n;i++)&#123;
+        if(!vis[i])&#123;
+            vis[i]=true;
+            p[pos]=i;
+            dfs(pos+1);
+            vis[i]=false;
+        &#125;
+    &#125;
+&#125;
+
+signed main()&#123;
+    read(n,m);
+    memset(g,-1,sizeof(g));
+    for(int i=1;i&lt;=m;i++)&#123;
+        int u,v,w;
+        read(u,v,w);
+        g[u][v]=g[v][u]=w;
+    &#125;
+    p[1]=1;vis[1]=true;
+    dfs(2);
+    cout&lt;&lt;ans;
+    return 0;
+&#125;</code></pre>
+<p>此题在 AtCoder 上评分为 <span
+class="math inline">\(645\)</span>，也就只是一次
+DFS，思路也很容易，建议评黄。</p>
+<h2 id="t5">T5</h2>
+<p><a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_abc396_e">洛谷传送门</a><br />
+<a
+target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc396/tasks/abc396_e">AT传送门</a></p>
+<h3 id="题意-1">题意</h3>
+<p>给定三个长度为 <span class="math inline">\(M\)</span> 的序列 <span
+class="math inline">\(X,Y,Z\)</span>，问是否存在一个长度为 <span
+class="math inline">\(N\)</span> 的序列 <span
+class="math inline">\(A\)</span>，满足 <span
+class="math inline">\(\forall1\le i\le M,A_{X_{i}}\oplus
+A_{Y_{i}}=Z_{i}\)</span>。输出 <span
+class="math inline">\(\sum\limits_{i=1}^{n}A_{i}\)</span>
+最小的任意一种方案，若不存在合法的 <span
+class="math inline">\(A\)</span>，则输出 <span
+class="math inline">\(-1\)</span>。</p>
+<h3 id="数据范围-1">数据范围</h3>
+<p><span class="math inline">\(2\le N\le 2\times10^{5}\)</span><br />
+<span class="math inline">\(2\le M\le 10^{5}\)</span><br />
+<span class="math inline">\(1\le X_{i},Y_{i}\le N\)</span><br />
+<span class="math inline">\(0\le Z_{i}&lt;10^{9}\)</span></p>
+<h3 id="思路-1">思路</h3>
+<p>首先，异或是存在交换律的，也就是 <span class="math inline">\(x\oplus
+y=y\oplus x\)</span>。<br />
+因此我们考虑将 <span class="math inline">\(X_{i}\)</span> 和 <span
+class="math inline">\(Y_{i}\)</span> 之间连一条边，边权为 <span
+class="math inline">\(Z_{i}\)</span>，那么问题就转化成了：对于任意一条边，都需要满足它的两个端点的权值的异或和，等于这条边的权值。若存在一条边出现矛盾，那么就不存在合法的方案。</p>
+<p>我们知道，若 <span class="math inline">\(x=y\)</span>，那么有 <span
+class="math inline">\(x\oplus z=y\oplus
+z\)</span>，因此我们找出一种合法的方案后，对该连通块的所有点的权值都异或上一个相同的数，依然是合法的方案。</p>
+<p>找任意一个合法的方案是容易的，我们 DFS
+一下，对未访问过的点赋值，对访问过的点进行检查，出现矛盾直接为无解。</p>
+<p>找出一种方案后，我们统计一下当前这个连通块下，每个点的权值在二进制下每一位的
+<span class="math inline">\(0\)</span> 的数量和 <span
+class="math inline">\(1\)</span> 的数量。假如 <span
+class="math inline">\(1\)</span> 的数量大于 <span
+class="math inline">\(0\)</span> 的数量，那么显然对于这一位，把 <span
+class="math inline">\(1\)</span> 异或成 <span
+class="math inline">\(0\)</span>，<span class="math inline">\(0\)</span>
+异或成 <span class="math inline">\(1\)</span> 是更优的。</p>
+<p>最后再跑一次 DFS，把这个连通块内每个点的权值都改一下就行了。</p>
+<p>注意：图不一定全联通。</p>
+<h3 id="代码-1">代码</h3>
+<pre class="cpp"><code>// Problem: E - Min of Restricted Sum
+// Contest: AtCoder - AtCoder Beginner Contest 396
+// URL: https://atcoder.jp/contests/abc396/tasks/abc396_e
+// Memory Limit: 1024 MB
+// Time Limit: 3000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int MAXN=4e5+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x)&#123;
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+&#125;
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y)&#123;
+    read(x),read(y...);
+&#125;
+
+int n,m,k,num,head[MAXN],t[MAXN][40][2],z[MAXN];
+bool vis[MAXN],vis2[MAXN];
+struct node&#123;
+    int to,next,val;
+&#125;edge[MAXN&lt;&lt;1];
+
+void build(int u,int v,int w)&#123;
+    edge[++k].to=v;
+    edge[k].next=head[u];
+    edge[k].val=w;
+    head[u]=k;
+&#125;
+
+void dfs(int f,int fa,int u)&#123;
+    vis[u]=true;
+    for(int i=0;i&lt;=35;i++)&#123;
+        if(z[u]&amp;(1ll&lt;&lt;i)) t[f][i][1]++;
+        else t[f][i][0]++;
+    &#125;
+    for(int i=head[u];i;i=edge[i].next)&#123;
+        int v=edge[i].to;
+        if(vis[v])&#123;
+            if(z[v]!=(z[u]^edge[i].val))&#123;
+                cout&lt;&lt;-1;
+                exit(0);
+            &#125;
+            continue;
+        &#125;
+        z[v]=z[u]^edge[i].val;
+        dfs(f,u,v);
+    &#125;
+&#125;
+
+void work(int u)&#123;
+    vis2[u]=true;
+    z[u]^=num;
+    for(int i=head[u];i;i=edge[i].next)&#123;
+        int v=edge[i].to;
+        if(vis2[v]) continue;
+        work(v);
+    &#125;
+&#125;
+
+signed main()&#123;
+    read(n,m);
+    memset(z,-1,sizeof(z));
+    for(int i=1;i&lt;=m;i++)&#123;
+        int x,y,z;
+        read(x,y,z);
+        build(x,y,z);
+        build(y,x,z);
+    &#125;
+    for(int i=1;i&lt;=n;i++)&#123;
+        if(!vis[i])&#123;
+            z[i]=0;
+            dfs(i,i,i);
+            num=0;
+            for(int j=0;j&lt;=35;j++) if(t[i][j][1]&gt;t[i][j][0]) num|=(1ll&lt;&lt;j);
+            work(i);
+        &#125;
+    &#125;
+    for(int i=1;i&lt;=n;i++) cout&lt;&lt;z[i]&lt;&lt;&quot; &quot;;
+    return 0;
+&#125;</code></pre>
+<p>此题在 AtCoder 上评分为 <span
+class="math inline">\(1358\)</span>，转化为图上问题，思路较为容易，建议评绿。</p>
+<h2 id="t6">T6</h2>
+<p><a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_abc396_f">洛谷传送门</a><br />
+<a
+target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc396/tasks/abc396_f">AT传送门</a></p>
+<h3 id="题意-2">题意</h3>
+<p>给定一个长度为 <span class="math inline">\(N\)</span> 的序列 <span
+class="math inline">\(A\)</span>，对于每一个 <span
+class="math inline">\(0\le k\le M-1\)</span>， 令 <span
+class="math inline">\(B_{i}=(A_{i}+k)\bmod M\)</span>，求 <span
+class="math inline">\(B\)</span> 的逆序对数量。</p>
+<h3 id="数据范围-2">数据范围</h3>
+<p><span class="math inline">\(1\le N,M\le 2\times10^{5}\)</span><br />
+<span class="math inline">\(0\le A_{i}&lt;M\)</span></p>
+<h3 id="思路-2">思路</h3>
+<p>我们知道，对一个序列中所有数同时加上或者减去一个相同的数，这个序列的逆序对数量是不会发生改变的。<br />
+但这道题中，它还需要取模，这会导致某些数的相对大小关系发生变化。<br />
+首先我们转化一下，题意其实也就是每次将 <span
+class="math inline">\(A\)</span> 中每个元素增加 <span
+class="math inline">\(1\)</span> 后，对 <span
+class="math inline">\(M\)</span> 取模后，求一下逆序对数量。</p>
+<p>思考一下会产生哪些影响，一个数发生变化，要么是增加 <span
+class="math inline">\(1\)</span>，要么是从 <span
+class="math inline">\(M-1\)</span> 变成 <span
+class="math inline">\(0\)</span>。前者因为是全局加，不会产生影响，因此我们只需要考虑后者。</p>
+<p>逆序对是对于一个数，计算它前面的数中有多少比它大的数，在我的思路中，我将其转化为了计算小于等于它的数有多少，记
+<span class="math inline">\(val_{i}\)</span> 表示第 <span
+class="math inline">\(i\)</span>
+个位置的数的前面的数中，有多少个是小于等于第 <span
+class="math inline">\(i\)</span> 个数的。当然，正着做也是可行的。</p>
+<p>我们不妨先假设 <span class="math inline">\(A\)</span>
+序列中没有相同的元素。<br />
+那么当这个数是 <span class="math inline">\(M-1\)</span>
+时，对于其后面的每一个数 <span
+class="math inline">\(A_{i}\)</span>，一定都是 <span
+class="math inline">\(M-1&gt;A_{i}\)</span>，而变成 <span
+class="math inline">\(0\)</span> 后，一定都是 <span
+class="math inline">\(0&lt;A_{i}+1\)</span>。因此也就是一个区间加。<br />
+而对于他自己，原来它前面的数都是<strong>小于等于</strong>它的，现在全都变成<strong>大于</strong>它了，也就是这个位置的
+<span class="math inline">\(val_{i}\)</span> 变为 <span
+class="math inline">\(0\)</span>。</p>
+<p>那么对于有重复的数的时候。<br />
+因为是同时发生变化的，所以对于位置靠后的数，从 <span
+class="math inline">\(M-1\)</span> 变为 <span
+class="math inline">\(0\)</span> 后，<span
+class="math inline">\(val_{i}\)</span> 并不会变成 <span
+class="math inline">\(0\)</span>，而会变成：其前面的数中，在更改之前，值为
+<span class="math inline">\(M-1\)</span> 的数的数量。</p>
+<p>每个位置从 <span class="math inline">\(M-1\)</span> 变为 <span
+class="math inline">\(0\)</span>
+的时间是可以计算的。我们便可以按照每个数变化的时间来进行计算，</p>
+<h3 id="代码-2">代码</h3>
+<pre class="cpp"><code>// Problem: F - Rotated Inversions
+// Contest: AtCoder - AtCoder Beginner Contest 396
+// URL: https://atcoder.jp/contests/abc396/tasks/abc396_f
+// Memory Limit: 1024 MB
+// Time Limit: 2000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int MAXN=2e5+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x)&#123;
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+&#125;
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y)&#123;
+    read(x),read(y...);
+&#125;
+
+int n,m,ans,tot,cnt,b[MAXN],pos[MAXN],val[MAXN],id[MAXN],t[MAXN];
+struct node&#123;
+    int l,r,val,lazy;
+&#125;tree[MAXN&lt;&lt;2];
+
+bool cmp(int n1,int n2)&#123;
+    if(pos[n1]!=pos[n2]) return pos[n1]&lt;pos[n2];
+    return n1&lt;n2;
+&#125;
+
+int lowbit(int u)&#123;return u&amp;(-u);&#125;
+
+void update(int pos,int val)&#123;
+    while(pos&lt;=m)&#123;
+        t[pos]+=val;
+        pos+=lowbit(pos);
+    &#125;
+&#125;
+
+int query(int pos)&#123;
+    int res=0;
+    while(pos)&#123;
+        res+=t[pos];
+        pos-=lowbit(pos);
+    &#125;
+    return res;
+&#125;
+
+void pushup(int id)&#123;
+    tree[id].val=tree[id*2].val+tree[id*2+1].val;
+&#125;
+
+void pushdown(int id)&#123;
+    if(tree[id].lazy==0) return;
+    tree[id*2].val+=(tree[id*2].r-tree[id*2].l+1)*tree[id].lazy;
+    tree[id*2+1].val+=(tree[id*2+1].r-tree[id*2+1].l+1)*tree[id].lazy;
+    tree[id*2].lazy+=tree[id].lazy;
+    tree[id*2+1].lazy+=tree[id].lazy;
+    tree[id].lazy=0;
+&#125;
+
+void build(int id,int l,int r)&#123;
+    tree[id].l=l;
+    tree[id].r=r;
+    tree[id].lazy=0;
+    if(l==r)&#123;
+        tree[id].val=val[l];
+        return;
+    &#125;
+    int mid=(l+r)&gt;&gt;1;
+    build(id*2,l,mid);
+    build(id*2+1,mid+1,r);
+    pushup(id);
+&#125;
+
+void update(int id,int l,int r,int L,int R,int val)&#123;
+    if(L&gt;R) return;
+    if(r&lt;L||R&lt;l) return;
+    if(L&lt;=l&amp;&amp;r&lt;=R)&#123;
+        tree[id].lazy+=val;
+        tree[id].val+=(r-l+1)*val;
+        return;
+    &#125;
+    pushdown(id);
+    int mid=(l+r)&gt;&gt;1;
+    if(L&lt;=mid) update(id*2,l,mid,L,R,val);
+    if(R&gt;mid) update(id*2+1,mid+1,r,L,R,val);
+    pushup(id);
+&#125;
+
+int query(int id,int l,int r,int pos)&#123;
+    if(l==r) return tree[id].val;
+    pushdown(id);
+    int mid=(l+r)&gt;&gt;1;
+    if(pos&lt;=mid) return query(id*2,l,mid,pos);
+    else return query(id*2+1,mid+1,r,pos);
+&#125;
+
+signed main()&#123;
+    read(n,m);tot=n*(n-1);tot&gt;&gt;=1;
+    for(int i=1;i&lt;=n;i++) read(b[i]);
+    for(int i=1;i&lt;=n;i++) pos[i]=(m-b[i])%m;
+    for(int i=1;i&lt;=n;i++) if(pos[i]==0) pos[i]=m;
+    for(int i=1;i&lt;=n;i++) id[i]=i;
+    sort(id+1,id+n+1,cmp);
+    for(int i=1;i&lt;=n;i++)&#123;
+        val[i]=query(b[i]+1);
+        update(b[i]+1,1);
+    &#125;
+    build(1,1,n);
+    ans=tree[1].val;
+    for(int i=1;i&lt;=n;i++)&#123;
+        if(pos[id[i-1]]!=pos[id[i]]) cnt=0;
+        else cnt++;
+        for(int j=pos[id[i-1]];j&lt;pos[id[i]];j++) cout&lt;&lt;tot-ans&lt;&lt;endl;
+        update(1,1,n,id[i]+1,n,1);
+        int should=-query(1,1,n,id[i])+cnt;
+        update(1,1,n,id[i],id[i],should);
+        ans=tree[1].val;
+    &#125;
+    for(int j=pos[id[n]]+1;j&lt;=m;j++) cout&lt;&lt;tot-ans&lt;&lt;endl;
+    return 0;
+&#125;</code></pre>
+<h3 id="优化">优化</h3>
+<p>其实我们发现，每次区间加，都是对从当前这个位置的后一个位置到序列结尾都增加
+<span
+class="math inline">\(1\)</span>，这个是可以直接计算的，再将单点进行修改，这个也是只对其<strong>位置</strong>和<strong>前面的数的值</strong>有关的，这些都是可以简单计算的，因此并不需要线段树。<br />
+另外，对于前文所说：</p>
+<blockquote>
+<p>因为是同时发生变化的，所以对于位置靠后的数，从 <span
+class="math inline">\(M-1\)</span> 变为 <span
+class="math inline">\(0\)</span> 后，<span
+class="math inline">\(val_{i}\)</span> 并不会变成 <span
+class="math inline">\(0\)</span>，而会变成：其前面的数中，在更改之前，值为
+<span class="math inline">\(M-1\)</span> 的数的数量。</p>
+</blockquote>
+<p>因为原先前面的 <span class="math inline">\(M-1\)</span> 对后面的
+<span class="math inline">\(M-1\)</span>
+多贡献了一次（最开始本来相等贡献了一次，变成 <span
+class="math inline">\(0\)</span> 后又贡献了一次）。因此在处理到后面的
+<span class="math inline">\(M-1\)</span>
+的时候，直接减去其前面的数的个数，就可以了。</p>
+<p><del>（但是我在场上想到线段树后就直接打线段树了啊啊啊啊）</del></p>
+<p>注意，因为权值有 <span
+class="math inline">\(0\)</span>，所以在树状数组上求逆序对的时候，需要先将权值增加
+<span class="math inline">\(1\)</span>，再加进树状数组里。</p>
+<h3 id="更简单的代码">更简单的代码</h3>
+<pre class="cpp"><code>// Problem: F - Rotated Inversions
+// Contest: AtCoder - AtCoder Beginner Contest 396
+// URL: https://atcoder.jp/contests/abc396/tasks/abc396_f
+// Memory Limit: 1024 MB
+// Time Limit: 2000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int MAXN=2e5+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x)&#123;
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+&#125;
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y)&#123;
+    read(x),read(y...);
+&#125;
+
+int n,m,ans,tot,b[MAXN],pos[MAXN],id[MAXN],t[MAXN];
+
+bool cmp(int n1,int n2)&#123;
+    if(pos[n1]!=pos[n2]) return pos[n1]&lt;pos[n2];
+    return n1&lt;n2;
+&#125;
+
+int lowbit(int u)&#123;return u&amp;(-u);&#125;
+
+void update(int pos,int val)&#123;
+    while(pos&lt;=m)&#123;
+        t[pos]+=val;
+        pos+=lowbit(pos);
+    &#125;
+&#125;
+
+int query(int pos)&#123;
+    int res=0;
+    while(pos)&#123;
+        res+=t[pos];
+        pos-=lowbit(pos);
+    &#125;
+    return res;
+&#125;
+
+signed main()&#123;
+    read(n,m);tot=n*(n-1);tot&gt;&gt;=1;
+    for(int i=1;i&lt;=n;i++) read(b[i]);
+    for(int i=1;i&lt;=n;i++) pos[i]=(m-b[i])%m;
+    for(int i=1;i&lt;=n;i++) if(pos[i]==0) pos[i]=m;
+    for(int i=1;i&lt;=n;i++) id[i]=i;
+    sort(id+1,id+n+1,cmp);
+    for(int i=1;i&lt;=n;i++)&#123;
+        ans+=query(b[i]+1);
+        update(b[i]+1,1);
+    &#125;
+    for(int i=1;i&lt;=n;i++)&#123;
+        for(int j=pos[id[i-1]];j&lt;pos[id[i]];j++) cout&lt;&lt;tot-ans&lt;&lt;endl;
+        ans+=n-id[i];ans-=id[i]-1;
+    &#125;
+    for(int j=pos[id[n]]+1;j&lt;=m;j++) cout&lt;&lt;tot-ans&lt;&lt;endl;
+    return 0;
+&#125;</code></pre>
+<p>此题在 AtCoder 上评分为 <span
+class="math inline">\(1455\)</span>，考虑一个数改变后产生的影响，相对容易，再进一步推导，可以得出不需要使用
+线段树 的做法，建议评绿。</p>
+<h2 id="t7">T7</h2>
+<p><a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_abc396_g">洛谷传送门</a><br />
+<a
+target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc396/tasks/abc396_g">AT传送门</a></p>
+<p>暂时不会。</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+    
+    
+    
+    
+    <div id="comment">
+        <div id="giscus-container" class="giscus"></div>
+    </div>
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2024 - 2025 yzljyのBlog
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;yzljy
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+<script
+    src="https://giscus.app/client.js"
+    data-repo="yzljyawa/yzljyawa.github.io"
+    data-repo-id="R_kgDOMbAUfA"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOMbAUfM4CiQYe"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin
+    async
+></script>
+
+
+
+
+
+    
+</body>
+</html>

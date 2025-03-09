@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>洛谷 P10838 庭中有奇树 | yzljyのBlog</title>
+    <title>yzljyのBlog</title>
     <meta name="author" content="yzljy" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -47,9 +47,7 @@
 
 
 
-
-
-
+<script src="/js/lib/home.js"></script>
 
 <link rel="stylesheet" href="/css/main.css" />
 
@@ -163,197 +161,160 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            <div class="article">
-    <div>
-        <h1>洛谷 P10838 庭中有奇树</h1>
+            <div id="home-head">
+    <div
+        id="home-background"
+        ref="homeBackground"
+        data-images="/images/"
+    ></div>
+    <div id="home-info" @click="homeClick">
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="info">
+            <div class="wrap">
+                <h1>yzljyのBlog</h1>
+                <h3></h3>
+                <h5></h5>
+            </div>
+        </span>
     </div>
-    <div class="info">
+</div>
+<div
+    id="home-posts-wrap"
+    ref="homePostsWrap"
+    true
+>
+    <div id="home-posts">
+        
+
+<div class="post">
+    <a href="/%E6%B5%8B%E8%AF%95/%E8%BF%99%E5%8F%AA%E6%98%AF%E4%B8%80%E4%B8%AA%E4%B8%BA%E4%BA%86%E5%BB%BA%E7%AB%99%E8%80%8C%E5%BB%BA%E7%9A%84%E6%96%87%E7%AB%A0awa/">
+        <h2 class="post-title">这只是一个为了建站而建的文章awa</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="category">
+            <a href="/categories/%E6%B5%8B%E8%AF%95/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                测试
+            </a>
+        </span>
+        
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2024/11/6
-        </span>
-        
-        <span class="category">
-            <a href="/categories/OI/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                OI
-            </a>
+            2024/7/26
         </span>
         
         
-        <span class="tags">
-            <span class="icon">
-                <i class="fa-solid fa-tags fa-fw"></i>
-            </span>
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
             
+            <p>真的没有东西啦awa</p>
+<p>真的只是用来测试东西xwx</p>
+
             
-            <span class="tag">
-                
-                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #ffa400">
-                    题解
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/%E6%B5%8B%E8%AF%95/" style="color: #979a9a">测试</a>
+        </span>
+        
+    </div>
+    <a href="/%E6%B5%8B%E8%AF%95/%E8%BF%99%E5%8F%AA%E6%98%AF%E4%B8%80%E4%B8%AA%E4%B8%BA%E4%BA%86%E5%BB%BA%E7%AB%99%E8%80%8C%E5%BB%BA%E7%9A%84%E6%96%87%E7%AB%A0awa/" class="go-post">阅读全文</a>
+</div>
+
+
+        <div class="page-current">
+    
+    <a class="page-num" href="/page/3/">
+        <i class="fa-solid fa-caret-left fa-fw"></i>
+    </a>
+    <a class="page-num" href="/">1</a>
+    <span class="page-omit">...</span>
+    
+    <span class="current">4</span>
+    
+    
+    
+    
+</div>
+
+    </div>
+    
+    <div id="home-card">
+        <div id="card-style">
+    <div id="card-div">
+        <div class="avatar">
+            <img src="/images/yzljy.jpg" alt="avatar" />
+        </div>
+        <div class="name">yzljy</div>
+        <div class="description">
+            <p>uwu<br />
+只是高一蒟蒻oier</p>
+
+        </div>
+        
+        <div class="icon-links">
+            
+            <span class="icon-link">
+                <a href="/function%20link()%20%7B%20%5Bnative%20code%5D%20%7D">
+                    <i
+                        class="fa- fa- fa-fw"
+                    ></i>
                 </a>
             </span>
             
-            <span class="tag">
-                
-                <a href="/tags/%E4%BA%8C%E5%88%86/" style="color: #e74c3c">
-                    二分
+            <span class="icon-link">
+                <a href="/function%20link()%20%7B%20%5Bnative%20code%5D%20%7D">
+                    <i
+                        class="fa- fa- fa-fw"
+                    ></i>
                 </a>
             </span>
             
-        </span>
+        </div>
+        
+        
+        <div class="friend-links">
+            
+            <div class="friend-link">
+                <a target="_blank" rel="noopener" href="https://fatedshadow.github.io/">Fated_Shadow</a>
+            </div>
+            
+            <div class="friend-link">
+                <a target="_blank" rel="noopener" href="https://stemsky-oi.blog/">stemsky</a>
+            </div>
+            
+            <div class="friend-link">
+                <a target="_blank" rel="noopener" href="https://starcried.github.io/">Star_Cried</a>
+            </div>
+            
+            <div class="friend-link">
+                <a target="_blank" rel="noopener" href="https://ma-siwei.github.io/chitose.github.io/">BHX</a>
+            </div>
+            
+        </div>
         
     </div>
-    
-    <div class="content" v-pre>
-        <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P10838">题目传送门</a></p>
-<h2 id="思路">思路</h2>
-<p>这道题乍一看是一个博弈论的题，但其实稍微想想可以发现，如果小 G
-能开挂，肯定就尽量开挂，当然如果走树边的答案比开挂更优，那就走树边，还有注意如果这两种情况都大于了
-<span class="math inline">\(1e9\)</span>，那么直接强制开挂即可。</p>
-<p>因为只能开挂一次，所以预处理 S 和 T 点到所有点的距离，记为 <span
-class="math inline">\(dis_{s,i}\)</span> 和 <span
-class="math inline">\(dis_{t,i}\)</span> 那么小 G 所需的金币数量就是
-<span class="math inline">\(dis_{s,i}+dis_{t,j}+k\)</span> 当然得满足
-<span class="math inline">\(i,j\)</span> 不相邻。因为小 Y
-很正义，所以他就需要把上面这个式子中的前 <span
-class="math inline">\(m\)</span> 小封印掉，那么其实最终答案就是第 <span
-class="math inline">\(m\)</span> 小的 <span
-class="math inline">\(dis_{s,i}+dis_{t,j}+k\)</span></p>
-<p>这个的话，其实就是经典的 <span
-class="math inline">\(a_{i}+b_{j}\)</span> 的第 <span
-class="math inline">\(k\)</span> 大的问题，将 <span
-class="math inline">\(a\)</span> 或者 <span
-class="math inline">\(b\)</span>
-排序，然后二分答案即可。假如当前枚举的答案是 <span
-class="math inline">\(val\)</span>，设比 <span
-class="math inline">\(val\)</span> 小的 <span
-class="math inline">\(dis_{s,i}+dis_{t,j}+k\)</span> 的数量为 <span
-class="math inline">\(cnt\)</span>，那么当 <span
-class="math inline">\(m\le cnt\)</span> 时，<span
-class="math inline">\(r=mid\)</span>，否则 <span
-class="math inline">\(l=mid+1\)</span>，求 <span
-class="math inline">\(cnt\)</span> 的话，枚举每一个 <span
-class="math inline">\(dis_{s,i}\)</span>，在 <span
-class="math inline">\(dis_{t,i}\)</span> 上二分找到小于等于 <span
-class="math inline">\(val-dis_{s,i}\)</span> 的数量，全部加起来就是
-<span class="math inline">\(cnt\)</span>。<br />
-注意在这道题中 <span class="math inline">\(i,j\)</span> 不能相邻，所以
-<span class="math inline">\(cnt\)</span>
-再减去相邻的多统计了的即可。</p>
-<p>时间复杂度 <span class="math inline">\(O(n\log n \log
-V)\)</span>。</p>
-<h2 id="代码">代码</h2>
-<pre class="cpp"><code>// Problem: P10838 『FLA - I』庭中有奇树
-// Contest: Luogu
-// URL: https://www.luogu.com.cn/problem/P10838
-// Memory Limit: 512 MB
-// Time Limit: 1000 ms
-// 
-// Powered by CP Editor (https://cpeditor.org)
+</div>
 
-#include&lt;bits/stdc++.h&gt;
-#define int long long
-using namespace std;
-const int MAXN=1e5+10;
-const int mod1=1e9+7;
-const int mod2=998244353;
-const int inf_int=0x7f7f7f7f;
-const long long inf_long=0x7f7f7f7f7f7f7f7f;
-const double eps=1e-9;
-char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
-#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
-template&lt;typename type&gt;
-inline void read(type &amp;x)&#123;
-    x=0;
-    bool f=false;
-    char ch=getchar();
-    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
-    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
-    if(f) x=-x;
-&#125;
-template&lt;typename type,typename... args&gt;
-inline void read(type &amp;x,args&amp;... y)&#123;
-    read(x),read(y...);
-&#125;
-
-int n,m,s,t,k,K,head[MAXN],dis[2][MAXN],Dis[MAXN];
-bool vis[MAXN];
-struct node&#123;
-    int to,next,val;
-&#125;edge[MAXN&lt;&lt;1];
-
-void build(int u,int v,int w)&#123;
-    edge[++K].to=v;
-    edge[K].next=head[u];
-    edge[K].val=w;
-    head[u]=K;
-&#125;
-
-void dfs(int u,int f)&#123;
-    vis[u]=true;
-    for(int i=head[u];i;i=edge[i].next)&#123;
-        int v=edge[i].to;
-        if(vis[v]) continue;
-        dis[f==t][v]=dis[f==t][u]+edge[i].val;
-        dfs(v,f);
-    &#125;
-&#125;
-
-int chk(int val)&#123;
-    int sum=0;
-    for(int i=1;i&lt;=n;i++)&#123;
-        int z=val-dis[0][i];
-        int pos=upper_bound(Dis+1,Dis+n+1,z)-Dis-1;
-        sum+=pos;
-        for(int j=head[i];j;j=edge[j].next)&#123;
-            int v=edge[j].to;
-            if(dis[0][i]+dis[1][v]&lt;=val) sum--;
-        &#125;
-    &#125;
-    // cout&lt;&lt;val&lt;&lt;&quot; &quot;&lt;&lt;sum&lt;&lt;endl;
-    return sum;
-&#125;
-
-signed main()&#123;
-    read(n,m,k,s,t);
-    for(int i=1;i&lt;n;i++)&#123;
-        int u,v,w;
-        read(u,v,w);
-        build(u,v,w);
-        build(v,u,w);
-    &#125;
-    dfs(s,s);
-    for(int i=1;i&lt;=n;i++) vis[i]=false;
-    dfs(t,t);
-    for(int i=1;i&lt;=n;i++) Dis[i]=dis[1][i];
-    sort(Dis+1,Dis+n+1);
-    // for(int i=1;i&lt;=n;i++) cout&lt;&lt;dis[0][i]&lt;&lt;&quot; &quot;&lt;&lt;dis[1][i]&lt;&lt;endl;
-    int l=0,r=1e9;m++;
-    while(l&lt;r)&#123;
-        int mid=(l+r)&gt;&gt;1;
-        if(chk(mid)&gt;=m) r=mid;
-        else l=mid+1;
-    &#125;
-    cout&lt;&lt;min(&#123;dis[0][t],l+k,1000000000ll&#125;);
-    return 0;
-&#125;</code></pre>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
-    
-    
-    
-    
-    <div id="comment">
-        <div id="giscus-container" class="giscus"></div>
-    </div>
-    
-    
-    
     
 </div>
 
@@ -385,29 +346,6 @@ signed main()&#123;
         
     </div>
     <script src="/js/main.js"></script>
-    
-    
-<script
-    src="https://giscus.app/client.js"
-    data-repo="yzljyawa/yzljyawa.github.io"
-    data-repo-id="R_kgDOMbAUfA"
-    data-category="Announcements"
-    data-category-id="DIC_kwDOMbAUfM4CiQYe"
-    data-mapping="pathname"
-    data-strict="0"
-    data-reactions-enabled="1"
-    data-emit-metadata="0"
-    data-input-position="top"
-    data-theme="preferred_color_scheme"
-    data-lang="zh-CN"
-    crossorigin
-    async
-></script>
-
-
-
-
-
     
 </body>
 </html>
