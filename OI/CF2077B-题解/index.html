@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>NOI Linux 操作指南 | yzljyのBlog</title>
+    <title>CF2077B 题解 | yzljyのBlog</title>
     <meta name="author" content="yzljy" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -165,14 +165,14 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div class="article">
     <div>
-        <h1>NOI Linux 操作指南</h1>
+        <h1>CF2077B 题解</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2024/7/31
+            2025/3/12
         </span>
         
         <span class="category">
@@ -193,15 +193,22 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #00beff">
-                    学习指南
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #979a9a">
+                    题解
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E6%8A%80%E6%9C%AF/" style="color: #979a9a">
-                    技术
+                <a href="/tags/%E4%BA%A4%E4%BA%92%E9%A2%98/" style="color: #a5ff4d">
+                    交互题
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E6%9E%84%E9%80%A0/" style="color: #ffa400">
+                    构造
                 </a>
             </span>
             
@@ -210,94 +217,174 @@
     </div>
     
     <div class="content" v-pre>
-        <h1 id="大致介绍">大致介绍</h1>
-<h2 id="桌面">桌面</h2>
-<p>初次打开 NOI Linux 应该看见的是如下界面：（当然我这里是虚拟机）</p>
-<p><img src="/images/图片1.png" /></p>
-<h2 id="快捷键">快捷键</h2>
-<p>大部分快捷键和 Windows 差不多，常用的有如下：</p>
-<ul>
-<li>复制 Ctrl+C</li>
-<li>粘贴 Ctrl+V</li>
-<li>切换窗口 Alt+Tab</li>
-</ul>
-<h2 id="右键">右键</h2>
-<p>在屏幕上右键可唤起如下窗口：</p>
-<p><img src="/images/图片2.png" /></p>
-<h3 id="更改壁纸">更改壁纸</h3>
-<p>觉得默认壁纸太丑可点击“更换壁纸……”换一些自己相对喜欢的壁纸：（当然真正比赛的时候建议不要换）</p>
-<p>有如下壁纸：</p>
-<p><img src="/images/图片3.png" /></p>
-<p>点击自己想换的壁纸后，点右上角的×即可</p>
-<p>（ps：其他的设置最好都不要更改）</p>
-<h3 id="新建文件夹">新建文件夹</h3>
-<p>点击“新建文件夹”即可</p>
-<p>随后输入文件夹的名称：<img src="/images/图片4.png" /></p>
-<p>点击“创建”即可</p>
-<p>随后你便可以在桌面看见你新建的文件夹了：<img
-src="/images/图片5.png" /><br />
-（我这里建了一个测试用的文件夹“test”）</p>
-<p>双击即可进入该文件夹</p>
-<p>进入后长这样： <img src="/images/图片6.png" /></p>
-<h3 id="新建文件">新建文件</h3>
-<p>在 NOI Lunux 中，你并不可以像 Windows 中一样直接新建一个文件</p>
-<p>你需要这样做：</p>
-<p>1.在文件夹内右击： <img src="/images/图片7.png" />
-2.点击“在终端内打开”： <img src="/images/图片8.png" />
-3.输入如下命令：</p>
-<pre><code>touch 文件名</code></pre>
-<p>比如我要新建一个叫做test_txt的文件，就输入：</p>
-<pre><code>touch test_txt</code></pre>
-<p>按下回车，就建好啦！ <img src="/images/图片9.png" /></p>
-<h2 id="打开软件">打开软件</h2>
-<p>点击此处呼出窗口： <img src="/images/图片10.png" /> <img
-src="/images/图片11.png" /> 使用鼠标滚轮上下切换： <img
-src="/images/图片12.png" /> 建议使用 Code::Blocks 进行 C++
-程序的编写和编译 <img src="/images/图片13.png" /> 点击即可进入软件</p>
-<p>在左侧“活动栏”右击程序可呼出如下窗口： <img
-src="/images/图片14.png" /> 点击“收藏到文件夹”即可将该应用固定下来</p>
-<h1 id="c程序的编写和编译">C++程序的编写和编译</h1>
-<h2 id="配置基础设置">配置基础设置</h2>
-<p>这里我使用 Code::Blocks 做示范，其他的比如 Sublime Text
-的使用可以左转百度</p>
-<p>在打开 Code::Blocks 的时候，你应该看见如下界面： <img
-src="/images/图片15.png" /> 发现界面十分的乱，杂，对吧？</p>
-<p>我们可以进行一些简单的配置：</p>
-<p>1.在此处右键可以呼出： <img src="/images/图片16.png" />
-这边建议改成这样： <img src="/images/图片17.png" />
-拖动这些地方改成这样比较好： <img src="/images/图片18.png" />
-以下是常用按钮的作用： <img src="/images/图片19.png" /></p>
-<p>2.自动保存</p>
-<p>点击“Settings”： <img src="/images/图片20.png" />
-再点击“Environment…”： <img src="/images/图片21.png" />
-在右边标箭头这边使用鼠标滚轮向下滚动： <img src="/images/图片22.png" />
-找到“Autosave”： <img src="/images/图片23.png" /> 将这两项打勾： <img
-src="/images/图片24.png" /> 最后点“OK”即可： <img
-src="/images/图片25.png" /></p>
-<h2 id="新建c文件">新建C++文件</h2>
-<p>依次点击： <img src="/images/图片26.png" /> 你就会看见如下界面： <img
-src="/images/图片27.png" /> 随便写一个程序试试： <img
-src="/images/图片28.png" /></p>
-<h2 id="编译并运行c源程序">编译并运行C++源程序</h2>
-<p>点击这里编译并运行： <img src="/images/图片29.png" />
-若你还没有保存过文件，点击后会是这样的： <img
-src="/images/图片30.png" />
-在上方输入文件，记得在最后加上“.cpp”，中间选择保存的位置，最后点击“Save”即可保存：
-<img src="/images/图片31.png" /> 随后你就可以见到如下界面： <img
-src="/images/图片32.png" /> 输入数据按下回车： <img
-src="/images/图片33.png" /> 恭喜你运行成功了！</p>
-<p>当然这样编译有很大的弊端，比如没开O2之类的</p>
-<p>我们更常使用如下命令进行编译：</p>
-<p>ps：在NOI考试的PDF中，第一页通常会给出编译命令，一般是这样的：</p>
-<pre><code>-O2 -std=c++14</code></pre>
-<p>之类似的</p>
-<p>我们在进行编译的时候，先打开C++源代码所在的文件夹，再呼出终端（方法见上文），再输入：</p>
-<pre><code>g++ 给出的编译命令 -o 源程序名字 源程序名字.cpp</code></pre>
-<p>比如我这里编译就是这样的： <img src="/images/图片34.png" />
-按下回车就编译好了</p>
-<p>要运行程序，输入</p>
-<pre><code>./源程序名字</code></pre>
-<p>比如我这里就是这样的：</p>
+        <h2 id="前言">前言</h2>
+<p>场上被 C 题卡住了，考完第二天一看，这么简单……<span
+class="math inline">\(30\)</span> 分钟不到就切了……<br />
+难度是 <span
+class="math inline">\(2058\)</span>，个人感觉很简单，建议评绿。</p>
+<h2 id="题意">题意</h2>
+<p>有两个未知数 <span class="math inline">\(x\)</span> 和 <span
+class="math inline">\(y\)</span>，你现在可以进行至多 <span
+class="math inline">\(2\)</span> 次询问，每次询问任选一个整数 <span
+class="math inline">\(n(0\le n&lt;2^{30})\)</span>，询问的结果为 <span
+class="math inline">\((n|x)+(n|y)\)</span> 的值。最后会给定一个数 <span
+class="math inline">\(m\)</span>，你需要输出 <span
+class="math inline">\((m|x)+(m|y)\)</span> 的值。</p>
+<h2 id="思路">思路</h2>
+<p>首先我们知道，若 <span class="math inline">\(x\)</span>
+的某一位二进制位为 <span class="math inline">\(0\)</span>，而 <span
+class="math inline">\(y\)</span> 的这一位为 <span
+class="math inline">\(1\)</span>，不妨令这一位为 <span
+class="math inline">\(i\)</span>，那么 <span
+class="math inline">\((x|n)+(y|n)=\left((x+2^{i})|n\right)+\left((y-2^{i})|n\right)\)</span>
+因此能满足条件的 <span class="math inline">\(x\)</span> 和 <span
+class="math inline">\(y\)</span> 是很多的，我们只需要找出一组即可。</p>
+<p>我们不妨分类讨论一下，列一张表：<br />
+（<span class="math inline">\(ans\)</span> 表示 <span
+class="math inline">\((n|x)+(n|y)\)</span> 的值，<span
+class="math inline">\(ans_{i}=2\)</span>
+的地方其实应该是要进一位，但为了方便和理解，暂时这么表示一下）</p>
+<table>
+<thead>
+<tr>
+<th><span class="math inline">\(x_{i}\)</span></th>
+<th><span class="math inline">\(y_{i}\)</span></th>
+<th><span class="math inline">\(n_{i}\)</span></th>
+<th><span class="math inline">\(ans_{i}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(0\)</span></td>
+<td><span class="math inline">\(0\)</span></td>
+<td><span class="math inline">\(0\)</span></td>
+<td><span class="math inline">\(0\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(0\)</span></td>
+<td><span class="math inline">\(0\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(0\)</span></td>
+<td><span class="math inline">\(2\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(0\)</span></td>
+<td><span class="math inline">\(0\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(2\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(0\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(2\)</span></td>
+</tr>
+<tr>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(2\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>正如前文所说，<span class="math inline">\(x_{i}\)</span> 和 <span
+class="math inline">\(y_{i}\)</span> 是可以交换的，所以只列了 <span
+class="math inline">\(6\)</span> 种情况。<br />
+从表中，我们可以看出，<span class="math inline">\(n_{i}\)</span> 为
+<span class="math inline">\(0\)</span> 可以表现出 <span
+class="math inline">\(x_{i},y_{i}\)</span> 之间的关系，而 <span
+class="math inline">\(n_{i}\)</span> 为 <span
+class="math inline">\(1\)</span> 则可以隐藏这种关系。</p>
+<p>那可能有人就会说，那直接问一次 <span
+class="math inline">\(n=0\)</span> 不就行了吗？<br />
+这显然是不可以的。假如你在 <span class="math inline">\(ans_{i}\)</span>
+这一位是 <span
+class="math inline">\(1\)</span>，但你实际上并不知道这一位，是 <span
+class="math inline">\(x_{i}=1\)</span> 和 <span
+class="math inline">\(y_{i}=0\)</span> 的结果，还是 <span
+class="math inline">\(x_{i-1}=1\)</span> 和 <span
+class="math inline">\(y_{i-1}=1\)</span> 的结果。（假设其他位都为 <span
+class="math inline">\(0\)</span>，毕竟只是举任意一个反例。）</p>
+<p>那么就可以想到隔一位确定一位，这样的话，就可以确定，这一位的值到底是因为什么了。然后询问两次，这两次刚好问的是不同的位，凑起来刚好是所有位。<br />
+也就是第一次问 <span
+class="math inline">\(\begin{matrix}\underbrace{10\dots10}\\15个10\end{matrix}\)</span>，第二次问
+<span
+class="math inline">\(\begin{matrix}\underbrace{01\dots01}\\15个01\end{matrix}\)</span></p>
+<p>每次得到 <span class="math inline">\(ans\)</span>
+后，先将原先用于隐藏关系的 <span class="math inline">\(1\)</span>
+产生的值去掉，再来计算 <span class="math inline">\(x\)</span> 和 <span
+class="math inline">\(y\)</span> 对应的位置的值，最后对于 <span
+class="math inline">\(m\)</span>，直接求答案即可。</p>
+<h2 id="代码">代码</h2>
+<pre class="cpp"><code>// Problem: E. Finding OR Sum
+// Contest: Codeforces - Codeforces Round 1008 (Div. 2)
+// URL: https://codeforces.com/contest/2078/problem/E
+// Memory Limit: 256 MB
+// Time Limit: 2000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int MAXN=1e5+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x)&#123;
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+&#125;
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y)&#123;
+    read(x),read(y...);
+&#125;
+
+int T,a,b,m,x,y,val1,val2;
+
+int solve()&#123;
+    x=y=0;
+    for(int i=0;i&lt;=29;i+=2) val1-=(1&lt;&lt;i+1);
+    for(int i=1;i&lt;=29;i+=2) val2-=(1&lt;&lt;i+1);
+    for(int i=0;i&lt;=29;i+=2)&#123;
+        if(val1&amp;(1&lt;&lt;i+1)) x+=(1&lt;&lt;i+1);
+        else if(val1&amp;(1&lt;&lt;i+2)) x+=(1&lt;&lt;i+1),y+=(1&lt;&lt;i+1);
+    &#125;
+    for(int i=1;i&lt;=29;i+=2)&#123;
+        if(val2&amp;(1&lt;&lt;i-1)) x+=(1&lt;&lt;i-1);
+        else if(val2&amp;(1&lt;&lt;i)) x+=(1&lt;&lt;i-1),y+=(1&lt;&lt;i-1);
+    &#125;
+    return (m|x)+(m|y);
+&#125;
+
+signed main()&#123;
+    cin&gt;&gt;T;
+    for(int i=0;i&lt;=29;i+=2) a+=(1&lt;&lt;i);
+    for(int i=1;i&lt;=29;i+=2) b+=(1&lt;&lt;i);
+    while(T--)&#123;
+        cout&lt;&lt;a&lt;&lt;endl;
+        cin&gt;&gt;val1;
+        cout&lt;&lt;b&lt;&lt;endl;
+        cin&gt;&gt;val2;
+        cout&lt;&lt;&#39;!&#39;&lt;&lt;endl;
+        cin&gt;&gt;m;
+        cout&lt;&lt;solve()&lt;&lt;endl;
+    &#125;
+    return 0;
+&#125;</code></pre>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
     
