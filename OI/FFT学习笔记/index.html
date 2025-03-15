@@ -193,14 +193,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%A4%9A%E9%A1%B9%E5%BC%8F/" style="color: #e74c3c">
+                <a href="/tags/%E5%A4%9A%E9%A1%B9%E5%BC%8F/" style="color: #a5ff4d">
                     多项式
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #979a9a">
+                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #00beff">
                     学习指南
                 </a>
             </span>
@@ -573,13 +573,12 @@ class="math display">\[
 \]</span>
 可能有人发现，最终的位置刚好就是二进制翻转后的值。注意！是<strong>翻转</strong>，而不是<strong>反转</strong>。<br />
 那么怎么进行二进制翻转呢？</p>
-<h4 id="朴素法">朴素法</h4>
+<h4 id="二进制翻转">二进制翻转</h4>
 <p>对于每一个数，我们一位一位进行翻转。<br />
 但这样的时间复杂度是多少呢？一个数有 <span class="math inline">\(O(log
 n)\)</span> 位二进制位，总共 <span class="math inline">\(O(n)\)</span>
 个数，因此时间复杂度是 <span class="math inline">\(O(n\log
 n)\)</span>，你这不但没有优化常数，反倒有可能增加了常数。</p>
-<h2 id="二递推法">二、递推法</h2>
 <p>我们不妨令 <span class="math inline">\(rev(i)\)</span> 表示将数字
 <span class="math inline">\(i\)</span> 在二进制下翻转后的值。 我们在求
 <span class="math inline">\(rev(i)\)</span>
@@ -598,41 +597,20 @@ class="math inline">\(\left\lfloor\dfrac{i}{2}\right\rfloor\)</span>
 for(int i=0;i&lt;n;i++) rev[i]=(rev[i&gt;&gt;1]&gt;&gt;1)|(i&amp;1&lt;&lt;BIT-1);</code></pre>
 <p>那么，因为是递推，所以时间复杂度也就是 <span
 class="math inline">\(O(n)\)</span>
-的，而且我们可以将递归改成递推，常数还能更小。</p>
-<p>这样的话，我们就可以写出递推，而不是递归<br />
-效率就会高很多<br />
-好，那我们怎么进行递推来得出答案呢？<br />
-<del>参见oi-wiki<a
-target="_blank" rel="noopener" href="https://oi-wiki.org/math/poly/fft/#%E8%9D%B6%E5%BD%A2%E8%BF%90%E7%AE%97%E4%BC%98%E5%8C%96">蝶形运算优化</a></del></p>
-<p>根据这个方法的性质<br />
-我们知道它是从小区间转移到大的区间 <span class="math inline">\((2\to
-4\to 8\to \dots \to n)\)</span></p>
-<p>所以我们 <del>考虑区间DP</del> 利用区间DP的思想（可以这么说吧）<br />
-设当前小区间的长度为 <span class="math inline">\(k\)</span><br />
-先枚举每个小区间的起点<br />
-每个小区间内:<br />
-前 <span class="math inline">\(\cfrac{k}{2}\)</span> 个数对应的 <span
-class="math inline">\(f\)</span> 就是原来所说的 <span
-class="math inline">\(f1\)</span><br />
-后 <span class="math inline">\(\cfrac{k}{2}\)</span> 个数对应的 <span
-class="math inline">\(f\)</span> 就是原来所说的 <span
-class="math inline">\(f2\)</span><br />
-再根据先前的结论</p>
+的，而且我们可以将原先的计算形式从递归改成递推，常数还能更小。</p>
+<h4 id="合并答案">合并答案</h4>
+<p>根据 FFT 的过程，我们知道它是从小区间贡献到大的区间 <span
+class="math inline">\((2\to 4\to 8\to \dots \to n)\)</span></p>
+<p>所以我们利用区间DP的思想（可以这么说吧）。<br />
+回顾先前的式子：</p>
 <p><span class="math display">\[
-\Large
-f(\omega ^{k}_{n})=
-\left\{\begin{matrix}
-  f1(\omega ^{k}_{\frac{n}{2} })+\omega _{n}^{k}\cdot f2(\omega
-^{k}_{\frac{n}{2} })(0\le k&lt; \cfrac{n}{2} )\\  
-  \\
-  f1(\omega _{\frac{n}{2} }^{k-\frac{n}{2}})-\omega
-_{n}^{k-\frac{n}{2}}\cdot f2(\omega _{\frac{n}{2}
-}^{k-\frac{n}{2}})(\cfrac{n}{2}\le k&lt;n)\\
-\end{matrix}\right.
+f(\omega_{n}^{k})=
+\begin{cases}
+p+q,0\le k&lt;\dfrac{n}{2}\\
+p-q,\dfrac{n}{2}\le k&lt;n
+\end{cases}
 \]</span></p>
-<p>可以将这 <span class="math inline">\(k\)</span>
-个数转移到新的位置上<br />
-代码如下</p>
+<p>我们便可以写出代码如下：</p>
 <pre class="cpp"><code>for(int k=2;k&lt;=n;k*=2)&#123;
     fs omega=fs(cos(2*pi/k),sin(z*2*pi/k));
     for(int i=0;i&lt;n;i+=k)&#123;
@@ -645,41 +623,16 @@ _{n}^{k-\frac{n}{2}}\cdot f2(\omega _{\frac{n}{2}
         &#125;
     &#125;
 &#125;</code></pre>
-<p>ps:在 IDFT（快速傅里叶逆变换）的时候，要乘上 <span
-class="math inline">\(-1\)</span> 即：</p>
-<pre class="cpp"><code>if(z==-1)&#123;//z是判断是否为IDFT的变量，当z==-1是则当前为IDFT
-    for(int i=0;i&lt;n;i++)&#123;
-        c[i].real(c[i].real()/n);
-    &#125;
-&#125;</code></pre>
-<p>最后只需要</p>
-<pre class="cpp"><code>fft(a,1);//将a数进行FFT
-fft(b,1);//将b数进行FFT
-for(int i=0;i&lt;n;i++) a[i]*=b[i];//相乘
-fft(a,-1);//将所得到的a进行逆FFT(IDFT)</code></pre>
-<p>最后的最后，只需要把 <span class="math inline">\(a\)</span>
-数组的答案输出就行了</p>
-<pre class="cpp"><code>for(int i=0;i&lt;n;i++)&#123;
-    ans[i]+=a[i].real()+0.5;
-    ans[i+1]+=ans[i]/10;
-    ans[i]%=10;
-&#125;</code></pre>
-<p>注意 <span class="math inline">\(ans\)</span>
-数组是倒着来的，需要倒着输出<br />
-而且因为 <span class="math inline">\(n\)</span> 的值必须为
-<code>2</code> 的整数次幂<br />
-所以会有前导零，需要去掉(我的方法较笨，不太美观，这里是可以优化的)<br />
-代码如下：</p>
-<pre class="cpp"><code>int q;
-for(int i=n-1;i&gt;=0;i--)&#123;
-    if(ans[i]!=0)&#123;
-        q=i;
-        break;
-    &#125;
-&#125;
-for(int i=q;i&gt;=0;i--) cout&lt;&lt;ans[i];</code></pre>
-<p>好，到这里就结束了<br />
-<code>AC</code> 代码如下：</p>
+<p>在进行 IFFT 的时候，因为我们用的是 单位根 的倒数，也就是 <span
+class="math inline">\(\omega_{n}^{-k}=\cos\dfrac{k}{n}2\pi-\sin\dfrac{k}{n}2\pi
+i\)</span> 可以画图思考一下为什么只需要将 <span
+class="math inline">\(\sin\)</span> 的部分变成负的就行了。最后别忘记除以
+<span class="math inline">\(n\)</span>。</p>
+<h3 id="三次变两次">三次变两次</h3>
+<p>不会xwx</p>
+<h2 id="代码">代码</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1919">P1919
+【模板】高精度乘法 | A*B Problem 升级版</a></p>
 <pre class="cpp"><code>#include&lt;bits/stdc++.h&gt;
 using namespace std;
 
