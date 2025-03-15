@@ -193,14 +193,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%A4%9A%E9%A1%B9%E5%BC%8F/" style="color: #a5ff4d">
+                <a href="/tags/%E5%A4%9A%E9%A1%B9%E5%BC%8F/" style="color: #ffa400">
                     多项式
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #00beff">
+                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #a5ff4d">
                     学习指南
                 </a>
             </span>
@@ -233,25 +233,29 @@ class="math inline">\(\sqrt{x}\)</span> 才是有意义的。<br />
 呢？数学家们定义了一种新的数：<code>虚数</code>。相对应的，我们一般用的数，称为<code>实数</code>，用
 <span class="math inline">\(\mathbb{R}\)</span> 表示。<br />
 虚数的单位是 <span
-class="math inline">\(i\)</span>，你可能会问。实数的单位是什么，其实是
+class="math inline">\(\mathrm{i}\)</span>，你可能会问。实数的单位是什么，其实是
 <span class="math inline">\(1\)</span>。所以你大概可以将 <span
-class="math inline">\(i\)</span> 当成虚数集的 <span
+class="math inline">\(\mathrm{i}\)</span> 当成虚数集的 <span
 class="math inline">\(1\)</span>。因为 <span
-class="math inline">\(\sqrt{-1}=i\)</span>，所以有 <span
-class="math inline">\(i^{2}=-1\)</span>，这点很重要，记住。</p>
+class="math inline">\(\sqrt{-1}=\mathrm{i}\)</span>，所以有 <span
+class="math inline">\(\mathrm{i}^{2}=-1\)</span>，这点很重要，记住。</p>
 <p>虚数是有四则运算的，也就是：</p>
 <ul>
-<li><span class="math inline">\(ai+bi=(a+b)i\)</span><br />
+<li><span
+class="math inline">\(a\mathrm{i}+b\mathrm{i}=(a+b)\mathrm{i}\)</span><br />
 </li>
-<li><span class="math inline">\(ai-bi=(a-b)i\)</span><br />
+<li><span
+class="math inline">\(a\mathrm{i}-b\mathrm{i}=(a-b)\mathrm{i}\)</span><br />
 </li>
-<li><span class="math inline">\(ai\times bi=abi^{2}=-ab\)</span></li>
-<li><span class="math inline">\(ai\div bi=\dfrac{a}{b}i\)</span></li>
+<li><span class="math inline">\(a\mathrm{i}\times
+b\mathrm{i}=ab\mathrm{i}^{2}=-ab\)</span></li>
+<li><span class="math inline">\(a\mathrm{i}\div
+b\mathrm{i}=\dfrac{a}{b}\mathrm{i}\)</span></li>
 </ul>
 <p>而<code>复数</code>则是一个<code>实数</code>加上一个<code>虚数</code>，一般表示为
-<span class="math inline">\(a+bi\)</span>。其中，<span
+<span class="math inline">\(a+b\mathrm{i}\)</span>。其中，<span
 class="math inline">\(a\)</span> 称为<code>实部</code>，<span
-class="math inline">\(bi\)</span> 称为<code>虚部</code>。<br />
+class="math inline">\(b\mathrm{i}\)</span> 称为<code>虚部</code>。<br />
 我们知道，一条数轴可以表示出所有<code>实数</code>，那么我们加上一条与之垂直的数轴，用来表示<code>虚数</code>，那么在这个二维平面上的点，都是一个复数，而这个点的
 <span class="math inline">\(x\)</span>
 坐标则是这个复数的<code>实部</code>，<span
@@ -276,8 +280,8 @@ class="math inline">\(\Delta=b^{2}-4ac\)</span>，初中老师告诉我们，当
 class="math inline">\(\Delta=2^{2}-4\times2\times1=-4\)</span>，如果我们强行带入求根公式中可以得到：
 <span class="math display">\[
 \begin{cases}
-    x_{1}=\dfrac{-b+\sqrt{\Delta}}{2a}=\dfrac{-2+\sqrt{-4}}{2}=-1+i\\
-    x_{2}=\dfrac{-b-\sqrt{\Delta}}{2a}=\dfrac{-2-\sqrt{-4}}{2}=-1-i
+    x_{1}=\dfrac{-b+\sqrt{\Delta}}{2a}=\dfrac{-2+\sqrt{-4}}{2}=-1+\mathrm{i}\\
+    x_{2}=\dfrac{-b-\sqrt{\Delta}}{2a}=\dfrac{-2-\sqrt{-4}}{2}=-1-\mathrm{i}
 \end{cases}
 \]</span>
 这两个根，也被称为原方程的<code>复数根</code>，所以，你现在应该能明白为什么初中求解一元二次方程的时候，要说
@@ -286,9 +290,10 @@ class="math inline">\(\Delta=2^{2}-4\times2\times1=-4\)</span>，如果我们强
 <p>复数是满足四则运算的。</p>
 <ul>
 <li><span
-class="math inline">\((a+ci)+(b+di)=(a+b)+(c+d)i\)</span><br />
+class="math inline">\((a+c\mathrm{i})+(b+d\mathrm{i})=(a+b)+(c+d)\mathrm{i}\)</span><br />
 </li>
-<li><span class="math inline">\((a+ci)-(b+di)=(a-b)+(c-d)i\)</span></li>
+<li><span
+class="math inline">\((a+c\mathrm{i})-(b+d\mathrm{i})=(a-b)+(c-d)\mathrm{i}\)</span></li>
 </ul>
 <p>容易发现，复数的加减法是满足交换律和结合律的。也就是：</p>
 <ul>
@@ -300,9 +305,10 @@ class="math inline">\(z_{1}+z_{2}+z_{3}=z_{1}+(z_{2}+z_{3})\)</span></li>
 </ul>
 <p>联系一下向量。我们发现这也同样满足向量的加减法。（也就是四边形法则）<br />
 <img src="\images\复数2.png" /><br />
-上图表示了 <span class="math inline">\(z_{1}=3+5i,z_{2}=4-2i\)</span>
+上图表示了 <span
+class="math inline">\(z_{1}=3+5\mathrm{i},z_{2}=4-2\mathrm{i}\)</span>
 两个复数的加法，我们知道其等于 <span
-class="math inline">\(z_{3}=7+3i\)</span>，我们又知道 <span
+class="math inline">\(z_{3}=7+3\mathrm{i}\)</span>，我们又知道 <span
 class="math inline">\(\overrightarrow{OB}+\overrightarrow{OF}=\overrightarrow{OE}\)</span>。而这几个向量又刚好分别对应了
 <span class="math inline">\(z_{1},z_{2},z_{3}\)</span>。<br />
 减法同理。</p>
@@ -310,25 +316,26 @@ class="math inline">\(\overrightarrow{OB}+\overrightarrow{OF}=\overrightarrow{OE
 class="math inline">\(z\)</span> 的共轭复数用 <span
 class="math inline">\(\overline{z}\)</span> 来表示。具体是什么呢？也就是
 <span class="math inline">\(z\)</span> 的虚部取反，比如 <span
-class="math inline">\(z_{1}=3+5i\)</span>，<span
-class="math inline">\(\overline{z_{1}}=3-5i\)</span>。<br />
+class="math inline">\(z_{1}=3+5\mathrm{i}\)</span>，<span
+class="math inline">\(\overline{z_{1}}=3-5\mathrm{i}\)</span>。<br />
 乘法是很简单的：</p>
 <ul>
 <li><span
-class="math inline">\((a+ci)\times(b+di)=ab+adi+bci+cdi^{2}=(ab-cd)+(ad+bc)i\)</span></li>
+class="math inline">\((a+c\mathrm{i})\times(b+d\mathrm{i})=ab+ad\mathrm{i}+bc\mathrm{i}+cd\mathrm{i}^{2}=(ab-cd)+(ad+bc)\mathrm{i}\)</span></li>
 </ul>
 <p>这个同样是和向量乘法相同的，也就是<code>幅角相加，辐长相乘</code><br />
 <img src="\images\复数3.png" /><br />
-上图表示了 <span class="math inline">\(z_{1}=3+5i,z_{2}=4-2i\)</span>
+上图表示了 <span
+class="math inline">\(z_{1}=3+5\mathrm{i},z_{2}=4-2\mathrm{i}\)</span>
 两个复数的乘法，我们知道其等于 <span
-class="math inline">\(z_{3}=22+14i\)</span>。我们又知道 <span
+class="math inline">\(z_{3}=22+14\mathrm{i}\)</span>。我们又知道 <span
 class="math inline">\(\overrightarrow{OB}\times\overrightarrow{OF}=\overrightarrow{OK}\)</span>。而这几个向量又刚好分别对应了
 <span class="math inline">\(z_{1},z_{2},z_{3}\)</span>。（<span
 class="math inline">\(\alpha+\gamma=\delta,OB\times OF=OK\)</span>）</p>
 <p>除法相对比较复杂：</p>
 <ul>
 <li><span
-class="math inline">\(\dfrac{a+ci}{b+di}=\dfrac{(a+ci)(b-di)}{(b+di)(b-di)}=\dfrac{(ab+cd)+(bc-ad)i}{b^{2}+d^{2}}=\dfrac{ab+cd}{b^{2}+d^{2}}+\dfrac{bc-ad}{b^{2}+d^{2}}i\)</span></li>
+class="math inline">\(\dfrac{a+c\mathrm{i}}{b+d\mathrm{i}}=\dfrac{(a+c\mathrm{i})(b-d\mathrm{i})}{(b+d\mathrm{i})(b-d\mathrm{i})}=\dfrac{(ab+cd)+(bc-ad)\mathrm{i}}{b^{2}+d^{2}}=\dfrac{ab+cd}{b^{2}+d^{2}}+\dfrac{bc-ad}{b^{2}+d^{2}}\mathrm{i}\)</span></li>
 </ul>
 <p>共轭复数的加入非常的巧妙。因为向量没有除法，所以也就不说了。</p>
 <h3 id="单位根">单位根</h3>
@@ -393,7 +400,7 @@ class="math inline">\(\omega_{n}^{k}\)</span> 对应的点为 <span
 class="math inline">\((\cos\dfrac{k}{n}2\pi,\sin\dfrac{k}{n}2\pi)\)</span>，根据前文所讲，我们便求出了
 <span class="math inline">\(\omega_{n}^{k}\)</span> 对应的复数 <span
 class="math inline">\(\cos\dfrac{k}{n}2\pi+\sin\dfrac{k}{n}2\pi
-i\)</span>。</p>
+\mathrm{i}\)</span>。</p>
 <h3 id="系数表示法和点值表示法">系数表示法和点值表示法</h3>
 <p>我们现在有一个多项式 <span
 class="math inline">\(f(x)=x^{2}+5x-3\)</span>。现在 <span
@@ -625,7 +632,7 @@ p-q,\dfrac{n}{2}\le k&lt;n
 &#125;</code></pre>
 <p>在进行 IFFT 的时候，因为我们用的是 单位根 的倒数，也就是 <span
 class="math inline">\(\omega_{n}^{-k}=\cos\dfrac{k}{n}2\pi-\sin\dfrac{k}{n}2\pi
-i\)</span> 可以画图思考一下为什么只需要将 <span
+\mathrm{i}\)</span> 可以画图思考一下为什么只需要将 <span
 class="math inline">\(\sin\)</span> 的部分变成负的就行了。最后别忘记除以
 <span class="math inline">\(n\)</span>。</p>
 <h3 id="三次变两次">三次变两次</h3>
