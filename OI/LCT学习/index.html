@@ -193,21 +193,21 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #979a9a">
+                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #a5ff4d">
                     学习指南
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/LCT/" style="color: #a5ff4d">
+                <a href="/tags/LCT/" style="color: #ffa400">
                     LCT
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/" style="color: #ffa400">
+                <a href="/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/" style="color: #00beff">
                     平衡树
                 </a>
             </span>
@@ -971,6 +971,41 @@ int main()&#123;
     &#125;
     return 0;
 &#125;</code></pre>
+<p>还没结束！</p>
+<p>在平衡树的相关模板中，除了<a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3369">【模板】普通平衡树</a>，<a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6136">【模板】普通平衡树（数据加强版）</a>外，还有一道<a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3391">【模板】文艺平衡树</a>。<del>（当然还有<a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3835">【模板】可持久化平衡树</a>和<a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5055">【模板】可持久化文艺平衡树</a>，但这个是
+FHQ 干的事，我还不会。似乎还有一个神秘的<a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6164">【模板】后缀平衡树</a>）</del></p>
+<h3 id="文艺平衡树">文艺平衡树</h3>
+<p>所谓文艺平衡树，其实是让你支持一种操作，区间翻转。<br />
+这个操作看起来不太可做，实际上，我们可以利用二叉搜索树的性质来实现。</p>
+<p>我们知道，二叉搜索树的<code>中序遍历</code>也就是原序列。<br />
+我们为了实现<code>区间翻转</code>的操作，我们不妨修改一下，我们改成：</p>
+<blockquote>
+<p>中序遍历是原序列从左到右的遍历结果。</p>
+</blockquote>
+<p>那么我们又可以得到这些性质：</p>
+<ul>
+<li>Splay 上每一个元素代表了原序列的每一个元素。<br />
+</li>
+<li>Splay 上的每一棵子树都代表了原序列中一段的数。</li>
+</ul>
+<p>那么，在初始建树的时候，我们只需要按照序列原先的顺序，挨个挨个建一条只有左儿子的链就行了。</p>
+<pre class="cpp"><code>void build(int n)&#123;
+    for(int i=1;i&lt;=n+2;i++)&#123;
+        son[++cnt][0]=root;
+        if(root!=0) fa[root]=cnt;
+        root=cnt;
+        val[cnt]=i-1;
+    &#125;
+    Splay(1);//从下往上更新一下节点信息
+&#125;</code></pre>
+<p>那么我们怎么翻转呢？<br />
+显然我们只需要将一棵子树的左右儿子挨个挨个调换位置就可以了。</p>
 <p>接下来，就正式进入 <code>LCT</code> 的部分了~</p>
 <h2 id="lct">LCT</h2>
 <p>现在，你应该已经掌握了所有的前置芝士，是时候真正进入LCT的部分了！！！</p>
@@ -1039,9 +1074,8 @@ class="math inline">\(\textcolor{blue}{辅助树}\)</span>可能就会是这样�
 <p>那么我们现在就需要思考，<span
 class="math inline">\(\textcolor{blue}{辅助树}\)</span>是如何实现 动态树
 这么一个难题的呢？</p>
-<p>我认为，如果只是去讲具体什么 <code>Access</code>
-函数的实现之类的，可能并不能算是真正了解 LCT
-的原理，我在这里尽量会讲得更清楚。</p>
+<p>既然叫做 Link-Cut Tree，那么肯定就要 Link 和
+Cut，下面我们来看看怎么连边。</p>
 <h4 id="如何连边">如何连边</h4>
 <p>拿这么两棵树举例：</p>
 <p><img src="/images/LCT18.png" /> <img src="/images/LCT20.png" /></p>
@@ -1073,7 +1107,8 @@ class="math inline">\(\textcolor{blue}{辅助树}\)</span>的根的位置。<br 
 我们定义一种新的函数叫做 <code>access(x)</code>，表示将 <code>x</code>
 这个点与其当前变所在的<span
 class="math inline">\(\textcolor{blue}{辅助树}\)</span>的根结点弄到同一个
-Splay 中。<br />
+Splay 中。也就是将 <code>x</code>
+到根的路径变成一条<code>实链</code>。<br />
 那么在这个例子中，我们进行一次 <code>access(G)</code>，再
 <code>Splay(G)</code> 一下，最后，连接 <span
 class="math inline">\(G\)</span> 和 <span
@@ -1097,7 +1132,7 @@ class="math inline">\(A\)</span>
 class="math inline">\(\textcolor{green}{原树}\)</span>的根就可以了。<br />
 我们称这样将某个点变成其所在的<span
 class="math inline">\(\textcolor{green}{原树}\)</span>的根的操作为
-<code>makeroot(x)</code>，当然，我们只能在<span
+<code>makeroot(x)</code>，当然，我们依然只能在<span
 class="math inline">\(\textcolor{blue}{辅助树}\)</span>上进行一些操作。<br />
 那么这个 <code>makeroot(x)</code> 函数以及前文中的
 <code>access(x)</code> 函数分别该怎样实现呢？</p>
@@ -1117,13 +1152,105 @@ class="math inline">\(\textcolor{blue}{辅助树}\)</span>可能长这样：</p>
 class="math inline">\(\textcolor{green}{原树}\)</span>变为这样：</p>
 <p><img src="https://oi-wiki.org/ds/images/lct-access-3.svg" /></p>
 <p>（红色的边表示的是有虚实边类型切换的边）</p>
-<p>为了保证<span
-class="math inline">\(\textcolor{blue}{辅助树}\)</span>的性质，我们需要将原来
-<span class="math inline">\(N\)</span> 到 <span
+<p>首先我们肯定需要先将 <span class="math inline">\(N\)</span>
+转到其所在的 Splay 的根处，这样我们才能继续往上嘛。<br />
+根据 <code>access</code> 的定义，我们需要将原来 <span
+class="math inline">\(N\)</span> 到 <span
 class="math inline">\(O\)</span>
-的<code>实边</code>变为<code>虚边</code>。</p>
-<p>那么在<span
-class="math inline">\(\textcolor{blue}{辅助树}\)</span>上，我们首先需要</p>
+的<code>实边</code>变为<code>虚边</code>。<br />
+根据<span
+class="math inline">\(\textcolor{blue}{辅助树}\)</span>认父不认子的特点，我们可以直接将
+<span class="math inline">\(N\)</span> 的儿子变成不存在。<br />
+那么<span
+class="math inline">\(\textcolor{blue}{辅助树}\)</span>就变成了这样：</p>
+<p><img src="https://oi-wiki.org/ds/images/lct-access-4.svg" /></p>
+<p>然后，我们需要把 <span class="math inline">\(N\)</span> 与其在<span
+class="math inline">\(\textcolor{blue}{辅助树}\)</span>上的父亲 <span
+class="math inline">\(I\)</span> 打通。根据前面所讲，<span
+class="math inline">\(I\)</span> 点也就是 <span
+class="math inline">\(N\)</span> 目前所在的实链的顶端的点的父亲。<br />
+那么我们要将 <span class="math inline">\(N\)</span> 与 <span
+class="math inline">\(I\)</span> 打通，肯定需要先将 <span
+class="math inline">\(I\)</span> 原来的实儿子取消掉。这个我们只需要先将
+<span class="math inline">\(I\)</span> 点转到其所在的 Splay 的根处，然后
+<span class="math inline">\(I\)</span> 原来的实儿子一定位于其在 Splay
+上的<strong>右儿子</strong>处，直接将 <span
+class="math inline">\(rson_{I}\)</span> 变成不存在就行了。<br />
+然后，我们将 <span class="math inline">\(N\)</span> 设置为 <span
+class="math inline">\(I\)</span> 的右儿子即可。<br />
+那么<span
+class="math inline">\(\textcolor{blue}{辅助树}\)</span>也就变成了这样：</p>
+<p><img src="https://oi-wiki.org/ds/images/lct-access-5.svg" /></p>
+<p>重复上述操作，直到 <span class="math inline">\(A\)</span> 和 <span
+class="math inline">\(N\)</span> 在同一棵 Splay 中。</p>
+<p><img src="https://oi-wiki.org/ds/images/lct-access-6.svg" /></p>
+<p><img src="https://oi-wiki.org/ds/images/lct-access-7.svg" /></p>
+<p>那么 <code>access(N)</code> 的任务就完成啦！</p>
+<p>总结一下，<code>access</code> 操作也就是以下几步：</p>
+<ol type="1">
+<li>将当前点转到根上<br />
+</li>
+<li>将当前点的右儿子换成上一个点<br />
+</li>
+<li>更新一下当前点的信息<br />
+</li>
+<li>将当前点换成当前点的父亲</li>
+</ol>
+<p>代码如下：</p>
+<pre class="cpp"><code>int access(int u)&#123;
+    for(int now=0;u;now=u,u=fa[u]) Splay(u),son[u][1]=now,pushup(u);
+    return now;
+&#125;</code></pre>
+<p>注意到这里的 <code>access</code> 函数有一个返回值。<br />
+这个返回值代表的是：最后一次进行虚实边变换的时候，虚边的父亲对应的编号。就比如在上面的例子中，最后一次变换的是
+<span class="math inline">\(A\)</span> 到 <span
+class="math inline">\(B\)</span> 这条边，这两条边的父亲节点都是 <span
+class="math inline">\(A\)</span>，所以最后会返回 <span
+class="math inline">\(A\)</span>。<br />
+这个东西有什么用呢？我们后面再说。</p>
+<h4 id="makeroot">makeroot</h4>
+<p><code>makeroot</code> 的重要性不亚于
+<code>access</code>，在前文我们已经讲解了为什么要使用
+<code>makeroot</code>，以及 <code>makeroot</code>
+的作用。现在我们直接来讲怎么做。</p>
+<p>假设我们现在有这么一棵<span
+class="math inline">\(\textcolor{green}{原树}\)</span>：</p>
+<p><img src="\images\LCT25.png" /></p>
+<p>虽然我们的<span
+class="math inline">\(\textcolor{green}{原树}\)</span>是无向的，但是我们不妨假设其有向。（假设以
+<span class="math inline">\(1\)</span> 号点为根）</p>
+<p><img src="\images\LCT26.png" /></p>
+<p>那我们发现，我们假如要让 <span class="math inline">\(4\)</span>
+号点变成<span
+class="math inline">\(\textcolor{green}{原树}\)</span>的根，我们需要把树变成这样：</p>
+<p><img src="\images\LCT27.png" /></p>
+<p>我们发现，其实也就是将 <span class="math inline">\(1\)</span> 号点到
+<span class="math inline">\(4\)</span> 号点的路径进行了翻转。<br />
+那么也就是说，我们想要将某个点变成<span
+class="math inline">\(\textcolor{green}{原树}\)</span>的根，我们只需要将其到根节点的路径进行翻转就可以了。<br />
+这个操作和 Splay 的翻转操作是类似的。</p>
+<p>代码：</p>
+<pre class="cpp"><code>void makeroot(int u)&#123;
+    u=access(u);
+    swap(son[u][0],son[u][1]);
+    tag[u]^=1;
+&#125;</code></pre>
+<p>这里的 access 函数，将 <span class="math inline">\(u\)</span>
+和当前的根放在了同一 Splay 下。但是我们又令 <span
+class="math inline">\(u\gets
+\operatorname{access}(u)\)</span>，这是为什么呢？<br />
+我们前面在学习 Splay 的时候说过，Splay 的翻转操作应该从根开始，而这里
+<code>access(u)</code> 返回的值，恰好就是这棵 Splay 的根，为什么？看看
+<code>access</code> 的代码，就明白了。</p>
+<p>那我们现在，makeroot
+函数也搞定了，终于可以连边了~直接按照前文所说的来操作就行了，注意先判一下要连的边是否在同一棵树中，如果在同一棵树中显然是不能连边的。</p>
+<pre class="cpp"><code>void link(int u,int v)&#123;
+    makeroot(u);
+    access(u);
+    fa[u]=v;
+&#125;</code></pre>
+<h4 id="如何删边">如何删边</h4>
+<p>Link-Cut 中的 Link 我们解决了，那 Cut 呢？</p>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
     

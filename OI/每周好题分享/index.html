@@ -1,0 +1,657 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>每周好题分享 | yzljyのBlog</title>
+    <meta name="author" content="yzljy" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/yzljy.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>YZLJYのBLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;首页</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;关于</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;归档</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;分类</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;标签</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;YZLJYのBLOG</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">首页</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">关于</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">归档</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">分类</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">标签</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>每周好题分享</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/3/18
+        </span>
+        
+        <span class="category">
+            <a href="/categories/OI/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                OI
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #a5ff4d">
+                    题解
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1 id="第一周2025031720250323">第一周（2025/03/17~2025/03/23）</h1>
+<h2 id="t1">T1</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P7671">P7671 [GDOI2016]
+疯狂动物城</a></p>
+<p>省流：推式子+树剖+主席树。</p>
+<p>对于操作一，直接树剖后即可解决。<br />
+对于操作三，写主席树维护即可。<br />
+操作二的话，推式子就可以了。</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;\sum_{i\in S(x,y)}\sum_{j=1}^{dis(i,y)}a_{i}\cdot j\\
+=&amp;\sum_{i\in S(x,y)}a_{i}\frac{dis(i,y)^{2}+dis(i,y)}{2}\\
+=&amp;\sum_{i\in
+S(x,y)}a_{i}\frac{(dep_{i}+dep_{y}-2dep_{\operatorname{LCA}(i,y)})^{2}+(dep_{i}+dep_{y}-2dep_{\operatorname{LCA}(i,y)})}{2}\\
+=&amp;\sum_{i\in
+S(x,y)}a_{i}\frac{dep^{2}_{i}+dep^{2}_{y}+2dep_{i}dep_{y}+4dep^{2}_{\operatorname{LCA}(i,y)}-4dep_{\operatorname{LCA}(i,y)}dep_{i}-4dep_{\operatorname{LCA}(i,y)}dep_{y}+dep_{i}+dep_{y}-2dep_{\operatorname{LCA}(i,y)}}{2}\\
+=&amp;\sum_{i\in
+S(x,y)}a_{i}\left(\frac{dep^{2}_{i}+dep_{i}}{2}+\frac{dep^{2}_{y}+2dep_{i}dep_{y}+dep_{y}}{2}+2dep^{2}_{\operatorname{LCA}(i,y)}-dep_{\operatorname{LCA}(i,y)}-2dep_{\operatorname{LCA}(i,y)}(dep_{i}+dep_{y})\right)\\
+=&amp;\sum_{i\in S(x,y)}a_{i}\frac{dep^{2}_{i}+dep_{i}}{2}+\sum_{i\in
+S(x,y)}a_{i}\frac{dep^{2}_{y}+dep_{y}}{2}+\sum_{i\in
+S(x,y)}a_{i}dep_{i}dep_{y}+\sum_{i\in
+S(x,y)}a_{i}(2dep^{2}_{\operatorname{LCA}(i,y)}-dep_{\operatorname{LCA}(i,y)})-\sum_{i\in
+S(x,y)}2a_{i}dep_{\operatorname{LCA}(i,y)}(dep_{i}+dep_{y})\\
++&amp;\sum_{i\in S(x,y)}a_{i}\frac{dep^{2}_{i}+dep_{i}}{2}\\
++&amp;\sum_{i\in
+S(x,y)}a_{i}\frac{dep^{2}_{y}+dep_{y}}{2}=\frac{dep^{2}_{y}+dep_{y}}{2}\sum_{i\in
+S(x,y)}a_{i}\\
++&amp;\sum_{i\in S(x,y)}a_{i}dep_{i}dep_{y}=dep_{y}\sum_{i\in
+S(x,y)}a_{i}dep_{i}\\
++&amp;\sum_{i\in
+S(x,y)}a_{i}(2dep^{2}_{\operatorname{LCA}(i,y)}-dep_{\operatorname{LCA}(i,y)})=(2dep_{\operatorname{LCA}(x,y)}^{2}-dep_{\operatorname{LCA}(x,y)})\sum_{i\in
+S(x,\operatorname{LCA}(x,y))}a_{i}+\sum_{i\in
+S(\operatorname{LCA}(x,y),y)}a_{i}(2dep_{i}^{2}-dep_{i})-a_{\operatorname{LCA}(x,y)}(2dep_{\operatorname{LCA}(x,y)}^{2}-dep_{\operatorname{LCA}(x,y)})\\
+-&amp;\sum_{i\in
+S(x,y)}2a_{i}dep_{\operatorname{LCA}(i,y)}(dep_{i}+dep_{y})=\sum_{i\in
+S(x,\operatorname{LCA}(x,y))}2a_{i}dep_{\operatorname{LCA}(x,y)}(dep_{i}+dep_{y})+\sum_{i\in
+S(\operatorname{LCA}(x,y),y)}2a_{i}dep_{i}(dep_{i}+dep_{y})-2a_{\operatorname{LCA}(x,y)}dep_{\operatorname{LCA}(x,y)}(dep_{\operatorname{LCA}(x,y)}+dep_{y})\\
+&amp;\sum_{i\in
+S(x,\operatorname{LCA}(x,y))}2a_{i}dep_{\operatorname{LCA}(x,y)}(dep_{i}+dep_{y})=2dep_{\operatorname{LCA}(x,y)}\sum_{i\in
+S(x,\operatorname{LCA}(x,y))}a_{i}dep_{i}+2dep_{\operatorname{LCA}(x,y)}dep_{y}\sum_{i\in
+S(x,\operatorname{LCA}(x,y))}a_{i}\\
+&amp;\sum_{i\in
+S(\operatorname{LCA}(x,y),y)}2a_{i}dep_{i}(dep_{i}+dep_{y})=2\sum_{i\in
+S(\operatorname{LCA}(x,y),y)}a_{i}dep_{i}^{2}+2dep_{y}\sum_{i\in
+S(\operatorname{LCA}(x,y),y)}a_{i}dep_{i}\\
+\end{aligned}
+\]</span> 维护： <span class="math display">\[
+\sum dep_{i}\\
+\sum dep_{i}^{2}\\
+\sum a_{i}\\
+\sum a_{i}dep_{i}\\
+\sum a_{i}dep_{i}^{2}\\
+\]</span></p>
+<p>照着式子维护就好了。<br />
+一般的主席树是单点改，这里区间改的话，挨着挨着改显然会
+TLE，我们把区间先留下来，要 pushdown
+的时候，新建一下儿子节点就好了。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        参考std
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>// Problem: P7671 [GDOI2016] 疯狂动物城
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/P7671
+// Memory Limit: 2 GB
+// Time Limit: 2000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int MAXN=1e5+10;
+const int mod=20160501;
+const int inv2=10080251;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x){
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+}
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y){
+    read(x),read(y...);
+}
+
+bool awa;
+int n,m,k,q,lastans,qcnt,cnt,tree_cnt,idq[MAXN],root[MAXN],head[MAXN],siz[MAXN],dep[MAXN],hson[MAXN],top[MAXN],dfsnum[MAXN],dfsnod[MAXN],fa[MAXN],a[MAXN];
+struct node{
+    int to,next;
+}edge[MAXN&lt;&lt;1];
+struct node2{
+    int id,l,r,lson,rson,val1,val2,val3,val4,val5,lazy;
+}tree[MAXN*200];
+
+void build(int u,int v){
+    edge[++k].to=v;
+    edge[k].next=head[u];
+    head[u]=k;
+}
+
+void dfs(int u,int f){
+    siz[u]=1;
+    int maxsiz=0;
+    for(int i=head[u];i;i=edge[i].next){
+        int v=edge[i].to;
+        if(v==f) continue;
+        dep[v]=dep[u]+1;
+        fa[v]=u;
+        dfs(v,u);
+        siz[u]+=siz[v];
+        if(maxsiz&lt;siz[v]){
+            maxsiz=siz[v];
+            hson[u]=v;
+        }
+    }
+}
+
+void dfs2(int u,int f){
+    top[u]=f;
+    dfsnum[u]=++cnt;
+    dfsnod[cnt]=u;
+    if(hson[u]==0) return;
+    dfs2(hson[u],f);
+    for(int i=head[u];i;i=edge[i].next){
+        int v=edge[i].to;
+        if(v==fa[u]||v==hson[u]) continue;
+        dfs2(v,v);
+    }
+}
+
+void newnode(int l,int r,int ID){
+    int id=++tree_cnt;
+    tree[id].id=ID;
+    tree[id].l=l;
+    tree[id].r=r;
+}
+
+void pushup(int id){
+    tree[id].val1=tree[tree[id].lson].val1+tree[tree[id].rson].val1;
+    tree[id].val2=tree[tree[id].lson].val2+tree[tree[id].rson].val2;
+    tree[id].val3=tree[tree[id].lson].val3+tree[tree[id].rson].val3;
+    tree[id].val4=tree[tree[id].lson].val4+tree[tree[id].rson].val4;
+    tree[id].val5=tree[tree[id].lson].val5+tree[tree[id].rson].val5;
+    tree[id].val1-=tree[id].val1&gt;=mod?mod:0;
+    tree[id].val2-=tree[id].val2&gt;=mod?mod:0;
+    tree[id].val3-=tree[id].val3&gt;=mod?mod:0;
+    tree[id].val4-=tree[id].val4&gt;=mod?mod:0;
+    tree[id].val5-=tree[id].val5&gt;=mod?mod:0;
+}
+
+void pushdown(int id){
+    if(tree[id].lazy==0) return;
+    tree[tree[id].lson].val3+=(tree[tree[id].lson].r-tree[tree[id].lson].l+1)*(tree[id].lazy%mod)%mod;
+    tree[tree[id].lson].val4+=tree[tree[id].lson].val1*(tree[id].lazy%mod)%mod;
+    tree[tree[id].lson].val5+=tree[tree[id].lson].val2*(tree[id].lazy%mod)%mod;
+    tree[tree[id].lson].val3-=tree[tree[id].lson].val3&gt;=mod?mod:0;
+    tree[tree[id].lson].val4-=tree[tree[id].lson].val4&gt;=mod?mod:0;
+    tree[tree[id].lson].val5-=tree[tree[id].lson].val5&gt;=mod?mod:0;
+    tree[tree[id].lson].lazy+=tree[id].lazy;
+    tree[tree[id].rson].val3+=(tree[tree[id].rson].r-tree[tree[id].rson].l+1)*(tree[id].lazy%mod)%mod;
+    tree[tree[id].rson].val4+=tree[tree[id].rson].val1*(tree[id].lazy%mod)%mod;
+    tree[tree[id].rson].val5+=tree[tree[id].rson].val2*(tree[id].lazy%mod)%mod;
+    tree[tree[id].rson].val3-=tree[tree[id].rson].val3&gt;=mod?mod:0;
+    tree[tree[id].rson].val4-=tree[tree[id].rson].val4&gt;=mod?mod:0;
+    tree[tree[id].rson].val5-=tree[tree[id].rson].val5&gt;=mod?mod:0;
+    tree[tree[id].rson].lazy+=tree[id].lazy;
+    tree[id].lazy=0;
+}
+
+void build_tree(int ID,int id,int l,int r){
+    if(l==r){
+        tree[id].val1=dep[dfsnod[l]];
+        tree[id].val2=dep[dfsnod[l]]*dep[dfsnod[l]]%mod;
+        tree[id].val3=a[dfsnod[l]];
+        tree[id].val4=a[dfsnod[l]]*tree[id].val1%mod;
+        tree[id].val5=a[dfsnod[l]]*tree[id].val2%mod;
+        return;
+    }
+    int mid=(l+r)&gt;&gt;1;
+    newnode(l,mid,ID);
+    tree[id].lson=tree_cnt;
+    build_tree(ID,tree[id].lson,l,mid);
+    newnode(mid+1,r,ID);
+    tree[id].rson=tree_cnt;
+    build_tree(ID,tree[id].rson,mid+1,r);
+    pushup(id);
+}
+
+void update(int ID,int last,int id,int l,int r,int L,int R,int val){
+    if(r&lt;L||R&lt;l) return;
+    if(L&lt;=l&amp;&amp;r&lt;=R){
+        tree[id].val3+=(r-l+1)*val%mod;
+        tree[id].val4+=tree[id].val1*val%mod;
+        tree[id].val5+=tree[id].val2*val%mod;
+        tree[id].val3-=tree[id].val3&gt;=mod?mod:0;
+        tree[id].val4-=tree[id].val4&gt;=mod?mod:0;
+        tree[id].val5-=tree[id].val5&gt;=mod?mod:0;
+        tree[id].lazy+=val;
+        return;
+    }
+    int mid=(l+r)&gt;&gt;1;
+    if(tree[tree[id].lson].id!=ID){
+        newnode(l,mid,ID);
+        tree[tree_cnt]=tree[tree[id].lson];
+        tree[tree_cnt].id=ID;
+        tree[id].lson=tree_cnt;
+    }
+    if(tree[tree[id].rson].id!=ID){
+        newnode(mid+1,r,ID);
+        tree[tree_cnt]=tree[tree[id].rson];
+        tree[tree_cnt].id=ID;
+        tree[id].rson=tree_cnt;
+    }
+    pushdown(id);
+    if(L&lt;=mid) update(ID,tree[last].lson,tree[id].lson,l,mid,L,R,val);
+    if(R&gt;mid) update(ID,tree[last].rson,tree[id].rson,mid+1,r,L,R,val);
+    pushup(id);
+}
+
+void change(int ID,int last,int rt,int u,int v,int val){
+    while(top[u]!=top[v]){
+        if(dep[top[u]]&lt;dep[top[v]]) swap(u,v);
+        update(ID,last,rt,1,cnt,dfsnum[top[u]],dfsnum[u],val);
+        // int pos=u;
+        // while(pos!=fa[top[u]]){
+            // update(ID,last,rt,1,cnt,dfsnum[pos],dfsnum[pos],val);
+            // pos=fa[pos]; 
+        // }
+        u=fa[top[u]];
+    }
+    if(dep[u]&lt;dep[v]) swap(u,v);
+    // int pos=u;
+    // while(pos!=fa[v]){
+        // update(ID,last,rt,1,cnt,dfsnum[pos],dfsnum[pos],val);
+        // pos=fa[pos]; 
+    // }
+    update(ID,last,rt,1,cnt,dfsnum[v],dfsnum[u],val);
+}
+
+int query(int id,int l,int r,int L,int R,int type){
+    if(id==0||r&lt;L||R&lt;l) return 0;
+    if(L&lt;=l&amp;&amp;r&lt;=R){
+        if(type==1) return tree[id].val1;
+        if(type==2) return tree[id].val2;
+        if(type==3) return tree[id].val3;
+        if(type==4) return tree[id].val4;
+        if(type==5) return tree[id].val5;
+    }
+    int res=0,mid=(l+r)&gt;&gt;1;
+    if(tree[tree[id].lson].id!=tree[id].id){
+        newnode(l,mid,tree[id].id);
+        tree[tree_cnt]=tree[tree[id].lson];
+        tree[tree_cnt].id=tree[id].id;
+        tree[id].lson=tree_cnt;
+    }
+    if(tree[tree[id].rson].id!=tree[id].id){
+        newnode(mid+1,r,tree[id].id);
+        tree[tree_cnt]=tree[tree[id].rson];
+        tree[tree_cnt].id=tree[id].id;
+        tree[id].rson=tree_cnt;
+    }
+    pushdown(id);
+    if(L&lt;=mid&amp;&amp;tree[id].lson){
+        int val=query(tree[id].lson,l,mid,L,R,type);
+        res+=val;
+        res-=res&gt;=mod?mod:0;
+    }
+    if(R&gt;mid&amp;&amp;tree[id].rson){
+        int val=query(tree[id].rson,mid+1,r,L,R,type);
+        res+=val;
+        res-=res&gt;=mod?mod:0;
+    }
+    return res;
+}
+
+int ask(int rt,int u,int v,int type){
+    int res=0;
+    while(top[u]!=top[v]){
+        if(dep[top[u]]&lt;dep[top[v]]) swap(u,v);
+        res+=query(rt,1,cnt,dfsnum[top[u]],dfsnum[u],type);
+        res-=res&gt;=mod?mod:0;
+        u=fa[top[u]];
+    }
+    if(dep[u]&lt;dep[v]) swap(u,v);
+    res+=query(rt,1,cnt,dfsnum[v],dfsnum[u],type);
+    res-=res&gt;=mod?mod:0;
+    return res;
+}
+
+int lca(int u,int v){
+    while(top[u]!=top[v]){
+        if(dep[top[u]]&lt;dep[top[v]]) swap(u,v);
+        u=fa[top[u]];
+    }
+    if(dep[u]&lt;dep[v]) swap(u,v);
+    return v;
+}
+
+int work(int rt,int u,int v){
+    int res=((ask(rt,u,v,4)+ask(rt,u,v,5))*inv2)%mod,lc=lca(u,v);
+    res+=((dep[v]*dep[v]+dep[v])*inv2)%mod*ask(rt,u,v,3)%mod;
+    res-=res&gt;=mod?mod:0;
+    res+=dep[v]*ask(rt,u,v,4)%mod;
+    res-=res&gt;=mod?mod:0;
+    res+=(2ll*dep[lc]*dep[lc]%mod-dep[lc]+mod)%mod*ask(rt,u,lc,3)%mod;
+    res-=res&gt;=mod?mod:0;
+    res+=(2ll*ask(rt,lc,v,5)%mod-ask(rt,lc,v,4)+mod)%mod;
+    res-=res&gt;=mod?mod:0;
+    res-=(2ll*dep[lc]*dep[lc]%mod-dep[lc]+mod)%mod*ask(rt,lc,lc,3)%mod;
+    res+=res&lt;0?mod:0;
+    res-=(2ll*dep[lc]*ask(rt,u,lc,4)%mod+2ll*dep[lc]*dep[v]%mod*ask(rt,u,lc,3)%mod)%mod;
+    res+=res&lt;0?mod:0;
+    res-=(2ll*ask(rt,lc,v,5)%mod+2ll*dep[v]*ask(rt,lc,v,4)%mod)%mod;
+    res+=res&lt;0?mod:0;
+    res+=2ll*ask(rt,lc,lc,3)%mod*dep[lc]%mod*(dep[lc]+dep[v])%mod;
+    res-=res&gt;=mod?mod:0;
+    return res;
+}
+
+bool qwq;
+
+signed main(){
+    // cout&lt;&lt;(&amp;awa-&amp;qwq)/1024.0/1024.0&lt;&lt;endl;
+    read(n,m);
+    for(int i=1;i&lt;n;i++){
+        int u,v;
+        read(u,v);
+        build(u,v);
+        build(v,u);
+    }
+    for(int i=1;i&lt;=n;i++) read(a[i]);
+    dfs(1,1);
+    dfs2(1,1);
+    idq[0]=0;
+    newnode(1,cnt,0);
+    root[0]=tree_cnt;
+    build_tree(0,root[0],1,cnt);
+    for(int i=1;i&lt;=m;i++){
+        int opt,x,y,w;
+        read(opt);
+        if(opt==1){
+            read(x,y,w);
+            x=x^lastans;
+            y=y^lastans;
+            idq[++qcnt]=i;
+            newnode(1,cnt,i);
+            root[i]=tree_cnt;
+            tree[root[i]]=tree[root[i-1]];
+            tree[root[i]].id=i;
+            change(i,root[i-1],root[i],x,y,w);
+        }
+        if(opt==2){
+            read(x,y);
+            x=x^lastans;
+            y=y^lastans;
+            root[i]=root[i-1];
+            lastans=work(root[i],x,y);
+            cout&lt;&lt;lastans&lt;&lt;&#39;\n&#39;;
+        }
+        if(opt==3){
+            read(x);
+            x=x^lastans;
+            root[i]=root[idq[x]];
+        }
+        // for(int j=1;j&lt;=n;j++) cout&lt;&lt;query(root[i],1,cnt,dfsnum[j],dfsnum[j],3)&lt;&lt;&quot; &quot;;
+        // cout&lt;&lt;endl;
+    }
+    return 0;
+}</code></pre>
+
+    </div>
+</div>
+<h2 id="t2">T2</h2>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+    
+    
+    
+    
+    <div id="comment">
+        <div id="giscus-container" class="giscus"></div>
+    </div>
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2024 - 2025 yzljyのBlog
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;yzljy
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+<script
+    src="https://giscus.app/client.js"
+    data-repo="yzljyawa/yzljyawa.github.io"
+    data-repo-id="R_kgDOMbAUfA"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOMbAUfM4CiQYe"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin
+    async
+></script>
+
+
+
+
+
+    
+</body>
+</html>

@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>k短路 学习笔记 | yzljyのBlog</title>
+    <title>成长 | yzljyのBlog</title>
     <meta name="author" content="yzljy" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -165,22 +165,22 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div class="article">
     <div>
-        <h1>k短路 学习笔记</h1>
+        <h1>成长</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2024/12/23
+            2025/3/17
         </span>
         
         <span class="category">
-            <a href="/categories/OI/">
+            <a href="/categories/%E6%84%8F%E8%AF%86%E6%B5%81/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
-                OI
+                意识流
             </a>
         </span>
         
@@ -193,15 +193,8 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #979a9a">
-                    学习指南
-                </a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/%E5%8F%AF%E6%8C%81%E4%B9%85%E5%8C%96%E5%8F%AF%E5%B9%B6%E5%A0%86/" style="color: #00beff">
-                    可持久化可并堆
+                <a href="/tags/%E6%96%87%E7%AB%A0/" style="color: #ffa400">
+                    文章
                 </a>
             </span>
             
@@ -210,74 +203,44 @@
     </div>
     
     <div class="content" v-pre>
-        <h2 id="是什么">是什么</h2>
-<p><del>字面意思</del><br />
-一种用于求解有向图上从某一起点到某一终点的所有可行路径中第 <span
-class="math inline">\(k\)</span> 小（大）的算法。</p>
-<h2 id="怎么做">怎么做</h2>
-<p>首先把模板放在 <a
-target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2483">这里</a><br />
-<del>其实我并不知道还有没有其他应用</del></p>
-<h3 id="a">A*</h3>
-<blockquote>
-<p>注：对于 <span class="math inline">\(k\)</span> 短路问题，A*
-算法的最坏时间复杂度是 <span class="math inline">\(O(nk \log n)\)</span>
-的。虽然 A* 算法可以通过本题原版数据，但可以构造数据，使得 A*
-算法在原题的数据范围内无法通过。事实上，存在使用可持久化可并堆的算法可以做到在
-<span class="math inline">\(O((n+m) \log n + k \log k)\)</span>
-的时间复杂度解决 <span class="math inline">\(k\)</span> 短路问题。详情见
-<a target="_blank" rel="noopener" href="https://oi-wiki.org/graph/kth-path/">OI-Wiki</a>。</p>
-</blockquote>
-<p>（摘自 Luogu k短路 模板题的题目背景）</p>
-<p>想要直接学 可持久化可并堆 做法的可以跳过这里。</p>
-<p>虽然时间复杂度假了，但是依然可以作为 A* 算法的一个入门练习。<br />
-这里放一个可以使用 A* 通过的模板题 <a
-target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2901">链接</a></p>
-<h4 id="具体做法">具体做法</h4>
-<p>什么，你连 Dijkstra 都不会？那快去学你的入门课（<br />
-或者看看 <a href="">我的</a>？</p>
-<p>我们在使用 Dijkstra 的堆优版本求解 <strong>最短路</strong>
-问题时，是这样写的：（这里只写了关键代码）</p>
-<pre class="cpp"><code>struct node&#123;
-    int to,dis;
-        friend bool operator &lt; (node n1,node n2)&#123;
-        return n1.dis&gt;n2.dis;
-    &#125;
-&#125;;
-
-void dij(int s)&#123;
-    for(int i=1;i&lt;=n;i++) dis[i]=inf;
-    dis[s]=0;
-    priority_queue&lt;node&gt; q;
-    q.push((node)&#123;s,0&#125;);
-    while(!q.empty())&#123;
-        int u=q.top().to;
-        q.pop();
-        if(sure[u]) continue;
-        sure[u]=true;
-        for(int i=head[u];i;i=edge[i].next)&#123;
-            int v=edge[i].to;
-            if(sure[v]) continue;
-            if(dis[v]&gt;dis[u]+edge[i].val)&#123;
-                dis[v]=dis[u]+edge[i].val;
-                q.push((node)&#123;v,dis[v]&#125;);
-            &#125;
-        &#125;
-    &#125;
-&#125;</code></pre>
-<p>我们可以看出，在 Dijkstra 中，每个点最多只会用于一次松弛操作</p>
-<h3 id="可持久化可并堆">可持久化可并堆</h3>
-<p><del>正解！</del></p>
-<p>可以去看 <a
-target="_blank" rel="noopener" href="https://www.docin.com/p-1387370338.html">俞鼎力大牛的课件</a>，其实讲解还是很详细的（？），至少我是从这个原课件看懂的（</p>
-<p>那么首先，你至少得会 <a href="">可并堆（左偏树）</a>
-不然从何谈起（<br />
-不会也没事，点击链接可以跳转到学习地址（</p>
-<blockquote>
-<p>ps：上面放的是我未来会写的内容 <del>（咕咕咕）</del>，在这条 ps
-还在的时候，你可以看 <a
-target="_blank" rel="noopener" href="https://www.luogu.com.cn/article/uoeyv3gq">这个</a></p>
-</blockquote>
+        <p><span
+class="math inline">\(\quad\,\,\,\,\)</span>前几天论坛开始三周目内测了。今天的时候，无意间翻到了以前的一些消息。感觉那时的自己，真的好天真啊。瞬间有一种物是人非的感觉，鼻子酸了一下，终还是忍住了。<br />
+<span class="math inline">\(\quad\,\,\,\,\)</span>大约两年半前，是 2022
+年 10 月 2
+号。那年的暑假，我第一次接触到了福瑞这个圈子。我那时什么都不了解，只是因为感觉可爱，而喜欢。我尝试探索这个圈子。10
+月 1 号那时，我发现了论坛，2
+号，我注册了账号，那时毕竟才入圈，我还什么都不了解。随便起了个名字，便在论坛“住”了下来。<br />
+<span
+class="math inline">\(\quad\,\,\,\,\)</span>当时，论坛给我的第一印象是：大家人都很好。我在探索论坛的同时，也在探索福瑞这个圈子。也在慢慢的交了许多朋友。东光，白风，方程组，凌元，毛同学，哈砖，饼干………………我感受到了快乐，与温暖。<br />
+<span
+class="math inline">\(\quad\,\,\,\,\)</span>后来在我初二下的时候的那个寒假。也就是
+2023 年，我不辞而别了……<br />
+<span class="math inline">\(\quad\,\,\,\,\)</span>再后来是 2023
+年的暑假了，我突然想起了论坛，但发现曾经的网址居然打不开了，想尽办法，想起以前加了毛同学的B站，我才知道，论坛已经关了……<br />
+<span
+class="math inline">\(\quad\,\,\,\,\)</span>那时的我已经有了QQ，但相对而言，也只是刚刚启用，我马上加了论坛的QQ群，却发现，已没有几人还记得我。但方程组还记得我，白风也想起来了，虽然有些人将我和另一只记混了，但没关系，大不了，重来！但是看着曾经熟悉的人很少再见，很多陌生的ID，我一时不知怎么办……<br />
+<span
+class="math inline">\(\quad\,\,\,\,\)</span>后来，我才知道事情的来龙去脉。我顿觉后悔，我当时的不辞而别，错过了许多，辜负了许多。<br />
+<span
+class="math inline">\(\quad\,\,\,\,\)</span>一年过去了，一天，天洛突然给我发来一些图片，说可以期待一下。那时我正在南京，为自己的理想而学习，但我从未有过如此激动的时候。2024
+年 8 月 5
+日，我被拉进了一个名为“论坛の二周目内测官方交流群”，我从未有如此高兴过。二周目的内测，我能有幸参加。翻看以前的消息，我才知道，那时我离开后，大家都还记得我，我，我对不起他们。<br />
+<span
+class="math inline">\(\quad\,\,\,\,\)</span>那段时间很高兴，虽然还有许多Bug，但已经有以前论坛的那种感觉了。虽然，人变了。<br />
+<span
+class="math inline">\(\quad\,\,\,\,\)</span>后来，出了一些事，天洛离开了团队……原先定的计划也通通泡汤了，大家都很不舍天洛离开，但……但没有办法。白风和石灰还在继续维护论坛，现在，也要等到三年后了。<br />
+<span class="math inline">\(\quad\,\,\,\,\)</span>到 2025 年 1 月 17
+日，内测群又活了，带来了一些好消息，虽然论坛，还是得三年后才能重新开放。但，石灰和白风告诉我们，会有一个三周目内测。<br />
+<span class="math inline">\(\quad\,\,\,\,\)</span>终于是 2025 年 2 月 26
+日，确定了三周目内测。<br />
+<span class="math inline">\(\quad\,\,\,\,\)</span>到了 3 月 13
+号，石灰告诉大家，三周目内测，开始了！大家迫不及待地进入论坛，就像两年半前一样，大家都有说不完的话。<br />
+<span
+class="math inline">\(\quad\,\,\,\,\)</span>无意间看见了以前发送的私信，写的文章，先是看见自己以前的幼稚，无知而笑一笑，随后，便是一种，物是人非的落寞。但总之，还是很高兴的啦！<br />
+<span
+class="math inline">\(\quad\,\,\,\,\)</span>我见证着论坛一步步完善，却在它最辉煌的时候离开了。论坛也见证着我，一点点成长。<br />
+<span
+class="math inline">\(\quad\,\,\,\,\)</span>感谢大家，感谢论坛的管理人员，感谢世上一切美好的事物！</p>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
     
