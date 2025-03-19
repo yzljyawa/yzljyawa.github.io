@@ -260,12 +260,9 @@ S(\operatorname{LCA}(x,y),y)}a_{i}dep_{i}\\
 一般的主席树是单点改，这里区间改的话，挨着挨着改显然会
 TLE，我们把区间先留下来，要 pushdown
 的时候，新建一下儿子节点就好了。</p>
-<div class='spoiler collapsed'>
-    <div class='spoiler-title'>
-        参考std
-    </div>
-    <div class='spoiler-content'>
-        <pre class="cpp"><code>// Problem: P7671 [GDOI2016] 疯狂动物城
+<p>（似乎有相对简单的做法，但我觉得我这样拆的方法更通用一点？比如<a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P10773">这道题</a>）</p>
+<pre class="cpp"><code>// Problem: P7671 [GDOI2016] 疯狂动物城
 // Contest: Luogu
 // URL: https://www.luogu.com.cn/problem/P7671
 // Memory Limit: 2 GB
@@ -285,72 +282,72 @@ const double eps=1e-9;
 char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
 #define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
 template&lt;typename type&gt;
-inline void read(type &amp;x){
+inline void read(type &amp;x)&#123;
     x=0;
     bool f=false;
     char ch=getchar();
     while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
     while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
     if(f) x=-x;
-}
+&#125;
 template&lt;typename type,typename... args&gt;
-inline void read(type &amp;x,args&amp;... y){
+inline void read(type &amp;x,args&amp;... y)&#123;
     read(x),read(y...);
-}
+&#125;
 
 bool awa;
 int n,m,k,q,lastans,qcnt,cnt,tree_cnt,idq[MAXN],root[MAXN],head[MAXN],siz[MAXN],dep[MAXN],hson[MAXN],top[MAXN],dfsnum[MAXN],dfsnod[MAXN],fa[MAXN],a[MAXN];
-struct node{
+struct node&#123;
     int to,next;
-}edge[MAXN&lt;&lt;1];
-struct node2{
+&#125;edge[MAXN&lt;&lt;1];
+struct node2&#123;
     int id,l,r,lson,rson,val1,val2,val3,val4,val5,lazy;
-}tree[MAXN*200];
+&#125;tree[MAXN*200];
 
-void build(int u,int v){
+void build(int u,int v)&#123;
     edge[++k].to=v;
     edge[k].next=head[u];
     head[u]=k;
-}
+&#125;
 
-void dfs(int u,int f){
+void dfs(int u,int f)&#123;
     siz[u]=1;
     int maxsiz=0;
-    for(int i=head[u];i;i=edge[i].next){
+    for(int i=head[u];i;i=edge[i].next)&#123;
         int v=edge[i].to;
         if(v==f) continue;
         dep[v]=dep[u]+1;
         fa[v]=u;
         dfs(v,u);
         siz[u]+=siz[v];
-        if(maxsiz&lt;siz[v]){
+        if(maxsiz&lt;siz[v])&#123;
             maxsiz=siz[v];
             hson[u]=v;
-        }
-    }
-}
+        &#125;
+    &#125;
+&#125;
 
-void dfs2(int u,int f){
+void dfs2(int u,int f)&#123;
     top[u]=f;
     dfsnum[u]=++cnt;
     dfsnod[cnt]=u;
     if(hson[u]==0) return;
     dfs2(hson[u],f);
-    for(int i=head[u];i;i=edge[i].next){
+    for(int i=head[u];i;i=edge[i].next)&#123;
         int v=edge[i].to;
         if(v==fa[u]||v==hson[u]) continue;
         dfs2(v,v);
-    }
-}
+    &#125;
+&#125;
 
-void newnode(int l,int r,int ID){
+void newnode(int l,int r,int ID)&#123;
     int id=++tree_cnt;
     tree[id].id=ID;
     tree[id].l=l;
     tree[id].r=r;
-}
+&#125;
 
-void pushup(int id){
+void pushup(int id)&#123;
     tree[id].val1=tree[tree[id].lson].val1+tree[tree[id].rson].val1;
     tree[id].val2=tree[tree[id].lson].val2+tree[tree[id].rson].val2;
     tree[id].val3=tree[tree[id].lson].val3+tree[tree[id].rson].val3;
@@ -361,9 +358,9 @@ void pushup(int id){
     tree[id].val3-=tree[id].val3&gt;=mod?mod:0;
     tree[id].val4-=tree[id].val4&gt;=mod?mod:0;
     tree[id].val5-=tree[id].val5&gt;=mod?mod:0;
-}
+&#125;
 
-void pushdown(int id){
+void pushdown(int id)&#123;
     if(tree[id].lazy==0) return;
     tree[tree[id].lson].val3+=(tree[tree[id].lson].r-tree[tree[id].lson].l+1)*(tree[id].lazy%mod)%mod;
     tree[tree[id].lson].val4+=tree[tree[id].lson].val1*(tree[id].lazy%mod)%mod;
@@ -380,17 +377,17 @@ void pushdown(int id){
     tree[tree[id].rson].val5-=tree[tree[id].rson].val5&gt;=mod?mod:0;
     tree[tree[id].rson].lazy+=tree[id].lazy;
     tree[id].lazy=0;
-}
+&#125;
 
-void build_tree(int ID,int id,int l,int r){
-    if(l==r){
+void build_tree(int ID,int id,int l,int r)&#123;
+    if(l==r)&#123;
         tree[id].val1=dep[dfsnod[l]];
         tree[id].val2=dep[dfsnod[l]]*dep[dfsnod[l]]%mod;
         tree[id].val3=a[dfsnod[l]];
         tree[id].val4=a[dfsnod[l]]*tree[id].val1%mod;
         tree[id].val5=a[dfsnod[l]]*tree[id].val2%mod;
         return;
-    }
+    &#125;
     int mid=(l+r)&gt;&gt;1;
     newnode(l,mid,ID);
     tree[id].lson=tree_cnt;
@@ -399,11 +396,11 @@ void build_tree(int ID,int id,int l,int r){
     tree[id].rson=tree_cnt;
     build_tree(ID,tree[id].rson,mid+1,r);
     pushup(id);
-}
+&#125;
 
-void update(int ID,int last,int id,int l,int r,int L,int R,int val){
+void update(int ID,int last,int id,int l,int r,int L,int R,int val)&#123;
     if(r&lt;L||R&lt;l) return;
-    if(L&lt;=l&amp;&amp;r&lt;=R){
+    if(L&lt;=l&amp;&amp;r&lt;=R)&#123;
         tree[id].val3+=(r-l+1)*val%mod;
         tree[id].val4+=tree[id].val1*val%mod;
         tree[id].val5+=tree[id].val2*val%mod;
@@ -412,106 +409,106 @@ void update(int ID,int last,int id,int l,int r,int L,int R,int val){
         tree[id].val5-=tree[id].val5&gt;=mod?mod:0;
         tree[id].lazy+=val;
         return;
-    }
+    &#125;
     int mid=(l+r)&gt;&gt;1;
-    if(tree[tree[id].lson].id!=ID){
+    if(tree[tree[id].lson].id!=ID)&#123;
         newnode(l,mid,ID);
         tree[tree_cnt]=tree[tree[id].lson];
         tree[tree_cnt].id=ID;
         tree[id].lson=tree_cnt;
-    }
-    if(tree[tree[id].rson].id!=ID){
+    &#125;
+    if(tree[tree[id].rson].id!=ID)&#123;
         newnode(mid+1,r,ID);
         tree[tree_cnt]=tree[tree[id].rson];
         tree[tree_cnt].id=ID;
         tree[id].rson=tree_cnt;
-    }
+    &#125;
     pushdown(id);
     if(L&lt;=mid) update(ID,tree[last].lson,tree[id].lson,l,mid,L,R,val);
     if(R&gt;mid) update(ID,tree[last].rson,tree[id].rson,mid+1,r,L,R,val);
     pushup(id);
-}
+&#125;
 
-void change(int ID,int last,int rt,int u,int v,int val){
-    while(top[u]!=top[v]){
+void change(int ID,int last,int rt,int u,int v,int val)&#123;
+    while(top[u]!=top[v])&#123;
         if(dep[top[u]]&lt;dep[top[v]]) swap(u,v);
         update(ID,last,rt,1,cnt,dfsnum[top[u]],dfsnum[u],val);
         // int pos=u;
-        // while(pos!=fa[top[u]]){
+        // while(pos!=fa[top[u]])&#123;
             // update(ID,last,rt,1,cnt,dfsnum[pos],dfsnum[pos],val);
             // pos=fa[pos]; 
-        // }
+        // &#125;
         u=fa[top[u]];
-    }
+    &#125;
     if(dep[u]&lt;dep[v]) swap(u,v);
     // int pos=u;
-    // while(pos!=fa[v]){
+    // while(pos!=fa[v])&#123;
         // update(ID,last,rt,1,cnt,dfsnum[pos],dfsnum[pos],val);
         // pos=fa[pos]; 
-    // }
+    // &#125;
     update(ID,last,rt,1,cnt,dfsnum[v],dfsnum[u],val);
-}
+&#125;
 
-int query(int id,int l,int r,int L,int R,int type){
+int query(int id,int l,int r,int L,int R,int type)&#123;
     if(id==0||r&lt;L||R&lt;l) return 0;
-    if(L&lt;=l&amp;&amp;r&lt;=R){
+    if(L&lt;=l&amp;&amp;r&lt;=R)&#123;
         if(type==1) return tree[id].val1;
         if(type==2) return tree[id].val2;
         if(type==3) return tree[id].val3;
         if(type==4) return tree[id].val4;
         if(type==5) return tree[id].val5;
-    }
+    &#125;
     int res=0,mid=(l+r)&gt;&gt;1;
-    if(tree[tree[id].lson].id!=tree[id].id){
+    if(tree[tree[id].lson].id!=tree[id].id)&#123;
         newnode(l,mid,tree[id].id);
         tree[tree_cnt]=tree[tree[id].lson];
         tree[tree_cnt].id=tree[id].id;
         tree[id].lson=tree_cnt;
-    }
-    if(tree[tree[id].rson].id!=tree[id].id){
+    &#125;
+    if(tree[tree[id].rson].id!=tree[id].id)&#123;
         newnode(mid+1,r,tree[id].id);
         tree[tree_cnt]=tree[tree[id].rson];
         tree[tree_cnt].id=tree[id].id;
         tree[id].rson=tree_cnt;
-    }
+    &#125;
     pushdown(id);
-    if(L&lt;=mid&amp;&amp;tree[id].lson){
+    if(L&lt;=mid&amp;&amp;tree[id].lson)&#123;
         int val=query(tree[id].lson,l,mid,L,R,type);
         res+=val;
         res-=res&gt;=mod?mod:0;
-    }
-    if(R&gt;mid&amp;&amp;tree[id].rson){
+    &#125;
+    if(R&gt;mid&amp;&amp;tree[id].rson)&#123;
         int val=query(tree[id].rson,mid+1,r,L,R,type);
         res+=val;
         res-=res&gt;=mod?mod:0;
-    }
+    &#125;
     return res;
-}
+&#125;
 
-int ask(int rt,int u,int v,int type){
+int ask(int rt,int u,int v,int type)&#123;
     int res=0;
-    while(top[u]!=top[v]){
+    while(top[u]!=top[v])&#123;
         if(dep[top[u]]&lt;dep[top[v]]) swap(u,v);
         res+=query(rt,1,cnt,dfsnum[top[u]],dfsnum[u],type);
         res-=res&gt;=mod?mod:0;
         u=fa[top[u]];
-    }
+    &#125;
     if(dep[u]&lt;dep[v]) swap(u,v);
     res+=query(rt,1,cnt,dfsnum[v],dfsnum[u],type);
     res-=res&gt;=mod?mod:0;
     return res;
-}
+&#125;
 
-int lca(int u,int v){
-    while(top[u]!=top[v]){
+int lca(int u,int v)&#123;
+    while(top[u]!=top[v])&#123;
         if(dep[top[u]]&lt;dep[top[v]]) swap(u,v);
         u=fa[top[u]];
-    }
+    &#125;
     if(dep[u]&lt;dep[v]) swap(u,v);
     return v;
-}
+&#125;
 
-int work(int rt,int u,int v){
+int work(int rt,int u,int v)&#123;
     int res=((ask(rt,u,v,4)+ask(rt,u,v,5))*inv2)%mod,lc=lca(u,v);
     res+=((dep[v]*dep[v]+dep[v])*inv2)%mod*ask(rt,u,v,3)%mod;
     res-=res&gt;=mod?mod:0;
@@ -530,19 +527,19 @@ int work(int rt,int u,int v){
     res+=2ll*ask(rt,lc,lc,3)%mod*dep[lc]%mod*(dep[lc]+dep[v])%mod;
     res-=res&gt;=mod?mod:0;
     return res;
-}
+&#125;
 
 bool qwq;
 
-signed main(){
+signed main()&#123;
     // cout&lt;&lt;(&amp;awa-&amp;qwq)/1024.0/1024.0&lt;&lt;endl;
     read(n,m);
-    for(int i=1;i&lt;n;i++){
+    for(int i=1;i&lt;n;i++)&#123;
         int u,v;
         read(u,v);
         build(u,v);
         build(v,u);
-    }
+    &#125;
     for(int i=1;i&lt;=n;i++) read(a[i]);
     dfs(1,1);
     dfs2(1,1);
@@ -550,10 +547,10 @@ signed main(){
     newnode(1,cnt,0);
     root[0]=tree_cnt;
     build_tree(0,root[0],1,cnt);
-    for(int i=1;i&lt;=m;i++){
+    for(int i=1;i&lt;=m;i++)&#123;
         int opt,x,y,w;
         read(opt);
-        if(opt==1){
+        if(opt==1)&#123;
             read(x,y,w);
             x=x^lastans;
             y=y^lastans;
@@ -563,28 +560,25 @@ signed main(){
             tree[root[i]]=tree[root[i-1]];
             tree[root[i]].id=i;
             change(i,root[i-1],root[i],x,y,w);
-        }
-        if(opt==2){
+        &#125;
+        if(opt==2)&#123;
             read(x,y);
             x=x^lastans;
             y=y^lastans;
             root[i]=root[i-1];
             lastans=work(root[i],x,y);
             cout&lt;&lt;lastans&lt;&lt;&#39;\n&#39;;
-        }
-        if(opt==3){
+        &#125;
+        if(opt==3)&#123;
             read(x);
             x=x^lastans;
             root[i]=root[idq[x]];
-        }
+        &#125;
         // for(int j=1;j&lt;=n;j++) cout&lt;&lt;query(root[i],1,cnt,dfsnum[j],dfsnum[j],3)&lt;&lt;&quot; &quot;;
         // cout&lt;&lt;endl;
-    }
+    &#125;
     return 0;
-}</code></pre>
-
-    </div>
-</div>
+&#125;</code></pre>
 <h2 id="t2">T2</h2>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>

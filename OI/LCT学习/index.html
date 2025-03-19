@@ -193,7 +193,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #a5ff4d">
+                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #e74c3c">
                     学习指南
                 </a>
             </span>
@@ -218,12 +218,12 @@
     
     <div class="content" v-pre>
         <h1 id="是什么">是什么</h1>
-<p>Link-Cut-Tree<br />
-一般称作 <code>LCT</code>/<code>虚实链剖分</code><br />
-ps： LCT 不能称作 <code>动态树</code>，<code>动态树</code>
-指的是一类问题。<br />
-由著名巨佬 Tarjan 发明（对，又是他）<br />
-用于解决动态的树上路径/子树问题（统称为<strong>动态树</strong>问题）<br />
+<p>Link-Cut-Tree 一般称作
+<code>LCT</code>/<code>虚实链剖分</code>。<br />
+（ps： LCT 不能称作 <code>动态树</code>，<code>动态树</code>
+指的是一类问题。）<br />
+由 Tarjan
+发明（对，又是他），用于解决动态的树上路径/子树问题（统称为<strong>动态树</strong>问题）。<br />
 对于普通的树上问题，比如：</p>
 <blockquote>
 <p>给定一颗 <span class="math inline">\(n\)</span>
@@ -234,7 +234,7 @@ class="math inline">\(v\)</span> 路径上的权值和<br />
 3.将 <span class="math inline">\(u\)</span> 点的权值修改为 <span
 class="math inline">\(val\)</span></p>
 </blockquote>
-<p>那么这是一道很板的 <del>熟练剖粪</del> 树链剖分题<br />
+<p>那么这是一道很板的树链剖分题。<br />
 但假如我们还需要维护两个操作：</p>
 <blockquote>
 <p>4.将 <span class="math inline">\(u,v\)</span>
@@ -242,8 +242,8 @@ class="math inline">\(val\)</span></p>
 5.将 <span class="math inline">\(u,v\)</span> 连接起来（若 <span
 class="math inline">\(u,v\)</span> 不在同一连通块内）</p>
 </blockquote>
-<p>那么现在，普通的树剖就没有办法解决了<br />
-这时候，我们就需要用到 LCT</p>
+<p>那么现在，普通的树剖就没有办法解决了。这时候，我们就需要用到
+LCT。</p>
 <h1 id="怎么做">怎么做</h1>
 <p><strong>变量声明</strong></p>
 <blockquote>
@@ -266,18 +266,15 @@ class="math inline">\(i\)</span>
 class="math inline">\(i\)</span> 节点为根的子树大小</p>
 </blockquote>
 <p>先将 LCT 模板题放在 <a
-target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3690">这里</a><br />
-其实 LCT 的码量并不算太大，但是就比较难理解</p>
-<p>前置芝士：二叉搜索树，Splay</p>
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3690">这里</a>。<br />
+其实 LCT 的码量并不算太大，但是就比较难理解。</p>
+<p>前置芝士：二叉搜索树，Splay。</p>
 <h2 id="二叉搜索树">二叉搜索树</h2>
-<p>我们在对一个序列进行各种操作的时候，<br />
-可能会遇见让你插入某个数，删除某个数，还需要让你随时都保证有序，<br />
-假如我们对一个普通的数组这样操作的话，如果从中间插入和删除之类的，需要用到
-<span class="math inline">\(O(n)\)</span> 的时间来维护序列的有序，<br />
-这样显然无法接受，我们需要优化时间复杂度。<br />
-考虑将序列转移到一颗二叉树上。</p>
+<p>我们在对一个序列进行各种操作的时候，可能会遇见让你插入某个数，删除某个数，还需要让你随时都保证有序，假如我们对一个普通的数组这样操作的话，如果从中间插入和删除之类的，需要用到
+<span class="math inline">\(O(n)\)</span>
+的时间来维护序列的有序，这样的时间复杂度是无法接受的。于是我们将序列转移到一颗二叉树上。</p>
 <h3 id="输出">输出</h3>
-<p>我们让二叉树的中序遍历的结果，就是原先的序列。</p>
+<p>我们不妨让二叉树的中序遍历的结果，就是原先的序列。</p>
 <p>那么怎么维护有序？假设我们需要维护单调递增的序列，对于每个节点 <span
 class="math inline">\(i\)</span> 都满足 <span
 class="math inline">\(val_{son_{i,0}} &lt; val_{i} &lt;
@@ -291,19 +288,23 @@ val_{son_{i,1}}\)</span> 即可。</p>
 class="math inline">\(b\)</span> 的值赋给 <span
 class="math inline">\(a\)</span>）<br />
 一直重复下面这个式子，直到 <span
-class="math inline">\(pos=0\)</span>。</p>
+class="math inline">\(pos=0\)</span>，或者 <span
+class="math inline">\(val_{pos}=v\)</span>。</p>
 <p><span class="math display">\[
-\left\{\begin{matrix}
+\begin{cases}
   pos \gets son_{pos,0}(v&lt;val_{pos})\\
   pos \gets son_{pos,1}(v&gt;val_{pos})
-\end{matrix}\right.
+\end{cases}
 \]</span></p>
-<p><span class="math inline">\(pos=0\)</span> 后，我们就可以将 <span
+<p>找到插入的位置后，如果 <span
+class="math inline">\(pos=0\)</span>，我们就可以将 <span
 class="math inline">\(tot \gets tot+1\)</span> 并将新的这个权值 <span
 class="math inline">\(v\)</span> 赋给 <span
-class="math inline">\(val_{tot}\)</span><br />
-记住插入后要更新 <span class="math inline">\(fa_{tot}\)</span> 和 <span
-class="math inline">\(son_{fa_{tot},0/1}\)</span><br />
+class="math inline">\(val_{tot}\)</span>，再更新 <span
+class="math inline">\(fa_{tot}\)</span> 和 <span
+class="math inline">\(son_{fa_{tot},0/1}\)</span>。如果 <span
+class="math inline">\(pos\not =0\)</span>，那我们只需要将 <span
+class="math inline">\(cnt_{pos} \gets cnt_{pos}+1\)</span> 即可。<br />
 这样插入操作就完成了！<br />
 代码如下：</p>
 <pre class="cpp"><code>void insert(int v)&#123;
@@ -379,21 +380,22 @@ void del(int v)&#123;
 </li>
 <li>查询 <span class="math inline">\(v\)</span> 这个值的后继</li>
 </ul>
-<p>请读者自行尝试或者查阅，因为普通的二叉搜索树容易被卡，因此在后文讲解
-Splay 时具体讲解。</p>
+<p>请读者自行尝试或者查阅，因为普通的二叉搜索树可以被很容易的卡成 <span
+class="math inline">\(O(n)\)</span> 的，因此在后文讲解 Splay
+时再具体讲解这些操作。</p>
 <h3 id="复杂度分析">复杂度分析</h3>
 <p>空间复杂度：</p>
 <blockquote>
 <p>我们每次在插入时只会多一个，因此空间复杂度为 <span
-class="math inline">\(O(n)\)</span></p>
+class="math inline">\(O(n)\)</span>。</p>
 </blockquote>
 <p>时间复杂度：</p>
 <blockquote>
 <p>理想情况下，<span class="math inline">\(n\)</span>
-个数据构成的二叉树的高度为 <span class="math inline">\(\log{n}\)</span>
-因此在插入删除时均最多跳 <span class="math inline">\(\log{n}\)</span>
-次，最优时间复杂度为 <span
-class="math inline">\(O(\log{n})\)</span>。<br />
+个数据构成的二叉树的高度为 <span
+class="math inline">\(O(\log{n})\)</span>，因此在插入删除时均最多跳
+<span class="math inline">\(O(\log{n})\)</span> 次，最优时间复杂度为
+<span class="math inline">\(O(\log{n})\)</span>。<br />
 但是我们可以通过构造如 <code>1 2 3 4 5</code>
 这样单调的数据，来使树高变为 <span
 class="math inline">\(O(n)\)</span>，此时二叉搜索树退化为<strong>链</strong>，插入和删除时最多会跳
@@ -402,7 +404,7 @@ class="math inline">\(O(n)\)</span>。</p>
 </blockquote>
 <p>总之，普通的二叉搜索树没法保证时间复杂度，我们需要优化。</p>
 <h2 id="splay">Splay</h2>
-<p>Splay 是一种自平衡的 二叉搜索树。<br />
+<p>Splay 是一种自平衡的二叉搜索树。<br />
 （ps：关于更多平衡树，以后会讲）</p>
 <p>Splay 通过一种叫做 <code>Splay</code>
 的操作，防止二叉搜索树退化为链，保证了树高为 <span
@@ -420,8 +422,7 @@ bool get(int x)&#123;
     return x==son[fa[x]][1];
 &#125;//得到点x属于fa[x]的左儿子还是右儿子</code></pre>
 <h3 id="旋转操作">旋转操作</h3>
-<p>若你学过 Treap
-之类的带旋平衡树，这一部分可以选择略过（建议不要略过）。</p>
+<p>若你学过 Treap 之类的带旋平衡树，这一部分可以选择略过。</p>
 <p>由中序遍历的性质：同一种中序遍历对应的二叉树不止一棵。<br />
 我们可以通过一些操作，在保证中序遍历不变的前提下，来使树高变低。<br />
 这种操作就称作 <code>旋转操作</code>，函数一般叫做
@@ -431,10 +432,8 @@ bool get(int x)&#123;
 <p><img src="/images/LCT1.png" /></p>
 <p>我们要将其转成这样：</p>
 <p><img src="/images/LCT2.png" /></p>
-<p>当然也可以转回来，<br />
-这样进行一次旋转后，x的高度提高了一层。<br />
-看似对总的高度没有影响，<br />
-但对于这样的退化成链的情况时：</p>
+<p>当然也可以转回来。<br />
+这样进行一次旋转后，x的高度提高了一层，看似对总的高度没有影响，但对于这样的退化成链的情况时：</p>
 <p><img src="/images/LCT3.png" /></p>
 <p>我们可以通过如下操作，将高度降低。</p>
 <ol type="1">
@@ -465,8 +464,8 @@ class="math inline">\(3\)</span>。<br />
 <p>我们令要进行 <code>rotate</code> 操作的点为 <span
 class="math inline">\(x\)</span>。<br />
 令:<br />
-<span class="math inline">\(y \gets fa[x]\)</span><br />
-<span class="math inline">\(z \gets fa[y]\)</span><br />
+<span class="math inline">\(y \gets fa_{x}\)</span><br />
+<span class="math inline">\(z \gets fa_{y}\)</span><br />
 <span class="math inline">\(ch \gets get(x)\)</span></p>
 <p>根据这两个图：</p>
 <p><img src="/images/LCT1.png" /></p>
@@ -520,16 +519,16 @@ class="math inline">\(son_{x,ch \oplus 1}\)</span><br />
 <p><img src="/images/LCT10.png" /></p>
 <p><img src="/images/LCT11.png" /></p>
 <p><img src="/images/LCT12.png" /></p>
-<p>这样的话，就是“如转”。<br />
-我们虽然将 <span class="math inline">\(1\)</span>
+<p>这样的话，就是“如转”，我们虽然将 <span
+class="math inline">\(1\)</span>
 号点转到了根上，但是高度并没有降低。<br />
-因此当树退化为一条链的时候。<br />
-<code>单旋Splay</code> 也就没法保证时间复杂度了。</p>
+因此当树退化为一条链的时候，<code>单旋Splay</code>
+也就没法保证时间复杂度了。</p>
 <p>这时候我们就需要用到 <code>双旋Splay</code>。</p>
 <h4 id="双旋splay">双旋Splay</h4>
 <p><code>双旋Splay</code> 其实就是在 <code>单旋Splay</code>
 的基础上，特殊处理了一下 <span class="math inline">\(u,v,z\)</span>
-三点共线的情况<br />
+三点共线的情况。<br />
 在遇到三点共线的情况时，我们只需要先旋转 <span
 class="math inline">\(fa_{u}\)</span> 也就是 <span
 class="math inline">\(v\)</span> 点，再旋转 <span
@@ -551,18 +550,18 @@ class="math inline">\(4\)</span> 号点，再转 <span
 class="math inline">\(1\)</span> 号点。</p>
 <p><img src="/images/LCT15.png" /></p>
 <p><img src="/images/LCT16.png" /></p>
-<p>可见，<code>双旋Splay</code> 不仅将我们需要的点转到了根上。<br />
-而且将原来的不优美的链，变得优美了一些些。<br />
-高度也就降低了。<br />
-因此 <code>双旋Splay</code> 更优。</p>
-<p>代码如下：</p>
-<pre class="cpp"><code>void Splay(int x)&#123;
-    for(int f=fa[x];f;f=fa[x])&#123;
-        if(fa[f]!=0) rotate(get(x)==get(f)?f:x);
+<p>可见，<code>双旋Splay</code>
+不仅将我们需要的点转到了根上，而且将原来的不优美的链，变得优美了一些些，高度也就降低了，因此
+<code>双旋Splay</code> 更优。</p>
+<pre class="cpp"><code>//这里的to表示要转到哪个点去，一般是转到根，也就是to==root
+void Splay(int x,int &amp;to)&#123;
+    int z=fa[to];
+    for(int f=fa[x];f!=z;f=fa[x])&#123;
+        if(fa[f]!=z) rotate(get(x)==get(f)?f:x);
         rotate(x);
     &#125;
-&#125;
-//忘记了 get 函数是做什么的，去前面看看吧xwx</code></pre>
+    to=x;
+&#125;</code></pre>
 <p>现在我们学会了
 <code>Splay操作</code>，那么其实也就很简单了，只需要像普通的二叉搜索树一样进行操作基本就行了，记住每次操作完后，将最后找到的点通过
 <code>Splay操作</code> 转到根上去就可以了。</p>
@@ -585,7 +584,7 @@ class="math inline">\(1\)</span> 号点。</p>
             cnt[pos]++;
             pushup(pos);
             pushup(f);
-            Splay(pos);//记住Splay操作！！！
+            Splay(pos,root);//记住Splay操作！！！
             return;
         &#125;
         f=pos;
@@ -597,7 +596,7 @@ class="math inline">\(1\)</span> 号点。</p>
             son[f][x&gt;val[f]]=tot;
             pushup(tot);
             pushup(f);
-            Splay(tot);//记住Splay操作！！！
+            Splay(tot,root);//记住Splay操作！！！
             return;
         &#125;
     &#125;
@@ -636,15 +635,14 @@ class="math inline">\(x\)</span> 大的值。<br />
 需要继续到左子树中计算答案，即 <span class="math inline">\(pos \gets
 son_{pos,1}\)</span></li>
 </ol>
-<p>代码如下：</p>
 <pre class="cpp"><code>int selrank(int x)&#123;
     int res=0,pos=root;
     while(true)&#123;
         if(x==val[pos])&#123;
-            Splay(pos);//将pos转到根后，其左子树就是答案，其实和前文表述是一样的
+            Splay(pos,root);//将pos转到根后，其左子树就是答案，其实和前文表述是一样的
             return siz[pos[son][0]]+1;
         &#125;
-        if(now==0) break;
+        if(pos==0) break;
         if(x&lt;val[pos]) pos=son[pos][0];
         else&#123;
             res+=siz[son[pos][0]]+cnt[pos];
@@ -677,17 +675,17 @@ siz_{son_{pos,0}}+cnt_{pos}\)</span>：<br />
 到左子树（<span class="math inline">\(pos \gets
 son_{pos,0}\)</span>）中继续寻找答案即可。</li>
 </ol>
-<p>代码如下：</p>
-<pre class="cpp"><code>int selval(int x)&#123;
-    int pos=root;
+<pre class="cpp"><code>//rt表示要在以哪个点为根的子树里寻找
+int selval(int x,int &amp;rt)&#123;
+    int pos=rt;
     while(true)&#123;
-        if(x&lt;=siz[son[pos][0]])&#123;
+        if(x&lt;=siz[son[pos][0]]&amp;&amp;son[pos][0])&#123;
             pos=son[pos][0];
             continue;
         &#125;
         x-=siz[son[pos][0]]+cnt[pos];
         if(x&lt;=0)&#123;
-            Splay(pos);//记住Splay操作！！！
+            Splay(pos,rt);//记住Splay操作！！！
             return val[pos];
         &#125;
         pos=son[pos][1];
@@ -696,16 +694,15 @@ son_{pos,0}\)</span>）中继续寻找答案即可。</li>
 <h3 id="查询前驱">查询前驱</h3>
 <p>前驱被定义为比 <span class="math inline">\(x\)</span>
 小的数中最大的数。<br />
-因此我们只需要从根的左子树开始，一直跳右儿子即可。</p>
-<p>代码如下：</p>
+因此我们只需要先将 <span class="math inline">\(x\)</span>
+转到根上，再从根的左子树开始，一直跳右儿子即可。</p>
 <pre class="cpp"><code>int selpre()&#123;
     int pos=son[root][0];
     while(son[pos][1]!=0) pos=son[pos][1];
-    Splay(pos);//记住Splay操作！！！
+    Splay(pos,root);//记住Splay操作！！！
     return pos;
 &#125;</code></pre>
 <p>注意：这个是找的是当前<strong>根所对应的值</strong>的前驱，如果需要查找任意一个数的前驱，可以先插入这个数，查完后再删除即可。</p>
-<p>也就是：</p>
 <pre class="cpp"><code>int selpre_val(int x)&#123;
     int res;
     insert(x);
@@ -718,7 +715,7 @@ son_{pos,0}\)</span>）中继续寻找答案即可。</li>
 <pre class="cpp"><code>int selnext()&#123;
     int pos=son[root][1];
     while(son[pos][0]!=0) pos=son[pos][0];
-    Splay(pos);//记住Splay操作！！！
+    Splay(pos,root);//记住Splay操作！！！
     return pos;
 &#125;</code></pre>
 <p>查找任意一个数的后继和查找任意一个数的前驱是同样的道理：</p>
@@ -743,12 +740,11 @@ class="math inline">\(fa\)</span>
 数组也跟着更新即可，最后合并出的根就是第一棵子树的根。</li>
 </ol>
 <p>为什么要将一棵树的最大值转到根后再合并？因为这样才能保证第一棵子树的右儿子是空的，才能够合并上去。</p>
-<p>代码如下：</p>
 <pre class="cpp"><code>int merge(int x,int y)&#123;//这里传的是两个树的根，返回值是合并后的根
     if(x==0||y==0) return x+y;
     int pos=x;
     while(son[pos][1]!=0) pos=son[pos][1];
-    Splay(pos);//记住Splay操作！！！
+    Splay(pos,root);//记住Splay操作！！！
     son[pos][1]=y;
     fa[y]=pos;
     pushup(pos);
@@ -765,7 +761,6 @@ class="math inline">\(cnt_{pos} \gets  cnt_{pos}-1\)</span> 即可。
 <p>为什么要找前驱？<br />
 因为在当前你要删除的这个点的右子树中，只有前驱可以<strong>保证</strong>没有右儿子。<br />
 合并两棵子树也就是 <span class="math inline">\(O(1)\)</span> 的了。</p>
-<p>代码如下：</p>
 <pre class="cpp"><code>void del(int x)&#123;
     selrank(x);//这里的作用是将x转到根上
     if(cnt[root]&gt;1)&#123;
@@ -817,113 +812,131 @@ target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6136">加
 #include&lt;bits/stdc++.h&gt;
 using namespace std;
 const int MAXN=1e5+10;
-int n,x,tot,root,val[MAXN],siz[MAXN],cnt[MAXN],fa[MAXN],son[MAXN][2];
-inline int read()&#123;
-    register int s=0,w=1;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x)&#123;
+    x=0;
+    bool f=false;
     char ch=getchar();
-    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;)&#123;if(ch==&#39;-&#39;)w=-1;ch=getchar();&#125;
-    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;)s=s*10+ch-&#39;0&#39;,ch=getchar();
-    return s*w;
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
 &#125;
-void clear(int x)&#123;
-    fa[x]=val[x]=son[x][0]=son[x][1]=cnt[x]=siz[x]=0;
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y)&#123;
+    read(x),read(y...);
 &#125;
-void pushup(int x)&#123;
-    siz[x]=siz[son[x][0]]+siz[son[x][1]]+cnt[x];
-&#125;
-bool get(int x)&#123;
-    return x==son[fa[x]][1];
-&#125;
+
+int n,tot,root,cnt[MAXN],val[MAXN],fa[MAXN],son[MAXN][2],siz[MAXN];
+
+int get(int x)&#123;return x==son[fa[x]][1];&#125;
+void pushup(int x)&#123;siz[x]=siz[son[x][0]]+siz[son[x][1]]+cnt[x];&#125;
+void clear(int x)&#123;siz[x]=cnt[x]=val[x]=fa[x]=son[x][0]=son[x][1]=0;&#125;
+
 void rotate(int x)&#123;
     int y=fa[x],z=fa[y],ch=get(x);
     son[y][ch]=son[x][ch^1];
-    if(son[x][ch^1]!=0) fa[son[x][ch^1]]=y;
+    if(son[x][ch^1]) fa[son[x][ch^1]]=y;
     son[x][ch^1]=y;
-    fa[y]=x;
-    fa[x]=z;
-    if(z!=0) son[z][y==son[z][1]]=x;
-    pushup(y);
-    pushup(x);
+    if(z) son[z][get(y)]=x;
+    fa[y]=x;fa[x]=z;
+    pushup(y);pushup(x);
 &#125;
-void splay(int x)&#123;
-    for(int f=fa[x];f;f=fa[x])&#123;
-        if(fa[f]) rotate(get(x)==get(f)?f:x);
+
+void Splay(int x,int &amp;rt)&#123;
+    int z=fa[rt];
+    for(int f=fa[x];f!=z;f=fa[x])&#123;
+        if(fa[f]!=z) rotate(get(x)==get(f)?f:x);
         rotate(x);
     &#125;
-    root=x;
+    rt=x;
 &#125;
+
 void insert(int x)&#123;
     if(root==0)&#123;
-        val[++tot]=x;
-        cnt[tot]++;
-        pushup(tot);
+        cnt[++tot]=1;
+        siz[tot]=1;
+        val[tot]=x;
         root=tot;
         return;
     &#125;
-    int now=root,f=0;
+    int f=0,pos=root;
     while(true)&#123;
-        if(val[now]==x)&#123;
-            cnt[now]++;
-            pushup(now);
-            pushup(fa[now]);
-            splay(now);
-            break;
+        if(val[pos]==x)&#123;
+            cnt[pos]++;
+            pushup(pos);
+            pushup(f);
+            Splay(pos,root);
+            return;
         &#125;
-        f=now;now=son[now][x&gt;val[now]];
-        if(now==0)&#123;
-            val[++tot]=x;
-            cnt[tot]++;
+        f=pos;
+        pos=son[pos][x&gt;val[pos]];
+        if(pos==0)&#123;
+            cnt[++tot]++;
+            val[tot]=x;
             fa[tot]=f;
             son[f][x&gt;val[f]]=tot;
             pushup(tot);
             pushup(f);
-            splay(tot);
-            break;
+            Splay(tot,root);
+            return;
         &#125;
     &#125;
 &#125;
+
 int selrank(int x)&#123;
-    int res=0,now=root;
+    int res=0,pos=root;
     while(true)&#123;
-        if(x==val[now])&#123;
-            splay(now);
-            return siz[son[now][0]]+1;
+        if(val[pos]==x)&#123;
+            Splay(pos,root);
+            return siz[son[pos][0]]+1;
         &#125;
-        if(now==0) break;
-        if(x&lt;val[now]) now=son[now][0];
-        else&#123;
-            res+=siz[son[now][0]]+cnt[now];
-            now=son[now][1];
+        if(pos==0) break;
+        if(val[pos]&lt;x)&#123;
+            res+=siz[son[pos][0]]+cnt[pos];
+            pos=son[pos][1];
         &#125;
+        else pos=son[pos][0];
     &#125;
     return res+1;
 &#125;
-int selval(int x)&#123;
-    int now=root;
+
+int selval(int x,int &amp;rt)&#123;
+    int pos=rt;
     while(true)&#123;
-        if(x&lt;=siz[son[now][0]]&amp;&amp;son[now][0]!=0) now=son[now][0];
-        else&#123;
-            x-=siz[son[now][0]]+cnt[now];
-            if(x&lt;=0)&#123;
-                splay(now);
-                return val[now];
-            &#125;
-            now=son[now][1];
+        if(x&lt;=siz[son[pos][0]]&amp;&amp;son[pos][0])&#123;
+            pos=son[pos][0];
+            continue;
         &#125;
+        x-=siz[son[pos][0]]+cnt[pos];
+        if(x&lt;=0)&#123;
+            Splay(pos,rt);
+            return val[pos];
+        &#125;
+        pos=son[pos][1];
     &#125;
 &#125;
+
 int selpre()&#123;
-    int now=son[root][0];
-    while(son[now][1]!=0) now=son[now][1];
-    splay(now);
-    return root;
+    int pos=son[root][0];
+    while(son[pos][1]) pos=son[pos][1];
+    Splay(pos,root);
+    return pos;
 &#125;
+
 int selnext()&#123;
-    int now=son[root][1];
-    while(son[now][0]!=0) now=son[now][0];
-    splay(now);
-    return root;
+    int pos=son[root][1];
+    while(son[pos][0]) pos=son[pos][0];
+    Splay(pos,root);
+    return pos;
 &#125;
+
 void del(int x)&#123;
     selrank(x);
     if(cnt[root]&gt;1)&#123;
@@ -957,17 +970,18 @@ void del(int x)&#123;
     clear(past);
     pushup(root);
 &#125;
-int main()&#123;
-    n=read();
+
+signed main()&#123;
+    read(n);
     for(int i=1;i&lt;=n;i++)&#123;
-        int opt,x;
-        opt=read();x=read();
-        if(opt==1) insert(x);
-        if(opt==2) del(x);
-        if(opt==3) cout&lt;&lt;selrank(x)&lt;&lt;endl;
-        if(opt==4) cout&lt;&lt;selval(x)&lt;&lt;endl;
-        if(opt==5)&#123;insert(x);cout&lt;&lt;val[selpre()]&lt;&lt;endl;del(x);&#125;
-        if(opt==6)&#123;insert(x);cout&lt;&lt;val[selnext()]&lt;&lt;endl;del(x);&#125;
+        int opt,z;
+        read(opt,z);
+        if(opt==1) insert(z);
+        if(opt==2) del(z);
+        if(opt==3) cout&lt;&lt;selrank(z)&lt;&lt;&#39;\n&#39;;
+        if(opt==4) cout&lt;&lt;selval(z,root)&lt;&lt;&#39;\n&#39;;
+        if(opt==5)&#123;insert(z);cout&lt;&lt;val[selpre()]&lt;&lt;&#39;\n&#39;;del(z);&#125;
+        if(opt==6)&#123;insert(z);cout&lt;&lt;val[selnext()]&lt;&lt;&#39;\n&#39;;del(z);&#125;
     &#125;
     return 0;
 &#125;</code></pre>
@@ -997,16 +1011,178 @@ target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6164">【
 <p>那么，在初始建树的时候，我们只需要按照序列原先的顺序，挨个挨个建一条只有左儿子的链就行了。</p>
 <pre class="cpp"><code>void build(int n)&#123;
     for(int i=1;i&lt;=n+2;i++)&#123;
-        son[++cnt][0]=root;
-        if(root!=0) fa[root]=cnt;
-        root=cnt;
-        val[cnt]=i-1;
+        son[++tot][0]=root;
+        if(root!=0) fa[root]=tot;
+        root=tot;
+        val[tot]=i-1;
     &#125;
-    Splay(1);//从下往上更新一下节点信息
+    Splay(1,root);//从下往上更新一下节点信息
 &#125;</code></pre>
 <p>那么我们怎么翻转呢？<br />
-显然我们只需要将一棵子树的左右儿子挨个挨个调换位置就可以了。</p>
-<p>接下来，就正式进入 <code>LCT</code> 的部分了~</p>
+显然我们只需要将一棵子树的左右儿子挨个挨个调换位置就可以了。<br />
+但如果我们直接每次翻转都去做一遍的话，时间复杂度显然会是 <span
+class="math inline">\(O(n)\)</span> 的。我们考虑像线段树一样，记录一个
+lazy 标签，需要下传的时候，再下传标记就可以了。</p>
+<pre class="cpp"><code>void rev(int u)&#123;
+    swap(son[u][0],son[u][1]);
+    tag[u]^=1;
+&#125;
+
+void pushdown(int x)&#123;
+    if(tag[x])&#123;
+        if(son[x][0]) rev(son[x][0]);
+        if(son[x][1]) rev(son[x][1]);
+        tag[x]=0;
+    &#125;
+&#125;</code></pre>
+<p>那我们怎么对区间 <span class="math inline">\([L,R]\)</span>
+进行翻转呢？我们每次翻转是翻转一整棵子树，而一棵子树，又恰好对应了原序列的一段区间，因此我们只需要尝试将
+<span class="math inline">\([L,R]\)</span>
+区间弄到同一棵子树内就可以了。</p>
+<p>根据中序遍历，一个结点的右子树对应的编号一定是比这个点对应的编号要大的。而左子树都是要更小的。<br />
+所以我们不妨先把 <span class="math inline">\(L-1\)</span> 转到根上，再将
+<span class="math inline">\(R+1\)</span> 转到 <span
+class="math inline">\(L-1\)</span> 的右子树的根上。这样，<span
+class="math inline">\(R+1\)</span> 的左子树对应的区间便是 <span
+class="math inline">\([L,R]\)</span> 了。因为 <span
+class="math inline">\(L\)</span> 可能为 <span
+class="math inline">\(1\)</span>，<span class="math inline">\(R\)</span>
+可能为 <span class="math inline">\(n\)</span>，此时 <span
+class="math inline">\(L-1=0,R+1=n+1\)</span>
+所以我们在初始建树的时候，便可以先在一前一后加上两个空节点。<br />
+然后翻转的时候打个 lazy 标签，往下走的时候下传标签就好了。<br />
+一定要记住，往下走的时候，就要下传一次标签！！！</p>
+<pre class="cpp"><code>void reverse(int l,int r)&#123;
+    selval(l,root);//因为初始序列前后各加了一个数，所以这里找第l个，刚好就是原序列的第l-1个
+    selval((r+1)-(l-1),son[root][1]);
+    int now=son[son[root[1]]][0];
+    rev(now);
+    pushdown(now);
+    Splay(now,root);
+&#125;</code></pre>
+<p>其他部分和普通的平衡树差不多。</p>
+<pre class="cpp"><code>// Problem: P3391 【模板】文艺平衡树
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/P3391
+// Memory Limit: 125 MB
+// Time Limit: 1000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int MAXN=1e5+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x)&#123;
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+&#125;
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y)&#123;
+    read(x),read(y...);
+&#125;
+
+int n,m,tot,root,val[MAXN],siz[MAXN],tag[MAXN],fa[MAXN],son[MAXN][2],cnt[MAXN];
+
+int get(int x)&#123;return x==son[fa[x]][1];&#125;
+void pushup(int x)&#123;siz[x]=siz[son[x][0]]+siz[son[x][1]]+cnt[x];&#125;
+void rev(int x)&#123;swap(son[x][0],son[x][1]);tag[x]^=1;&#125;
+
+void rotate(int x)&#123;
+    int y=fa[x],z=fa[y],ch=get(x);
+    son[y][ch]=son[x][ch^1];
+    if(son[x][ch^1]) fa[son[x][ch^1]]=y;
+    son[x][ch^1]=y;
+    if(z) son[z][get(y)]=x;
+    fa[x]=z;fa[y]=x;
+    pushup(y);pushup(x);
+&#125;
+
+void Splay(int x,int &amp;rt)&#123;
+    int z=fa[rt];
+    for(int f=fa[x];f!=z;f=fa[x])&#123;
+        if(fa[f]!=z) rotate(get(x)==get(f)?f:x);
+        rotate(x);
+    &#125;
+    rt=x;
+&#125;
+
+void build(int n)&#123;
+    for(int i=0;i&lt;=n+1;i++)&#123;
+        son[++tot][0]=root;
+        if(root) fa[root]=tot;
+        root=tot;
+        val[tot]=i;
+        cnt[tot]++;
+    &#125;
+    Splay(1,root);
+&#125;
+
+void pushdown(int x)&#123;
+    if(tag[x])&#123;
+        if(son[x][0]) rev(son[x][0]);
+        if(son[x][1]) rev(son[x][1]);
+        tag[x]=0;
+    &#125;
+&#125;
+
+int selval(int x,int &amp;rt)&#123;
+    int pos=rt;
+    while(true)&#123;
+        pushdown(pos);
+        if(x&lt;=siz[son[pos][0]]&amp;&amp;son[pos][0]) pos=son[pos][0];
+        else&#123;
+            x-=siz[son[pos][0]]+cnt[pos];
+            if(x&lt;=0)&#123;
+                Splay(pos,rt);
+                return val[pos];
+            &#125;
+            pos=son[pos][1];
+        &#125;
+    &#125;
+&#125;
+
+void reverse(int l,int r)&#123;
+    selval(l,root);
+    selval((r+1)-(l-1),son[root][1]);
+    int x=son[son[root][1]][0];
+    rev(x);
+    pushdown(x);
+    Splay(x,root);
+&#125;
+
+void print(int x)&#123;
+    if(!x) return;
+    pushdown(x);
+    print(son[x][0]);
+    if(val[x]&gt;=1&amp;&amp;val[x]&lt;=n) cout&lt;&lt;val[x]&lt;&lt;&quot; &quot;;
+    print(son[x][1]);
+&#125;
+
+signed main()&#123;
+    read(n,m);
+    build(n);
+    for(int i=1;i&lt;=m;i++)&#123;
+        int l,r;
+        read(l,r);
+        reverse(l,r);
+    &#125;
+    print(root);
+    return 0;
+&#125;</code></pre>
+<p>好，文艺平衡树到这里也就结束了！<br />
+接下来，就正式进入 <code>LCT</code> 的部分了~</p>
 <h2 id="lct">LCT</h2>
 <p>现在，你应该已经掌握了所有的前置芝士，是时候真正进入LCT的部分了！！！</p>
 <h3 id="讲解">讲解</h3>
@@ -1086,8 +1262,8 @@ class="math inline">\(B\)</span> 连接起来，那么树就变成这个样子�
 class="math inline">\(\textcolor{blue}{辅助树}\)</span>的。因此我们要么在<span
 class="math inline">\(\textcolor{green}{原树}\)</span>上作出修改，要么在<span
 class="math inline">\(\textcolor{blue}{辅助树}\)</span>上做修改。<br />
-根据前文所讲，我们只需在<span
-class="math inline">\(\textcolor{blue}{辅助树}\)</span>上做修改即可。<br />
+根据前文所讲，我们只需要，也只能在<span
+class="math inline">\(\textcolor{blue}{辅助树}\)</span>上做修改。<br />
 那么我们怎么修改呢？</p>
 <p>原先两棵树的<span
 class="math inline">\(\textcolor{blue}{辅助树}\)</span>可以是这样的：</p>
@@ -1106,7 +1282,7 @@ class="math inline">\(\textcolor{blue}{辅助树}\)</span>的根节点才是没�
 class="math inline">\(\textcolor{blue}{辅助树}\)</span>的根的位置。<br />
 我们定义一种新的函数叫做 <code>access(x)</code>，表示将 <code>x</code>
 这个点与其当前变所在的<span
-class="math inline">\(\textcolor{blue}{辅助树}\)</span>的根结点弄到同一个
+class="math inline">\(\textcolor{green}{原树}\)</span>的根结点弄到同一个
 Splay 中。也就是将 <code>x</code>
 到根的路径变成一条<code>实链</code>。<br />
 那么在这个例子中，我们进行一次 <code>access(G)</code>，再
@@ -1197,8 +1373,10 @@ class="math inline">\(N\)</span> 在同一棵 Splay 中。</p>
 <li>将当前点换成当前点的父亲</li>
 </ol>
 <p>代码如下：</p>
-<pre class="cpp"><code>int access(int u)&#123;
-    for(int now=0;u;now=u,u=fa[u]) Splay(u),son[u][1]=now,pushup(u);
+<pre class="cpp"><code>int access(int x)&#123;
+    int now=0;
+    for(;x;now=x,x=fa[x]) Splay(x),son[x][1]=now,pushup(x);
+    pushup(x);
     return now;
 &#125;</code></pre>
 <p>注意到这里的 <code>access</code> 函数有一个返回值。<br />
@@ -1230,27 +1408,275 @@ class="math inline">\(\textcolor{green}{原树}\)</span>的根，我们需要把
 class="math inline">\(\textcolor{green}{原树}\)</span>的根，我们只需要将其到根节点的路径进行翻转就可以了。<br />
 这个操作和 Splay 的翻转操作是类似的。</p>
 <p>代码：</p>
-<pre class="cpp"><code>void makeroot(int u)&#123;
-    u=access(u);
-    swap(son[u][0],son[u][1]);
-    tag[u]^=1;
+<pre class="cpp"><code>void makeroot(int x)&#123;
+    x=access(x);Splay(x);
+    swap(son[x][0],son[x][1]);
+    tag[x]^=1;
 &#125;</code></pre>
 <p>这里的 access 函数，将 <span class="math inline">\(u\)</span>
 和当前的根放在了同一 Splay 下。但是我们又令 <span
 class="math inline">\(u\gets
 \operatorname{access}(u)\)</span>，这是为什么呢？<br />
-我们前面在学习 Splay 的时候说过，Splay 的翻转操作应该从根开始，而这里
-<code>access(u)</code> 返回的值，恰好就是这棵 Splay 的根，为什么？看看
-<code>access</code> 的代码，就明白了。</p>
+我们前面在学习 Splay 的翻转操作时知道，Splay
+的翻转操作是需要对一整棵子树操作的，而这里 <code>access(u)</code>
+返回的值，恰好就是这棵 Splay 的根，为什么？看看 <code>access</code>
+的代码，就明白了。</p>
 <p>那我们现在，makeroot
 函数也搞定了，终于可以连边了~直接按照前文所说的来操作就行了，注意先判一下要连的边是否在同一棵树中，如果在同一棵树中显然是不能连边的。</p>
-<pre class="cpp"><code>void link(int u,int v)&#123;
-    makeroot(u);
-    access(u);
-    fa[u]=v;
+<pre class="cpp"><code>void link(int x,int y)&#123;
+    makeroot(x);Splay(x);
+    if(findroot(y)!=x) fa[x]=y;
 &#125;</code></pre>
 <h4 id="如何删边">如何删边</h4>
 <p>Link-Cut 中的 Link 我们解决了，那 Cut 呢？</p>
+<p>我们现在要删掉 <span class="math inline">\(x\)</span> 与 <span
+class="math inline">\(y\)</span>
+之间的边，显然，我们需要判断这个操作是否合法，也就是 <span
+class="math inline">\(x\)</span> 与 <span
+class="math inline">\(y\)</span> 当前有没有边。这怎么去判断呢？<br />
+当然你可以选择用 map 来存一下边。</p>
+<p>首先，要有边，<span class="math inline">\(x\)</span> 与 <span
+class="math inline">\(y\)</span> 必须得是联通的。也就是 <span
+class="math inline">\(x\)</span> 和 <span
+class="math inline">\(y\)</span> 在同一棵树内。<span
+class="math inline">\(\textcolor{blue}{辅助树}\)</span>的根会经常变化，而<span
+class="math inline">\(\textcolor{green}{原树}\)</span>的根只有在调用
+<code>makeroot</code> 函数的时候才会发生变化，因此我们要知道 <span
+class="math inline">\(x\)</span> 和 <span
+class="math inline">\(y\)</span> 是否在同一棵子树中，只需要判断 <span
+class="math inline">\(x\)</span> 与 <span
+class="math inline">\(y\)</span> 所在的<span
+class="math inline">\(\textcolor{green}{原树}\)</span>的根是否是同一个点就行了。</p>
+<p>怎么去找一个点所在<span
+class="math inline">\(\textcolor{green}{原树}\)</span>的根呢？我们稍后再讲。我们现在先把判断合法的条件讲完。</p>
+<p><span class="math inline">\(x\)</span> 与 <span
+class="math inline">\(y\)</span>
+在同一棵树中显然并不能说明他们俩之间有边。而且我们只知道<span
+class="math inline">\(\textcolor{blue}{辅助树}\)</span>的形态。我们不妨先
+<code>makeroot(x)</code>，这样的话，<span
+class="math inline">\(y\)</span> 的就一定深于 <span
+class="math inline">\(x\)</span> 了。我们令这个函数叫做
+<code>findroot</code>。<br />
+我们知道，LCT 将<span
+class="math inline">\(\textcolor{green}{原树}\)</span>拆成了若干条链，那么如果
+<span class="math inline">\(x\)</span> 与 <span
+class="math inline">\(y\)</span> 在同一条实链上，至少可以说明它俩在<span
+class="math inline">\(\textcolor{green}{原树}\)</span>上是可能相连的。<br />
+另外，我们知道，一条虚边对应的两个点也显然之间是有边的（废话）。<br />
+那么我们可以组合一下，如果 <span class="math inline">\(x\)</span> 和
+<span class="math inline">\(y\)</span> 在<span
+class="math inline">\(\textcolor{green}{原树}\)</span>上的路径上没有多的链，那么也有可能是合法的。那么我们此时先<code>Splay(y)</code>，这样的话，如果满足上面的条件，<span
+class="math inline">\(y\)</span> 在<span
+class="math inline">\(\textcolor{blue}{辅助树}\)</span>上的父亲绝对是
+<span class="math inline">\(x\)</span>。<br />
+当然这样依然不能判断是否有边。如果 <span
+class="math inline">\(y\)</span> 在<span
+class="math inline">\(\textcolor{blue}{辅助树}\)</span>上有左儿子，那么
+<span class="math inline">\(y\)</span> 所在的实链中，存在在 <span
+class="math inline">\(y\)</span> 之上，且不是 <span
+class="math inline">\(x\)</span> 的点，那么这样的话，<span
+class="math inline">\(x\)</span> 与 <span
+class="math inline">\(y\)</span> 之间就存在其他边。</p>
+<pre class="cpp"><code>void cut(int x,int y)&#123;
+    makeroot(x);access(y);
+    if(findroot(y)==x&amp;&amp;fa[y]==x&amp;&amp;!son[y][0]) son[x][1]=fa[y]=0;
+&#125;</code></pre>
+<p>那么我们就只剩下 <code>findroot</code> 这个函数了。</p>
+<h4 id="findroot">findroot</h4>
+<p>我们要找 <span class="math inline">\(x\)</span> 所在的<span
+class="math inline">\(\textcolor{green}{原树}\)</span>的根，我们不妨先
+<code>access(x)</code> 一下，再 <code>Splay(x)</code>
+一下，这样的话，根就和 <span class="math inline">\(x\)</span> 在同一棵
+Splay 中，并且根是这棵 Splay
+中深度最小的那个点，直接一直跳左儿子即可。</p>
+<pre class="cpp"><code>int findroot(int x)&#123;
+    access(x);Splay(x);pushdown(x);
+    while(son[x][0]) x=son[x][0],pushdown(x);
+    Splay(x);
+    return x;
+&#125;</code></pre>
+<p>那么我们 Cut 也就完成了！</p>
+<h3 id="一些细节">一些细节</h3>
+<p>最后还有一些细节。<br />
+比如在 <code>Splay</code>，<code>rotate</code>
+操作中，如果当前这个点是这棵 Splay
+中的根了，显然不能继续向上了，因此我们需要判断一下一个点是否是其所在的点的根。</p>
+<h4 id="isroot">isroot</h4>
+<p>因为<span
+class="math inline">\(\textcolor{blue}{辅助树}\)</span>认父不认子的特点，如果一个点既不是其父亲的左儿子，也不是右儿子，那么这个点就是这棵
+Splay 的根。</p>
+<pre class="cpp"><code>bool isroot(int x)&#123;return x!=son[fa[x]][0]&amp;&amp;x!=son[fa[x]][1];&#125;</code></pre>
+<h4 id="update">update</h4>
+<p>因为我们在进行 <code>Splay</code> 操作的时候，可能其上面的点还有 lazy
+标签没有下传，这时如果直接 <code>Splay</code>
+就会出问题，此时我们就先从上往下把标签下放即可。</p>
+<pre class="cpp"><code>void update(int x)&#123;
+    if(!isroot(x)) update(fa[x]);
+    pushdown(x);
+&#125;</code></pre>
+<blockquote>
+<p>为什么在文艺平衡树中不需要
+update？因为在找到某个点的时候，其从根到这个点的路径上的标签均被下传过了，而这个点自己的标签又只会往下传，因此不会对
+Splay 操作造成影响。</p>
+</blockquote>
+<h4 id="splay-rotate">Splay &amp; rotate</h4>
+<p>那么再然后就是 <code>Splay</code> 函数和 <code>rotate</code>
+函数的一点小改动了。</p>
+<pre class="cpp"><code>void rotate(int x)&#123;
+    int y=fa[x],z=fa[y],ch=get(x);
+    if(!isroot(y)) son[z][get(y)]=x;
+    //这一句要写在前面，因为我们要看y是否已经是根了，不然后面fa[y]改了后，y就一定不是根了。
+    son[y][ch]=son[x][ch^1];
+    if(son[x][ch^1]) fa[son[x][ch^1]]=y;
+    son[x][ch^1]=y;
+    fa[x]=z;fa[y]=x;
+    pushup(y);pushup(x);
+&#125;
+
+void Splay(int x)&#123;
+    update(x);
+    for(int f=fa[x];f&amp;&amp;!isroot(x);f=fa[x])&#123;
+        if(!isroot(f)) rotate(get(x)==get(f)?f:x);
+        rotate(x);
+    &#125;
+&#125;</code></pre>
+<h3 id="提取路径信息">提取路径信息</h3>
+<p>对于 LCT 的模板题而言，我们还需要维护路径信息，这个怎么实现呢？</p>
+<p>我们现在需要维护 <span class="math inline">\(x\)</span> 到 <span
+class="math inline">\(y\)</span> 的路径的一些关系，很自然可以想到先
+<code>makeroot(x)</code>，再 <code>access(y)</code>。这样，<span
+class="math inline">\(x\)</span> 和 <span
+class="math inline">\(y\)</span> 就在同一条实链上了。我们不妨再
+<code>Splay(y)</code>。这样，<span class="math inline">\(x\)</span> 到
+<span class="math inline">\(y\)</span> 的路径就在 <span
+class="math inline">\(y\)</span> 的子树中了，这个是很好维护的，我们在
+<code>pushup</code> 的时候，顺带记录就好了。<br />
+我们称这样提取出一条路径的操作叫做 <code>split</code>。</p>
+<pre class="cpp"><code>void split(int x,int y)&#123;makeroot(x);access(y);Splay(y);&#125;</code></pre>
+<p>对于模板题，我们维护异或和就行。</p>
+<pre class="cpp"><code>void pushup(int x)&#123;xorsum[x]=xorsum[son[x][0]]^xorsum[son[x][1]]^val[x];&#125;</code></pre>
+<h3 id="改变权值">改变权值</h3>
+<p>改变权值是容易的，我们先把要改的位置 <code>Splay</code>
+一下，再直接改就行了。</p>
+<pre class="cpp"><code>void changeval(int x,int y)&#123;Splay(x);val[x]=y;&#125;</code></pre>
+<p>那么，模板题就结束啦！</p>
+<pre class="cpp"><code>// Problem: P3690 【模板】动态树（LCT）
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/P3690
+// Memory Limit: 128 MB
+// Time Limit: 1000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int MAXN=1e5+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x)&#123;
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+&#125;
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y)&#123;
+    read(x),read(y...);
+&#125;
+
+int n,m,tot,son[MAXN][2],fa[MAXN],tag[MAXN],xorsum[MAXN],val[MAXN];
+
+int get(int x)&#123;return x==son[fa[x]][1];&#125;
+int isroot(int x)&#123;return x!=son[fa[x]][0]&amp;&amp;x!=son[fa[x]][1];&#125;
+void pushup(int x)&#123;xorsum[x]=xorsum[son[x][0]]^xorsum[son[x][1]]^val[x];&#125;
+void rev(int x)&#123;swap(son[x][0],son[x][1]);tag[x]^=1;&#125;
+
+void pushdown(int x)&#123;
+    if(tag[x])&#123;
+        if(son[x][0]) rev(son[x][0]);
+        if(son[x][1]) rev(son[x][1]);
+        tag[x]=0;
+    &#125;
+&#125;
+
+void update(int x)&#123;
+    if(!isroot(x)) update(fa[x]);
+    pushdown(x);
+&#125;
+
+void rotate(int x)&#123;
+    int y=fa[x],z=fa[y],ch=get(x);
+    if(!isroot(y)) son[z][get(y)]=x;
+    son[y][ch]=son[x][ch^1];
+    if(son[x][ch^1]) fa[son[x][ch^1]]=y;
+    son[x][ch^1]=y;
+    fa[x]=z;fa[y]=x;
+    pushup(y);pushup(x);
+&#125;
+
+void Splay(int x)&#123;
+    update(x);
+    for(int f=fa[x];f&amp;&amp;!isroot(x);f=fa[x])&#123;
+        if(!isroot(f)) rotate(get(x)==get(f)?f:x);
+        rotate(x);
+    &#125;
+&#125;
+
+int access(int x)&#123;
+    int now=0;
+    for(;x;now=x,x=fa[x]) Splay(x),son[x][1]=now,pushup(x);
+    pushup(x);
+    return now;
+&#125;
+
+void makeroot(int x)&#123;
+    x=access(x);Splay(x);
+    swap(son[x][0],son[x][1]);
+    tag[x]^=1;
+&#125;
+
+int findroot(int x)&#123;
+    access(x);Splay(x);pushdown(x);
+    while(son[x][0]) x=son[x][0],pushdown(x);
+    Splay(x);
+    return x;
+&#125;
+
+void link(int x,int y)&#123;
+    makeroot(x);Splay(x);
+    if(findroot(y)!=x) fa[x]=y;
+&#125;
+
+void cut(int x,int y)&#123;
+    makeroot(x);access(y);
+    if(findroot(y)==x&amp;&amp;fa[y]==x&amp;&amp;!son[y][0]) son[x][1]=fa[y]=0;
+&#125;
+
+void split(int x,int y)&#123;makeroot(x);access(y);Splay(y);&#125;
+int query(int x,int y)&#123;split(x,y);return xorsum[y];&#125;
+void changeval(int x,int y)&#123;Splay(x);val[x]=y;&#125;
+
+signed main()&#123;
+    read(n,m);
+    for(int i=1;i&lt;=n;i++) read(val[i]);
+    for(int i=1;i&lt;=m;i++)&#123;
+        int opt,x,y;
+        read(opt,x,y);
+        if(opt==0) cout&lt;&lt;query(x,y)&lt;&lt;&#39;\n&#39;;
+        if(opt==1) link(x,y);
+        if(opt==2) cut(x,y);
+        if(opt==3) changeval(x,y);
+    &#125;
+    return 0;
+&#125;</code></pre>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
     
