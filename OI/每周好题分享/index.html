@@ -193,7 +193,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #979a9a">
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #e74c3c">
                     题解
                 </a>
             </span>
@@ -262,6 +262,7 @@ TLE，我们把区间先留下来，要 pushdown
 的时候，新建一下儿子节点就好了。</p>
 <p>（似乎有相对简单的做法，但我觉得我这样拆的方法更通用一点？比如<a
 target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P10773">这道题</a>）</p>
+<p>注意：在极限数据下，我的代码会 RE，但其实可以优化一下，懒的改了）</p>
 <pre class="cpp"><code>// Problem: P7671 [GDOI2016] 疯狂动物城
 // Contest: Luogu
 // URL: https://www.luogu.com.cn/problem/P7671
@@ -582,8 +583,9 @@ signed main()&#123;
 <h2 id="t2">T2</h2>
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2387">P2387 [NOI2014]
 魔法森林</a></p>
-<p>虽然大部分人还不会 LCT，但可以先不管，总之就是可以在 <span
-class="math inline">\(O(\log n)\)</span>
+<p>虽然大部分人还不会 LCT（也可以看看我的<a
+target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/">博客</a>，我觉得写得挺清楚的qwq），但可以先不管，总之就是可以在
+<span class="math inline">\(O(\log n)\)</span>
 的时间内连边和断边就行了，思考一下怎么维护这道题需要的就可以了。<br />
 如果见过类似的题那其实很简单，可能有人很快就秒了。</p>
 <p>这题相对于一般的维护链上最大值，变成了两种权值各自的最大值后相加的结果。<br />
