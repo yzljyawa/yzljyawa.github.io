@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>洛谷 P9529 [JOISC2022] 一流团子师傅 题解 | yzljyのBlog</title>
+    <title>广义串并联图学习笔记 | yzljyのBlog</title>
     <meta name="author" content="yzljy" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -165,14 +165,14 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div class="article">
     <div>
-        <h1>洛谷 P9529 [JOISC2022] 一流团子师傅 题解</h1>
+        <h1>广义串并联图学习笔记</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2024/7/29
+            2025/3/24
         </span>
         
         <span class="category">
@@ -193,22 +193,15 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #a5ff4d">
-                    题解
+                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #979a9a">
+                    学习指南
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E4%BA%A4%E4%BA%92%E9%A2%98/" style="color: #00beff">
-                    交互题
-                </a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/%E4%BA%8C%E5%88%86/" style="color: #979a9a">
-                    二分
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/" style="color: #e74c3c">
+                    图论
                 </a>
             </span>
             
@@ -217,127 +210,18 @@
     </div>
     
     <div class="content" v-pre>
-        <p>今天下午学长刚讲了交互题，写完交上去一发过，似乎还是最优解？<br />
-<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P9529">题目传送门</a></p>
-<h2 id="题意简述">题意简述</h2>
-<p>有 <span class="math inline">\(n\)</span> 种物品，每种有 <span
-class="math inline">\(m\)</span>
-个，现在这些物品被随机打乱了（你并不知道顺序）。你每次可以选择<strong>任意多个</strong>（即给出一个向量）进行询问，每次询问会告诉你这些物品中
-<span class="math inline">\(1\)</span> 到 <span
-class="math inline">\(n\)</span> 这 <span
-class="math inline">\(n\)</span>
-种物品中，最少的那种物品的<strong>数量</strong>。最后你需要给出 <span
-class="math inline">\(m\)</span>
-个<strong>完全不同</strong>的向量，每个向量必须包含这 <span
-class="math inline">\(n\)</span>
-种物品，每种物品<strong>有且仅有</strong> <span
-class="math inline">\(1\)</span> 个，在不多于 <span
-class="math inline">\(50000\)</span> 次询问下完成。</p>
-<h2 id="思路">思路</h2>
-<p>注意到只能在 <span class="math inline">\(50000\)</span>
-次询问内完成，而物品最多有 <span class="math inline">\(n \times
-m\)</span> 共 <span class="math inline">\(10000\)</span>
-个，最后对于每个物品，我们还剩下了 <span
-class="math inline">\(5\)</span> 次查询机会。因为 <span
-class="math inline">\(m \le 25\)</span>，所以 <span
-class="math inline">\(\log m &lt;
-5\)</span>，因此我们可以考虑二分（这个其实还是比较难想的？）</p>
-<p>我们令 <span class="math inline">\(M\)</span>
-表示当前处理的需要提交的向量的数量，<span
-class="math inline">\(mid\)</span> 变量表示二分的值，即$mid = $所以当
-<span class="math inline">\(M=1\)</span>
-的时候，我们就可以提交当前这一个向量。我们每次将一个大向量从前往后一个个遍历（具体方法后面会讲），将其拆成两个小向量，再递归处理，递归到最后直接提交答案，可以计算最多需要询问
-<span class="math inline">\(43600\)</span> 次，时间复杂度也是 <span
-class="math inline">\(O(n \log m)\)</span> 的，可以通过。</p>
-<h2 id="实现">实现</h2>
-<p>最开始，我们将 <span class="math inline">\(n \times m\)</span>
-这么多个数全部扔进一个叫做 <span class="math inline">\(x\)</span>
-的向量中，我们要将 <span class="math inline">\(x\)</span>
-这个向量拆成两个小的向量 <span class="math inline">\(y\)</span> 和 <span
-class="math inline">\(z\)</span>。使得 <span
-class="math inline">\(y\)</span> 这个向量中有 <span
-class="math inline">\(mid\)</span> 串未处理的物品，<span
-class="math inline">\(z\)</span> 中有 <span
-class="math inline">\(M-mid\)</span> 串未处理的物品。</p>
-<p>根据查询的性质：返回 <span class="math inline">\(1\)</span> 到 <span
-class="math inline">\(n\)</span> 这 <span
-class="math inline">\(n\)</span>
-种物品中最少的一种物品的数量。因此一个向量可以组成多少个串，就是对这个向量进行询问后的返回值。</p>
-<p>因此我们从 <span class="math inline">\(x\)</span>
-这个向量的第一个元素开始遍历，假如去掉这一个物品后，我们进行一次查询，发现返回值仍是<strong>大于等于</strong>
-<span class="math inline">\(mid\)</span>
-的，那么就说明，去掉这个物品后，剩下的物品也至少也可以组成 <span
-class="math inline">\(mid\)</span> 个串，那么这个物品就可以扔到 <span
-class="math inline">\(z\)</span>
-这个向量。反之当返回值<strong>小于</strong> <span
-class="math inline">\(mid\)</span>
-的时候，就说明去掉这个物品后，剩下的物品不能够组成 <span
-class="math inline">\(mid\)</span>
-个串，因此这个物品是<strong>必须的</strong>，需要放到 <span
-class="math inline">\(y\)</span> 向量。再依次对 <span
-class="math inline">\(y\)</span> 和 <span
-class="math inline">\(z\)</span> 递归处理，当一个向量长度为 <span
-class="math inline">\(n\)</span>
-时，那么就说明这是一个合法的串，提交答案即可。</p>
-<p><strong>注意！</strong> 当去掉这个物品后，剩下的物品不能组成至少
-<span class="math inline">\(mid\)</span> 根串的时候，我们是需要把它扔进
-<span class="math inline">\(y\)</span>
-这个向量的，但是它<strong>依然</strong>应该被保留在 <span
-class="math inline">\(x\)</span>
-这个向量中，否则在后面继续遍历的时候，无论如何返回的询问值<strong>总是</strong>小于
-<span class="math inline">\(mid\)</span>
-的。因此在代码实现的时候，我们其实并不需要真的开两个向量，自然的当 <span
-class="math inline">\(x\)</span> 中可以扔去 <span
-class="math inline">\(z\)</span> 的扔完后，剩下的其实就是原先<span
-class="math inline">\(y\)</span> 这个向量。</p>
-<p>具体的，我们维护一个 <span class="math inline">\(pos\)</span>
-变量，记录当前应该取的是 <span class="math inline">\(x\)</span>
-这个向量中的哪个元素的位置，再另开一个变量记录一下这个元素的值。因为我们有时需要扔进另一个向量，有时需要继续保留。每次我们先将这个元素从向量中弹出，进行查询后根据返回值决定要放回去还是丢进另一个变量。在扔走的时候，<span
-class="math inline">\(pos\)</span> 是不变的，当留下的时候，将 <span
-class="math inline">\(pos\)</span> 增加 <span
-class="math inline">\(1\)</span>。</p>
-<p>具体可以看下面几张图来理解： <img
-src="https://cdn.luogu.com.cn/upload/image_hosting/2ob88zt8.png" /> <img
-src="https://cdn.luogu.com.cn/upload/image_hosting/b2txfmnd.png" /> <img
-src="https://cdn.luogu.com.cn/upload/image_hosting/sycpxf00.png" /></p>
-<p>为什么这样是正确的？因为我们在每次处理 <span
-class="math inline">\(x\)</span> 这个向量时，都保证了处理后的 <span
-class="math inline">\(y\)</span> 向量和 <span
-class="math inline">\(z\)</span> 向量中，分别可以组合出 <span
-class="math inline">\(mid\)</span> 个串和 <span
-class="math inline">\(M-mid\)</span> 个串。当最后 <span
-class="math inline">\(M=1\)</span> 的时候，也就自然的一定可以组合出
-<span class="math inline">\(1\)</span> 个串，因此这也就是答案。</p>
-<p>最后处理一些细节，代码也很容易完成，似乎是最短的，就可以愉快地 AC
-啦~</p>
-<h2 id="代码">代码</h2>
-<pre class="cpp"><code>#include &lt;vector&gt;
-void Solve(int N, int M);
-int Query(const std::vector&lt;int&gt; &amp;x);
-void Answer(const std::vector&lt;int&gt; &amp;a);
-void work(std::vector&lt;int&gt; &amp;a,int m)&#123;//递归处理
-    if(m==1)&#123;//得到答案
-        Answer(a);
-        return;
-    &#125;
-    int mid=m/2,cache;
-    std::vector&lt;int&gt; x;
-    int pos=0;
-    int len=a.size();
-    for(int i=1;i&lt;=len;i++)&#123;
-        cache=a[pos];
-        a.erase(a.begin()+pos);
-        if(Query(a)&lt;mid) a.insert(a.begin()+pos,cache),pos++;//返回值大于等于mid，扔进另一个向量
-        else x.push_back(cache);//返回值小于mid，需要扔回去
-    &#125;
-    work(a,mid);
-    work(x,m-mid);//向下递归继续处理
-&#125;
-void Solve(int N,int M)&#123;
-    std::vector&lt;int&gt; s;
-    for(int i=1;i&lt;=N*M;i++) s.push_back(i);//将最开始的N*M个数全部丢进一个初始向量
-    work(s,M);
-&#125;</code></pre>
+        <h1 id="是什么">是什么</h1>
+<p>广义串并联图定义为：不存在同胚于 <span
+class="math inline">\(K_{4}\)</span> 的子图的图。</p>
+<blockquote>
+<p><span class="math inline">\(K_{i}\)</span> 就是 <span
+class="math inline">\(i\)</span> 个点的完全图。<br />
+同胚：反复插入或删除二度点后同构。</p>
+</blockquote>
+<p>通俗点就是：对于任意 <span class="math inline">\(4\)</span>
+个节点都不存在 <span class="math inline">\(6\)</span>
+条两两没有公共边的路径连接这 <span class="math inline">\(4\)</span>
+个节点中的每一对节点的无向连通图。</p>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
     
