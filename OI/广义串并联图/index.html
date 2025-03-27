@@ -193,14 +193,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #a5ff4d">
+                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #ffa400">
                     学习指南
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E5%9B%BE%E8%AE%BA/" style="color: #979a9a">
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/" style="color: #00beff">
                     图论
                 </a>
             </span>
@@ -222,6 +222,262 @@ class="math inline">\(i\)</span> 个点的完全图。<br />
 个节点都不存在 <span class="math inline">\(6\)</span>
 条两两没有公共边的路径连接这 <span class="math inline">\(4\)</span>
 个节点中的每一对节点的无向连通图。</p>
+<p>给两张图看看：</p>
+<p><img src="\images\广义串并联图1.png" /></p>
+<p>这张图就是一张广义串并联图。</p>
+<p>那么这张图呢？</p>
+<p><img src="\images\广义串并联图2.png" /></p>
+<p>它并不是一张广义串并联图。<br />
+图中 <span class="math inline">\(1,4,6,5\)</span> 号节点，可以通过 <span
+class="math inline">\(6\)</span> 条没有公共边的的路径到达。<br />
+<span class="math inline">\(6\to4\)</span><br />
+<span class="math inline">\(6\to1\)</span><br />
+<span class="math inline">\(6\to2\to8\to5\)</span><br />
+<span class="math inline">\(4\to1\)</span><br />
+<span class="math inline">\(4\to5\)</span><br />
+<span class="math inline">\(1\to5\)</span><br />
+根据定义，这张图便不是一张广义串并联图。</p>
+<h1 id="怎么判">怎么判</h1>
+<p>显然我们可以暴力去枚举所有 <span class="math inline">\(4\)</span>
+个点，去找存不存在 <span class="math inline">\(6\)</span> 条可以使这
+<span class="math inline">\(4\)</span>
+个点两两到达，且没有边重合的路径。但这样显然时间复杂度太高了，无法接受。<br />
+首先，我们观察到，假如存在一个点，其度数为 <span
+class="math inline">\(1\)</span>，（我们不妨称度数为 <span
+class="math inline">\(k\)</span> 的点为 <span
+class="math inline">\(k\)</span>
+度点）那么删去这个点对图的判定是没有影响的，对于这些点我们可以直接删除掉。<br />
+拿这张图举例：</p>
+<p><img src="\images\广义串并联图1.png" /></p>
+<p>删去其中的 <span class="math inline">\(1\)</span>
+度点后就变成了这样：</p>
+<p><img src="\images\广义串并联图3.png" /></p>
+<p>我们称这样的操作为“删 <span class="math inline">\(1\)</span>
+度点”操作。似乎这一没有什么太大的变化。<br />
+我们现在再给出一种操作，称为“缩 <span class="math inline">\(2\)</span>
+度点”操作，什么意思呢？取一个度数为 <span
+class="math inline">\(2\)</span> 的点 <span
+class="math inline">\(u\)</span>，与其相连的两个点设为 <span
+class="math inline">\(v\)</span> 和 <span
+class="math inline">\(w\)</span>，将原本的边 <span
+class="math inline">\((u,w)\)</span> 和 <span
+class="math inline">\((v,w)\)</span> 删去，连接一条新的边 <span
+class="math inline">\((v,w)\)</span>。这样的操作称为“缩 <span
+class="math inline">\(2\)</span> 度点”操作。<br />
+比如对上图中的 <span class="math inline">\(1\)</span> 号点进行“缩 <span
+class="math inline">\(2\)</span> 度点”操作，会得到这么一张图。</p>
+<p><img src="\images\广义串并联图4.png" /></p>
+<p>好，我们现在证明一下，进行“缩 <span class="math inline">\(2\)</span>
+度点”操作后的图的判定结果和原图一样。</p>
+<h2 id="缩-2-度点">缩 <span class="math inline">\(2\)</span> 度点</h2>
+<p>我们不妨将操作反过来，现在变成删去 <span
+class="math inline">\((u,v)\)</span>，新建点 <span
+class="math inline">\(w\)</span>，连接 <span
+class="math inline">\((u,w)\)</span> 和 <span
+class="math inline">\((v,w)\)</span>。</p>
+<p>假设原图不是广义串并联图，那么根据定义，存在 <span
+class="math inline">\(6\)</span> 条不重合的路径，使 <span
+class="math inline">\(4\)</span> 个不同的点可以两两到达。我们不妨设这
+<span class="math inline">\(4\)</span> 个点为 <span
+class="math inline">\(a,b,c,d\)</span>，这 <span
+class="math inline">\(6\)</span> 条路径为 <span
+class="math inline">\(p(a,b),p(a,c),p(a,d),p(b,c),p(b,d),p(c,d)\)</span>。<br />
+我们这里分两种情况讨论：</p>
+<ul>
+<li>在经历完所有的“缩 <span class="math inline">\(2\)</span>
+度点”操作后，这 <span class="math inline">\(6\)</span>
+条路径上没有一条边经历了更改。那此时，<span
+class="math inline">\(a,b,c,d\)</span>
+依然可以判定图不是广义串并联图。<br />
+</li>
+<li>在某次操作时，这 <span class="math inline">\(6\)</span>
+条路径中的某一条边经历了修改。我们设这条修改了的边为 <span
+class="math inline">\((u,v)\)</span>，新增的点为 <span
+class="math inline">\(w\)</span>。不妨假设出现修改的路径为 <span
+class="math inline">\(p(a,b)\)</span>，因为这 <span
+class="math inline">\(6\)</span> 条路径没有重边，所以 <span
+class="math inline">\(p(a,u)\)</span> 和 <span
+class="math inline">\(p(v,b)\)</span> 与另外 <span
+class="math inline">\(5\)</span> 条路径也均没有重边。此时 <span
+class="math inline">\(w\)</span> 点是一个图上曾经不存在的点。且只连接了
+<span class="math inline">\(u\)</span> 和 <span
+class="math inline">\(v\)</span> 两个点，因此新的 <span
+class="math inline">\(p(a,b)\)</span> 依然与另外 <span
+class="math inline">\(5\)</span> 条路径没有重边。</li>
+</ul>
+<p>若原图是广义串并联图，证明是类似的。<br />
+综上，“缩 <span class="math inline">\(2\)</span> 度点”操作不会影响。</p>
+<p>那么我们又可以将图变成这样：</p>
+<p><img src="\images\广义串并联图5.png" /></p>
+<p>(这里暂时先只进行了一部分“缩 <span class="math inline">\(2\)</span>
+度点”操作。)</p>
+<p>我们发现出现了很多重边。<br />
+显然删去重边不会影响我们的判定结果，因此我们直接删去就行了。<br />
+我们称这种操作为“叠合重边”。</p>
+<p><img src="\images\广义串并联图6.png" /></p>
+<p>我们继续进行以上三种操作：</p>
+<p><img src="\images\广义串并联图7.png" /></p>
+<p><img src="\images\广义串并联图8.png" /></p>
+<p><img src="\images\广义串并联图9.png" /></p>
+<p><img src="\images\广义串并联图10.png" /></p>
+<p>我们发现最后变成了一个点，一个点显然是不能继续操作了，并且一个点也是广义串并联图。</p>
+<p>而我们看看另一张图：</p>
+<p><img src="\images\广义串并联图2.png" /></p>
+<p>它经过操作后，只能变成这样：</p>
+<p><img src="\images\广义串并联图11.png" /></p>
+<p>那此时我们大胆猜测：<br />
+假如一张图可以经过上述三种操作，变成一个点，那么这张图便是广义串并联图。</p>
+<p>而且我们知道，这三种操作，会将所有度数小于等于 <span
+class="math inline">\(2\)</span> 的点去掉。那我们可以再猜测：<br />
+如果一张图所有点的度数均大于等于 <span
+class="math inline">\(3\)</span>，那么这张图一定不是广义串并联图。</p>
+<p>我们现在来尝试证明一下。<br />
+（以下证明大多参考原文，只是部分给出了更加详细的证明。如果认为 OIer
+不需要掌握证明，可以跳过这一部分。）</p>
+<h2 id="证明">证明</h2>
+<p>首先我们来证明另外两个定理：</p>
+<h3 id="定理1">定理1</h3>
+<p>对于任意一个点双联通分量，其要么是 <span
+class="math inline">\(K_2\)</span>，要么至少存在一个简单环。</p>
+<p>我们知道，不存在环的图，是树。树除了叶子节点外均是割点。而有割点的图一定不是一个点双联通分量，因此对于树而言，只有
+<span class="math inline">\(K_2\)</span> 是点双联通分量。于是，不是
+<span class="math inline">\(K_2\)</span>
+的点双联通分量一定不是树，也就一定存在至少一个简单环。</p>
+<h3 id="定理2">定理2</h3>
+<p>对于任意一个非空无向图 <span
+class="math inline">\(G\)</span>，一定存在 <span
+class="math inline">\(G\)</span> 的一个点双联通分量 <span
+class="math inline">\(B\)</span>，使得 <span
+class="math inline">\(B\)</span> 上只有不超过 <span
+class="math inline">\(1\)</span> 个（可以是 <span
+class="math inline">\(0\)</span> 个）节点是 <span
+class="math inline">\(G\)</span> 的割点，如果不存在割点，此时 <span
+class="math inline">\(B=G\)</span>。</p>
+<p>假如 <span class="math inline">\(G\)</span> 中存在一个点双联通分量为
+<span class="math inline">\(K_{2}\)</span>，且 <span
+class="math inline">\(G\not = {K_{2}}\)</span>，那么度数不为 <span
+class="math inline">\(1\)</span> 的那个点，是 <span
+class="math inline">\(G\)</span> 的割点之一。（去掉这个点后，度数原先为
+<span class="math inline">\(1\)</span> 的点就不与原图联通了。）<br />
+假如 <span class="math inline">\(G=K_{2}\)</span> 那么此时 <span
+class="math inline">\(G\)</span> 中只有 <span
+class="math inline">\(B=G\)</span> 这一个点双联通分量，且 <span
+class="math inline">\(G\)</span> 和 <span
+class="math inline">\(B\)</span> 均没有割点。</p>
+<p>那么此时我们的图 <span class="math inline">\(G\)</span> 是没有 <span
+class="math inline">\(K_{2}\)</span> 这一类点双联通分量的。<br />
+我们对剩下的点双联通分量进行“缩点”操作，会得到一棵树。<br />
+分两种情况：</p>
+<ol type="1">
+<li>缩成了一个点。此时说明 <span class="math inline">\(G\)</span>
+本身就是一个点双联通分量，并且 <span class="math inline">\(G\)</span>
+中没有割点，此时 <span class="math inline">\(B=G\)</span>。<br />
+</li>
+<li>是一棵树，此时树上的每个点都代表了一个点双联通分量。对于每一个点双，在
+<span class="math inline">\(G\)</span> 上的割点数量为其在树上的度数（<a
+target="_blank" rel="noopener" href="https://oi-wiki.org/graph/bcc/#%E7%82%B9%E5%8F%8C%E8%BF%9E%E9%80%9A%E5%88%86%E9%87%8F">两个点双至多有一个公共点且这个点为割点</a>）。容易发现叶子节点度数为
+<span class="math inline">\(1\)</span>，也就找到了一个符合题设的 <span
+class="math inline">\(B\)</span>。</li>
+</ol>
+<p>得证。</p>
+<blockquote>
+<p>上文中的“两个点双联通分量至多有一个公共点且这个点为割点”，大致证明如下：<br />
+设两个点双联通分量为 <span class="math inline">\(A\)</span> 和 <span
+class="math inline">\(B\)</span>，首先证明至多一个公共点。<br />
+使用反证法，假设存在两个或以上公共点。那么此时，<span
+class="math inline">\(A\)</span> 中所有点均与 <span
+class="math inline">\(B\)</span> 中所有点两两点双联通。<span
+class="math inline">\(A\)</span> 中的点本身就两两点双联通，<span
+class="math inline">\(B\)</span> 中的点同理。此时 <span
+class="math inline">\(A \cup B\)</span>
+才是点双联通分量，与题设矛盾。<br />
+我们现在证明第二点，这个点是割点。<br />
+依然使用反证法，假设这个点不是割点，那么删去这个点后，<span
+class="math inline">\(A\)</span> 和 <span
+class="math inline">\(B\)</span> 依然联通，那么这也说明 <span
+class="math inline">\(A \cup B\)</span>
+才是点双联通分量。与题设矛盾。<br />
+得证。</p>
+</blockquote>
+<p>由这两个定理，我们可以得出一个引理。</p>
+<h3 id="引理1">引理1</h3>
+<p>对于一个不是 <span class="math inline">\(K_{2}\)</span>
+的点双联通分量上的任意一点 <span
+class="math inline">\(u\)</span>，一定存在一个简单环 <span
+class="math inline">\(C\)</span> 使得 <span
+class="math inline">\(u\)</span> 在 <span
+class="math inline">\(C\)</span> 上。</p>
+<p>依然考虑反证法，假设存在一个点 <span
+class="math inline">\(u\)</span>，找不到一个简单环 <span
+class="math inline">\(C\)</span> 使得 <span
+class="math inline">\(u\)</span> 在 <span
+class="math inline">\(C\)</span> 上，设这个点双联通分量为 <span
+class="math inline">\(B\)</span>。</p>
+<p>因为 <span class="math inline">\(u\)</span>
+在点双联通分量上，所以我们删去 <span class="math inline">\(B\)</span>
+上任意一点 <span class="math inline">\(v\)</span> 后，其他在 <span
+class="math inline">\(B\)</span> 上的点依然与 <span
+class="math inline">\(u\)</span> 联通。我们不妨删去一个与 <span
+class="math inline">\(u\)</span> 相邻的点 <span
+class="math inline">\(w\)</span>。取一点 <span
+class="math inline">\(a\)</span> 在 <span
+class="math inline">\(B\)</span> 上且原路径 <span
+class="math inline">\(p(u,a)\)</span> 经过 <span
+class="math inline">\(w\)</span>，现在删去点 <span
+class="math inline">\(w\)</span> 后，有新的路径 <span
+class="math inline">\(p&#39;(u,a)\)</span>，根据点双联通的定义，<span
+class="math inline">\(p(u,a)\)</span> 与 <span
+class="math inline">\(p&#39;(u,a)\)</span> 没有重合的边。于是，<span
+class="math inline">\(p(u,a),p&#39;(u,a)\)</span>
+构成一个环，与题设矛盾。</p>
+<p>得证。</p>
+<p>我们现在需要证明：任意一张广义串并联图都可以经过上文三种操作，最终变成一个点。</p>
+<p>我们再证明一个定理。</p>
+<h3 id="定理3">定理3</h3>
+<p>若一张无向连通图 <span class="math inline">\(G\)</span> 中存在 <span
+class="math inline">\(3\)</span> 个不同的 <span
+class="math inline">\(1\)</span> 度点 <span
+class="math inline">\(x,y,z\)</span>，则一定存在一个点 <span
+class="math inline">\(u \notin \{x,y,z\}\)</span> 使得存在 <span
+class="math inline">\(3\)</span>
+条两两没有公共边的简单路径，满足其中一个端点均为 <span
+class="math inline">\(u\)</span> 且另一个端点分别为 <span
+class="math inline">\(x,y,z\)</span>。</p>
+<p>我们先求出 <span class="math inline">\(G\)</span> 的任意一棵生成树
+<span class="math inline">\(T\)</span>。<br />
+因为 <span class="math inline">\(x,y,z\)</span> 在 <span
+class="math inline">\(G\)</span> 上是 <span
+class="math inline">\(1\)</span> 度点，所以在 <span
+class="math inline">\(T\)</span> 上绝对也是 <span
+class="math inline">\(1\)</span> 度点，也就是叶子。<br />
+一张图上度数为奇数的点的数量一定为偶数个（所有点度数之和为 <span
+class="math inline">\(2n\)</span>，是一个偶数，偶数乘任何数还是偶数，奇数乘偶数是偶数，偶数加偶数是偶数，奇数加偶数是奇数。）。因此在
+<span class="math inline">\(G\)</span> 中一定存在一个点不是 <span
+class="math inline">\(x,y,z\)</span> 中的一个，我们将这一个点作为 <span
+class="math inline">\(T\)</span> 的根。<br />
+取一点 <span
+class="math inline">\(u=\operatorname{LCA}(x,y)\)</span>。因此 <span
+class="math inline">\(x,y,z\)</span> 均为叶子且不为根，所以有 <span
+class="math inline">\(u\not ={x},u\not ={y},u\not ={z}\)</span>。<br />
+我们分两种情况来：</p>
+<p>第一种情况如图（图比较简陋）：</p>
+<p><img src="\images\广义串并联图12.png" /></p>
+<p>也就是 <span class="math inline">\(z\)</span> 不在 <span
+class="math inline">\(u\)</span> 的子树中，或者 <span
+class="math inline">\(\operatorname{LCA}(u,z)=u\)</span> 且 <span
+class="math inline">\(\operatorname{LCA}(y,z)=u\)</span>
+的情况。此时显然在 <span class="math inline">\(T\)</span> 上，<span
+class="math inline">\(u\)</span> 到 <span
+class="math inline">\(u,v,w\)</span> 的路径没有重边。</p>
+<p>第二种情况如图（图依然简陋）：</p>
+<p><img src="\images\广义串并联图13.png" /></p>
+<p>此时 <span class="math inline">\(\operatorname{LCA}(x,z)\)</span> 和
+<span class="math inline">\(\operatorname{LCA}(y,z)\)</span>
+中恰有一个不是 <span class="math inline">\(u\)</span>。</p>
+<h1 id="参考文献">参考文献</h1>
+<p>吴作同, 《〈公园〉命题报告》, IOI2019 中国国家候选队论文<br />
+OI-Wiki 图论相关概念<br />
+OI-Wiki 双连通分量</p>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
     

@@ -193,7 +193,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #00beff">
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #e74c3c">
                     题解
                 </a>
             </span>
@@ -772,6 +772,298 @@ signed main()&#123;
     for(int i=1;i&lt;=m;i++) read(e[i].u,e[i].v,e[i].a,e[i].b);
     sort(e+1,e+m+1,cmp);
     for(int i=1;i&lt;=m;i++) Link(e[i].u,e[i].v,a[i+n]=e[i].a,b[i+n]=e[i].b,i);
+    cout&lt;&lt;ans;
+    return 0;
+&#125;</code></pre>
+<h1 id="第二周2025032420250330">第二周（2025/03/24~2025/03/30）</h1>
+<h2 id="t1-1">T1</h2>
+<p>这次来一道简单的水题。<br />
+<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/10463">P10463 Interval
+GCD</a></p>
+<p>区间加很烦，<span class="math inline">\(\gcd(a,b)+c\not
+={\gcd(a+c,b+c)}\)</span>。<br />
+但是单点改则是可行的。</p>
+<p>我们知道求 <span class="math inline">\(\gcd\)</span>
+的方法一般使用辗转相除法，但其实还有一种“更相减损术”，或者说是辗转相减法，也就是：</p>
+<p><span class="math display">\[
+a\ge b\\
+\gcd(a,b)=
+\begin{cases}
+    b&amp;,a=b\\
+    gcd(a-b,b)&amp;,a\not ={b}
+\end{cases}
+\]</span></p>
+<p>于是我们将原数组进行差分后，设原数组为 <span
+class="math inline">\(A\)</span>，差分数组为 <span
+class="math inline">\(B\)</span>，<span
+class="math inline">\(\gcd\)</span>
+的值是不变的。我们也就将区间加，变成了单点加。<br />
+而求 <span class="math inline">\([L,R]\)</span> 的 <span
+class="math inline">\(\gcd\)</span> 时，也就应该是 <span
+class="math inline">\(\gcd(A_{L},gcd_{i=L+1}^{R}B_{i})\)</span>。<br />
+于是就做完了。</p>
+<pre class="cpp"><code>// Problem: P10463 Interval GCD
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/P10463
+// Memory Limit: 512 MB
+// Time Limit: 1000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int MAXN=5e5+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x)&#123;
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+&#125;
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y)&#123;
+    read(x),read(y...);
+&#125;
+
+int n,m,val[MAXN],t[MAXN];
+struct node&#123;
+    int l,r,val;
+&#125;tree[MAXN&lt;&lt;2];
+
+int gcd(int x,int y)&#123;
+    if(x==0||y==0) return x+y;
+    if(x%y==0) return y;
+    return gcd(y,x%y);
+&#125;
+
+void pushup(int id)&#123;
+    tree[id].val=gcd(tree[id*2].val,tree[id*2+1].val);
+&#125;
+
+void build(int id,int l,int r)&#123;
+    tree[id].l=l;
+    tree[id].r=r;
+    if(l==r)&#123;
+        tree[id].val=val[l];
+        return;
+    &#125;
+    int mid=(l+r)&gt;&gt;1;
+    build(id*2,l,mid);
+    build(id*2+1,mid+1,r);
+    pushup(id);
+&#125;
+
+void update(int id,int l,int r,int pos,int val)&#123;
+    if(pos&lt;=0||pos&gt;n) return;
+    if(r&lt;pos||pos&lt;l) return;
+    if(l==r)&#123;
+        tree[id].val+=val;
+        return;
+    &#125;
+    int mid=(l+r)&gt;&gt;1;
+    if(pos&lt;=mid) update(id*2,l,mid,pos,val);
+    else update(id*2+1,mid+1,r,pos,val);
+    pushup(id);
+&#125;
+
+int query(int id,int l,int r,int L,int R)&#123;
+    if(l&gt;r||r&lt;L||R&lt;l) return 0;
+    if(L&lt;=l&amp;&amp;r&lt;=R) return tree[id].val;
+    int res=0,mid=(l+r)&gt;&gt;1;
+    if(L&lt;=mid) res=query(id*2,l,mid,L,R);
+    if(R&gt;mid) res=gcd(res,query(id*2+1,mid+1,r,L,R));
+    return res;
+&#125;
+
+int lowbit(int x)&#123;return x&amp;(-x);&#125;
+
+void update(int pos,int val)&#123;
+    while(pos&lt;=n)&#123;
+        t[pos]+=val;
+        pos+=lowbit(pos);
+    &#125;
+&#125;
+
+int query(int pos)&#123;
+    int res=0;
+    while(pos)&#123;
+        res+=t[pos];
+        pos-=lowbit(pos);
+    &#125;
+    return res;
+&#125;
+
+signed main()&#123;
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cin&gt;&gt;n&gt;&gt;m;
+    for(int i=1;i&lt;=n;i++) cin&gt;&gt;val[i];
+    for(int i=n;i&gt;=1;i--) val[i]-=val[i-1];
+    for(int i=1;i&lt;=n;i++) update(i,val[i]);
+    build(1,1,n);
+    for(int i=1;i&lt;=m;i++)&#123;
+        char opt;int x,y,z;
+        cin&gt;&gt;opt;
+        if(opt==&#39;Q&#39;)&#123;
+            cin&gt;&gt;x&gt;&gt;y;
+            cout&lt;&lt;abs(gcd(query(x),query(1,1,n,x+1,y)))&lt;&lt;&#39;\n&#39;;
+        &#125;
+        else&#123;
+            cin&gt;&gt;x&gt;&gt;y&gt;&gt;z;
+            update(1,1,n,x,z);
+            update(x,z);
+            update(1,1,n,y+1,-z);
+            update(y+1,-z);
+        &#125;
+    &#125;
+    return 0;
+&#125;</code></pre>
+<h2 id="t2-1">T2</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6790">P6790 [SNOI2020]
+生成树</a></p>
+<p>广义串并联图。<br />
+不会的可以去看看我的<a
+target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/%E5%B9%BF%E4%B9%89%E4%B8%B2%E5%B9%B6%E8%81%94%E5%9B%BE/">博客</a>。</p>
+<p>这张图为什么是广义串并联图？<br />
+首先，仙人掌是广义串并联图，加一条边有六种可能：</p>
+<ul>
+<li>自环，显然不影响。<br />
+</li>
+<li>重边，直接进行叠合重边操作后不影响。<br />
+</li>
+<li>链连链，此时我们先将原来仙人掌上的环经过三种操作后缩成一个点，此时图变成了一棵树多一条边，显然这个图是广义串并联图。<br />
+</li>
+<li>环连自环，显然这个依然可以缩成一个点，因此这张图是广义串并联图。</li>
+<li>链连环，可以看作是一个大环内部加了一条边，同上。<br />
+</li>
+<li>环连异环，我们可以看作是一个大环内加了两条边，且环长大于等于 <span
+class="math inline">\(5\)</span>，只有当环长为 <span
+class="math inline">\(4\)</span>
+的时候，可能出现不合法情况，因此这张图是广义串并联图。</li>
+</ul>
+<p>以上情况涵盖了所有情况，因此这张图是广义串并联图。</p>
+<p>设 <span class="math inline">\(f_{i}\)</span> 表示第 <span
+class="math inline">\(i\)</span> 条边选择的时候的方案数，<span
+class="math inline">\(g_{i}\)</span> 表示第 <span
+class="math inline">\(i\)</span> 条边不选的时候的方案数。</p>
+<p>那么对于一张图，其生成树数量，等于对于每种不同的生成树，其选了的边的
+<span class="math inline">\(f_{i}\)</span> 之积，乘上没选的边的 <span
+class="math inline">\(g_{i}\)</span> 之积。</p>
+<p>对于这道题而言，因为这张图是一张广义串并联图，因此经过删 <span
+class="math inline">\(1\)</span> 度点、缩 <span
+class="math inline">\(2\)</span>
+度点，叠合重边操作后，最后会变成一个点，此时答案就已经求出来了。</p>
+<p>显然进行“删 <span class="math inline">\(1\)</span>
+度点”操作后，这条边必须得选，直接将答案乘上 <span
+class="math inline">\(f_{i}\)</span> 就行了。<br />
+进行“缩 <span class="math inline">\(2\)</span>
+度点”操作后，原来的两条边不能同时不选。两条边都选了这条边才算选了。也就是
+<span
+class="math inline">\(f_{i}=f_{j}f_{k},g_{i}=f_{j}g_{k}+f_{k}g_{j}\)</span>。<br />
+进行“叠合重边”操作后，原来的两条边不能同时选。两条边都不选这条边才不选，也就是
+<span
+class="math inline">\(f_{i}=f_{j}g_{k}+f_{k}g_{j},g_{i}=g_{j}g_{k}\)</span>。</p>
+<p>那么就结束了。</p>
+<pre class="cpp"><code>// Problem: P6790 [SNOI2020] 生成树
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/P6790
+// Memory Limit: 128 MB
+// Time Limit: 1000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int MAXN=4e5+10;
+const int mod=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x)&#123;
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+&#125;
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y)&#123;
+    read(x),read(y...);
+&#125;
+
+int n,m,cnt,ans=1,d[MAXN],u[MAXN],v[MAXN],f[MAXN],g[MAXN];
+bool vis[MAXN];
+map&lt;pair&lt;int,int&gt;,int&gt; mp;
+set&lt;int&gt; s[MAXN];
+queue&lt;int&gt; q;
+
+signed main()&#123;
+    read(n,m);
+    for(int i=1;i&lt;=m;i++)&#123;
+        int U,V;read(U,V);
+        if(U==V) continue;
+        if(mp.find(make_pair(U,V))==mp.end())&#123;
+            u[++cnt]=U,v[cnt]=V;
+            mp[make_pair(U,V)]=mp[make_pair(V,U)]=cnt;
+            s[U].insert(cnt);s[V].insert(cnt);
+            g[cnt]=1;
+            d[U]++;d[V]++;
+        &#125;
+        f[mp[make_pair(U,V)]]++;
+    &#125;
+    for(int i=1;i&lt;=n;i++) if(d[i]&lt;=2) q.push(i);
+    while(!q.empty())&#123;
+        int U=q.front();q.pop();
+        if(vis[U]) continue;
+        vis[U]=true;
+        if(d[U]==1)&#123;
+            int id=*s[U].begin(),V=(v[id]==U?u[id]:v[id]);s[U].erase(id);
+            mp.erase(mp.find(make_pair(U,V)));mp.erase(mp.find(make_pair(V,U)));
+            ans=ans*f[id]%mod;
+            s[V].erase(id);
+            d[V]--;
+            if(d[V]&lt;=2) q.push(V);
+        &#125;
+        if(d[U]==2)&#123;
+            int id1=*s[U].begin();s[U].erase(id1);int id2=*s[U].begin();s[U].erase(id2);
+            int V1=(v[id1]==U?u[id1]:v[id1]),V2=(v[id2]==U?u[id2]:v[id2]);
+            mp.erase(mp.find(make_pair(U,V1)));mp.erase(mp.find(make_pair(V1,U)));
+            mp.erase(mp.find(make_pair(U,V2)));mp.erase(mp.find(make_pair(V2,U)));
+            s[V1].erase(id1);s[V2].erase(id2);
+            d[V1]--;d[V2]--;
+            int F=f[id1]*f[id2]%mod,G=(f[id1]*g[id2]%mod+g[id1]*f[id2]%mod)%mod;
+            if(mp.find(make_pair(V1,V2))!=mp.end())&#123;
+                int id=mp[make_pair(V1,V2)];
+                int FF=f[id],GG=g[id];
+                f[id]=(FF*G%mod+GG*F%mod)%mod;
+                g[id]=G*GG%mod;
+            &#125;
+            else&#123;
+                u[++cnt]=V1,v[cnt]=V2;
+                mp[make_pair(V1,V2)]=mp[make_pair(V2,V1)]=cnt;
+                s[V1].insert(cnt);s[V2].insert(cnt);
+                d[V1]++;d[V2]++;
+                f[cnt]=F;g[cnt]=G;
+            &#125;
+            if(d[V1]&lt;=2) q.push(V1);
+            if(d[V2]&lt;=2) q.push(V2);
+        &#125;
+    &#125;
     cout&lt;&lt;ans;
     return 0;
 &#125;</code></pre>
