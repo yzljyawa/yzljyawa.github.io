@@ -193,14 +193,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #ffa400">
+                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #e74c3c">
                     学习指南
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E5%9B%BE%E8%AE%BA/" style="color: #00beff">
+                <a href="/tags/%E5%9B%BE%E8%AE%BA/" style="color: #a5ff4d">
                     图论
                 </a>
             </span>
@@ -468,12 +468,57 @@ class="math inline">\(\operatorname{LCA}(u,z)=u\)</span> 且 <span
 class="math inline">\(\operatorname{LCA}(y,z)=u\)</span>
 的情况。此时显然在 <span class="math inline">\(T\)</span> 上，<span
 class="math inline">\(u\)</span> 到 <span
-class="math inline">\(u,v,w\)</span> 的路径没有重边。</p>
+class="math inline">\(x,y,z\)</span> 的路径没有重边。</p>
 <p>第二种情况如图（图依然简陋）：</p>
 <p><img src="\images\广义串并联图13.png" /></p>
 <p>此时 <span class="math inline">\(\operatorname{LCA}(x,z)\)</span> 和
 <span class="math inline">\(\operatorname{LCA}(y,z)\)</span>
-中恰有一个不是 <span class="math inline">\(u\)</span>。</p>
+中恰有一个不是 <span class="math inline">\(u\)</span>。<br />
+不妨设 <span
+class="math inline">\(\operatorname{LCA}(x,z)=w\not=u\)</span>，那么此时在
+<span class="math inline">\(T\)</span> 上，<span
+class="math inline">\(w\)</span> 到 <span
+class="math inline">\(x,y,z\)</span> 的路径没有重边。</p>
+<p>得证。</p>
+<p>要证明原命题，我们尝试证明其逆否命题：</p>
+<blockquote>
+<p>任意一个不能用上述操作使其变为一个只包含一个节点的图的无向连通图不是广义串并联图。</p>
+</blockquote>
+<p>根据前文，我们知道一张图经过三种操作后，要么变成一个点，要么变成一张所有点的度数均大于等于
+<span class="math inline">\(3\)</span> 的图。<br />
+一个点显然是广义串并联图，我们又知道三种操作对图的判定没有影响。因此能变成一个点的图是广义串并联图。<br />
+那我们现在只需要证明：任意一张所有点的度数均大于等于 <span
+class="math inline">\(3\)</span> 的图不是广义串并联图。</p>
+<h3 id="最终证明">最终证明</h3>
+<p>我们现在有一个所有点的度数均大于等于 <span
+class="math inline">\(3\)</span> 的图 <span
+class="math inline">\(G\)</span>。<br />
+根据定理2，<span class="math inline">\(G\)</span>
+上一定存在一个点双联通分量 <span
+class="math inline">\(B\)</span>，存在至多一个点是 <span
+class="math inline">\(G\)</span> 的割点。<br />
+<span class="math inline">\(B\)</span> 不会是 <span
+class="math inline">\(K_{2}\)</span>，否则会出现度数为 <span
+class="math inline">\(1\)</span> 的点。</p>
+<p>若 <span class="math inline">\(B\not ={G}\)</span>，则 <span
+class="math inline">\(B\)</span> 中存在一个 <span
+class="math inline">\(G\)</span>
+中的割点。再根据引理1，一定存在一个简单环 <span
+class="math inline">\(C\)</span> 使得这个割点在 <span
+class="math inline">\(C\)</span> 上。<br />
+若 <span class="math inline">\(B=G\)</span>，则 <span
+class="math inline">\(B\)</span> 中不存在一个 <span
+class="math inline">\(G\)</span>
+中的割点，此时我们根据定理1，找到任意一个简单环 <span
+class="math inline">\(C\)</span>。</p>
+<p>设 <span class="math inline">\(C\)</span> 的环长为 <span
+class="math inline">\(len\)</span>，环上的点依次为 <span
+class="math inline">\(v_{0},v_{1},v_{2},\dotsb,v_{len-1}\)</span>，有
+<span class="math inline">\(v_{0}\)</span> 与 <span
+class="math inline">\(v_{len-1}\)</span> 相邻，对于 <span
+class="math inline">\(1\le i\le len-1\)</span> 有 <span
+class="math inline">\(v_{i-1}\)</span> 与 <span
+class="math inline">\(v_{i}\)</span> 相邻。</p>
 <h1 id="参考文献">参考文献</h1>
 <p>吴作同, 《〈公园〉命题报告》, IOI2019 中国国家候选队论文<br />
 OI-Wiki 图论相关概念<br />

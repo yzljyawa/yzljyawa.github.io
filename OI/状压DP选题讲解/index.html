@@ -193,7 +193,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/DP/" style="color: #00beff">
+                <a href="/tags/DP/" style="color: #a5ff4d">
                     DP
                 </a>
             </span>
@@ -207,14 +207,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9/" style="color: #979a9a">
+                <a href="/tags/%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9/" style="color: #a5ff4d">
                     状态压缩
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E7%9F%A9%E4%B9%98%E4%BC%98%E5%8C%96/" style="color: #00beff">
+                <a href="/tags/%E7%9F%A9%E4%B9%98%E4%BC%98%E5%8C%96/" style="color: #979a9a">
                     矩乘优化
                 </a>
             </span>
@@ -1165,6 +1165,250 @@ signed main(){
     cout&lt;&lt;ans;
     return 0;
 }</code></pre>
+
+    </div>
+</div>
+<h2 id="p6603-ezec-2甜梦"><a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF1569F">P6603
+「EZEC-2」甜梦</a></h2>
+<p>原本的最后一题，fl
+说太难了，所以我重新选了一道，但是那道题还是在后面，有时间也可以讲一下。</p>
+<p>这道题真的是好题啊。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        题面
+    </div>
+    <div class='spoiler-content'>
+        <p>有一张连通有向图，点的编号在 <span
+class="math inline">\([1,n]\)</span> 之间且互不相同。<br />
+现在有两个点，初始均在 <span class="math inline">\(1\)</span>
+号点。任意时刻，这两个点所在的点的编号之差的绝对值不能大于 <span
+class="math inline">\(l\)</span>。<br />
+每次可以移动一个点到其可以到达的另一个点，特别的，如果两个点都可以到
+<span class="math inline">\(v\)</span> 点，则可以同时移动到 <span
+class="math inline">\(v\)</span> 点。<br />
+每个点有一个权值 <span class="math inline">\(a_{i}\)</span>，第一次经过
+<span class="math inline">\(i\)</span> 点的时候将获得 <span
+class="math inline">\(a_{i}\)</span>。<br />
+两个点同时到达 <span class="math inline">\(n\)</span>
+点的时候结束，问能获得权值的最大值是多少？</p>
+<p><strong>【数据范围与约定】</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">测试点编号</th>
+<th style="text-align: center;"><span
+class="math inline">\(n\le\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(m\le\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(l\le\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(a_i\le\)</span></th>
+<th style="text-align: center;">时间</th>
+<th style="text-align: center;">特殊性质</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><span
+class="math inline">\(1,2\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(15\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(5\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(50\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\text
+s\)</span></td>
+<td style="text-align: center;">无</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="math inline">\(3\sim
+4\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(16\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(40\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(5 \times
+10^3\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\text
+s\)</span></td>
+<td style="text-align: center;">无</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="math inline">\(5\sim
+6\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(16\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(120\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(5 \times
+10^3\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\text
+s\)</span></td>
+<td style="text-align: center;">无</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="math inline">\(7 \sim
+10\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(100\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10^3\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10^4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1 \text
+s\)</span></td>
+<td style="text-align: center;">无</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span
+class="math inline">\(11\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(100\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10^3\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10^4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\text
+s\)</span></td>
+<td style="text-align: center;">场景是一棵树</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="math inline">\(12 \sim
+14\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10^3\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10^4\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10^4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\text
+s\)</span></td>
+<td style="text-align: center;">无</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span
+class="math inline">\(15,16\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(5\times10^3\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(3\times10^4\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10^4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\text
+s\)</span></td>
+<td style="text-align: center;">无</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span
+class="math inline">\(17,18\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(5\times10^3\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(3\times10^4\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(11\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10^4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2\text
+s\)</span></td>
+<td style="text-align: center;">无</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span
+class="math inline">\(19,20\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(5\times10^3\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(3\times10^4\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(12\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10^4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3\text
+s\)</span></td>
+<td style="text-align: center;">无</td>
+</tr>
+</tbody>
+</table>
+<p>对于 <span class="math inline">\(100\%\)</span> 的数据，<span
+class="math inline">\(1\le u&lt;v \le n\)</span>, <span
+class="math inline">\(1 \le n \le 5\times 10^3\)</span>, <span
+class="math inline">\(1 \le m \le 3\times 10^4\)</span>, <span
+class="math inline">\(1 \le a_i \le 10^4\)</span>, <span
+class="math inline">\(1 \le l \le 12\)</span>。</p>
+<p><strong>输入保证每个场景都能从起点到达，并且都能连到终点。</strong><br />
+<strong>输入不保证没有重边。</strong><br />
+<strong>输入不对 <span class="math inline">\(u,v\)</span>
+的编号差做任何保证。</strong></p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint1
+    </div>
+    <div class='spoiler-content'>
+        <p>可以先思考一个最暴力的状压
+DP。并计算一下你能通过哪些数据点。尝试一下优化？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint2
+    </div>
+    <div class='spoiler-content'>
+        <p>显然对于 <span class="math inline">\(n\)</span>
+很小的时候，我们可以设计状态 <span
+class="math inline">\(dp_{S,i,j}\)</span> 表示当前已经走了 <span
+class="math inline">\(S\)</span> 集合，当前两个点是 <span
+class="math inline">\(i,j\)</span>
+的最大权值和。转移在这里就不给出了。<br />
+这样的状态复杂度是 <span
+class="math inline">\(O(2^nn^2)\)</span>，转移的复杂度是 <span
+class="math inline">\(O(m^2)\)</span> 的，总的时间复杂度就是 <span
+class="math inline">\(O(2^nn^2m^2)\)</span>，可以拿 <span
+class="math inline">\(20pts\)</span>。</p>
+<p>对于这张图的性质你有没有找全？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint3
+    </div>
+    <div class='spoiler-content'>
+        <p>发现图其实是一张 DAG，并且总是从编号小的点到编号大的点。<br />
+因此我们是没有必要将整张图的状态都记录下来的。<br />
+如果 <span class="math inline">\(S\)</span> 种最小的点是 <span
+class="math inline">\(k\)</span>，那么编号小于 <span
+class="math inline">\(k\)</span>
+的点都没用了。我们可以将它们丢掉。<br />
+不妨设 <span class="math inline">\(dp_{S,i,j}\)</span> 表示从 <span
+class="math inline">\([k,k+l]\)</span> 这些点的状态，<span
+class="math inline">\(i,j\)</span> 依然表示这两个点的位置。<br />
+此时的状态复杂度是 <span
+class="math inline">\(O(l^2n^2)\)</span>，转移的复杂度依然是 <span
+class="math inline">\(O(m^2)\)</span> 的，总时间复杂度是 <span
+class="math inline">\(O(l^2n^2m^2)\)</span> 可以获得 <span
+class="math inline">\(pts\)</span>。</p>
 
     </div>
 </div>
