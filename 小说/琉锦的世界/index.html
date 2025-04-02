@@ -44,6 +44,9 @@
 <script src="/js/lib/preview.js"></script>
 
 
+<script src="https://s4.zstatic.net/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+<script src="/js/lib/crypto.js"></script>
+
 
 
 
@@ -193,7 +196,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E6%96%87%E7%AB%A0/" style="color: #e74c3c">
+                <a href="/tags/%E6%96%87%E7%AB%A0/" style="color: #a5ff4d">
                     文章
                 </a>
             </span>
@@ -202,26 +205,20 @@
         
     </div>
     
-    <div class="content" v-pre>
-        <h3 id="chapter-0.0-曾经的曾经">Chapter 0.0 曾经的曾经</h3>
-<p><span
-class="math inline">\(\quad\,\,\,\,\)</span>可能是很久很久之前，可能是不久前，可能是现在，可能试不久后，可能是很久很久以后。同一缕意识在无数的浩瀚的宇宙中诞生了。</p>
-<h3 id="chapter-1.0-故事之前">Chapter 1.0 故事之前</h3>
-<p><span
-class="math inline">\(\quad\,\,\,\,\)</span>我们讲的故事，主要发生在所谓的“主宇宙”，在这个宇宙的琉锦被称为“主琉锦”，我们就简单的称呼其为“琉锦”吧。但这个宇宙的琉锦是最平凡的，最普通的。让我们看看别的宇宙吧：有拯救世界的，有不停冒险的，有循环往复的……这个宇宙的琉锦，似乎每天就只有学习，吃饭，睡觉，玩耍四种事。他也有许多想法，但都因各种原因而放弃了，比如在“主宇宙”中被称作“钱”的东西，以及他自己的各种原因。<br />
-<span
-class="math inline">\(\quad\,\,\,\,\)</span>但琉锦常常会想一些不切实际的东西，当然这里的不切实际，是在他所在的“主宇宙”中，以他所在的文明现有的科技水平而言，不切实际的。但是似乎其他宇宙的出现，都是因为他的意识而逐渐出现的，也许这也是他所在的宇宙，被称为“主宇宙”的原因吧。<br />
-<span
-class="math inline">\(\quad\,\,\,\,\)</span>每每当琉锦思绪万千之时，也就沟通建立起了不同的宇宙中短暂的，丝一般的联系。也许这种联系，会使得副宇宙（不是主宇宙的其他宇宙都被称为“副宇宙”）的世界走向发生变化。也就是说，其实琉锦有着改变其他世界的能力，但他似乎并没有意识到这点，毕竟他也改变不了自己所在的“主宇宙”，何况其他宇宙的琉锦并没有他这样的能力。<br />
-<span
-class="math inline">\(\quad\,\,\,\,\)</span>让我们现在详细介绍一下“主琉锦”吧。他的所在地，按照他所在文明的说法，在：宇宙—总星系—双鱼-鲸鱼座超星系团复合体—拉尼亚凯亚超星系团—本超星系团—本星系群—银河系次集团—银河系—猎户座旋臂—古尔德带—本地泡—本星际云—太阳系—地月系—地球。总之，也就是被他们称为“地球”的一颗普通行星。而琉锦的具体位置又在这颗渺小尘埃上的，被称为“亚洲”的七块大陆之一，其上许多国家中的“中国”，里面许多省份中的“四川省”中的一个小城市。琉锦是一个普普通通的高中生，虽然他在参加一个被称为“信息学竞赛”的东西，但似乎他并没有太强的实力，而且这导致他的假期十分少。他似乎有一种被称为“福瑞控”的爱好。每天总是想来想去的，虽然他知道，他既没有时间去参加“聚”，也没有钱来养自己的“设定”，或者“实体化”。但他似乎期待着未来能有时间和“钱”吧。绝大部分宇宙，也都是在琉锦有了这么一个爱好后，才出现的。哎，这个琉锦似乎的确挺普通的，但他创造出了一些不普通的宇宙。<br />
-<span
-class="math inline">\(\quad\,\,\,\,\)</span>那既然讲了这么多了，那么琉锦的故事，也就该正式开始了吧？</p>
-<h3 id="chapter-1.1-开端">Chapter 1.1 开端</h3>
-<p><span
-class="math inline">\(\quad\,\,\,\,\)</span>琉锦第一个幻想出来的宇宙，是一个比较“抽象”的宇宙，毕竟他当时还不太成熟嘛。</p>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
-    </div>
+    
+    <input
+        id="crypto"
+        :class="['input', cryptoStatus]"
+        :disabled="cryptoStatus === 'success'"
+        ref="crypto"
+        placeholder="文章被加密，请输入密码"
+        data-encrypted="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"
+        data-shasum="c8148135879d3be2dd8dcf93f71b49951f5e61234079f1dddeb59aa30d0306b8"
+        v-model="crypto"
+    />
+    <transition name="fade">
+        <div class="content" ref="content" v-show="cryptoStatus === 'success'"></div>
+    </transition>
     
     
     

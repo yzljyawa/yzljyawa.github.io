@@ -44,6 +44,9 @@
 <script src="/js/lib/preview.js"></script>
 
 
+<script src="https://s4.zstatic.net/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+<script src="/js/lib/crypto.js"></script>
+
 
 
 
@@ -193,7 +196,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E6%96%87%E7%AB%A0/" style="color: #a5ff4d">
+                <a href="/tags/%E6%96%87%E7%AB%A0/" style="color: #e74c3c">
                     文章
                 </a>
             </span>
@@ -202,47 +205,20 @@
         
     </div>
     
-    <div class="content" v-pre>
-        <p><span
-class="math inline">\(\quad\,\,\,\,\)</span>前几天论坛开始三周目内测了。今天的时候，无意间翻到了以前的一些消息。感觉那时的自己，真的好天真啊。瞬间有一种物是人非的感觉，鼻子酸了一下，终还是忍住了。<br />
-<span class="math inline">\(\quad\,\,\,\,\)</span>大约两年半前，是 2022
-年 10 月 2
-号。那年的暑假，我第一次接触到了福瑞这个圈子。我那时什么都不了解，只是因为感觉可爱，而喜欢。我尝试探索这个圈子。10
-月 1 号那时，我发现了论坛，2
-号，我注册了账号，那时毕竟才入圈，我还什么都不了解。随便起了个名字，便在论坛“住”了下来。<br />
-<span
-class="math inline">\(\quad\,\,\,\,\)</span>当时，论坛给我的第一印象是：大家人都很好。我在探索论坛的同时，也在探索福瑞这个圈子。也在慢慢的交了许多朋友。东光，白风，方程组，凌元，毛同学，哈砖，饼干………………我感受到了快乐，与温暖。<br />
-<span
-class="math inline">\(\quad\,\,\,\,\)</span>后来在我初二下的时候的那个寒假。也就是
-2023 年，我不辞而别了……<br />
-<span class="math inline">\(\quad\,\,\,\,\)</span>再后来是 2023
-年的暑假了，我突然想起了论坛，但发现曾经的网址居然打不开了，想尽办法，想起以前加了毛同学的B站，我才知道，论坛已经关了……<br />
-<span
-class="math inline">\(\quad\,\,\,\,\)</span>那时的我已经有了QQ，但相对而言，也只是刚刚启用，我马上加了论坛的QQ群，却发现，已没有几人还记得我。但方程组还记得我，白风也想起来了，虽然有些人将我和另一只记混了，但没关系，大不了，重来！但是看着曾经熟悉的人很少再见，很多陌生的ID，我一时不知怎么办……<br />
-<span
-class="math inline">\(\quad\,\,\,\,\)</span>后来，我才知道事情的来龙去脉。我顿觉后悔，我当时的不辞而别，错过了许多，辜负了许多。<br />
-<span
-class="math inline">\(\quad\,\,\,\,\)</span>一年过去了，一天，天洛突然给我发来一些图片，说可以期待一下。那时我正在南京，为自己的理想而学习，但我从未有过如此激动的时候。2024
-年 8 月 5
-日，我被拉进了一个名为“论坛の二周目内测官方交流群”，我从未有如此高兴过。二周目的内测，我能有幸参加。翻看以前的消息，我才知道，那时我离开后，大家都还记得我，我，我对不起他们。<br />
-<span
-class="math inline">\(\quad\,\,\,\,\)</span>那段时间很高兴，虽然还有许多Bug，但已经有以前论坛的那种感觉了。虽然，人变了。<br />
-<span
-class="math inline">\(\quad\,\,\,\,\)</span>后来，出了一些事，天洛离开了团队……原先定的计划也通通泡汤了，大家都很不舍天洛离开，但……但没有办法。白风和石灰还在继续维护论坛，现在，也要等到三年后了。<br />
-<span class="math inline">\(\quad\,\,\,\,\)</span>到 2025 年 1 月 17
-日，内测群又活了，带来了一些好消息，虽然论坛，还是得三年后才能重新开放。但，石灰和白风告诉我们，会有一个三周目内测。<br />
-<span class="math inline">\(\quad\,\,\,\,\)</span>终于是 2025 年 2 月 26
-日，确定了三周目内测。<br />
-<span class="math inline">\(\quad\,\,\,\,\)</span>到了 3 月 13
-号，石灰告诉大家，三周目内测，开始了！大家迫不及待地进入论坛，就像两年半前一样，大家都有说不完的话。<br />
-<span
-class="math inline">\(\quad\,\,\,\,\)</span>无意间看见了以前发送的私信，写的文章，先是看见自己以前的幼稚，无知而笑一笑，随后，便是一种，物是人非的落寞。但总之，还是很高兴的啦！<br />
-<span
-class="math inline">\(\quad\,\,\,\,\)</span>我见证着论坛一步步完善，却在它最辉煌的时候离开了。论坛也见证着我，一点点成长。<br />
-<span
-class="math inline">\(\quad\,\,\,\,\)</span>感谢大家，感谢论坛的管理人员，感谢世上一切美好的事物！</p>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
-    </div>
+    
+    <input
+        id="crypto"
+        :class="['input', cryptoStatus]"
+        :disabled="cryptoStatus === 'success'"
+        ref="crypto"
+        placeholder="文章被加密，请输入密码"
+        data-encrypted="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"
+        data-shasum="bd34fdd666aa1131aa8b2d678699dfe1c1c149e62b4e15048d46c0e29857d356"
+        v-model="crypto"
+    />
+    <transition name="fade">
+        <div class="content" ref="content" v-show="cryptoStatus === 'success'"></div>
+    </transition>
     
     
     

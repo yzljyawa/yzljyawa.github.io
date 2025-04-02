@@ -200,21 +200,21 @@
             
             <span class="tag">
                 
-                <a href="/tags/DP%E4%BC%98%E5%8C%96/" style="color: #ffa400">
+                <a href="/tags/DP%E4%BC%98%E5%8C%96/" style="color: #979a9a">
                     DP优化
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9/" style="color: #00beff">
+                <a href="/tags/%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9/" style="color: #a5ff4d">
                     状态压缩
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E7%9F%A9%E4%B9%98%E4%BC%98%E5%8C%96/" style="color: #e74c3c">
+                <a href="/tags/%E7%9F%A9%E4%B9%98%E4%BC%98%E5%8C%96/" style="color: #979a9a">
                     矩乘优化
                 </a>
             </span>
@@ -1067,8 +1067,8 @@ class="math display">\[
 dp=dp_{1}+dp_{2}-dp
 \]</span> 为什么要减去一个 <span
 class="math inline">\(dp\)</span>？因为我们求出的 <span
-class="math inline">\(dp1\)</span> 和 <span
-class="math inline">\(dp2\)</span>
+class="math inline">\(dp_1\)</span> 和 <span
+class="math inline">\(dp_2\)</span>
 中，是算上了不选的方案数，因此直接加起来的话，就计算了两次小 G 和小 W
 都不选的方案数，而这个方案数恰好又是原来的 <span
 class="math inline">\(dp\)</span> 值。<br />
@@ -1084,7 +1084,15 @@ class="math inline">\(O(n2^{16})\)</span>。</p>
         代码
     </div>
     <div class='spoiler-content'>
-        <pre class="cpp"><code>#include&lt;bits/stdc++.h&gt;
+        <pre class="cpp"><code>// Problem: P2150 [NOI2015] 寿司晚宴
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/P2150
+// Memory Limit: 125 MB
+// Time Limit: 1000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
 using namespace std;
 const int MAXN=5e2+10;
 const int mod1=1e9+7;
