@@ -193,7 +193,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #979a9a">
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #ffa400">
                     题解
                 </a>
             </span>
@@ -207,7 +207,12 @@
 <h2 id="t1">T1</h2>
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P7671">P7671 [GDOI2016]
 疯狂动物城</a></p>
-<p>省流：推式子+树剖+主席树。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>省流：推式子+树剖+主席树。</p>
 <p>对于操作一，直接树剖后即可解决。<br />
 对于操作三，写主席树维护即可。<br />
 操作二的话，推式子就可以了。</p>
@@ -263,7 +268,15 @@ TLE，我们把区间先留下来，要 pushdown
 <p>（似乎有相对简单的做法，但我觉得我这样拆的方法更通用一点？比如<a
 target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P10773">这道题</a>）</p>
 <p>注意：在极限数据下，我的代码会 RE，但其实可以优化一下，懒的改了）</p>
-<pre class="cpp"><code>// Problem: P7671 [GDOI2016] 疯狂动物城
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>// Problem: P7671 [GDOI2016] 疯狂动物城
 // Contest: Luogu
 // URL: https://www.luogu.com.cn/problem/P7671
 // Memory Limit: 2 GB
@@ -283,72 +296,72 @@ const double eps=1e-9;
 char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
 #define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
 template&lt;typename type&gt;
-inline void read(type &amp;x)&#123;
+inline void read(type &amp;x){
     x=0;
     bool f=false;
     char ch=getchar();
     while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
     while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
     if(f) x=-x;
-&#125;
+}
 template&lt;typename type,typename... args&gt;
-inline void read(type &amp;x,args&amp;... y)&#123;
+inline void read(type &amp;x,args&amp;... y){
     read(x),read(y...);
-&#125;
+}
 
 bool awa;
 int n,m,k,q,lastans,qcnt,cnt,tree_cnt,idq[MAXN],root[MAXN],head[MAXN],siz[MAXN],dep[MAXN],hson[MAXN],top[MAXN],dfsnum[MAXN],dfsnod[MAXN],fa[MAXN],a[MAXN];
-struct node&#123;
+struct node{
     int to,next;
-&#125;edge[MAXN&lt;&lt;1];
-struct node2&#123;
+}edge[MAXN&lt;&lt;1];
+struct node2{
     int id,l,r,lson,rson,val1,val2,val3,val4,val5,lazy;
-&#125;tree[MAXN*200];
+}tree[MAXN*200];
 
-void build(int u,int v)&#123;
+void build(int u,int v){
     edge[++k].to=v;
     edge[k].next=head[u];
     head[u]=k;
-&#125;
+}
 
-void dfs(int u,int f)&#123;
+void dfs(int u,int f){
     siz[u]=1;
     int maxsiz=0;
-    for(int i=head[u];i;i=edge[i].next)&#123;
+    for(int i=head[u];i;i=edge[i].next){
         int v=edge[i].to;
         if(v==f) continue;
         dep[v]=dep[u]+1;
         fa[v]=u;
         dfs(v,u);
         siz[u]+=siz[v];
-        if(maxsiz&lt;siz[v])&#123;
+        if(maxsiz&lt;siz[v]){
             maxsiz=siz[v];
             hson[u]=v;
-        &#125;
-    &#125;
-&#125;
+        }
+    }
+}
 
-void dfs2(int u,int f)&#123;
+void dfs2(int u,int f){
     top[u]=f;
     dfsnum[u]=++cnt;
     dfsnod[cnt]=u;
     if(hson[u]==0) return;
     dfs2(hson[u],f);
-    for(int i=head[u];i;i=edge[i].next)&#123;
+    for(int i=head[u];i;i=edge[i].next){
         int v=edge[i].to;
         if(v==fa[u]||v==hson[u]) continue;
         dfs2(v,v);
-    &#125;
-&#125;
+    }
+}
 
-void newnode(int l,int r,int ID)&#123;
+void newnode(int l,int r,int ID){
     int id=++tree_cnt;
     tree[id].id=ID;
     tree[id].l=l;
     tree[id].r=r;
-&#125;
+}
 
-void pushup(int id)&#123;
+void pushup(int id){
     tree[id].val1=tree[tree[id].lson].val1+tree[tree[id].rson].val1;
     tree[id].val2=tree[tree[id].lson].val2+tree[tree[id].rson].val2;
     tree[id].val3=tree[tree[id].lson].val3+tree[tree[id].rson].val3;
@@ -359,9 +372,9 @@ void pushup(int id)&#123;
     tree[id].val3-=tree[id].val3&gt;=mod?mod:0;
     tree[id].val4-=tree[id].val4&gt;=mod?mod:0;
     tree[id].val5-=tree[id].val5&gt;=mod?mod:0;
-&#125;
+}
 
-void pushdown(int id)&#123;
+void pushdown(int id){
     if(tree[id].lazy==0) return;
     tree[tree[id].lson].val3+=(tree[tree[id].lson].r-tree[tree[id].lson].l+1)*(tree[id].lazy%mod)%mod;
     tree[tree[id].lson].val4+=tree[tree[id].lson].val1*(tree[id].lazy%mod)%mod;
@@ -378,17 +391,17 @@ void pushdown(int id)&#123;
     tree[tree[id].rson].val5-=tree[tree[id].rson].val5&gt;=mod?mod:0;
     tree[tree[id].rson].lazy+=tree[id].lazy;
     tree[id].lazy=0;
-&#125;
+}
 
-void build_tree(int ID,int id,int l,int r)&#123;
-    if(l==r)&#123;
+void build_tree(int ID,int id,int l,int r){
+    if(l==r){
         tree[id].val1=dep[dfsnod[l]];
         tree[id].val2=dep[dfsnod[l]]*dep[dfsnod[l]]%mod;
         tree[id].val3=a[dfsnod[l]];
         tree[id].val4=a[dfsnod[l]]*tree[id].val1%mod;
         tree[id].val5=a[dfsnod[l]]*tree[id].val2%mod;
         return;
-    &#125;
+    }
     int mid=(l+r)&gt;&gt;1;
     newnode(l,mid,ID);
     tree[id].lson=tree_cnt;
@@ -397,11 +410,11 @@ void build_tree(int ID,int id,int l,int r)&#123;
     tree[id].rson=tree_cnt;
     build_tree(ID,tree[id].rson,mid+1,r);
     pushup(id);
-&#125;
+}
 
-void update(int ID,int last,int id,int l,int r,int L,int R,int val)&#123;
+void update(int ID,int last,int id,int l,int r,int L,int R,int val){
     if(r&lt;L||R&lt;l) return;
-    if(L&lt;=l&amp;&amp;r&lt;=R)&#123;
+    if(L&lt;=l&amp;&amp;r&lt;=R){
         tree[id].val3+=(r-l+1)*val%mod;
         tree[id].val4+=tree[id].val1*val%mod;
         tree[id].val5+=tree[id].val2*val%mod;
@@ -410,106 +423,106 @@ void update(int ID,int last,int id,int l,int r,int L,int R,int val)&#123;
         tree[id].val5-=tree[id].val5&gt;=mod?mod:0;
         tree[id].lazy+=val;
         return;
-    &#125;
+    }
     int mid=(l+r)&gt;&gt;1;
-    if(tree[tree[id].lson].id!=ID)&#123;
+    if(tree[tree[id].lson].id!=ID){
         newnode(l,mid,ID);
         tree[tree_cnt]=tree[tree[id].lson];
         tree[tree_cnt].id=ID;
         tree[id].lson=tree_cnt;
-    &#125;
-    if(tree[tree[id].rson].id!=ID)&#123;
+    }
+    if(tree[tree[id].rson].id!=ID){
         newnode(mid+1,r,ID);
         tree[tree_cnt]=tree[tree[id].rson];
         tree[tree_cnt].id=ID;
         tree[id].rson=tree_cnt;
-    &#125;
+    }
     pushdown(id);
     if(L&lt;=mid) update(ID,tree[last].lson,tree[id].lson,l,mid,L,R,val);
     if(R&gt;mid) update(ID,tree[last].rson,tree[id].rson,mid+1,r,L,R,val);
     pushup(id);
-&#125;
+}
 
-void change(int ID,int last,int rt,int u,int v,int val)&#123;
-    while(top[u]!=top[v])&#123;
+void change(int ID,int last,int rt,int u,int v,int val){
+    while(top[u]!=top[v]){
         if(dep[top[u]]&lt;dep[top[v]]) swap(u,v);
         update(ID,last,rt,1,cnt,dfsnum[top[u]],dfsnum[u],val);
         // int pos=u;
-        // while(pos!=fa[top[u]])&#123;
+        // while(pos!=fa[top[u]]){
             // update(ID,last,rt,1,cnt,dfsnum[pos],dfsnum[pos],val);
             // pos=fa[pos]; 
-        // &#125;
+        // }
         u=fa[top[u]];
-    &#125;
+    }
     if(dep[u]&lt;dep[v]) swap(u,v);
     // int pos=u;
-    // while(pos!=fa[v])&#123;
+    // while(pos!=fa[v]){
         // update(ID,last,rt,1,cnt,dfsnum[pos],dfsnum[pos],val);
         // pos=fa[pos]; 
-    // &#125;
+    // }
     update(ID,last,rt,1,cnt,dfsnum[v],dfsnum[u],val);
-&#125;
+}
 
-int query(int id,int l,int r,int L,int R,int type)&#123;
+int query(int id,int l,int r,int L,int R,int type){
     if(id==0||r&lt;L||R&lt;l) return 0;
-    if(L&lt;=l&amp;&amp;r&lt;=R)&#123;
+    if(L&lt;=l&amp;&amp;r&lt;=R){
         if(type==1) return tree[id].val1;
         if(type==2) return tree[id].val2;
         if(type==3) return tree[id].val3;
         if(type==4) return tree[id].val4;
         if(type==5) return tree[id].val5;
-    &#125;
+    }
     int res=0,mid=(l+r)&gt;&gt;1;
-    if(tree[tree[id].lson].id!=tree[id].id)&#123;
+    if(tree[tree[id].lson].id!=tree[id].id){
         newnode(l,mid,tree[id].id);
         tree[tree_cnt]=tree[tree[id].lson];
         tree[tree_cnt].id=tree[id].id;
         tree[id].lson=tree_cnt;
-    &#125;
-    if(tree[tree[id].rson].id!=tree[id].id)&#123;
+    }
+    if(tree[tree[id].rson].id!=tree[id].id){
         newnode(mid+1,r,tree[id].id);
         tree[tree_cnt]=tree[tree[id].rson];
         tree[tree_cnt].id=tree[id].id;
         tree[id].rson=tree_cnt;
-    &#125;
+    }
     pushdown(id);
-    if(L&lt;=mid&amp;&amp;tree[id].lson)&#123;
+    if(L&lt;=mid&amp;&amp;tree[id].lson){
         int val=query(tree[id].lson,l,mid,L,R,type);
         res+=val;
         res-=res&gt;=mod?mod:0;
-    &#125;
-    if(R&gt;mid&amp;&amp;tree[id].rson)&#123;
+    }
+    if(R&gt;mid&amp;&amp;tree[id].rson){
         int val=query(tree[id].rson,mid+1,r,L,R,type);
         res+=val;
         res-=res&gt;=mod?mod:0;
-    &#125;
+    }
     return res;
-&#125;
+}
 
-int ask(int rt,int u,int v,int type)&#123;
+int ask(int rt,int u,int v,int type){
     int res=0;
-    while(top[u]!=top[v])&#123;
+    while(top[u]!=top[v]){
         if(dep[top[u]]&lt;dep[top[v]]) swap(u,v);
         res+=query(rt,1,cnt,dfsnum[top[u]],dfsnum[u],type);
         res-=res&gt;=mod?mod:0;
         u=fa[top[u]];
-    &#125;
+    }
     if(dep[u]&lt;dep[v]) swap(u,v);
     res+=query(rt,1,cnt,dfsnum[v],dfsnum[u],type);
     res-=res&gt;=mod?mod:0;
     return res;
-&#125;
+}
 
-int lca(int u,int v)&#123;
-    while(top[u]!=top[v])&#123;
+int lca(int u,int v){
+    while(top[u]!=top[v]){
         if(dep[top[u]]&lt;dep[top[v]]) swap(u,v);
         u=fa[top[u]];
-    &#125;
+    }
     if(dep[u]&lt;dep[v]) swap(u,v);
     return v;
-&#125;
+}
 
-int work(int rt,int u,int v)&#123;
+int work(int rt,int u,int v){
     int res=((ask(rt,u,v,4)+ask(rt,u,v,5))*inv2)%mod,lc=lca(u,v);
     res+=((dep[v]*dep[v]+dep[v])*inv2)%mod*ask(rt,u,v,3)%mod;
     res-=res&gt;=mod?mod:0;
@@ -528,19 +541,19 @@ int work(int rt,int u,int v)&#123;
     res+=2ll*ask(rt,lc,lc,3)%mod*dep[lc]%mod*(dep[lc]+dep[v])%mod;
     res-=res&gt;=mod?mod:0;
     return res;
-&#125;
+}
 
 bool qwq;
 
-signed main()&#123;
+signed main(){
     // cout&lt;&lt;(&amp;awa-&amp;qwq)/1024.0/1024.0&lt;&lt;endl;
     read(n,m);
-    for(int i=1;i&lt;n;i++)&#123;
+    for(int i=1;i&lt;n;i++){
         int u,v;
         read(u,v);
         build(u,v);
         build(v,u);
-    &#125;
+    }
     for(int i=1;i&lt;=n;i++) read(a[i]);
     dfs(1,1);
     dfs2(1,1);
@@ -548,10 +561,10 @@ signed main()&#123;
     newnode(1,cnt,0);
     root[0]=tree_cnt;
     build_tree(0,root[0],1,cnt);
-    for(int i=1;i&lt;=m;i++)&#123;
+    for(int i=1;i&lt;=m;i++){
         int opt,x,y,w;
         read(opt);
-        if(opt==1)&#123;
+        if(opt==1){
             read(x,y,w);
             x=x^lastans;
             y=y^lastans;
@@ -561,29 +574,37 @@ signed main()&#123;
             tree[root[i]]=tree[root[i-1]];
             tree[root[i]].id=i;
             change(i,root[i-1],root[i],x,y,w);
-        &#125;
-        if(opt==2)&#123;
+        }
+        if(opt==2){
             read(x,y);
             x=x^lastans;
             y=y^lastans;
             root[i]=root[i-1];
             lastans=work(root[i],x,y);
             cout&lt;&lt;lastans&lt;&lt;&#39;\n&#39;;
-        &#125;
-        if(opt==3)&#123;
+        }
+        if(opt==3){
             read(x);
             x=x^lastans;
             root[i]=root[idq[x]];
-        &#125;
+        }
         // for(int j=1;j&lt;=n;j++) cout&lt;&lt;query(root[i],1,cnt,dfsnum[j],dfsnum[j],3)&lt;&lt;&quot; &quot;;
         // cout&lt;&lt;endl;
-    &#125;
+    }
     return 0;
-&#125;</code></pre>
+}</code></pre>
+
+    </div>
+</div>
 <h2 id="t2">T2</h2>
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2387">P2387 [NOI2014]
 魔法森林</a></p>
-<p>虽然大部分人还不会 LCT（也可以看看我的<a
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>虽然大部分人还不会 LCT（也可以看看我的<a
 target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/LCT%E5%AD%A6%E4%B9%A0/">博客</a>，我觉得写得挺清楚的qwq），但可以先不管，总之就是可以在
 <span class="math inline">\(O(\log n)\)</span>
 的时间内连边和断边就行了，思考一下怎么维护这道题需要的就可以了。<br />
@@ -625,7 +646,15 @@ class="math inline">\(b_{i}&lt;b_{j}\)</span>，把原来的那条边删掉，�
 <span class="math inline">\(a_{i}\)</span> 的最小答案。</li>
 </ol>
 <p>那么就结束了。</p>
-<pre class="cpp"><code>// Problem: P2387 [NOI2014] 魔法森林
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>// Problem: P2387 [NOI2014] 魔法森林
 // Contest: Luogu
 // URL: https://www.luogu.com.cn/problem/P2387
 // Memory Limit: 125 MB
@@ -644,72 +673,72 @@ const double eps=1e-9;
 char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
 #define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
 template&lt;typename type&gt;
-inline void read(type &amp;x)&#123;
+inline void read(type &amp;x){
     x=0;
     bool f=false;
     char ch=getchar();
     while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
     while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
     if(f) x=-x;
-&#125;
+}
 template&lt;typename type,typename... args&gt;
-inline void read(type &amp;x,args&amp;... y)&#123;
+inline void read(type &amp;x,args&amp;... y){
     read(x),read(y...);
-&#125;
+}
 
 int n,m,ans=-1,fa[MAXN],maxa[MAXN],maxb[MAXN],a[MAXN],b[MAXN],ida[MAXN],idb[MAXN],son[MAXN][2],tag[MAXN];
-struct node&#123;
+struct node{
     int maxa,maxb,ida,idb;
-&#125;;
-struct node2&#123;
+};
+struct node2{
     int u,v,a,b;
-&#125;e[MAXN];
+}e[MAXN];
 
-bool get(int x)&#123;return x==son[fa[x]][1];&#125;
-bool isroot(int x)&#123;return x!=son[fa[x]][0]&amp;&amp;x!=son[fa[x]][1];&#125;
-void rev(int x)&#123;swap(son[x][0],son[x][1]);tag[x]^=1;&#125;
+bool get(int x){return x==son[fa[x]][1];}
+bool isroot(int x){return x!=son[fa[x]][0]&amp;&amp;x!=son[fa[x]][1];}
+void rev(int x){swap(son[x][0],son[x][1]);tag[x]^=1;}
 
-void pushup(int x)&#123;
-    if(maxa[son[x][0]]&gt;maxa[son[x][1]])&#123;
+void pushup(int x){
+    if(maxa[son[x][0]]&gt;maxa[son[x][1]]){
         maxa[x]=maxa[son[x][0]];
         ida[x]=ida[son[x][0]];
-    &#125;
-    else&#123;
+    }
+    else{
         maxa[x]=maxa[son[x][1]];
         ida[x]=ida[son[x][1]];
-    &#125;
-    if(a[x]&gt;maxa[x])&#123;
+    }
+    if(a[x]&gt;maxa[x]){
         maxa[x]=a[x];
         ida[x]=x;
-    &#125;
-    if(maxb[son[x][0]]&gt;maxb[son[x][1]])&#123;
+    }
+    if(maxb[son[x][0]]&gt;maxb[son[x][1]]){
         maxb[x]=maxb[son[x][0]];
         idb[x]=idb[son[x][0]];
-    &#125;
-    else&#123;
+    }
+    else{
         maxb[x]=maxb[son[x][1]];
         idb[x]=idb[son[x][1]];
-    &#125;
-    if(b[x]&gt;maxb[x])&#123;
+    }
+    if(b[x]&gt;maxb[x]){
         maxb[x]=b[x];
         idb[x]=x;
-    &#125;
-&#125;
+    }
+}
 
-void pushdown(int x)&#123;
-    if(tag[x])&#123;
+void pushdown(int x){
+    if(tag[x]){
         if(son[x][0]) rev(son[x][0]);
         if(son[x][1]) rev(son[x][1]);
         tag[x]=0;
-    &#125;
-&#125;
+    }
+}
 
-void update(int x)&#123;
+void update(int x){
     if(!isroot(x)) update(fa[x]);
     pushdown(x);
-&#125;
+}
 
-void rotate(int x)&#123;
+void rotate(int x){
     int y=fa[x],z=fa[y],ch=get(x);
     if(!isroot(y)) son[z][get(y)]=x;
     son[y][ch]=son[x][ch^1];
@@ -717,70 +746,78 @@ void rotate(int x)&#123;
     son[x][ch^1]=y;
     fa[y]=x;fa[x]=z;
     pushup(y);pushup(x);
-&#125;
+}
 
-void Splay(int x)&#123;
+void Splay(int x){
     update(x);
-    for(int f=fa[x];!isroot(x);f=fa[x])&#123;
+    for(int f=fa[x];!isroot(x);f=fa[x]){
         if(!isroot(f)) rotate(get(x)==get(f)?f:x);
         rotate(x);
-    &#125;
-&#125;
+    }
+}
 
-int access(int x)&#123;
+int access(int x){
     int pos=0;
     for(;x;pos=x,x=fa[x]) Splay(x),son[x][1]=pos,pushup(x);
     pushup(x);return pos;
-&#125;
+}
 
-void makeroot(int x)&#123;x=access(x);Splay(x);rev(x);&#125;
+void makeroot(int x){x=access(x);Splay(x);rev(x);}
 
-int findroot(int x)&#123;
+int findroot(int x){
     access(x);Splay(x);pushdown(x);
     while(son[x][0]) x=son[x][0],pushdown(x);
     Splay(x);return x;
-&#125;
+}
 
-void link(int x,int y)&#123;
+void link(int x,int y){
     makeroot(x);Splay(x);
     if(findroot(y)!=x) fa[x]=y;
-&#125;
+}
 
-void cut(int x,int y)&#123;makeroot(x);access(y);fa[y]=son[x][1]=0;&#125;
-void split(int x,int y)&#123;makeroot(x);access(y);Splay(y);&#125;
-node query(int x,int y)&#123;split(x,y);return (node)&#123;maxa[y],maxb[y],ida[y],idb[y]&#125;;&#125;
+void cut(int x,int y){makeroot(x);access(y);fa[y]=son[x][1]=0;}
+void split(int x,int y){makeroot(x);access(y);Splay(y);}
+node query(int x,int y){split(x,y);return (node){maxa[y],maxb[y],ida[y],idb[y]};}
 
-void Link(int x,int y,int w1,int w2,int id)&#123;
+void Link(int x,int y,int w1,int w2,int id){
     makeroot(x);Splay(x);
     if(findroot(y)!=x) link(x,id+n),link(id+n,y);
-    else&#123;
+    else{
         node now=query(x,y);
-        if(w2&lt;=now.maxb)&#123;
+        if(w2&lt;=now.maxb){
             cut(e[now.idb-n].u,now.idb),cut(now.idb,e[now.idb-n].v);
             link(x,id+n),link(id+n,y);
-        &#125;
-    &#125;
+        }
+    }
     makeroot(1);
     node now=query(1,n);
     if(findroot(n)==1) ans=ans==-1?now.maxa+now.maxb:min(ans,now.maxa+now.maxb);
-&#125;
+}
 
-bool cmp(node2 n1,node2 n2)&#123;return n1.a&lt;n2.a;&#125;
+bool cmp(node2 n1,node2 n2){return n1.a&lt;n2.a;}
 
-signed main()&#123;
+signed main(){
     read(n,m);
     for(int i=1;i&lt;=m;i++) read(e[i].u,e[i].v,e[i].a,e[i].b);
     sort(e+1,e+m+1,cmp);
     for(int i=1;i&lt;=m;i++) Link(e[i].u,e[i].v,a[i+n]=e[i].a,b[i+n]=e[i].b,i);
     cout&lt;&lt;ans;
     return 0;
-&#125;</code></pre>
+}</code></pre>
+
+    </div>
+</div>
 <h1 id="第二周2025032420250330">第二周（2025/03/24~2025/03/30）</h1>
 <h2 id="t1-1">T1</h2>
 <p>这次来一道简单的水题。<br />
 <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/10463">P10463 Interval
 GCD</a></p>
-<p>区间加很烦，<span class="math inline">\(\gcd(a,b)+c\not
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>区间加很烦，<span class="math inline">\(\gcd(a,b)+c\not
 ={\gcd(a+c,b+c)}\)</span>。<br />
 但是单点改则是可行的。</p>
 <p>我们知道求 <span class="math inline">\(\gcd\)</span>
@@ -802,7 +839,15 @@ class="math inline">\(\gcd\)</span>
 class="math inline">\(\gcd\)</span> 时，也就应该是 <span
 class="math inline">\(\gcd(A_{L},gcd_{i=L+1}^{R}B_{i})\)</span>。<br />
 于是就做完了。</p>
-<pre class="cpp"><code>// Problem: P10463 Interval GCD
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>// Problem: P10463 Interval GCD
 // Contest: Luogu
 // URL: https://www.luogu.com.cn/problem/P10463
 // Memory Limit: 512 MB
@@ -822,88 +867,88 @@ const double eps=1e-9;
 char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
 #define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
 template&lt;typename type&gt;
-inline void read(type &amp;x)&#123;
+inline void read(type &amp;x){
     x=0;
     bool f=false;
     char ch=getchar();
     while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
     while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
     if(f) x=-x;
-&#125;
+}
 template&lt;typename type,typename... args&gt;
-inline void read(type &amp;x,args&amp;... y)&#123;
+inline void read(type &amp;x,args&amp;... y){
     read(x),read(y...);
-&#125;
+}
 
 int n,m,val[MAXN],t[MAXN];
-struct node&#123;
+struct node{
     int l,r,val;
-&#125;tree[MAXN&lt;&lt;2];
+}tree[MAXN&lt;&lt;2];
 
-int gcd(int x,int y)&#123;
+int gcd(int x,int y){
     if(x==0||y==0) return x+y;
     if(x%y==0) return y;
     return gcd(y,x%y);
-&#125;
+}
 
-void pushup(int id)&#123;
+void pushup(int id){
     tree[id].val=gcd(tree[id*2].val,tree[id*2+1].val);
-&#125;
+}
 
-void build(int id,int l,int r)&#123;
+void build(int id,int l,int r){
     tree[id].l=l;
     tree[id].r=r;
-    if(l==r)&#123;
+    if(l==r){
         tree[id].val=val[l];
         return;
-    &#125;
+    }
     int mid=(l+r)&gt;&gt;1;
     build(id*2,l,mid);
     build(id*2+1,mid+1,r);
     pushup(id);
-&#125;
+}
 
-void update(int id,int l,int r,int pos,int val)&#123;
+void update(int id,int l,int r,int pos,int val){
     if(pos&lt;=0||pos&gt;n) return;
     if(r&lt;pos||pos&lt;l) return;
-    if(l==r)&#123;
+    if(l==r){
         tree[id].val+=val;
         return;
-    &#125;
+    }
     int mid=(l+r)&gt;&gt;1;
     if(pos&lt;=mid) update(id*2,l,mid,pos,val);
     else update(id*2+1,mid+1,r,pos,val);
     pushup(id);
-&#125;
+}
 
-int query(int id,int l,int r,int L,int R)&#123;
+int query(int id,int l,int r,int L,int R){
     if(l&gt;r||r&lt;L||R&lt;l) return 0;
     if(L&lt;=l&amp;&amp;r&lt;=R) return tree[id].val;
     int res=0,mid=(l+r)&gt;&gt;1;
     if(L&lt;=mid) res=query(id*2,l,mid,L,R);
     if(R&gt;mid) res=gcd(res,query(id*2+1,mid+1,r,L,R));
     return res;
-&#125;
+}
 
-int lowbit(int x)&#123;return x&amp;(-x);&#125;
+int lowbit(int x){return x&amp;(-x);}
 
-void update(int pos,int val)&#123;
-    while(pos&lt;=n)&#123;
+void update(int pos,int val){
+    while(pos&lt;=n){
         t[pos]+=val;
         pos+=lowbit(pos);
-    &#125;
-&#125;
+    }
+}
 
-int query(int pos)&#123;
+int query(int pos){
     int res=0;
-    while(pos)&#123;
+    while(pos){
         res+=t[pos];
         pos-=lowbit(pos);
-    &#125;
+    }
     return res;
-&#125;
+}
 
-signed main()&#123;
+signed main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     cin&gt;&gt;n&gt;&gt;m;
@@ -911,27 +956,35 @@ signed main()&#123;
     for(int i=n;i&gt;=1;i--) val[i]-=val[i-1];
     for(int i=1;i&lt;=n;i++) update(i,val[i]);
     build(1,1,n);
-    for(int i=1;i&lt;=m;i++)&#123;
+    for(int i=1;i&lt;=m;i++){
         char opt;int x,y,z;
         cin&gt;&gt;opt;
-        if(opt==&#39;Q&#39;)&#123;
+        if(opt==&#39;Q&#39;){
             cin&gt;&gt;x&gt;&gt;y;
             cout&lt;&lt;abs(gcd(query(x),query(1,1,n,x+1,y)))&lt;&lt;&#39;\n&#39;;
-        &#125;
-        else&#123;
+        }
+        else{
             cin&gt;&gt;x&gt;&gt;y&gt;&gt;z;
             update(1,1,n,x,z);
             update(x,z);
             update(1,1,n,y+1,-z);
             update(y+1,-z);
-        &#125;
-    &#125;
+        }
+    }
     return 0;
-&#125;</code></pre>
+}</code></pre>
+
+    </div>
+</div>
 <h2 id="t2-1">T2</h2>
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6790">P6790 [SNOI2020]
 生成树</a></p>
-<p>广义串并联图。<br />
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>广义串并联图。<br />
 不会的可以去看看我的<a
 target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/%E5%B9%BF%E4%B9%89%E4%B8%B2%E5%B9%B6%E8%81%94%E5%9B%BE/">博客</a>。</p>
 <p>这张图为什么是广义串并联图？<br />
@@ -974,7 +1027,15 @@ class="math inline">\(f_{i}=f_{j}f_{k},g_{i}=f_{j}g_{k}+f_{k}g_{j}\)</span>。<b
 <span
 class="math inline">\(f_{i}=f_{j}g_{k}+f_{k}g_{j},g_{i}=g_{j}g_{k}\)</span>。</p>
 <p>那么就结束了。</p>
-<pre class="cpp"><code>// Problem: P6790 [SNOI2020] 生成树
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>// Problem: P6790 [SNOI2020] 生成树
 // Contest: Luogu
 // URL: https://www.luogu.com.cn/problem/P6790
 // Memory Limit: 128 MB
@@ -993,18 +1054,18 @@ const double eps=1e-9;
 char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
 #define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
 template&lt;typename type&gt;
-inline void read(type &amp;x)&#123;
+inline void read(type &amp;x){
     x=0;
     bool f=false;
     char ch=getchar();
     while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
     while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
     if(f) x=-x;
-&#125;
+}
 template&lt;typename type,typename... args&gt;
-inline void read(type &amp;x,args&amp;... y)&#123;
+inline void read(type &amp;x,args&amp;... y){
     read(x),read(y...);
-&#125;
+}
 
 int n,m,cnt,ans=1,d[MAXN],u[MAXN],v[MAXN],f[MAXN],g[MAXN];
 bool vis[MAXN];
@@ -1012,34 +1073,34 @@ map&lt;pair&lt;int,int&gt;,int&gt; mp;
 set&lt;int&gt; s[MAXN];
 queue&lt;int&gt; q;
 
-signed main()&#123;
+signed main(){
     read(n,m);
-    for(int i=1;i&lt;=m;i++)&#123;
+    for(int i=1;i&lt;=m;i++){
         int U,V;read(U,V);
         if(U==V) continue;
-        if(mp.find(make_pair(U,V))==mp.end())&#123;
+        if(mp.find(make_pair(U,V))==mp.end()){
             u[++cnt]=U,v[cnt]=V;
             mp[make_pair(U,V)]=mp[make_pair(V,U)]=cnt;
             s[U].insert(cnt);s[V].insert(cnt);
             g[cnt]=1;
             d[U]++;d[V]++;
-        &#125;
+        }
         f[mp[make_pair(U,V)]]++;
-    &#125;
+    }
     for(int i=1;i&lt;=n;i++) if(d[i]&lt;=2) q.push(i);
-    while(!q.empty())&#123;
+    while(!q.empty()){
         int U=q.front();q.pop();
         if(vis[U]) continue;
         vis[U]=true;
-        if(d[U]==1)&#123;
+        if(d[U]==1){
             int id=*s[U].begin(),V=(v[id]==U?u[id]:v[id]);s[U].erase(id);
             mp.erase(mp.find(make_pair(U,V)));mp.erase(mp.find(make_pair(V,U)));
             ans=ans*f[id]%mod;
             s[V].erase(id);
             d[V]--;
             if(d[V]&lt;=2) q.push(V);
-        &#125;
-        if(d[U]==2)&#123;
+        }
+        if(d[U]==2){
             int id1=*s[U].begin();s[U].erase(id1);int id2=*s[U].begin();s[U].erase(id2);
             int V1=(v[id1]==U?u[id1]:v[id1]),V2=(v[id2]==U?u[id2]:v[id2]);
             mp.erase(mp.find(make_pair(U,V1)));mp.erase(mp.find(make_pair(V1,U)));
@@ -1047,26 +1108,460 @@ signed main()&#123;
             s[V1].erase(id1);s[V2].erase(id2);
             d[V1]--;d[V2]--;
             int F=f[id1]*f[id2]%mod,G=(f[id1]*g[id2]%mod+g[id1]*f[id2]%mod)%mod;
-            if(mp.find(make_pair(V1,V2))!=mp.end())&#123;
+            if(mp.find(make_pair(V1,V2))!=mp.end()){
                 int id=mp[make_pair(V1,V2)];
                 int FF=f[id],GG=g[id];
                 f[id]=(FF*G%mod+GG*F%mod)%mod;
                 g[id]=G*GG%mod;
-            &#125;
-            else&#123;
+            }
+            else{
                 u[++cnt]=V1,v[cnt]=V2;
                 mp[make_pair(V1,V2)]=mp[make_pair(V2,V1)]=cnt;
                 s[V1].insert(cnt);s[V2].insert(cnt);
                 d[V1]++;d[V2]++;
                 f[cnt]=F;g[cnt]=G;
-            &#125;
+            }
             if(d[V1]&lt;=2) q.push(V1);
             if(d[V2]&lt;=2) q.push(V2);
-        &#125;
-    &#125;
+        }
+    }
     cout&lt;&lt;ans;
     return 0;
-&#125;</code></pre>
+}</code></pre>
+
+    </div>
+</div>
+<h1 id="第三周20250331-20250406">第三周（2025/03/31-2025/04/06）</h1>
+<h2 id="t1-2">T1</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF1569F">P6603
+「EZEC-2」甜梦</a></p>
+<p>这道题真的是好题啊。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        题面
+    </div>
+    <div class='spoiler-content'>
+        <p>有一张连通有向图，点的编号在 <span
+class="math inline">\([1,n]\)</span> 之间且互不相同。<br />
+现在有两个点，初始均在 <span class="math inline">\(1\)</span>
+号点。任意时刻，这两个点所在的点的编号之差的绝对值不能大于 <span
+class="math inline">\(l\)</span>。<br />
+每次可以移动一个点到其可以到达的另一个点，特别的，如果两个点都可以到
+<span class="math inline">\(v\)</span> 点，则可以同时移动到 <span
+class="math inline">\(v\)</span> 点。<br />
+每个点有一个权值 <span class="math inline">\(a_{i}\)</span>，第一次经过
+<span class="math inline">\(i\)</span> 点的时候将获得 <span
+class="math inline">\(a_{i}\)</span>。<br />
+两个点同时到达 <span class="math inline">\(n\)</span>
+点的时候结束，问能获得权值的最大值是多少？</p>
+<p><strong>【数据范围与约定】</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">测试点编号</th>
+<th style="text-align: center;"><span
+class="math inline">\(n\le\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(m\le\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(l\le\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(a_i\le\)</span></th>
+<th style="text-align: center;">时间</th>
+<th style="text-align: center;">特殊性质</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><span
+class="math inline">\(1,2\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(15\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(5\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(50\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\text
+s\)</span></td>
+<td style="text-align: center;">无</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="math inline">\(3\sim
+4\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(16\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(40\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(5 \times
+10^3\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\text
+s\)</span></td>
+<td style="text-align: center;">无</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="math inline">\(5\sim
+6\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(16\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(120\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(5 \times
+10^3\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\text
+s\)</span></td>
+<td style="text-align: center;">无</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="math inline">\(7 \sim
+10\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(100\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10^3\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10^4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1 \text
+s\)</span></td>
+<td style="text-align: center;">无</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span
+class="math inline">\(11\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(100\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10^3\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10^4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\text
+s\)</span></td>
+<td style="text-align: center;">场景是一棵树</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="math inline">\(12 \sim
+14\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10^3\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10^4\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10^4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\text
+s\)</span></td>
+<td style="text-align: center;">无</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span
+class="math inline">\(15,16\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(5\times10^3\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(3\times10^4\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10^4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\text
+s\)</span></td>
+<td style="text-align: center;">无</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span
+class="math inline">\(17,18\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(5\times10^3\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(3\times10^4\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(11\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10^4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2\text
+s\)</span></td>
+<td style="text-align: center;">无</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span
+class="math inline">\(19,20\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(5\times10^3\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(3\times10^4\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(12\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10^4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3\text
+s\)</span></td>
+<td style="text-align: center;">无</td>
+</tr>
+</tbody>
+</table>
+<p>对于 <span class="math inline">\(100\%\)</span> 的数据，<span
+class="math inline">\(1\le u&lt;v \le n\)</span>, <span
+class="math inline">\(1 \le n \le 5\times 10^3\)</span>, <span
+class="math inline">\(1 \le m \le 3\times 10^4\)</span>, <span
+class="math inline">\(1 \le a_i \le 10^4\)</span>, <span
+class="math inline">\(1 \le l \le 12\)</span>。</p>
+<p><strong>输入保证每个场景都能从起点到达，并且都能连到终点。</strong><br />
+<strong>输入不保证没有重边。</strong><br />
+<strong>输入不对 <span class="math inline">\(u,v\)</span>
+的编号差做任何保证。</strong></p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint1
+    </div>
+    <div class='spoiler-content'>
+        <p>可以先思考一个最暴力的状压
+DP。并计算一下你能通过哪些数据点。尝试一下优化？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint2
+    </div>
+    <div class='spoiler-content'>
+        <p>显然对于 <span class="math inline">\(n\)</span>
+很小的时候，我们可以设计状态 <span
+class="math inline">\(dp_{S,i,j}\)</span> 表示当前已经走了 <span
+class="math inline">\(S\)</span> 集合，当前两个点是 <span
+class="math inline">\(i,j\)</span>
+的最大权值和。转移在这里就不给出了。<br />
+这样的状态复杂度是 <span
+class="math inline">\(O(2^nn^2)\)</span>，可以拿 <span
+class="math inline">\(20pts\)</span>。<br />
+对于这张图的性质你有没有找全？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint3
+    </div>
+    <div class='spoiler-content'>
+        <p>发现图其实是一张 DAG，并且总是从编号小的点到编号大的点。<br />
+因此我们是没有必要将整张图的状态都记录下来的。<br />
+如果 <span class="math inline">\(S\)</span> 中最小的点是 <span
+class="math inline">\(k\)</span>，那么编号小于 <span
+class="math inline">\(k\)</span>
+的点都没用了。我们可以将它们丢掉。<br />
+不妨设 <span class="math inline">\(dp_{S,i,j}\)</span> 表示从 <span
+class="math inline">\([k,k+l]\)</span> 这些点的状态，<span
+class="math inline">\(i,j\)</span> 依然表示这两个点的位置。<br />
+此时的状态复杂度是 <span
+class="math inline">\(O(2^ln^2)\)</span>，可以获得 <span
+class="math inline">\(55pts\)</span>。<br />
+能优化一下状态吗？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint4
+    </div>
+    <div class='spoiler-content'>
+        <p>如果我们记录的 <span class="math inline">\(i\)</span> 并不是当前
+<span class="math inline">\(S\)</span> 中表示的最小的点，那么显然 <span
+class="math inline">\(S\)</span> 中前面的点依然可以丢掉。因此我们强制
+<span class="math inline">\(i\)</span> 是 <span
+class="math inline">\(S\)</span> 中最小编号的点。<br />
+我们令新的状态 <span class="math inline">\(dp_{S,i,j}\)</span> 表示
+<span class="math inline">\([k,k+l]\)</span>
+点的状态，其中最小的点的编号为 <span
+class="math inline">\(i\)</span>，另一个点的编号是 <span
+class="math inline">\(i+j\)</span>。<br />
+此时状态复杂度变为 <span
+class="math inline">\(O(n2^ll)\)</span>，可以获得 <span
+class="math inline">\(80pts\)</span> 左右。<br />
+还能继续优化吗？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint5
+    </div>
+    <div class='spoiler-content'>
+        <p>记录最小的点与最大的点的编号的差有意义吗？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>因为不能走回头路，假如 <span class="math inline">\(i+j\)</span>
+并不是当前 <span class="math inline">\(S\)</span>
+中最大的，那说明后面有点走过了，这显然是不合法的，因此另一个点此时必然为
+<span class="math inline">\(S\)</span> 中最高的为 <span
+class="math inline">\(1\)</span> 的二进制位表示的编号。<br />
+于是此时只需要记录 <span class="math inline">\(dp_{S,i}\)</span>
+即可，时间复杂度 <span
+class="math inline">\(O(n2^l)\)</span>，可以通过。<br />
+转移方程呢？分类讨论一下即可：<br />
+我们不妨令较小的点为 <span class="math inline">\(A\)</span>，较大的点为
+<span class="math inline">\(B\)</span>，要转移到的点为 <span
+class="math inline">\(v\)</span>。</p>
+<ul>
+<li>从 <span class="math inline">\(B\)</span> 转移到 <span
+class="math inline">\(v\)</span>：<br />
+肯定需要满足 <span class="math inline">\(v-B\le l\)</span>。<br />
+<span class="math inline">\(dp_{S,A}+a_{v}\to
+dp_{S|(1&lt;&lt;v-B),A}\)</span>。<br />
+（ps：这样写 <span class="math inline">\(\LaTeX\)</span>
+其实是不太好的，但我这里就将就一下吧。）<br />
+</li>
+<li>从 <span class="math inline">\(A\)</span> 和 <span
+class="math inline">\(B\)</span> 同时转移到 <span
+class="math inline">\(v\)</span>： 首先肯定需要 <span
+class="math inline">\(A\)</span> 和 <span
+class="math inline">\(B\)</span> 均可到达 <span
+class="math inline">\(v\)</span>。<br />
+<span class="math inline">\(dp_{S,A}+a_{v}\to dp_{1,v}\)</span>。<br />
+</li>
+<li>从 <span class="math inline">\(A\)</span> 转移到 <span
+class="math inline">\(v\)</span>： 这里又要分两种情况了。
+<ol type="1">
+<li><span class="math inline">\(v\le B\)</span>：<br />
+此时最小的点从 <span class="math inline">\(A\)</span> 变成了 <span
+class="math inline">\(v\)</span>。<br />
+<span class="math inline">\(dp_{S,A}+a_{v}\to
+dp_{(S&gt;&gt;v-A)|1},v\)</span>。<br />
+注意要判断一下 <span class="math inline">\(v\)</span>
+在曾经的状态中又没有出现过，出现过就不要多加一次 <span
+class="math inline">\(a_{v}\)</span> 了。</li>
+<li><span class="math inline">\(v-B\le l\)</span>： 此时最小的点从 <span
+class="math inline">\(A\)</span> 变成了 <span
+class="math inline">\(B\)</span>。<br />
+<span class="math inline">\(dp_{S,A}+a_{v}\to
+dp_{(S&gt;&gt;B-A)|1|(1&lt;&lt;v-B)},B\)</span>。<br />
+此时并不需要判断 <span class="math inline">\(v\)</span>
+出现过没有，因为如果出现过，要么 <span
+class="math inline">\(v-A&gt;l\)</span> 不合法，要么原先最大的点不是
+<span class="math inline">\(B\)</span> 而是 <span
+class="math inline">\(v\)</span>。</li>
+</ol></li>
+</ul>
+<p>那么就结束了，注意下因为距离范围是 <span
+class="math inline">\([0,l]\)</span>，所以数组应该开 <span
+class="math inline">\(2^{l+1}\)</span> 而不是 <span
+class="math inline">\(2^{l}\)</span>。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>// Problem: P6603 「EZEC-2」甜梦
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/P6603
+// Memory Limit: 256 MB
+// Time Limit: 1000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int MAXN=5e3+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x){
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+}
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y){
+    read(x),read(y...);
+}
+
+bool awa;
+int n,m,l,k,old=0,now=1,head[MAXN],a[MAXN],dp[MAXN][(1&lt;&lt;13)],maxval[(1&lt;&lt;13)];
+struct node{
+    int to,next;
+}edge[MAXN*20];
+
+void build(int u,int v){
+    edge[++k].to=v;
+    edge[k].next=head[u];
+    head[u]=k;
+}
+bool qwq;
+
+signed main(){
+    // cout&lt;&lt;(&amp;awa-&amp;qwq)/1024.0/1024.0&lt;&lt;endl;
+    read(n,m,l);
+    for(int i=1;i&lt;=n;i++) read(a[i]);
+    for(int i=1;i&lt;=m;i++){
+        int u,v;
+        read(u,v);
+        build(u,v);
+    }
+    memset(dp,-1,sizeof(dp));
+    dp[1][1]=a[1];
+    for(int i=0;i&lt;(1&lt;&lt;l+1);i++){
+        for(int j=0;j&lt;=l;j++){
+            if(i&amp;(1&lt;&lt;j)) maxval[i]=j;
+        }
+    }
+    for(int A=1;A&lt;=n;A++){
+        for(int i=1;i&lt;(1&lt;&lt;l+1);i++){
+            int B=A+maxval[i];
+            if(dp[A][i]==-1||B&gt;n) continue;
+            set&lt;int&gt; s1,s2,g;
+            for(int j=head[A];j;j=edge[j].next) s1.insert(edge[j].to);
+            for(int j=head[B];j;j=edge[j].next) s2.insert(edge[j].to);
+            for(int j:s2) if(s1.find(j)!=s1.end()) g.insert(j);
+            for(int j:s2) if(j-A&lt;=l) dp[A][i|(1&lt;&lt;j-A)]=max(dp[A][i|(1&lt;&lt;j-A)],dp[A][i]+a[j]);
+            for(int j:s1){
+                if(j&lt;=B){
+                    int state=(i&gt;&gt;j-A)|1;
+                    dp[j][state]=max(dp[j][state],dp[A][i]+((i&amp;(1&lt;&lt;j-A))?0:a[j]));
+                }
+                else{
+                    if(j-B&lt;=l){
+                        int state=(i&gt;&gt;B-A)|1|(1&lt;&lt;j-B);
+                        dp[B][state]=max(dp[B][state],dp[A][i]+a[j]);
+                    }
+                }
+            }
+            for(int j:g) dp[j][1]=max(dp[j][1],dp[A][i]+a[j]);
+        }
+    }
+    cout&lt;&lt;dp[n][1];
+    return 0;
+}</code></pre>
+
+    </div>
+</div>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
     

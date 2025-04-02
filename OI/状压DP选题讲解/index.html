@@ -200,21 +200,21 @@
             
             <span class="tag">
                 
-                <a href="/tags/DP%E4%BC%98%E5%8C%96/" style="color: #a5ff4d">
+                <a href="/tags/DP%E4%BC%98%E5%8C%96/" style="color: #ffa400">
                     DP优化
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9/" style="color: #e74c3c">
+                <a href="/tags/%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9/" style="color: #00beff">
                     状态压缩
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E7%9F%A9%E4%B9%98%E4%BC%98%E5%8C%96/" style="color: #00beff">
+                <a href="/tags/%E7%9F%A9%E4%B9%98%E4%BC%98%E5%8C%96/" style="color: #e74c3c">
                     矩乘优化
                 </a>
             </span>
@@ -308,8 +308,7 @@ F_n = \left\{
 \begin{bmatrix}  
   0&amp; 1\\  
   1&amp; 1
-\end{bmatrix}
-=
+\end{bmatrix}=
 \begin{bmatrix}  
   F_{i} &amp; F_{i+1}
 \end{bmatrix}   
@@ -333,8 +332,7 @@ class="math inline">\(F_{i+1}\)</span>，然后按照手动模拟一下矩乘，
 \begin{bmatrix}  
   0&amp; 1\\  
   1&amp; 1
-\end{bmatrix}
-=
+\end{bmatrix}=
 \begin{bmatrix}  
   F_{i-1} &amp; F_{i}
 \end{bmatrix}   
@@ -346,8 +344,7 @@ class="math inline">\(F_{i+1}\)</span>，然后按照手动模拟一下矩乘，
 \begin{bmatrix}  
   1&amp; 1\\  
   1&amp; 2
-\end{bmatrix}
-=
+\end{bmatrix}=
 \begin{bmatrix}  
   F_{i} &amp; F_{i+1}
 \end{bmatrix}   
@@ -1168,195 +1165,37 @@ signed main(){
 
     </div>
 </div>
-<h2 id="p6603-ezec-2甜梦"><a
-target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF1569F">P6603
-「EZEC-2」甜梦</a></h2>
-<p>原本的最后一题，fl
-说太难了，所以我重新选了一道，但是那道题还是在后面，有时间也可以讲一下。</p>
-<p>这道题真的是好题啊。</p>
+<h2 id="p4460-cqoi2018-解锁屏幕"><a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4460">P4460 [CQOI2018]
+解锁屏幕</a></h2>
+<p>原先的最后一道题，黄老师说太难了，就换成了这道题，有时间的话可以给你们讲一下。</p>
 <div class='spoiler collapsed'>
     <div class='spoiler-title'>
         题面
     </div>
     <div class='spoiler-content'>
-        <p>有一张连通有向图，点的编号在 <span
-class="math inline">\([1,n]\)</span> 之间且互不相同。<br />
-现在有两个点，初始均在 <span class="math inline">\(1\)</span>
-号点。任意时刻，这两个点所在的点的编号之差的绝对值不能大于 <span
-class="math inline">\(l\)</span>。<br />
-每次可以移动一个点到其可以到达的另一个点，特别的，如果两个点都可以到
-<span class="math inline">\(v\)</span> 点，则可以同时移动到 <span
-class="math inline">\(v\)</span> 点。<br />
-每个点有一个权值 <span class="math inline">\(a_{i}\)</span>，第一次经过
-<span class="math inline">\(i\)</span> 点的时候将获得 <span
-class="math inline">\(a_{i}\)</span>。<br />
-两个点同时到达 <span class="math inline">\(n\)</span>
-点的时候结束，问能获得权值的最大值是多少？</p>
-<p><strong>【数据范围与约定】</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">测试点编号</th>
-<th style="text-align: center;"><span
-class="math inline">\(n\le\)</span></th>
-<th style="text-align: center;"><span
-class="math inline">\(m\le\)</span></th>
-<th style="text-align: center;"><span
-class="math inline">\(l\le\)</span></th>
-<th style="text-align: center;"><span
-class="math inline">\(a_i\le\)</span></th>
-<th style="text-align: center;">时间</th>
-<th style="text-align: center;">特殊性质</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><span
-class="math inline">\(1,2\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(10\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(15\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(5\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(50\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(1\text
-s\)</span></td>
-<td style="text-align: center;">无</td>
-</tr>
-<tr>
-<td style="text-align: center;"><span class="math inline">\(3\sim
-4\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(16\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(40\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(8\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(5 \times
-10^3\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(1\text
-s\)</span></td>
-<td style="text-align: center;">无</td>
-</tr>
-<tr>
-<td style="text-align: center;"><span class="math inline">\(5\sim
-6\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(16\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(120\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(8\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(5 \times
-10^3\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(1\text
-s\)</span></td>
-<td style="text-align: center;">无</td>
-</tr>
-<tr>
-<td style="text-align: center;"><span class="math inline">\(7 \sim
-10\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(100\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(10^3\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(10\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(10^4\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(1 \text
-s\)</span></td>
-<td style="text-align: center;">无</td>
-</tr>
-<tr>
-<td style="text-align: center;"><span
-class="math inline">\(11\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(100\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(10^3\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(10\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(10^4\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(1\text
-s\)</span></td>
-<td style="text-align: center;">场景是一棵树</td>
-</tr>
-<tr>
-<td style="text-align: center;"><span class="math inline">\(12 \sim
-14\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(10^3\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(10^4\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(10\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(10^4\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(1\text
-s\)</span></td>
-<td style="text-align: center;">无</td>
-</tr>
-<tr>
-<td style="text-align: center;"><span
-class="math inline">\(15,16\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(5\times10^3\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(3\times10^4\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(10\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(10^4\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(1\text
-s\)</span></td>
-<td style="text-align: center;">无</td>
-</tr>
-<tr>
-<td style="text-align: center;"><span
-class="math inline">\(17,18\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(5\times10^3\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(3\times10^4\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(11\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(10^4\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(2\text
-s\)</span></td>
-<td style="text-align: center;">无</td>
-</tr>
-<tr>
-<td style="text-align: center;"><span
-class="math inline">\(19,20\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(5\times10^3\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(3\times10^4\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(12\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(10^4\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(3\text
-s\)</span></td>
-<td style="text-align: center;">无</td>
-</tr>
-</tbody>
-</table>
-<p>对于 <span class="math inline">\(100\%\)</span> 的数据，<span
-class="math inline">\(1\le u&lt;v \le n\)</span>, <span
-class="math inline">\(1 \le n \le 5\times 10^3\)</span>, <span
-class="math inline">\(1 \le m \le 3\times 10^4\)</span>, <span
-class="math inline">\(1 \le a_i \le 10^4\)</span>, <span
-class="math inline">\(1 \le l \le 12\)</span>。</p>
-<p><strong>输入保证每个场景都能从起点到达，并且都能连到终点。</strong><br />
-<strong>输入不保证没有重边。</strong><br />
-<strong>输入不对 <span class="math inline">\(u,v\)</span>
-的编号差做任何保证。</strong></p>
+        <p>有 <span class="math inline">\(n\)</span>
+个点，你可以选择一些点来进行画线，画线时还需要遵循一些规则：</p>
+<ol type="1">
+<li>连接的点数不能少于 <span class="math inline">\(4\)</span>
+个。也就是说只连接两个点或者三个点会提示错误。<br />
+</li>
+<li>两个点之间的联线不能弯曲。<br />
+</li>
+<li>每个点只能“使用”一次，不可重复。这里的“使用”是指手指划过一个点，该点变绿。<br />
+</li>
+<li>两个点之间的连线不能“跨过”另一个点，除非那个点之前已经被“使用”过。</li>
+</ol>
+<p>请计算一共有多少满足规则的画线方案。对 <span
+class="math inline">\(10^8+7\)</span> 取模。</p>
+<p>数据范围：</p>
+<ul>
+<li>对于 <span class="math inline">\(30\%\)</span> 的数据，<span
+class="math inline">\(1 \le n \le 10\)</span>。</li>
+<li>对于 <span class="math inline">\(100\%\)</span> 的数据，<span
+class="math inline">\(-1000 \le x_i ,y_i \le 1000\)</span>，$ 1 n &lt;
+20$。各点坐标不相同。</li>
+</ul>
 
     </div>
 </div>
@@ -1365,8 +1204,7 @@ class="math inline">\(1 \le l \le 12\)</span>。</p>
         Hint1
     </div>
     <div class='spoiler-content'>
-        <p>可以先思考一个最暴力的状压
-DP。并计算一下你能通过哪些数据点。尝试一下优化？</p>
+        <p>先尝试将 <span class="math inline">\(30pts\)</span> 拿到手。</p>
 
     </div>
 </div>
@@ -1375,16 +1213,22 @@ DP。并计算一下你能通过哪些数据点。尝试一下优化？</p>
         Hint2
     </div>
     <div class='spoiler-content'>
-        <p>显然对于 <span class="math inline">\(n\)</span>
-很小的时候，我们可以设计状态 <span
-class="math inline">\(dp_{S,i,j}\)</span> 表示当前已经走了 <span
-class="math inline">\(S\)</span> 集合，当前两个点是 <span
-class="math inline">\(i,j\)</span>
-的最大权值和。转移在这里就不给出了。<br />
-这样的状态复杂度是 <span
-class="math inline">\(O(2^nn^2)\)</span>，可以拿 <span
-class="math inline">\(20pts\)</span>。<br />
-对于这张图的性质你有没有找全？</p>
+        <p>对于 <span class="math inline">\(30pts\)</span>，我们可以令 <span
+class="math inline">\(dp_{S,i}\)</span> 表示当前走过的点的集合为 <span
+class="math inline">\(S\)</span>，最后一个点为 <span
+class="math inline">\(i\)</span> 的方案数。<br />
+我们显然可以转移到一个还没有走过的点，并且要求中间经过的点都要被使用过。我们可以先尝试暴力查看哪些点经过了。<br />
+此时的时间复杂度就是 <span
+class="math inline">\(O(2^nn^3)\)</span>。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint2
+    </div>
+    <div class='spoiler-content'>
+        <p>经常会重复的判断两个点之间的点的状态。能否优化？</p>
 
     </div>
 </div>
@@ -1393,50 +1237,7 @@ class="math inline">\(20pts\)</span>。<br />
         Hint3
     </div>
     <div class='spoiler-content'>
-        <p>发现图其实是一张 DAG，并且总是从编号小的点到编号大的点。<br />
-因此我们是没有必要将整张图的状态都记录下来的。<br />
-如果 <span class="math inline">\(S\)</span> 中最小的点是 <span
-class="math inline">\(k\)</span>，那么编号小于 <span
-class="math inline">\(k\)</span>
-的点都没用了。我们可以将它们丢掉。<br />
-不妨设 <span class="math inline">\(dp_{S,i,j}\)</span> 表示从 <span
-class="math inline">\([k,k+l]\)</span> 这些点的状态，<span
-class="math inline">\(i,j\)</span> 依然表示这两个点的位置。<br />
-此时的状态复杂度是 <span
-class="math inline">\(O(2^ln^2)\)</span>，可以获得 <span
-class="math inline">\(55pts\)</span>。<br />
-能优化一下状态吗？</p>
-
-    </div>
-</div>
-<div class='spoiler collapsed'>
-    <div class='spoiler-title'>
-        Hint4
-    </div>
-    <div class='spoiler-content'>
-        <p>如果我们记录的 <span class="math inline">\(i\)</span> 并不是当前
-<span class="math inline">\(S\)</span> 中表示的最小的点，那么显然 <span
-class="math inline">\(S\)</span> 中前面的点依然可以丢掉。因此我们强制
-<span class="math inline">\(i\)</span> 是 <span
-class="math inline">\(S\)</span> 中最小编号的点。<br />
-我们令新的状态 <span class="math inline">\(dp_{S,i,j}\)</span> 表示
-<span class="math inline">\([k,k+l]\)</span>
-点的状态，其中最小的点的编号为 <span
-class="math inline">\(i\)</span>，另一个点的编号是 <span
-class="math inline">\(i+j\)</span>。<br />
-此时状态复杂度变为 <span
-class="math inline">\(O(n2^ll)\)</span>，可以获得 <span
-class="math inline">\(80pts\)</span> 左右。<br />
-还能继续优化吗？</p>
-
-    </div>
-</div>
-<div class='spoiler collapsed'>
-    <div class='spoiler-title'>
-        Hint5
-    </div>
-    <div class='spoiler-content'>
-        <p>记录最小的点与最大的点的编号的差有意义吗？</p>
+        <p>假设你现在预处理了两个点之间有什么点，你怎么快速确定这些点是否都走过了？</p>
 
     </div>
 </div>
@@ -1445,62 +1246,37 @@ class="math inline">\(80pts\)</span> 左右。<br />
         Solution
     </div>
     <div class='spoiler-content'>
-        <p>因为不能走回头路，假如 <span class="math inline">\(i+j\)</span>
-并不是当前 <span class="math inline">\(S\)</span>
-中最大的，那说明后面有点走过了，这显然是不合法的，因此另一个点此时必然为
-<span class="math inline">\(S\)</span> 中最高的为 <span
-class="math inline">\(1\)</span> 的二进制位表示的编号。<br />
-于是此时只需要记录 <span class="math inline">\(dp_{S,i}\)</span>
-即可，时间复杂度 <span
-class="math inline">\(O(n2^l)\)</span>，可以通过。<br />
-转移方程呢？分类讨论一下即可：<br />
-我们不妨令较小的点为 <span class="math inline">\(A\)</span>，较大的点为
-<span class="math inline">\(B\)</span>，要转移到的点为 <span
-class="math inline">\(v\)</span>。</p>
-<ul>
-<li>从 <span class="math inline">\(B\)</span> 转移到 <span
-class="math inline">\(v\)</span>：<br />
-肯定需要满足 <span class="math inline">\(v-B\le l\)</span>。<br />
-<span class="math inline">\(dp_{S,A}+a_{v}\to
-dp_{S|(1&lt;&lt;v-B),A}\)</span>。<br />
-（ps：这样写 <span class="math inline">\(\LaTeX\)</span>
-其实是不太好的，但我这里就将就一下吧。）<br />
-</li>
-<li>从 <span class="math inline">\(A\)</span> 和 <span
-class="math inline">\(B\)</span> 同时转移到 <span
-class="math inline">\(v\)</span>： 首先肯定需要 <span
-class="math inline">\(A\)</span> 和 <span
-class="math inline">\(B\)</span> 均可到达 <span
-class="math inline">\(v\)</span>。<br />
-<span class="math inline">\(dp_{S,A}+a_{v}\to dp_{1,v}\)</span>。<br />
-</li>
-<li>从 <span class="math inline">\(A\)</span> 转移到 <span
-class="math inline">\(v\)</span>： 这里又要分两种情况了。
+        <p>我们 DP 方程设计和先前一样，我们这次预处理一下两两点之间的点，记
+<span class="math inline">\(g_{i,j}\)</span> 表示在 <span
+class="math inline">\(i\)</span> 到 <span
+class="math inline">\(j\)</span>
+这条直线上经过的点的集合（经过了，其编号对应的二进制位就为 <span
+class="math inline">\(1\)</span>，否则为 <span
+class="math inline">\(0\)</span>。）<br />
+我们当前 DP 状态中的 <span class="math inline">\(S\)</span>
+表示的是经过了哪些点。我们现在从 <span
+class="math inline">\(dp_{S,i}\)</span> 转移到 <span
+class="math inline">\(dp_{S\cup j,j}\)</span>，需要满足两个条件：</p>
 <ol type="1">
-<li><span class="math inline">\(v\le B\)</span>：<br />
-此时最小的点从 <span class="math inline">\(A\)</span> 变成了 <span
-class="math inline">\(v\)</span>。<br />
-<span class="math inline">\(dp_{S,A}+a_{v}\to
-dp_{(S&gt;&gt;v-A)|1},v\)</span>。<br />
-注意要判断一下 <span class="math inline">\(v\)</span>
-在曾经的状态中又没有出现过，出现过就不要多加一次 <span
-class="math inline">\(a_{v}\)</span> 了。</li>
-<li><span class="math inline">\(v-B\le l\)</span>： 此时最小的点从 <span
-class="math inline">\(A\)</span> 变成了 <span
-class="math inline">\(B\)</span>。<br />
-<span class="math inline">\(dp_{S,A}+a_{v}\to
-dp_{(S&gt;&gt;B-A)|1|(1&lt;&lt;v-B)},B\)</span>。<br />
-此时并不需要判断 <span class="math inline">\(v\)</span>
-出现过没有，因为如果出现过，要么 <span
-class="math inline">\(v-A&gt;l\)</span> 不合法，要么原先最大的点不是
-<span class="math inline">\(B\)</span> 而是 <span
-class="math inline">\(v\)</span>。</li>
-</ol></li>
-</ul>
-<p>那么就结束了，注意下因为距离范围是 <span
-class="math inline">\([0,l]\)</span>，所以数组应该开 <span
-class="math inline">\(2^{l+1}\)</span> 而不是 <span
-class="math inline">\(2^{l}\)</span>。</p>
+<li><span class="math inline">\(j\)</span> 没有在 <span
+class="math inline">\(S\)</span> 中。<br />
+</li>
+<li><span class="math inline">\(i\)</span> 与 <span
+class="math inline">\(j\)</span> 之间的点全经过过。</li>
+</ol>
+<p>我们现在有 <span class="math inline">\(g_{i,j}\)</span> 表示 <span
+class="math inline">\(i\)</span> 与 <span
+class="math inline">\(j\)</span> 之间的点的集合，那么只需要 <span
+class="math inline">\(g_{i,j} \in
+S\)</span>，就表示这样的转移是合法的了。<br />
+因为我们使用了状态压缩，所以可以使用位运算来做到 <span
+class="math inline">\(O(1)\)</span> 判断。<br />
+也就是 <code>((g[i][j]&amp;S)^g[i][j])==0</code> 时，就是合法的。<br />
+时间复杂度则是 <span
+class="math inline">\(O(2^nn^2)\)</span>，虽然算下来是 <span
+class="math inline">\(4\times 10^8\)</span>
+左右，但实际上合法的转移没有这么多，不开 O2 也是可以通过的。</p>
+<p>那么就结束了。</p>
 
     </div>
 </div>
@@ -1509,19 +1285,19 @@ class="math inline">\(2^{l}\)</span>。</p>
         代码
     </div>
     <div class='spoiler-content'>
-        <pre class="cpp"><code>// Problem: P6603 「EZEC-2」甜梦
+        <pre class="cpp"><code>// Problem: P4460 [CQOI2018] 解锁屏幕
 // Contest: Luogu
-// URL: https://www.luogu.com.cn/problem/P6603
-// Memory Limit: 256 MB
+// URL: https://www.luogu.com.cn/problem/P4460
+// Memory Limit: 500 MB
 // Time Limit: 1000 ms
 // 
 // Powered by CP Editor (https://cpeditor.org)
 
 #include&lt;bits/stdc++.h&gt;
+#define int long long
 using namespace std;
-const int MAXN=5e3+10;
-const int mod1=1e9+7;
-const int mod2=998244353;
+const int MAXN=20+10;
+const int mod=1e8+7;
 const int inf_int=0x7f7f7f7f;
 const long long inf_long=0x7f7f7f7f7f7f7f7f;
 const double eps=1e-9;
@@ -1541,60 +1317,60 @@ inline void read(type &amp;x,args&amp;... y){
     read(x),read(y...);
 }
 
-bool awa;
-int n,m,l,k,old=0,now=1,head[MAXN],a[MAXN],dp[MAXN][(1&lt;&lt;13)],maxval[(1&lt;&lt;13)];
+int n,ans,dp[MAXN][(1&lt;&lt;20)],g[MAXN][MAXN];
 struct node{
-    int to,next;
-}edge[MAXN*20];
+    double x,y;
+}p[MAXN];
 
-void build(int u,int v){
-    edge[++k].to=v;
-    edge[k].next=head[u];
-    head[u]=k;
+bool cmp(node n1,node n2){
+    if(n1.x!=n2.x) return n1.x&lt;n2.x;
+    return n1.y&lt;n2.y;
 }
-bool qwq;
 
 signed main(){
-    // cout&lt;&lt;(&amp;awa-&amp;qwq)/1024.0/1024.0&lt;&lt;endl;
-    read(n,m,l);
-    for(int i=1;i&lt;=n;i++) read(a[i]);
-    for(int i=1;i&lt;=m;i++){
-        int u,v;
-        read(u,v);
-        build(u,v);
-    }
-    memset(dp,-1,sizeof(dp));
-    dp[1][1]=a[1];
-    for(int i=0;i&lt;(1&lt;&lt;l+1);i++){
-        for(int j=0;j&lt;=l;j++){
-            if(i&amp;(1&lt;&lt;j)) maxval[i]=j;
-        }
-    }
-    for(int A=1;A&lt;=n;A++){
-        for(int i=1;i&lt;(1&lt;&lt;l+1);i++){
-            int B=A+maxval[i];
-            if(dp[A][i]==-1||B&gt;n) continue;
-            set&lt;int&gt; s1,s2,g;
-            for(int j=head[A];j;j=edge[j].next) s1.insert(edge[j].to);
-            for(int j=head[B];j;j=edge[j].next) s2.insert(edge[j].to);
-            for(int j:s2) if(s1.find(j)!=s1.end()) g.insert(j);
-            for(int j:s2) if(j-A&lt;=l) dp[A][i|(1&lt;&lt;j-A)]=max(dp[A][i|(1&lt;&lt;j-A)],dp[A][i]+a[j]);
-            for(int j:s1){
-                if(j&lt;=B){
-                    int state=(i&gt;&gt;j-A)|1;
-                    dp[j][state]=max(dp[j][state],dp[A][i]+((i&amp;(1&lt;&lt;j-A))?0:a[j]));
-                }
-                else{
-                    if(j-B&lt;=l){
-                        int state=(i&gt;&gt;B-A)|1|(1&lt;&lt;j-B);
-                        dp[B][state]=max(dp[B][state],dp[A][i]+a[j]);
+    read(n);
+    for(int i=0;i&lt;n;i++) read(p[i].x,p[i].y);
+    sort(p,p+n,cmp);
+    for(int l=0;l&lt;n;l++){
+        for(int r=l+1;r&lt;n;r++){
+            if(p[l].x==p[r].x){
+                for(int i=l+1;i&lt;r;i++){
+                    if(p[i].x==p[l].x){
+                        g[l][r]|=(1&lt;&lt;i);
+                        g[r][l]|=(1&lt;&lt;i);
                     }
                 }
             }
-            for(int j:g) dp[j][1]=max(dp[j][1],dp[A][i]+a[j]);
+            else{
+                double k=(p[r].y-p[l].y)/(p[r].x-p[l].x);
+                double b=p[l].y-p[l].x*k;
+                for(int i=l+1;i&lt;r;i++){
+                    if(k*p[i].x+b==p[i].y){
+                        g[l][r]|=(1&lt;&lt;i);
+                        g[r][l]|=(1&lt;&lt;i);
+                    }
+                }
+            }
         }
     }
-    cout&lt;&lt;dp[n][1];
+    for(int i=0;i&lt;n;i++) dp[i][1&lt;&lt;i]=1;
+    for(int i=1;i&lt;(1&lt;&lt;n);i++){
+        for(int j=0;j&lt;n;j++){
+            if(i&amp;(1&lt;&lt;j)){
+                for(int k=0;k&lt;n;k++){
+                    if(i&amp;(1&lt;&lt;k)) continue;
+                    if((g[j][k]&amp;i)^g[j][k]) continue;
+                    dp[k][i|(1&lt;&lt;k)]=(dp[k][i|(1&lt;&lt;k)]+dp[j][i])%mod;
+                }
+            }
+        }
+    }
+    for(int i=0;i&lt;(1&lt;&lt;n);i++){
+        int cnt=0;
+        for(int j=0;j&lt;n;j++) if(i&amp;(1&lt;&lt;j)) cnt++;
+        if(cnt&gt;=4) for(int j=0;j&lt;n;j++) ans=(ans+dp[j][i])%mod;
+    }
+    cout&lt;&lt;ans;
     return 0;
 }</code></pre>
 
