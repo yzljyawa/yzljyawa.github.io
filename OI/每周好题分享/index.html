@@ -193,7 +193,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #979a9a">
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #00beff">
                     题解
                 </a>
             </span>
@@ -1133,7 +1133,7 @@ signed main(){
 </div>
 <h1 id="第三周20250331-20250406">第三周（2025/03/31-2025/04/06）</h1>
 <h2 id="t1-2">T1</h2>
-<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF1569F">P6603
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6603">P6603
 「EZEC-2」甜梦</a></p>
 <p>这道题真的是好题啊。</p>
 <div class='spoiler collapsed'>
@@ -1557,6 +1557,175 @@ signed main(){
         }
     }
     cout&lt;&lt;dp[n][1];
+    return 0;
+}</code></pre>
+
+    </div>
+</div>
+<h2 id="t2-2">T2</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2481">P2481 [SDOI2010]
+代码拍卖会</a></p>
+<p>这题也真的是好题啊。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>首先看见 <span class="math inline">\(N\)</span>
+这么大，容易想到矩阵快速幂或者是数位 DP。<br />
+发现如果写成矩阵快速幂必然和 <span class="math inline">\(p\)</span>
+相关，而 <span class="math inline">\(p\le 500,p^3\le 1.25\times
+10^8\)</span> 还要加只 <span
+class="math inline">\(\log\)</span>，肯定过不了，所以尝试往数位 DP
+上去想。</p>
+<p>不妨设每只小猪给出 <span class="math inline">\(a_{i}\)</span>
+颗猪币，发现 <span class="math inline">\(a_{i}\)</span> 不降。联系到数位
+DP 的特点是优化重复计算的内容，于是思考什么地方有多次重复计算。</p>
+<p>发现可以将 <span class="math inline">\(a_{i}\)</span> 拆成 <span
+class="math inline">\(a_{i}\)</span> 个 <span
+class="math inline">\(1\)</span>，由于取模具有结合律，所以可以重新组合成若干个后缀均为
+<span class="math inline">\(1\)</span> 的数之和。我们不妨称这种数为
+<span class="math inline">\(1\)</span> 串。（也就是由若干个 <span
+class="math inline">\(1\)</span> 组成的数）比如 <span
+class="math inline">\(1124\)</span> 可以拆成 <span
+class="math inline">\(1111+11+1+1\)</span>。</p>
+<p>而后缀为 <span class="math inline">\(1\)</span> 的数对 <span
+class="math inline">\(p\)</span>
+取模可以简单得由下边这个递推式得出：<br />
+<span class="math display">\[
+dp_{i}=(dp_{i-1}\times10+1)\bmod p
+\]</span> 这个东西在至多 <span class="math inline">\(2\times p\)</span>
+的范围内会出现重复。于是我们便可以简单的计算取模后结果为 <span
+class="math inline">\(i\)</span> 的由若干个 <span
+class="math inline">\(1\)</span> 的数的数量。我们记这个东西为 <span
+class="math inline">\(f_{i}\)</span>。<br />
+具体的，我们分三部分计算：</p>
+<ol type="1">
+<li>没进入循环节的部分<br />
+</li>
+<li>完整循环节的部分<br />
+</li>
+<li>非完整循环节的部分</li>
+</ol>
+<p>于是我们便可以设计一个简单的背包 DP 来计算答案。<br />
+设 <span class="math inline">\(dp_{i,j,k}\)</span>
+表示，当前考虑到取模后结果为 <span class="math inline">\(i\)</span> 的
+<span class="math inline">\(1\)</span> 串对答案的贡献，<span
+class="math inline">\(j\)</span> 表示当前的和对 <span
+class="math inline">\(p\)</span> 取模是多少，<span
+class="math inline">\(k\)</span> 表示我们已经用了多少个 <span
+class="math inline">\(1\)</span> 串。<br />
+转移是平凡的。大家可以自己推一下。</p>
+<p>因为一只小猪最多出 <span class="math inline">\(9\)</span> 个币，所以
+<span class="math inline">\(1\)</span> 串的数量最多也只有 <span
+class="math inline">\(9\)</span>，总的时间复杂度可以说是 <span
+class="math inline">\(O(81\times p^2)\)</span>，准确点说就是 <span
+class="math inline">\(O(p^2)\)</span> 的。</p>
+<p>细节有点小多，具体可以看我代码。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>// Problem: P2481 [SDOI2010] 代码拍卖会
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/P2481
+// Memory Limit: 125 MB
+// Time Limit: 1000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int MAXN=5e2+10;
+const int mod=999911659;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x){
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+}
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y){
+    read(x),read(y...);
+}
+
+int n,ans,p,len,pos,dp[MAXN][MAXN][11],f[MAXN],last[MAXN],inv[MAXN];
+
+int qpow(int x,int y){
+    int res=1;
+    while(y){
+        if(y&amp;1) res=res*x%mod;
+        x=x*x%mod;
+        y&gt;&gt;=1;
+    }
+    return res;
+}
+
+int C(int x,int y){
+    if(x&lt;0) return 1;
+    if(x&lt;y) return 0;
+    int res=1;
+    for(int i=1;i&lt;=y;i++) res=res*(x-i+1)%mod*inv[i]%mod;
+    return res;
+}
+
+signed main(){
+    read(n,p);
+    int val=1%p;
+    memset(last,-1,sizeof(last));
+    for(int i=1;i&lt;=10;i++) inv[i]=qpow(i,mod-2);
+    for(int i=1;i&lt;=min(n,2*p);i++){
+        if(last[val]!=-1){
+            len=i-1-last[val];
+            pos=i-1;
+            break;
+        }
+        if(i==n) dp[0][val][1]=1;
+        f[val]++;
+        last[val]=i-1;
+        val=(val*10+1)%p;
+    }
+    if(len!=0){
+        int cycle=(n-pos)/len+1;
+        for(int i=1;i&lt;=len;i++){
+            f[val]=f[val]*cycle%mod;
+            val=(val*10+1)%p;
+        }
+        if(pos+(n-pos)/len*len+1==n+1){
+            for(int i=1;i&lt;len;i++) val=(val*10+1)%p;
+            dp[0][val][1]=1;
+        }
+        for(int i=pos+(n-pos)/len*len+1;i&lt;=n;i++){
+            f[val]++;
+            if(i==n) dp[0][val][1]=1;
+            val=(val*10+1)%p;
+        }
+    }
+    for(int i=0;i&lt;p;i++) f[i]%=mod;
+    for(int i=1;i&lt;=p;i++){
+        for(int k=1;k&lt;=9;k++){
+            for(int q=0;q+k&lt;=9;q++){
+                for(int j=0;j&lt;p;j++){
+                    (dp[i][(j+(i-1)*q)%p][q+k]+=dp[i-1][j][k]*C(f[i-1]+q-1,q)%mod)%=mod;
+                }
+            }
+        }
+    }
+    for(int i=1;i&lt;=9;i++) ans=(ans+dp[p][0][i])%mod;
+    cout&lt;&lt;ans;
     return 0;
 }</code></pre>
 
