@@ -193,7 +193,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #00beff">
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #e74c3c">
                     题解
                 </a>
             </span>
@@ -1726,6 +1726,259 @@ signed main(){
     }
     for(int i=1;i&lt;=9;i++) ans=(ans+dp[p][0][i])%mod;
     cout&lt;&lt;ans;
+    return 0;
+}</code></pre>
+
+    </div>
+</div>
+<h1 id="第四周20250407-20250413">第四周（2025/04/07-2025/04/13）</h1>
+<h2 id="t1-3">T1</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF468C">CF468C Hack
+it!</a><br />
+CF 传送门：<a
+target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/468/C">CF468C Hack
+it!</a></p>
+<p>思维题，码量极短。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>我们假设 <span class="math inline">\(f(x)=y\)</span>，则有 <span
+class="math inline">\(f(x+10^{18})=y+1,1\le x &lt;
+10^{18}\)</span>。<br />
+我们令 <span class="math inline">\(\sum_{i=0}^{10^{18}-1}f(i)\equiv z
+\pmod a\)</span>，可以推得：</p>
+<p><span class="math display">\[
+\sum_{i=1}^{10^{18}}f(i)\equiv z+1 \pmod a
+\]</span></p>
+<p>于是可得：</p>
+<p><span class="math display">\[
+\sum_{i=a-z}^{10^{18}-1+a-z}f(i)\equiv 0 \pmod a
+\]</span></p>
+<p>那么 <span class="math inline">\(z\)</span> 怎么求呢？<br />
+我们令 <span class="math inline">\(g(x)\)</span> 表示 <span
+class="math inline">\(\sum_{i=0}^{10^x-1}f(i)\bmod a\)</span> 的值，那么
+<span class="math inline">\(z\)</span> 就等于 <span
+class="math inline">\(g(18)\)</span>。我们又有 <span
+class="math inline">\(g(i)=45\times 10^{i-1}+g(i-1)\times
+10\)</span>。化简一下得到：</p>
+<p><span class="math display">\[
+\begin{aligned}
+    g(i)&amp;=45\times 10^{i-1}+g(i-1)\times 10\\
+        &amp;=45\times 10^{i-1}+(45\times 10^{i-2}+g(i-2)\times
+10)\times 10\\
+        &amp;=45\times 10^{i-1}+45\times 10^{i-1}+g(i-2)\times 10^2\\
+        &amp;=45\times (i-1) \times 10^{i-1}+g(1)\times 10^{i-1}\\
+        &amp;=45\times i \times 10^{i-1}\\
+\end{aligned}
+\]</span></p>
+<p>于是，<span class="math inline">\(g(18)\)</span> 也可以在 <span
+class="math inline">\(O(1)\)</span> 的时间内求出来。<br />
+这道题便做完了。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>// Problem: CF468C Hack it!
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/CF468C
+// Memory Limit: 250 MB
+// Time Limit: 1000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+#define int unsigned long long
+using namespace std;
+const int MAXN=1e5+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x){
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+}
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y){
+    read(x),read(y...);
+}
+
+//(0) 1 2 3 4 5 6 7 8  9
+// 1  2 3 4 5 6 7 8 9  10
+// 2  3 4 5 6 7 8 9 10 11
+
+//0~9:45
+//0~99:45*10+45*10
+//0~999:45*100+10*(10~99)
+//0~1e18-1:18*45*1e17
+
+int n,f_1e18_1,_1e18_1=1000000000000000000ll-1ll;
+
+signed main(){
+    read(n);
+    f_1e18_1=100000000000000000ull*45ull%n*18ull%n;
+    if(f_1e18_1==0) cout&lt;&lt;1&lt;&lt;&quot; &quot;&lt;&lt;(int)(_1e18_1);
+    else cout&lt;&lt;n-f_1e18_1&lt;&lt;&quot; &quot;&lt;&lt;(int)(_1e18_1+(n-f_1e18_1));
+    return 0;
+}</code></pre>
+
+    </div>
+</div>
+<h2 id="t2-3">T2</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF512E">CF512E Fox And
+Polygon</a><br />
+CF 传送门：<a
+target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/512/E">CF512E Fox And
+Polygon</a></p>
+<p>思维题，个人感觉远没有 <span
+class="math inline">\(2900\)</span>。<br />
+我的代码写的比较丑陋，实际可以更短。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>首先，题面已经告诉我们了，从任意状态可以变成任意状态。<br />
+我们不妨设一个中间状态 <span
+class="math inline">\(M\)</span>，变化过程就是 <span
+class="math inline">\(S\to M\to T\)</span>。<br />
+从 <span class="math inline">\(M\)</span> 到 <span
+class="math inline">\(T\)</span> 可以变成从 <span
+class="math inline">\(T\)</span> 到 <span
+class="math inline">\(M\)</span>，再把方案倒过来。</p>
+<p>我们不妨令一种特殊情况为 <span
+class="math inline">\(M\)</span>，比如所有对角线均从 <span
+class="math inline">\(1\)</span> 号点出发。<br />
+我们发现一条从 <span class="math inline">\(1\)</span>
+号点出发的对角线将多边形分成了两半，可以继续递归处理。<br />
+实际上进行的次数是 <span class="math inline">\(n-3\)</span> 次。</p>
+<p>不妨设当前我们的区间为 <span
+class="math inline">\([l,r]\)</span>，假设其中有一条从 <span
+class="math inline">\(1\)</span>
+号点出发的对角线，直接分成两半。否则我们需要一次翻转。</p>
+<p>那么我们怎么去找原来的对角线呢？<br />
+我们发现原先的对角线一定是 <span class="math inline">\(l\)</span> 连接
+<span class="math inline">\(r\)</span>。画个图就知道了。</p>
+<p>那么新的对角线的另一端点呢？<br />
+我们将一个点连接的边的另一端点丢进一个 set 里面。<br />
+我们发现我们要找的，刚好就是 <span class="math inline">\(r\)</span> 的
+set 里面，<span class="math inline">\(l\)</span>
+的后继。这个画下图也就知道了。<br />
+然后修改了对角线后，会造成影响，一样用 set 维护一下就好了。</p>
+<p>时间复杂度 <span class="math inline">\(O(n\log n)\)</span></p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>// Problem: CF512E Fox And Polygon
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/CF512E
+// Memory Limit: 250 MB
+// Time Limit: 2000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int MAXN=2e4+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x){
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+}
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y){
+    read(x),read(y...);
+}
+
+int n,cnt1,cnt2,x[MAXN],y[MAXN];
+set&lt;int&gt; s1[MAXN],s2[MAXN];
+
+void work1(int l,int r){
+    if(l+1==r) return;
+    auto pos=s1[1].find(l);
+    pos++;
+    if(*pos==r){
+        x[++cnt1]=l,y[cnt1]=r;
+        pos=s1[r].find(l);pos++;
+        int awa=*pos;
+        s1[1].insert(awa);
+        s1[l].erase(r);s1[r].erase(l);
+        work1(l,awa);work1(awa,r);
+    }
+    else{
+        int awa=*pos;
+        work1(l,awa);work1(awa,r);
+    }
+}
+
+void work2(int l,int r){
+    if(l+1==r) return;
+    auto pos=s2[1].find(l);
+    pos++;
+    if(*pos==r){
+        pos=s2[r].find(l);pos++;
+        int awa=*pos;
+        x[++cnt2]=1,y[cnt2]=awa;
+        s2[1].insert(awa);
+        s2[l].erase(r);s2[r].erase(l);
+        work2(l,awa);work2(awa,r);
+    }
+    else{
+        int awa=*pos;
+        work2(l,awa);work2(awa,r);
+    }
+}
+
+signed main(){
+    read(n);
+    for(int i=1;i&lt;=n-3;i++){
+        int a,b;read(a,b);
+        s1[a].insert(b);s1[b].insert(a);
+    }
+    for(int i=1;i&lt;=n-3;i++){
+        int a,b;read(a,b);
+        s2[a].insert(b);s2[b].insert(a);
+    }
+    for(int i=1;i&lt;=n;i++){
+        s1[i].insert(i+1==n+1?1:i+1),s1[i].insert(i-1==0?n:i-1);
+        s2[i].insert(i+1==n+1?1:i+1),s2[i].insert(i-1==0?n:i-1);
+    }
+    work1(2,n);
+    cnt2=cnt1;
+    work2(2,n);
+    cout&lt;&lt;cnt2&lt;&lt;&#39;\n&#39;;
+    for(int i=1;i&lt;=cnt1;i++) cout&lt;&lt;x[i]&lt;&lt;&quot; &quot;&lt;&lt;y[i]&lt;&lt;&#39;\n&#39;;
+    for(int i=cnt2;i&gt;=1+cnt1;i--) cout&lt;&lt;x[i]&lt;&lt;&quot; &quot;&lt;&lt;y[i]&lt;&lt;&#39;\n&#39;;
     return 0;
 }</code></pre>
 
