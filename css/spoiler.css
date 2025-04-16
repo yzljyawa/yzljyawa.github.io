@@ -23,11 +23,11 @@
 }
 
 .spoiler.collapsed .spoiler-title:before {
-    content: "Show ";
+    content: "展开 ";
 }
 
 .spoiler.expanded .spoiler-title:before {
-    content: "Hide ";
+    content: "隐藏 ";
 }
 
 .spoiler .spoiler-content {
@@ -46,13 +46,13 @@
 }
 
 .spoiler.collapsed .spoiler-content {
-    overflow: hidden;
+    overflow: auto;
     max-height: 0;
 }
 
 .spoiler.expanded .spoiler-content {
-    max-height: 3000px;
-    overflow: hidden;
+    max-height: 30000px;
+    overflow: auto;
 }
 
 .spoiler .spoiler-content p:first-child {

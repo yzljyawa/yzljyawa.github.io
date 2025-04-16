@@ -193,7 +193,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #e74c3c">
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #00beff">
                     题解
                 </a>
             </span>
@@ -1979,6 +1979,279 @@ signed main(){
     cout&lt;&lt;cnt2&lt;&lt;&#39;\n&#39;;
     for(int i=1;i&lt;=cnt1;i++) cout&lt;&lt;x[i]&lt;&lt;&quot; &quot;&lt;&lt;y[i]&lt;&lt;&#39;\n&#39;;
     for(int i=cnt2;i&gt;=1+cnt1;i--) cout&lt;&lt;x[i]&lt;&lt;&quot; &quot;&lt;&lt;y[i]&lt;&lt;&#39;\n&#39;;
+    return 0;
+}</code></pre>
+
+    </div>
+</div>
+<h1 id="第五周20250414-20250420">第五周（2025/04/14-2025/04/20）</h1>
+<h2 id="t1-4">T1</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4948">P4948
+数列求和</a></p>
+<p>数学题，推推式子就可以了。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>题目让求：</p>
+<p><span class="math display">\[
+\sum_{i=1}^{n}i^ka^i
+\]</span></p>
+<p>我们从特殊性质入手。<br />
+<span class="math inline">\(k=0\)</span> 时也就是 <span
+class="math inline">\(\sum_{i=1}^{n}a^i\)</span>。这是一个标准的等比数列求和。</p>
+<p><span class="math display">\[
+\begin{aligned}
+    f(n)=\sum_{i=1}^{n}a^i\\
+    af(n)=\sum_{i=2}^{n+1}a^i\\
+    (a-1)f(n)=a^{n+1}-a\\
+    f(n)=\dfrac{a^{n+1}-a}{a-1}
+\end{aligned}
+\]</span></p>
+<p>直接照着式子做就行了。</p>
+<p>接下来考虑 <span class="math inline">\(k=1\)</span> 的情况。<br />
+此时要求的变成 <span
+class="math inline">\(\sum_{i=1}^{n}ia^i\)</span>。<br />
+我们沿用一下 <span class="math inline">\(k=0\)</span> 时的思路。</p>
+<p>令：</p>
+<p><span class="math display">\[
+A=\sum_{i=1}^{n}ia^i\\
+B=\sum_{i=2}^{n+1}ia^i\\
+C=aA=\sum_{i=1}^{n}ia^{i+1}
+\]</span></p>
+<p>可以得到：</p>
+<p><span class="math display">\[
+B-A=(n+1)a^{n+1}-a\\
+C-B=-\sum_{i=2}^{n+1}a^i\\
+C-A=(n+1)a^{n+1}-a-\sum_{i=2}^{n+1}a^i\\
+(a-1)A=(n+1)a^{n+1}-a-a\sum_{i=1}^{n}a^i\\
+A=\dfrac{(n+1)a^{n+1}-a-a\sum_{i=1}^{n}a^i}{a-1}
+\]</span></p>
+<p>最后面又是一个 <span class="math inline">\(k=0\)</span>
+的式子，直接算就行了。</p>
+<p>有了 <span class="math inline">\(k=1\)</span>
+的思路，我们不妨考虑更一般的情况。</p>
+<p>令：</p>
+<p><span class="math display">\[
+f(k)=\sum_{i=1}^{n}i^ka^i\\
+g(k)=\sum_{i=2}^{n+1}i^ka^i\\
+af(k)=\sum_{i=2}^{n+1}(i-1)^ka^{i}\\
+\]</span></p>
+<p>可以得到：</p>
+<p><span class="math display">\[
+af(k)-g(k)=-\sum_{i=2}^{n+1}a^{i}\left(i^k-(i-1)^k\right)\\
+g(k)-f(k)=(n+1)^ka^{n+1}-a\\
+(a-1)f(k)=(n+1)^ka^{n+1}-a-\sum_{i=2}^{n+1}a^{i}\left(i^k-(i-1)^k\right)\\
+\]</span></p>
+<p><span class="math inline">\(i^k-(i-1)^k\)</span>
+这个东西直接考虑展开，发现也就是 <span
+class="math inline">\(\sum_{j=0}^{k-1}\begin{pmatrix}k\\j\\\end{pmatrix}(i-1)^j\)</span>。</p>
+<p>我们每次要求的 <span class="math inline">\(i\)</span> 都是从 <span
+class="math inline">\(2\)</span> 到 <span
+class="math inline">\(n+1\)</span>，于是原式可以转化为：</p>
+<p><span class="math display">\[
+(a-1)f(k)=(n+1)^ka^{n+1}-a-
+\sum_{j=0}^{k-1}
+\begin{pmatrix}
+  k\\
+  j\\
+\end{pmatrix}\sum_{i=2}^{n+1}a^i(i-1)^j\\
+\]</span></p>
+<p>后面提出一个 <span class="math inline">\(a\)</span>，得到：</p>
+<p><span class="math display">\[
+(a-1)f(k)=(n+1)^ka^{n+1}-a-
+a\sum_{j=0}^{k-1}
+\begin{pmatrix}
+  k\\
+  j\\
+\end{pmatrix}\sum_{i=1}^{n}i^ja^i\\
+\]</span></p>
+<p>我们发现 <span class="math inline">\(\sum_{i=1}^{n}i^ja^i\)</span>
+其实就是 <span class="math inline">\(f(j)\)</span>。<br />
+因此就有：</p>
+<p><span class="math display">\[
+f(k)=\dfrac{(n+1)^ka^{n+1}-a-
+a\sum_{j=0}^{k-1}
+\begin{pmatrix}
+  k\\
+  j\\
+\end{pmatrix}f(j)}{a-1}\\
+\]</span></p>
+<p>照着式子 <span class="math inline">\(O(k^2)\)</span> 去做就好了。</p>
+<p>但是我们发现，当 <span class="math inline">\(a=1\)</span>
+的时候，这个式子出现了除以 <span class="math inline">\(0\)</span>
+的情况，这显然是不行的。<br />
+此时我们要求的式子，变成了 <span
+class="math inline">\(\sum_{i=1}^{n}i^k\)</span>。<br />
+这个又怎么去做呢？</p>
+<p>我们这次换一种方法，上面的也可以使用下面这种方法来推。但我不知道下面这个能不能用上面那个来推。</p>
+<p>我们令：</p>
+<p><span class="math display">\[
+f(k)=\sum_{i=1}^{n}i^k\\
+g(k)=\sum_{i=2}^{n+1}i^k=\sum_{i=1}^n(i+1)^k\\
+\]</span></p>
+<p>有：</p>
+<p><span class="math display">\[
+g(k)-f(k)=(n+1)^k-1\\
+\]</span></p>
+<p>我们又根据上面的 <span
+class="math inline">\(a^k-(a-1)^k=\sum_{i=0}^{k-1}\begin{pmatrix}k\\i\\\end{pmatrix}(a-1)^i\)</span>
+可以得到：</p>
+<p><span class="math display">\[
+\begin{aligned}
+g(k)-f(k)&amp;=
+\sum_{i=1}^n\sum_{j=0}^{k-1}
+\begin{pmatrix}
+  k\\
+  j\\
+\end{pmatrix}i^j\\
+&amp;=\sum_{j=0}^{k-1}
+\begin{pmatrix}
+k\\
+j\\
+\end{pmatrix}
+\sum_{i=1}^ni^j\\
+&amp;=\sum_{j=0}^{k-1}
+\begin{pmatrix}
+k\\
+j\\
+\end{pmatrix}
+f(j)\\
+\end{aligned}
+\\
+\]</span></p>
+<p>根据上下两个式子，我们可以得到：</p>
+<p><span class="math display">\[
+\sum_{j=0}^{k-1}
+\begin{pmatrix}
+k\\
+j\\
+\end{pmatrix}
+f(j)-(n+1)^k+1=0\\
+\]</span></p>
+<p>从左边拿出一个 <span
+class="math inline">\(\begin{pmatrix}k\\k-1\\\end{pmatrix}f(k-1)=kf(k-1)\)</span>
+得到：</p>
+<p><span class="math display">\[
+\sum_{j=0}^{k-2}
+\begin{pmatrix}
+k\\
+j\\
+\end{pmatrix}
+f(j)-(n+1)^k+1=-kf(k-1)
+\]</span></p>
+<p>将 <span class="math inline">\(k\)</span> 增加 <span
+class="math inline">\(1\)</span> 得到：</p>
+<p><span class="math display">\[
+\sum_{j=0}^{k-1}
+\begin{pmatrix}
+k+1\\
+j\\
+\end{pmatrix}
+f(j)-(n+1)^{k+1}+1=-(k+1)f(k)
+\]</span></p>
+<p>两边同时乘以 <span class="math inline">\(-1\)</span> 得到：</p>
+<p><span class="math display">\[
+(k+1)f(k)=
+(n+1)^{k+1}-
+\sum_{j=0}^{k-1}
+\begin{pmatrix}
+k+1\\
+j\\
+\end{pmatrix}
+f(j)-1\\
+f(k)=\dfrac{
+(n+1)^{k+1}-1-
+\sum_{j=0}^{k-1}
+\begin{pmatrix}
+k+1\\
+j\\
+\end{pmatrix}f(j)}{k+1}
+\]</span></p>
+<p>同样 <span class="math inline">\(O(k^2)\)</span>
+照着式子做就可以了。</p>
+<p>那么就结束了。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>// Problem: P4948 数列求和
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/P4948
+// Memory Limit: 125 MB
+// Time Limit: 1000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int MAXN=1e5+10;
+const int mod=1e9+7;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x){
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+}
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y){
+    read(x),read(y...);
+}
+
+int n,a,k,f[MAXN],fac[MAXN],inv[MAXN];
+
+int qpow(int x,int y){
+    x%=mod;
+    int res=1;
+    while(y){
+        if(y&amp;1) res=res*x%mod;
+        x=x*x%mod;
+        y&gt;&gt;=1;
+    }
+    return res;
+}
+
+int C(int x,int y){
+    return fac[x]*inv[y]%mod*inv[x-y]%mod;
+}
+
+signed main(){
+    read(n,a,k);
+    fac[0]=1;
+    for(int i=1;i&lt;=k+1;i++) fac[i]=fac[i-1]*i%mod;
+    inv[k+1]=qpow(fac[k+1],mod-2);
+    for(int i=k;i&gt;=0;i--) inv[i]=inv[i+1]*(i+1)%mod;
+    if(a==1){
+        f[0]=n;
+        for(int i=1;i&lt;=k;i++){
+            int sum=0;
+            for(int j=0;j&lt;i;j++) (sum+=C(i+1,j)*f[j]%mod)%=mod;
+            f[i]=((qpow(n+1,i+1)-1-sum)%mod+mod)%mod*qpow(i+1,mod-2)%mod;
+        }
+    }
+    else{
+        f[0]=(qpow(a,n+1)-a+mod)%mod*qpow(a-1,mod-2)%mod;
+        for(int i=1;i&lt;=k;i++){
+            int sum=0;
+            for(int j=0;j&lt;i;j++) (sum+=C(i,j)*f[j]%mod)%=mod;
+            f[i]=((qpow(n+1,i)*qpow(a,n+1)%mod-a-a*sum%mod)%mod+mod)%mod*qpow(a-1,mod-2)%mod;
+        }
+    }
+    cout&lt;&lt;f[k];
     return 0;
 }</code></pre>
 
