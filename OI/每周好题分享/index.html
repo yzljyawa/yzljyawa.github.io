@@ -193,7 +193,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #a5ff4d">
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #e74c3c">
                     题解
                 </a>
             </span>
@@ -2252,6 +2252,160 @@ signed main(){
         }
     }
     cout&lt;&lt;f[k];
+    return 0;
+}</code></pre>
+
+    </div>
+</div>
+<h2 id="t2-4">T2</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3209">P3209 [HNOI2010]
+平面图判定</a></p>
+<p>突然发现我不会 2-SAT，于是学了一下。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>首先，我们先得知道一个定理：</p>
+<blockquote>
+<p>若一张图是平面图，那么有 <span class="math inline">\(m\leq
+3n-6\)</span>。其中 <span class="math inline">\(m\)</span> 是边数，
+<span class="math inline">\(n\)</span> 是点数。</p>
+</blockquote>
+<p>于是我们就可以判一下，此时 <span class="math inline">\(m\)</span>
+变得与 <span class="math inline">\(n\)</span> 同阶，想一想怎么建立 2-SAT
+就行了。</p>
+<p>图一定存在一条哈密顿回路，我们把这条回路提出来，发现一条边要么从环里面连，要么从环外面连。<br />
+什么情况下会造成冲突呢？<br />
+当两条线段从同一种面填会相交的时候，那么此时就出现冲突（废话）此时也就构成了
+2-SAT。</p>
+<p>那么问题就是怎么找冲突的，令两条线段的四个端点依次为 <span
+class="math inline">\(x_1,y_1,x_2,y_2\)</span>，画一下图，发现当 <span
+class="math inline">\(x_1&lt;x_2&lt;y_1&lt;y_2\)</span>
+时则出现冲突，直接根据 2-SAT 连边就可以了。</p>
+<p>那么就做完了。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>// Problem: P3209 [HNOI2010] 平面图判定
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/P3209
+// Memory Limit: 125 MB
+// Time Limit: 1000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int MAXN=1e5+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x){
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+}
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y){
+    read(x),read(y...);
+}
+
+int T,n,m,k,tot,cnt,id[MAXN],head[MAXN],scc[MAXN],dfn[MAXN],low[MAXN];
+bool vis[MAXN],instack[MAXN];
+stack&lt;int&gt; s;
+struct node{
+    int u,v;
+}e[MAXN];
+struct node2{
+    int to,next;
+}edge[MAXN];
+
+void build(int u,int v){
+    edge[++k].to=v;
+    edge[k].next=head[u];
+    head[u]=k;
+}
+
+void tarjan(int u){
+    vis[u]=instack[u]=true;
+    dfn[u]=low[u]=++cnt;
+    s.push(u);
+    for(int i=head[u];i;i=edge[i].next){
+        int v=edge[i].to;
+        if(instack[v]) low[u]=min(low[u],dfn[v]);
+        if(vis[v]) continue;
+        tarjan(v);
+        low[u]=min(low[u],low[v]);
+    }
+    if(dfn[u]==low[u]){
+        tot++;
+        while(s.top()!=u){
+            instack[s.top()]=false;
+            scc[s.top()]=tot;
+            s.pop();
+        }
+        instack[s.top()]=false;
+        scc[s.top()]=tot;
+        s.pop();
+    }
+}
+
+signed main(){
+    read(T);
+    while(T--){
+        read(n,m);
+        k=tot=cnt=0;
+        for(int i=1;i&lt;=m;i++) read(e[i].u,e[i].v);
+        for(int i=1;i&lt;=n;i++){
+            int val;
+            read(val);
+            id[val]=i;
+        }
+        if(m&gt;3*n-6){
+            cout&lt;&lt;&quot;NO\n&quot;;
+            continue;
+        }
+        for(int i=1;i&lt;=m;i++){
+            if(abs(id[e[i].u]-id[e[i].v])==1||abs(id[e[i].u]-id[e[i].v])==n-1) continue;
+            for(int j=i+1;j&lt;=m;j++){
+                if(abs(id[e[j].u]-id[e[j].v])==1||abs(id[e[j].u]-id[e[j].v])==n-1) continue;
+                int x1=id[e[i].u],y1=id[e[i].v],x2=id[e[j].u],y2=id[e[j].v];
+                if(x1&gt;y1) swap(x1,y1);
+                if(x2&gt;y2) swap(x2,y2);
+                if(x1&gt;x2) swap(x1,x2),swap(y1,y2);
+                if(x1&lt;x2&amp;&amp;x2&lt;y1&amp;&amp;y1&lt;y2){
+                    build(i,j+m);
+                    build(j,i+m);
+                    build(j+m,i);
+                    build(i+m,j);
+                }
+            }
+        }
+        for(int i=1;i&lt;=2*m;i++) if(!dfn[i]) tarjan(i);
+        bool flag=true;
+        for(int i=1;i&lt;=m;i++){
+            if(scc[i]==scc[i+m]){
+                flag=false;
+                break;
+            }
+        }
+        cout&lt;&lt;(flag?&quot;YES\n&quot;:&quot;NO\n&quot;);
+        for(int i=1;i&lt;=2*m;i++) head[i]=scc[i]=dfn[i]=low[i]=vis[i]=instack[i]=0;
+    }
     return 0;
 }</code></pre>
 
