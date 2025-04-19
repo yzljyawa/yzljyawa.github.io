@@ -193,21 +193,21 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #a5ff4d">
+                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #ffa400">
                     学习指南
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/LCT/" style="color: #ffa400">
+                <a href="/tags/LCT/" style="color: #e74c3c">
                     LCT
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/" style="color: #979a9a">
+                <a href="/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/" style="color: #ffa400">
                     平衡树
                 </a>
             </span>
@@ -800,8 +800,12 @@ class="math inline">\(cnt_{pos} \gets  cnt_{pos}-1\)</span> 即可。
 target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3369">板子</a>的代码也放在这里了~</p>
 <p>ps：亲测本人 Splay 代码可以通过<a
 target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6136">加强版模板题</a></p>
-<p>代码如下：</p>
-<pre class="cpp"><code>// Problem: P3369 【模板】普通平衡树
+<p>代码如下： <div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>// Problem: P3369 【模板】普通平衡树
 // Contest: Luogu
 // URL: https://www.luogu.com.cn/problem/P3369
 // Memory Limit: 128 MB
@@ -820,26 +824,26 @@ const double eps=1e-9;
 char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
 #define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
 template&lt;typename type&gt;
-inline void read(type &amp;x)&#123;
+inline void read(type &amp;x){
     x=0;
     bool f=false;
     char ch=getchar();
     while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
     while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
     if(f) x=-x;
-&#125;
+}
 template&lt;typename type,typename... args&gt;
-inline void read(type &amp;x,args&amp;... y)&#123;
+inline void read(type &amp;x,args&amp;... y){
     read(x),read(y...);
-&#125;
+}
 
 int n,tot,root,cnt[MAXN],val[MAXN],fa[MAXN],son[MAXN][2],siz[MAXN];
 
-int get(int x)&#123;return x==son[fa[x]][1];&#125;
-void pushup(int x)&#123;siz[x]=siz[son[x][0]]+siz[son[x][1]]+cnt[x];&#125;
-void clear(int x)&#123;siz[x]=cnt[x]=val[x]=fa[x]=son[x][0]=son[x][1]=0;&#125;
+int get(int x){return x==son[fa[x]][1];}
+void pushup(int x){siz[x]=siz[son[x][0]]+siz[son[x][1]]+cnt[x];}
+void clear(int x){siz[x]=cnt[x]=val[x]=fa[x]=son[x][0]=son[x][1]=0;}
 
-void rotate(int x)&#123;
+void rotate(int x){
     int y=fa[x],z=fa[y],ch=get(x);
     son[y][ch]=son[x][ch^1];
     if(son[x][ch^1]) fa[son[x][ch^1]]=y;
@@ -847,37 +851,37 @@ void rotate(int x)&#123;
     if(z) son[z][get(y)]=x;
     fa[y]=x;fa[x]=z;
     pushup(y);pushup(x);
-&#125;
+}
 
-void Splay(int x,int &amp;rt)&#123;
+void Splay(int x,int &amp;rt){
     int z=fa[rt];
-    for(int f=fa[x];f!=z;f=fa[x])&#123;
+    for(int f=fa[x];f!=z;f=fa[x]){
         if(fa[f]!=z) rotate(get(x)==get(f)?f:x);
         rotate(x);
-    &#125;
+    }
     rt=x;
-&#125;
+}
 
-void insert(int x)&#123;
-    if(root==0)&#123;
+void insert(int x){
+    if(root==0){
         cnt[++tot]=1;
         siz[tot]=1;
         val[tot]=x;
         root=tot;
         return;
-    &#125;
+    }
     int f=0,pos=root;
-    while(true)&#123;
-        if(val[pos]==x)&#123;
+    while(true){
+        if(val[pos]==x){
             cnt[pos]++;
             pushup(pos);
             pushup(f);
             Splay(pos,root);
             return;
-        &#125;
+        }
         f=pos;
         pos=son[pos][x&gt;val[pos]];
-        if(pos==0)&#123;
+        if(pos==0){
             cnt[++tot]++;
             val[tot]=x;
             fa[tot]=f;
@@ -886,105 +890,108 @@ void insert(int x)&#123;
             pushup(f);
             Splay(tot,root);
             return;
-        &#125;
-    &#125;
-&#125;
+        }
+    }
+}
 
-int selrank(int x)&#123;
+int selrank(int x){
     int res=0,pos=root;
-    while(true)&#123;
-        if(val[pos]==x)&#123;
+    while(true){
+        if(val[pos]==x){
             Splay(pos,root);
             return siz[son[pos][0]]+1;
-        &#125;
+        }
         if(pos==0) break;
-        if(val[pos]&lt;x)&#123;
+        if(val[pos]&lt;x){
             res+=siz[son[pos][0]]+cnt[pos];
             pos=son[pos][1];
-        &#125;
+        }
         else pos=son[pos][0];
-    &#125;
+    }
     return res+1;
-&#125;
+}
 
-int selval(int x,int &amp;rt)&#123;
+int selval(int x,int &amp;rt){
     int pos=rt;
-    while(true)&#123;
-        if(x&lt;=siz[son[pos][0]]&amp;&amp;son[pos][0])&#123;
+    while(true){
+        if(x&lt;=siz[son[pos][0]]&amp;&amp;son[pos][0]){
             pos=son[pos][0];
             continue;
-        &#125;
+        }
         x-=siz[son[pos][0]]+cnt[pos];
-        if(x&lt;=0)&#123;
+        if(x&lt;=0){
             Splay(pos,rt);
             return val[pos];
-        &#125;
+        }
         pos=son[pos][1];
-    &#125;
-&#125;
+    }
+}
 
-int selpre()&#123;
+int selpre(){
     int pos=son[root][0];
     while(son[pos][1]) pos=son[pos][1];
     Splay(pos,root);
     return pos;
-&#125;
+}
 
-int selnext()&#123;
+int selnext(){
     int pos=son[root][1];
     while(son[pos][0]) pos=son[pos][0];
     Splay(pos,root);
     return pos;
-&#125;
+}
 
-void del(int x)&#123;
+void del(int x){
     selrank(x);
-    if(cnt[root]&gt;1)&#123;
+    if(cnt[root]&gt;1){
         cnt[root]--;
         pushup(root);
         return;
-    &#125;
-    if(son[root][0]==0&amp;&amp;son[root][1]==0)&#123;
+    }
+    if(son[root][0]==0&amp;&amp;son[root][1]==0){
         clear(root);
         root=0;
         return;
-    &#125;
-    if(son[root][0]!=0&amp;&amp;son[root][1]==0)&#123;
+    }
+    if(son[root][0]!=0&amp;&amp;son[root][1]==0){
         int past=root;
         root=son[root][0];
         fa[root]=0;
         clear(past);
         return;
-    &#125;
-    if(son[root][0]==0&amp;&amp;son[root][1]!=0)&#123;
+    }
+    if(son[root][0]==0&amp;&amp;son[root][1]!=0){
         int past=root;
         root=son[root][1];
         fa[root]=0;
         clear(past);
         return;
-    &#125;
+    }
     int past=root;
     int pos=selpre();
     fa[son[past][1]]=pos;
     son[pos][1]=son[past][1];
     clear(past);
     pushup(root);
-&#125;
+}
 
-signed main()&#123;
+signed main(){
     read(n);
-    for(int i=1;i&lt;=n;i++)&#123;
+    for(int i=1;i&lt;=n;i++){
         int opt,z;
         read(opt,z);
         if(opt==1) insert(z);
         if(opt==2) del(z);
         if(opt==3) cout&lt;&lt;selrank(z)&lt;&lt;&#39;\n&#39;;
         if(opt==4) cout&lt;&lt;selval(z,root)&lt;&lt;&#39;\n&#39;;
-        if(opt==5)&#123;insert(z);cout&lt;&lt;val[selpre()]&lt;&lt;&#39;\n&#39;;del(z);&#125;
-        if(opt==6)&#123;insert(z);cout&lt;&lt;val[selnext()]&lt;&lt;&#39;\n&#39;;del(z);&#125;
-    &#125;
+        if(opt==5){insert(z);cout&lt;&lt;val[selpre()]&lt;&lt;&#39;\n&#39;;del(z);}
+        if(opt==6){insert(z);cout&lt;&lt;val[selnext()]&lt;&lt;&#39;\n&#39;;del(z);}
+    }
     return 0;
-&#125;</code></pre>
+}</code></pre>
+
+    </div>
+</div></p>
 <p>还没结束！</p>
 <p>在平衡树的相关模板中，除了<a
 target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3369">【模板】普通平衡树</a>，<a
@@ -1061,7 +1068,12 @@ class="math inline">\(L-1=0,R+1=n+1\)</span>
     Splay(now,root);
 &#125;</code></pre>
 <p>其他部分和普通的平衡树差不多。</p>
-<pre class="cpp"><code>// Problem: P3391 【模板】文艺平衡树
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>// Problem: P3391 【模板】文艺平衡树
 // Contest: Luogu
 // URL: https://www.luogu.com.cn/problem/P3391
 // Memory Limit: 125 MB
@@ -1080,26 +1092,26 @@ const double eps=1e-9;
 char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
 #define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
 template&lt;typename type&gt;
-inline void read(type &amp;x)&#123;
+inline void read(type &amp;x){
     x=0;
     bool f=false;
     char ch=getchar();
     while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
     while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
     if(f) x=-x;
-&#125;
+}
 template&lt;typename type,typename... args&gt;
-inline void read(type &amp;x,args&amp;... y)&#123;
+inline void read(type &amp;x,args&amp;... y){
     read(x),read(y...);
-&#125;
+}
 
 int n,m,tot,root,val[MAXN],siz[MAXN],tag[MAXN],fa[MAXN],son[MAXN][2],cnt[MAXN];
 
-int get(int x)&#123;return x==son[fa[x]][1];&#125;
-void pushup(int x)&#123;siz[x]=siz[son[x][0]]+siz[son[x][1]]+cnt[x];&#125;
-void rev(int x)&#123;swap(son[x][0],son[x][1]);tag[x]^=1;&#125;
+int get(int x){return x==son[fa[x]][1];}
+void pushup(int x){siz[x]=siz[son[x][0]]+siz[son[x][1]]+cnt[x];}
+void rev(int x){swap(son[x][0],son[x][1]);tag[x]^=1;}
 
-void rotate(int x)&#123;
+void rotate(int x){
     int y=fa[x],z=fa[y],ch=get(x);
     son[y][ch]=son[x][ch^1];
     if(son[x][ch^1]) fa[son[x][ch^1]]=y;
@@ -1107,80 +1119,83 @@ void rotate(int x)&#123;
     if(z) son[z][get(y)]=x;
     fa[x]=z;fa[y]=x;
     pushup(y);pushup(x);
-&#125;
+}
 
-void Splay(int x,int &amp;rt)&#123;
+void Splay(int x,int &amp;rt){
     int z=fa[rt];
-    for(int f=fa[x];f!=z;f=fa[x])&#123;
+    for(int f=fa[x];f!=z;f=fa[x]){
         if(fa[f]!=z) rotate(get(x)==get(f)?f:x);
         rotate(x);
-    &#125;
+    }
     rt=x;
-&#125;
+}
 
-void build(int n)&#123;
-    for(int i=0;i&lt;=n+1;i++)&#123;
+void build(int n){
+    for(int i=0;i&lt;=n+1;i++){
         son[++tot][0]=root;
         if(root) fa[root]=tot;
         root=tot;
         val[tot]=i;
         cnt[tot]++;
-    &#125;
+    }
     Splay(1,root);
-&#125;
+}
 
-void pushdown(int x)&#123;
-    if(tag[x])&#123;
+void pushdown(int x){
+    if(tag[x]){
         if(son[x][0]) rev(son[x][0]);
         if(son[x][1]) rev(son[x][1]);
         tag[x]=0;
-    &#125;
-&#125;
+    }
+}
 
-int selval(int x,int &amp;rt)&#123;
+int selval(int x,int &amp;rt){
     int pos=rt;
-    while(true)&#123;
+    while(true){
         pushdown(pos);
         if(x&lt;=siz[son[pos][0]]&amp;&amp;son[pos][0]) pos=son[pos][0];
-        else&#123;
+        else{
             x-=siz[son[pos][0]]+cnt[pos];
-            if(x&lt;=0)&#123;
+            if(x&lt;=0){
                 Splay(pos,rt);
                 return val[pos];
-            &#125;
+            }
             pos=son[pos][1];
-        &#125;
-    &#125;
-&#125;
+        }
+    }
+}
 
-void reverse(int l,int r)&#123;
+void reverse(int l,int r){
     selval(l,root);
     selval((r+1)-(l-1),son[root][1]);
     int x=son[son[root][1]][0];
     rev(x);
     pushdown(x);
     Splay(x,root);
-&#125;
+}
 
-void print(int x)&#123;
+void print(int x){
     if(!x) return;
     pushdown(x);
     print(son[x][0]);
     if(val[x]&gt;=1&amp;&amp;val[x]&lt;=n) cout&lt;&lt;val[x]&lt;&lt;&quot; &quot;;
     print(son[x][1]);
-&#125;
+}
 
-signed main()&#123;
+signed main(){
     read(n,m);
     build(n);
-    for(int i=1;i&lt;=m;i++)&#123;
+    for(int i=1;i&lt;=m;i++){
         int l,r;
         read(l,r);
         reverse(l,r);
-    &#125;
+    }
     print(root);
     return 0;
-&#125;</code></pre>
+}</code></pre>
+
+    </div>
+</div>
 <p>好，文艺平衡树到这里也就结束了！<br />
 接下来，就正式进入 <code>LCT</code> 的部分了~</p>
 <h2 id="lct">LCT</h2>
@@ -1560,7 +1575,12 @@ class="math inline">\(y\)</span> 的子树中了，这个是很好维护的，�
 一下，再直接改就行了。这样是修改是没有影响的。</p>
 <pre class="cpp"><code>void changeval(int x,int y)&#123;Splay(x);val[x]=y;&#125;</code></pre>
 <p>那么，模板题就结束啦！</p>
-<pre class="cpp"><code>// Problem: P3690 【模板】动态树（LCT）
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>// Problem: P3690 【模板】动态树（LCT）
 // Contest: Luogu
 // URL: https://www.luogu.com.cn/problem/P3690
 // Memory Limit: 128 MB
@@ -1579,40 +1599,40 @@ const double eps=1e-9;
 char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
 #define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
 template&lt;typename type&gt;
-inline void read(type &amp;x)&#123;
+inline void read(type &amp;x){
     x=0;
     bool f=false;
     char ch=getchar();
     while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
     while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
     if(f) x=-x;
-&#125;
+}
 template&lt;typename type,typename... args&gt;
-inline void read(type &amp;x,args&amp;... y)&#123;
+inline void read(type &amp;x,args&amp;... y){
     read(x),read(y...);
-&#125;
+}
 
 int n,m,tot,son[MAXN][2],fa[MAXN],tag[MAXN],xorsum[MAXN],val[MAXN];
 
-int get(int x)&#123;return x==son[fa[x]][1];&#125;
-int isroot(int x)&#123;return x!=son[fa[x]][0]&amp;&amp;x!=son[fa[x]][1];&#125;
-void pushup(int x)&#123;xorsum[x]=xorsum[son[x][0]]^xorsum[son[x][1]]^val[x];&#125;
-void rev(int x)&#123;swap(son[x][0],son[x][1]);tag[x]^=1;&#125;
+int get(int x){return x==son[fa[x]][1];}
+int isroot(int x){return x!=son[fa[x]][0]&amp;&amp;x!=son[fa[x]][1];}
+void pushup(int x){xorsum[x]=xorsum[son[x][0]]^xorsum[son[x][1]]^val[x];}
+void rev(int x){swap(son[x][0],son[x][1]);tag[x]^=1;}
 
-void pushdown(int x)&#123;
-    if(tag[x])&#123;
+void pushdown(int x){
+    if(tag[x]){
         if(son[x][0]) rev(son[x][0]);
         if(son[x][1]) rev(son[x][1]);
         tag[x]=0;
-    &#125;
-&#125;
+    }
+}
 
-void update(int x)&#123;
+void update(int x){
     if(!isroot(x)) update(fa[x]);
     pushdown(x);
-&#125;
+}
 
-void rotate(int x)&#123;
+void rotate(int x){
     int y=fa[x],z=fa[y],ch=get(x);
     if(!isroot(y)) son[z][get(y)]=x;
     son[y][ch]=son[x][ch^1];
@@ -1620,68 +1640,320 @@ void rotate(int x)&#123;
     son[x][ch^1]=y;
     fa[x]=z;fa[y]=x;
     pushup(y);pushup(x);
-&#125;
+}
 
-void Splay(int x)&#123;
+void Splay(int x){
     update(x);
-    for(int f=fa[x];f&amp;&amp;!isroot(x);f=fa[x])&#123;
+    for(int f=fa[x];f&amp;&amp;!isroot(x);f=fa[x]){
         if(!isroot(f)) rotate(get(x)==get(f)?f:x);
         rotate(x);
-    &#125;
-&#125;
+    }
+}
 
-int access(int x)&#123;
+int access(int x){
     int now=0;
     for(;x;now=x,x=fa[x]) Splay(x),son[x][1]=now,pushup(x);
     pushup(x);
     return now;
-&#125;
+}
 
-void makeroot(int x)&#123;
+void makeroot(int x){
     x=access(x);Splay(x);
     swap(son[x][0],son[x][1]);
     tag[x]^=1;
-&#125;
+}
 
-int findroot(int x)&#123;
+int findroot(int x){
     access(x);Splay(x);pushdown(x);
     while(son[x][0]) x=son[x][0],pushdown(x);
     Splay(x);
     return x;
-&#125;
+}
 
-void link(int x,int y)&#123;
+void link(int x,int y){
     makeroot(x);Splay(x);
     if(findroot(y)!=x) fa[x]=y;
-&#125;
+}
 
-void cut(int x,int y)&#123;
+void cut(int x,int y){
     makeroot(x);access(y);
     if(findroot(y)==x&amp;&amp;fa[y]==x&amp;&amp;!son[y][0]) son[x][1]=fa[y]=0;
-&#125;
+}
 
-void split(int x,int y)&#123;makeroot(x);access(y);Splay(y);&#125;
-int query(int x,int y)&#123;split(x,y);return xorsum[y];&#125;
-void changeval(int x,int y)&#123;Splay(x);val[x]=y;&#125;
+void split(int x,int y){makeroot(x);access(y);Splay(y);}
+int query(int x,int y){split(x,y);return xorsum[y];}
+void changeval(int x,int y){Splay(x);val[x]=y;}
 
-signed main()&#123;
+signed main(){
     read(n,m);
     for(int i=1;i&lt;=n;i++) read(val[i]);
-    for(int i=1;i&lt;=m;i++)&#123;
+    for(int i=1;i&lt;=m;i++){
         int opt,x,y;
         read(opt,x,y);
         if(opt==0) cout&lt;&lt;query(x,y)&lt;&lt;&#39;\n&#39;;
         if(opt==1) link(x,y);
         if(opt==2) cut(x,y);
         if(opt==3) changeval(x,y);
-    &#125;
+    }
     return 0;
-&#125;</code></pre>
+}</code></pre>
+
+    </div>
+</div>
 <h2 id="应用">应用</h2>
 <p>我们知道，split 函数将<span
 class="math inline">\(\textcolor{green}{原树}\)</span>上的一条路径提取出来了。那我们据此便可以实现很多东西。<br />
 比如：维护路径点权和，最大值，最小值之类的。只要这种操作具有交换律和结合律，理论上来讲都是可以维护的。<br />
 <del>所以一些LCT的题可以用轻重链剖分解决。</del></p>
+<p>（此处暂时未写）</p>
+<h3 id="维护-2-sat">维护 2-SAT</h3>
+<p>在某些特殊的 2-SAT
+中，我们连的是双向边，此时当然可以使用并查集来维护，但假如我们还需要删除，此时就可以使用
+LCT。</p>
+<h4 id="例题">例题</h4>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P7843">P7843
+「C.E.L.U-03」布尔</a></p>
+<p>此题题意很显然，给定区间 <span
+class="math inline">\([l,r]\)</span>，求最少分割成几段，使得每段的限制条件均有解，输出最小段数。</p>
+<p>我们首先来思考一下暴力怎么去做。<br />
+有一个很显然的贪心：我们依次加边，如果出现不合法的情况，那么此时断开。这个显然是最优的。<br />
+那么我们暴力就可以依次加边，然后跑一次 2-SAT
+看是否合法，不合法就将答案加 <span
+class="math inline">\(1\)</span>，然后将边清空，继续操作直到边用完。</p>
+<p>这样的时间复杂度是 <span class="math inline">\(O(qn^2)\)</span>
+的（设 <span class="math inline">\(n,m\)</span> 同阶）。可以获得 <span
+class="math inline">\(10\)</span> 分。</p>
+<p>这样显然是不可行的。我们发现，在这道题中，每次连的边均是双向边。于是我们并不需要使用
+2-SAT 来每次暴力判断。我们使用并查集来维护，类似
+2-SAT，我们将一个点拆成两个对立点，每次加边后合并一下并查集。如果存在某个点，其对立点处于同一并查集，则此时不合法。
+（这种并查集也被称为“种类并查集”。）</p>
+<p>此时的时间复杂度降为 <span
+class="math inline">\(O(qn\alpha(n))\)</span>，可以获得 <span
+class="math inline">\(40\)</span> 分。</p>
+<p>如果想要通过，显然不可以每次询问都暴力去做。<br />
+我们发现，对于一个位置 <span
+class="math inline">\(pos\)</span>，假设其合法的最远位置为 <span
+class="math inline">\(a\)</span>，那么 <span
+class="math inline">\(\forall b\in [pos,a]\)</span>，区间 <span
+class="math inline">\([pos,b]\)</span> 均是合法的。<br />
+于是我们记 <span class="math inline">\(f(i)\)</span> 表示 <span
+class="math inline">\(i\)</span>
+这个位置合法的最远位置的后一个位置。注意，是后一个位置（虽然不是后一个位置也不是不行）！发现这个东西是可以倍增的！<br />
+于是我们现在便可以每次先暴力地求出每个位置的 <span
+class="math inline">\(f\)</span> 地值，然后使用倍增来快速回答。</p>
+<p>假设我们依然使用并查集来判断合法情况，此时的时间复杂度为 <span
+class="math inline">\(O(n^2\alpha(n)+q\log n)\)</span>，似乎也许可以得到
+<span class="math inline">\(70pts\)</span>。</p>
+<p>询问的速度已经足够了，我们考虑优化预处理部分。</p>
+<p>容易发现，对于 <span class="math inline">\(f(i)\)</span> 和 <span
+class="math inline">\(f(i+1)\)</span>，是存在大量交集的，我们每次暴力去做，显然不优。于是便可以想到使用双指针去扫描。<br />
+但是我们的并查集是不允许删除操作的。什么东西又可以连边又可以删边呢？LCT
+可以。于是我们现在就来仔细想想 LCT 怎么去实现这个预处理。</p>
+<p>我们令当前的区间为 <span
+class="math inline">\([l,r]\)</span>，我们此时需要将 <span
+class="math inline">\(r\)</span> 进行扩展，需要连接 <span
+class="math inline">\(u\)</span> 和 <span
+class="math inline">\(v\)</span> 两个点。我们分两种情况来讨论。</p>
+<ol type="1">
+<li>连接 <span class="math inline">\(u\)</span> 和 <span
+class="math inline">\(v\)</span> 后没有出现环，那么直接连接即可。<br />
+</li>
+<li>连接 <span class="math inline">\(u\)</span> 和 <span
+class="math inline">\(v\)</span>
+后出现了环，理论上来说我们随便断开一条边，是不会影响到连通性的，但是我们后面可能需要将
+<span class="math inline">\(l\)</span> 往前挪，此时需要删除编号为 <span
+class="math inline">\(l\)</span>
+的边。如果我们前面随意删除了一条边，此时又删去了 <span
+class="math inline">\(l\)</span>
+这条边，可能导致原本应该连通的图变得不连通。那么我们就删去编号最小的边，这样就没有影响了。</li>
+</ol>
+<p>将 <span class="math inline">\(r\)</span>
+扩展后，我们此时需要判断是否合法，从而决定 <span
+class="math inline">\(l\)</span> 点是否需要往前挪。<br />
+我们不可能 <span class="math inline">\(O(n)\)</span>
+的去遍历每个点看是否合法，这样的时间复杂度是 <span
+class="math inline">\(O(n\log n)\)</span> 的，还不如并查集。<br />
+但是我们又发现连接了一条边后，出现冲突的位置是不确定的。<br />
+思考一下，发现我们将前面连接的边，对于其对立点，我们也连边，假如没有出现冲突，这两部分会是独立的。而假如出现冲突，则一定是因为这条边的假如而冲突，那么也就是连接的这条边的两端点出现了冲突。这样我们只需要判断一次即可知道是否出现冲突。</p>
+<p>那么基本也就结束了，时间复杂度 <span class="math inline">\(O(n\log
+n+q\log n)\)</span>，常数较大，但是是可以通过的。<br />
+细节有点多，具体可以看代码。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>// Problem: P7843 「C.E.L.U-03」布尔
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/P7843
+// Memory Limit: 256 MB
+// Time Limit: 2500 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int MAXN=1.5e6+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x){
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+}
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y){
+    read(x),read(y...);
+}
+
+bool awa;
+int n,m,q,l,r,cnt,e_cnt,tag[MAXN],fa[MAXN],son[MAXN][2],val[MAXN],minval[MAXN],f[MAXN][21];
+int U[MAXN],X[MAXN],V[MAXN],Y[MAXN];
+
+bool get(int x){return x==son[fa[x]][1];}
+bool isroot(int x){return x!=son[fa[x]][0]&amp;&amp;x!=son[fa[x]][1];}
+void rev(int x){swap(son[x][0],son[x][1]);tag[x]^=1;}
+void pushup(int x){minval[x]=min({val[x],minval[son[x][0]],minval[son[x][1]]});}
+
+void pushdown(int x){
+    if(tag[x]){
+        if(son[x][0]) rev(son[x][0]);
+        if(son[x][1]) rev(son[x][1]);
+        tag[x]=0;
+    }
+}
+
+void update(int x){
+    if(!isroot(x)) update(fa[x]);
+    pushdown(x);
+}
+
+void rotate(int x){
+    int y=fa[x],z=fa[y],ch=get(x);
+    if(!isroot(y)) son[z][get(y)]=x;
+    son[y][ch]=son[x][ch^1];
+    if(son[x][ch^1]) fa[son[x][ch^1]]=y;
+    son[x][ch^1]=y;
+    fa[y]=x;fa[x]=z;
+    pushup(y);pushup(x);
+}
+
+void Splay(int x){
+    update(x);
+    for(int f=fa[x];!isroot(x);f=fa[x]){
+        if(!isroot(f)) rotate(get(x)==get(f)?f:x);
+        rotate(x);
+    }
+}
+
+int access(int x){
+    int pos=0;
+    for(;x;pos=x,x=fa[x]) Splay(x),son[x][1]=pos,pushup(x);
+    pushup(x);
+    return pos;
+}
+
+void makeroot(int x){x=access(x);Splay(x);rev(x);}
+
+int findroot(int x){
+    access(x);Splay(x);pushdown(x);
+    while(son[x][0]) x=son[x][0],pushdown(x);
+    Splay(x);return x;
+}
+
+void link(int x,int y){
+    makeroot(x);Splay(x);
+    if(findroot(y)!=x) fa[x]=y;
+}
+
+void cut(int x,int y){
+    makeroot(x);access(y);
+    if(findroot(y)==x&amp;&amp;fa[y]==x&amp;&amp;!son[y][0]) fa[y]=son[x][1]=0;
+}
+
+void split(int x,int y){makeroot(x);access(y);Splay(y);}
+void change(int pos,int z){Splay(pos);val[pos]=z;pushup(pos);}
+
+void get(int &amp;x1,int &amp;y1,int &amp;x2,int &amp;y2,int &amp;id1,int &amp;id2,int i){
+    id1=i+2*n;id2=i+2*n+m;
+    if(X[i]^Y[i]) x1=U[i],y1=V[i]+n,x2=U[i]+n,y2=V[i];
+    else x1=U[i],y1=V[i],x2=U[i]+n,y2=V[i]+n;
+}
+
+bool t(int x,int y){
+    return findroot(x)==findroot(y);
+}
+bool qwq;
+
+signed main(){
+    // cout&lt;&lt;(&amp;awa-&amp;qwq)/1024.0/1024.0&lt;&lt;endl;
+    read(n,m,q);cnt=n;
+    for(int i=0;i&lt;=2*n+2*m;i++) val[i]=minval[i]=1e9;
+    l=r=1;
+    for(int i=1;i&lt;=m;i++,r++){
+        read(U[i],X[i],V[i],Y[i]);
+        int x1,x2,y1,y2,id1,id2;
+        get(x1,y1,x2,y2,id1,id2,i);
+        if(t(x1,y1)){
+            split(x1,y1);
+            int minedge=minval[y1];
+            int xx,yy,XX,YY,ID1,ID2;
+            get(xx,yy,XX,YY,ID1,ID2,minedge);
+            cut(xx,ID1);cut(ID1,yy);
+            cut(XX,ID2);cut(ID2,YY);
+        }
+        change(id1,i);
+        link(x1,id1);link(id1,y1);
+        while(t(x1,x2)){
+            f[l][0]=r;
+            int xx,yy,XX,YY,ID1,ID2;
+            get(xx,yy,XX,YY,ID1,ID2,l);
+            cut(xx,ID1);cut(ID1,yy);
+            cut(XX,ID2);cut(ID2,YY);
+            l++;
+        }
+        change(id2,i);
+        link(x2,id2);link(id2,y2);
+    }
+    for(;l&lt;=m;l++) f[l][0]=m+1;
+    for(int i=m;i&gt;=1;i--) for(int j=1;j&lt;21;j++) f[i][j]=f[f[i][j-1]][j-1];
+    for(int i=1;i&lt;=q;i++){
+        int l,r,ans=0;
+        read(l,r);
+        for(int j=20;j&gt;=0;j--){
+            if(f[l][j]&gt;0&amp;&amp;f[l][j]&lt;=r+1){
+                ans+=(1&lt;&lt;j);
+                l=f[l][j];
+            }
+        }
+        if(l!=r+1){
+            for(int j=0;j&lt;=20;j++){
+                if(f[l][j]&gt;=r+1){
+                    ans+=(1&lt;&lt;j);
+                    break;
+                }
+            }
+        }
+        if(f[l][0]==l){
+            cout&lt;&lt;-1&lt;&lt;&#39;\n&#39;;
+            continue;
+        }
+        cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+    }
+    return 0;
+}</code></pre>
+
+    </div>
+</div>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
     
