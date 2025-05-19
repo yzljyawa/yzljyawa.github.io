@@ -193,14 +193,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #a5ff4d">
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #ffa400">
                     题解
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/" style="color: #e74c3c">
+                <a href="/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/" style="color: #979a9a">
                     线段树
                 </a>
             </span>
@@ -219,11 +219,12 @@
     <div class="content" v-pre>
         <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P10773">题目链接</a></p>
 <h2 id="前言">前言</h2>
-<p>随机跳题跳到的。我并不会题解区另外两篇大佬的做法，我用了一种相对更加复杂的拆式子。但似乎这种拆式子的方法更为通用一些？<br />
+<p>随机跳题跳到的。我并不会题解区另外两篇大佬的做法，我用了一种相对更加复杂的拆式子。似乎这种拆式子的方法更为通用一些？比如
+<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P7671">疯狂动物城</a>
+也可以用类似的拆法实现。<br />
 题意题面已经很简洁了，注意一下是<strong>先减少</strong>价值，<strong>再产生</strong>费用就行了。<br />
-但我有一个问题：为什么说数据保证 <span class="math inline">\(1\le
-D_{i},T_{i},G\le 10^{9}\)</span>，但是 样例二，Sub1，Sub2 又存在 <span
-class="math inline">\(T_{i}=0\)</span>？</p>
+到我的博客也许能有更优的阅读体验：<a
+target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/%E6%B4%9B%E8%B0%B7-P10773-NOISG-2021-Qualification-Truck/">这里</a></p>
 <h2 id="思路">思路</h2>
 <p>首先我们令 <span class="math inline">\(dis(x,y)\)</span> 表示从 <span
 class="math inline">\(x\)</span> 到 <span
@@ -232,22 +233,29 @@ class="math inline">\(T_{i}\)</span> 和。<span
 class="math inline">\(D_{i}\)</span>
 在边上不好做，我们使用边权转点权，将一条边的 <span
 class="math inline">\(D_{i}\)</span>
-的值，放到这条边相连的两个点中，深度更深的那个上面。</p>
+的值，放到这条边相连的两个点中，深度更深的那个上面。（这个是很常见的边权转点权的方法）</p>
 <p>记 <span class="math inline">\(S(x,y)\)</span> 表示从 <span
 class="math inline">\(x\)</span> 到 <span
 class="math inline">\(y\)</span> 的点集。<br />
 根据题意，我们可以写出这样的式子：</p>
 <p><span class="math display">\[
-ans=\left(\sum_{i\in
-S(x,\operatorname{LCA}(x,y)),i\not=\operatorname{LCA}(x,y)}D_{i}(dis(fa_{i},y)+G)\right)+\left(\sum_{i\in
+\begin{aligned}
+    ans=&amp;\left(\sum_{i\in
+S(x,\operatorname{LCA}(x,y)),i\not=\operatorname{LCA}(x,y)}D_{i}(dis(fa_{i},y)+G)\right)+\\
+    &amp;\left(\sum_{i\in
 S(\operatorname{LCA}(x,y),y),i\not=\operatorname{LCA}(x,y)}D_{i}(dis(i,y)+G)\right)\\
+\end{aligned}
 \]</span></p>
 <p>没有看懂式子的话，可以画一下图，模拟一下。</p>
 <p><img
 src="https://cdn.luogu.com.cn/upload/image_hosting/fsgh0xda.png" /></p>
 <p>看着十分吓人，我们可以先将 <span class="math inline">\(G\)</span>
 提出来，再将 <span class="math inline">\(dis(x,y)\)</span> 展开成 <span
-class="math inline">\(dep_{x}+dep_{y}-2dep_{\operatorname{LCA}(x,y)}\)</span>。</p>
+class="math inline">\(dep_{x}+dep_{y}-2dep_{\operatorname{LCA}(x,y)}\)</span>。<br />
+（<span class="math inline">\(dep_i\)</span> 也就是从 <span
+class="math inline">\(1\)</span> 号点到 <span
+class="math inline">\(i\)</span> 号点的边的 <span
+class="math inline">\(T\)</span> 和）</p>
 <ul>
 <li>对于 <span class="math inline">\(i\in
 S(x,\operatorname{LCA}(x,y))\)</span>，都有 <span
@@ -259,18 +267,27 @@ class="math inline">\(\operatorname{LCA}(i,y)=i\)</span>。</li>
 </ul>
 <p>那么我们便可以写成这样的式子：</p>
 <p><span class="math display">\[
-ans=\left(G\sum_{i\in
-S(x,y),i\not=\operatorname{LCA}(x,y)}D_{i}\right)+\left(\sum_{i\in
-S(x,\operatorname{LCA}(x,y)),i\not=\operatorname{LCA}(x,y)}D_{i}(dep_{fa_{i}}+dep_{y}-2dep_{\operatorname{LCA}(x,y)})\right)+\left(\sum_{i\in
+\begin{aligned}
+    ans=&amp;\left(G\sum_{i\in
+S(x,y),i\not=\operatorname{LCA}(x,y)}D_{i}\right)+\\
+    &amp;\left(\sum_{i\in
+S(x,\operatorname{LCA}(x,y)),i\not=\operatorname{LCA}(x,y)}D_{i}(dep_{fa_{i}}+dep_{y}-2dep_{\operatorname{LCA}(x,y)})\right)+\\
+    &amp;\left(\sum_{i\in
 S(\operatorname{LCA}(x,y),y),i\not=\operatorname{LCA}(x,y)}D_{i}(dep_{y}-dep_{i})\right)
+\end{aligned}
 \]</span></p>
-<p>化简一下，得到：</p>
+<p>展开化简一下，得到：</p>
 <p><span class="math display">\[
-ans=\left(\left(G+dep_{y}\right)\sum_{i\in
-S(x,y),i\not=LCA(x,y)}D_{i}\right)+\left(\sum_{i\in
-S(x,LCA(x,y)),i\not=LCA(x,y)}D_{i}dep_{fa_{i}}\right)-\left(2dep_{LCA(x,y)}\sum_{i\in
-S(x,LCA(x,y)),i\not=LCA(x,y)}D_{i}\right)-\left(\sum_{i\in
+\begin{aligned}
+    ans=&amp;\left(\left(G+dep_{y}\right)\sum_{i\in
+S(x,y),i\not=LCA(x,y)}D_{i}\right)+\\
+    &amp;\left(\sum_{i\in
+S(x,LCA(x,y)),i\not=LCA(x,y)}D_{i}dep_{fa_{i}}\right)-\\
+    &amp;\left(2dep_{LCA(x,y)}\sum_{i\in
+S(x,LCA(x,y)),i\not=LCA(x,y)}D_{i}\right)-\\
+    &amp;\left(\sum_{i\in
 S(LCA(x,y),y),i\not=LCA(x,y)}D_{i}dep_{i}\right)\\
+\end{aligned}
 \]</span></p>
 <p>我们发现这些都是可以使用线段树来维护的。<br />
 我们需要维护的也就是：</p>
@@ -283,7 +300,7 @@ S(LCA(x,y),y),i\not=LCA(x,y)}D_{i}dep_{i}\right)\\
 </li>
 <li>区间 <span class="math inline">\(D_{i}dep_{fa_{i}}\)</span> 和</li>
 </ul>
-<p>第一个是不变的。<br />
+<p>第一个是不变的，可以用一个前缀和简单实现（写线段树也可以）。<br />
 第二个我们发现和 <span class="math inline">\(T_{i}\)</span>
 有关，而修改一条边 <span class="math inline">\(x\)</span> 到 <span
 class="math inline">\(y\)</span>（设 <span
@@ -293,15 +310,16 @@ class="math inline">\(y\)</span> 及其子树的 <span
 class="math inline">\(dep_{i}\)</span> 一起增加 <span
 class="math inline">\(t-T_{i}\)</span>（<span
 class="math inline">\(T_{i}\)</span>
-为改之前的边权）。这是一个区间加的操作。<br />
+为改之前的边权）。对原树进行树剖重新标号后，这是一个区间加的操作。<br />
 第三个可以看作维护 <span class="math inline">\(kx,x=\sum
-dep_{i}\)</span> 也就是增加倍数的操作。<br />
+dep_{i}\)</span>，也就是增加倍数的操作。<br />
 第四个和第三个一样，因为我们每次修改的时候，会对一整棵子树进行修改，所以
-<span class="math inline">\(fa_{i}\)</span>
-没变的只有这棵子树的根，特殊处理一下就行了。</p>
+<span class="math inline">\(dep_{fa_{i}}\)</span>
+没变的只有这棵子树的根（也就是第二点中提到的 <span
+class="math inline">\(y\)</span>），特殊处理一下就行了。</p>
 <p>那么到这里就结束了，维护起来还是有一点麻烦的。</p>
 <h2 id="代码">代码</h2>
-<p>我打的比较丑陋，但是有一些注释。</p>
+<p>参考一下就好啦。</p>
 <pre class="cpp"><code>// Problem: P10773 [NOISG 2021 Qualification] Truck
 // Contest: Luogu
 // URL: https://www.luogu.com.cn/problem/P10773
