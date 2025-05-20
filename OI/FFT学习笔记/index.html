@@ -200,7 +200,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%A4%9A%E9%A1%B9%E5%BC%8F/" style="color: #e74c3c">
+                <a href="/tags/%E5%A4%9A%E9%A1%B9%E5%BC%8F/" style="color: #979a9a">
                     多项式
                 </a>
             </span>
@@ -630,66 +630,74 @@ class="math inline">\(\sin\)</span> 的部分变成负的就行了。最后别�
 <h3 id="三次变两次">三次变两次</h3>
 <p>不会xwx</p>
 <h2 id="代码">代码</h2>
-<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1919">P1919
-【模板】高精度乘法 | A*B Problem 升级版</a></p>
-<pre class="cpp"><code>#include&lt;bits/stdc++.h&gt;
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3803">P3803
+【模板】多项式乘法（FFT）</a></p>
+<pre class="cpp"><code>// Problem: P3803 【模板】多项式乘法（FFT）
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/P3803
+// Memory Limit: 500 MB
+// Time Limit: 2000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
 using namespace std;
-
-const int MAXN=4e6+10;
-const double pi=acos(-1);
 typedef complex&lt;double&gt; fs;
+const int MAXN=4e6+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double pi=acos(-1);
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x)&#123;
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+&#125;
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y)&#123;
+    read(x),read(y...);
+&#125;
 
-char sa[MAXN],sb[MAXN];
-double n=1;
-int lena,lenb,r[MAXN&lt;&lt;1],ans[MAXN&lt;&lt;1];
+int N,M,BIT,rev[MAXN];
 fs a[MAXN],b[MAXN];
 
-void fft(fs c[],int z)&#123;
-    for(int i=0;i&lt;n;i++) if(i&lt;r[i]) swap(c[i],c[r[i]]);
-    for(int k=2;k&lt;=n;k*=2)&#123;
-        fs omega=fs(cos(2*pi/k),sin(z*2*pi/k));
-        for(int i=0;i&lt;n;i+=k)&#123;
-            fs w=fs(1,0);
-            for(int j=i;j&lt;i+k/2;j++)&#123;
-                fs zs=w*c[j+k/2];
-                c[j+k/2]=c[j]-zs;
-                c[j]+=zs;
-                w*=omega;
+void FFT(fs *s,int opt,int bit)&#123;
+    int n=(1&lt;&lt;bit);
+    for(int i=0;i&lt;n;i++) rev[i]=(rev[i&gt;&gt;1]&gt;&gt;1)|((i&amp;1)&lt;&lt;bit-1);
+    for(int i=0;i&lt;n;i++) if(i&lt;rev[i]) swap(s[i],s[rev[i]]);
+    for(int i=2;i&lt;=n;i*=2)&#123;
+        fs omega=fs(cos(2*pi/i),sin(opt*2*pi/i));
+        for(int j=0;j&lt;n;j+=i)&#123;
+            fs z=fs(1,0);
+            for(int k=j;k&lt;j+i/2;k++)&#123;
+                fs p=s[k],q=z*s[k+i/2];
+                s[k]=p+q;
+                s[k+i/2]=p-q;
+                z*=omega;
             &#125;
         &#125;
     &#125;
-    if(z==-1)&#123;
-        for(int i=0;i&lt;n;i++)&#123;
-            c[i].real(c[i].real()/n);
-        &#125;
-    &#125;
+    if(opt==-1) for(int i=0;i&lt;n;i++) s[i].real(s[i].real()/n);
 &#125;
 
-int main()&#123;
-    cin&gt;&gt;sa&gt;&gt;sb;
-    lena=strlen(sa);
-    lenb=strlen(sb);
-    while(n&lt;lena+lenb) n*=2;
-    for(int i=0;i&lt;n;i++) r[i]=r[i/2]/2+pow(2,log2(n)-1)*(i&amp;1);
-    for(int i=0;i&lt;lena;i++) a[i].real(sa[lena-i-1]-&#39;0&#39;);
-    for(int i=0;i&lt;lenb;i++) b[i].real(sb[lenb-i-1]-&#39;0&#39;);
-    fft(a,1);
-    fft(b,1);
-    for(int i=0;i&lt;n;i++) a[i]*=b[i];
-    fft(a,-1);
-    for(int i=0;i&lt;n;i++)&#123;
-        ans[i]+=a[i].real()+0.5;
-        ans[i+1]+=ans[i]/10;
-        ans[i]%=10;
-    &#125;
-    int q;
-    for(int i=n-1;i&gt;=0;i--)&#123;
-        if(ans[i]!=0)&#123;
-            q=i;
-            break;
-        &#125;
-    &#125;
-    for(int i=q;i&gt;=0;i--) cout&lt;&lt;ans[i];
+signed main()&#123;
+    read(N,M);
+    for(int i=0,A;i&lt;=N;i++) read(A),a[i].real(A);
+    for(int i=0,B;i&lt;=M;i++) read(B),b[i].real(B);
+    while((1&lt;&lt;BIT)&lt;N+M+1) BIT++;
+    FFT(a,1,BIT);FFT(b,1,BIT);
+    for(int i=0;i&lt;(1&lt;&lt;BIT);i++) a[i]*=b[i];
+    FFT(a,-1,BIT);
+    for(int i=0;i&lt;=N+M;i++) cout&lt;&lt;(int)(a[i].real()+0.5)&lt;&lt;&quot; &quot;;
+    cout&lt;&lt;endl;
     return 0;
 &#125;</code></pre>
 <p>其实 NTT 大概就是把单位根改成了 <code>模数对应的原根</code>。</p>
