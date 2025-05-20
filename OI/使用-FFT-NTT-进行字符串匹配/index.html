@@ -421,7 +421,189 @@ target="_blank" rel="noopener" href="https://www.luogu.com.cn/user/76508">Untitl
         
     </div>
     <div class='spoiler-content'>
-        <pre class="cpp"><code>awa还没写完呢awa</code></pre>
+        <pre class="cpp"><code>#include &lt;algorithm&gt;
+#include &lt;bit&gt;
+#include &lt;cstdint&gt;
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+
+using std::cin;
+using std::cout;
+using std::string;
+using std::swap;
+using std::transform;
+using std::vector;
+
+using u32 = std::uint32_t;
+using u64 = std::uint64_t;
+
+constexpr u64 P = 998&#39;244&#39;353;
+
+template&lt;class Grp, class Exp, class Ty&gt;
+constexpr Ty pow(Grp base, Exp exp, Ty init) {
+    for(; exp; exp &gt;&gt;= 1, base *= base)
+        if(exp &amp; 1)
+            init *= base;
+    return init;
+}
+
+template&lt;class Grp, class Exp, class Ty&gt;
+constexpr Ty&amp; pow_assign(Grp base, Exp exp, Ty &amp;init) {
+    for(; exp; exp &gt;&gt;= 1, base *= base)
+        if(exp &amp; 1)
+            init *= base;
+    return init;
+}
+
+struct Fp {
+    
+    u32 x;
+
+    constexpr Fp(u32 value = 0) : x(value) {}
+
+    constexpr Fp&amp; operator+=(const Fp &amp;other) {
+        x += other.x;
+        if(x &gt;= P) x -= P;
+        return *this;
+    }
+    constexpr Fp&amp; operator-=(const Fp &amp;other) {
+        if(x &lt; other.x) x += P;
+        x -= other.x;
+        return *this;
+    }
+    constexpr Fp&amp; operator*=(const Fp &amp;other) {
+        x = u64(x) * other.x % P;
+        return *this;
+    }
+    constexpr Fp&amp; operator/=(const Fp &amp;other) {
+        return pow_assign(other, P - 2, *this);
+    }
+
+    constexpr friend Fp operator+(Fp lhs, const Fp &amp;rhs) { return lhs += rhs; }
+    constexpr friend Fp operator-(Fp lhs, const Fp &amp;rhs) { return lhs -= rhs; }
+    constexpr friend Fp operator*(Fp lhs, const Fp &amp;rhs) { return lhs *= rhs; }
+    constexpr friend Fp operator/(Fp lhs, const Fp &amp;rhs) { return lhs /= rhs; }
+};
+
+constexpr Fp prim(3);
+constexpr Fp co_prim = Fp(1) / prim;
+
+template&lt;class RanIt&gt;
+void FFT(RanIt vec, int loglen, bool type) {
+
+    // static_assert(std::is_same_v&lt;RanIt::velue_type, Fp&gt;);
+
+    size_t len = 1ull &lt;&lt; loglen;
+
+    vector&lt;size_t&gt; bitrev(len);
+    for(size_t idx = 0; idx &lt; len; ++idx) {
+        bitrev[idx] = (bitrev[idx &gt;&gt; 1] &gt;&gt; 1) | ((idx &amp; 1) &lt;&lt; (loglen - 1));
+        if(idx &lt; bitrev[idx]) {
+            swap(vec[idx], vec[bitrev[idx]]);
+        }
+    }
+
+    for(int logseg = 0; logseg &lt; loglen; ++logseg) {
+
+        Fp omega = pow(
+            type ? co_prim : prim,
+            (P - 1) &gt;&gt; (logseg + 1),
+            Fp(1)
+        );
+        size_t seg = 1ull &lt;&lt; logseg;
+        
+        for(RanIt lspan = vec; lspan != vec + len; lspan += (seg + seg)) {
+            Fp phi = Fp(1);
+            RanIt rspan = lspan + seg;
+            for(size_t off = 0; off &lt; seg; ++off) {
+                Fp g  = lspan[off];
+                Fp hw = rspan[off] * phi;
+                lspan[off] = g + hw;
+                rspan[off] = g - hw;
+                phi *= omega;
+            }
+        }
+    }
+
+    if(type) {
+        Fp invN = Fp(1) / Fp(len);
+        for(size_t idx = 0; idx &lt; len; ++idx)
+            vec[idx] *= invN;
+    }
+}
+
+int main() {
+
+    cin.tie(nullptr)-&gt;sync_with_stdio(false);
+
+    size_t m, n;
+    cin &gt;&gt; m &gt;&gt; n;
+
+    string a, b;
+    cin &gt;&gt; a &gt;&gt; b;
+
+    int logext = std::bit_width(n - 1);
+    size_t extn = 1ull &lt;&lt; logext;
+
+    vector&lt;Fp&gt; A, B;
+
+    A.reserve(extn);
+    for(char ch : a) {
+        A.emplace_back(ch == &#39;*&#39; ? 0 : ch - 96);
+    }
+    std::reverse(A.begin(), A.end());
+    A.resize(extn);
+
+    B.reserve(extn);
+    for(char ch : b) {
+        B.emplace_back(ch == &#39;*&#39; ? 0 : ch - 96);
+    }
+    B.resize(extn);
+
+    vector&lt;Fp&gt; Acube(extn), Asqr(extn);
+    vector&lt;Fp&gt; Bcube(extn), Bsqr(extn);
+
+    transform(A.begin(), A.end(), Asqr.begin(), [](const Fp &amp;x) {
+        return x * x;
+    });
+    transform(B.begin(), B.end(), Bsqr.begin(), [](const Fp &amp;x) {
+        return x * x;
+    });
+    transform(A.begin(), A.end(), Acube.begin(), [](const Fp &amp;x) {
+        return x * x * x;
+    });
+    transform(B.begin(), B.end(), Bcube.begin(), [](const Fp &amp;x) {
+        return x * x * x;
+    });
+
+    FFT(A.begin(), logext, false);
+    FFT(Asqr.begin(), logext, false);
+    FFT(Acube.begin(), logext, false);
+
+    FFT(B.begin(), logext, false);
+    FFT(Bsqr.begin(), logext, false);
+    FFT(Bcube.begin(), logext, false);
+
+    vector&lt;Fp&gt; C(extn);
+    for(size_t i = 0; i &lt; extn; ++i) {
+        C[i] = Acube[i] * B[i] - Fp(2) * Asqr[i] * Bsqr[i] + A[i] * Bcube[i];
+    }
+    FFT(C.begin(), logext, true);
+
+    vector&lt;size_t&gt; res;
+    for(size_t i = m - 1; i &lt; n; ++i) {
+        if(C[i].x == 0) {
+            res.push_back(i - (m - 1) + 1);
+        }
+    }
+
+    cout &lt;&lt; res.size() &lt;&lt; &#39;\n&#39;;
+    for(size_t x : res)
+        cout &lt;&lt; x &lt;&lt; &#39; &#39;;
+    
+    return 0;
+}</code></pre>
 
     </div>
 </div>
