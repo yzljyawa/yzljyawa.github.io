@@ -193,14 +193,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #ffa400">
+                <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97/" style="color: #00beff">
                     学习指南
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/LCT/" style="color: #00beff">
+                <a href="/tags/LCT/" style="color: #979a9a">
                     LCT
                 </a>
             </span>
@@ -1956,7 +1956,48 @@ signed main(){
     </div>
 </div>
 <h3 id="维护-sam">维护 SAM</h3>
-<p>前置知识：SAM（后缀自动机）</p>
+<p>前置知识：SAM，LCT 维护连通性</p>
+<h4 id="例题-1">例题</h4>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6292">P6292
+区间本质不同子串个数</a></p>
+<p>题意很简单，多次询问，每次询问区间 <span
+class="math inline">\([l,r]\)</span> 的本质不同子串个数。</p>
+<p>首先我们想一想假如问的是整个串的本质不同子串数量应该怎么做。这个是一个
+SAM 的简单运用。<br />
+见：<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2408">P2408
+不同子串个数</a><br />
+对于这个问题，我们建出 SAM 后，对于每一个节点，其代表的子串长度为 <span
+class="math inline">\(len_{fa_{i}}+1\)</span> 到 <span
+class="math inline">\(len_{i}\)</span>，于是减一下，就得到答案了。</p>
+<p>那么对于这道题而言，我们不可能每次询问都重新建一次
+SAM，然后统计答案，这样的时间复杂度是 <span
+class="math inline">\(O(qn)\)</span> 的，显然无法通过。</p>
+<p>我们先来看这么一道经典题：给定一个序列 <span
+class="math inline">\(a\)</span>
+，多次询问，每次询问一段区间内本质不同的数的数量。<br />
+这道题的做法是这样的： 先将所有询问离线下来，按照 <span
+class="math inline">\(r\)</span>
+为关键字排序，然后进行扫描线，对每一个位置 <span
+class="math inline">\(r\)</span> 维护 <span
+class="math inline">\(l\in[1,r]\)</span> 的答案，当我们新加入一个 <span
+class="math inline">\(a_{r}\)</span> 时，我们将这个位置的 <span
+class="math inline">\(val_{r}\)</span> 增加 <span
+class="math inline">\(1\)</span>，然后对于上一个值同样为 <span
+class="math inline">\(a_{r}\)</span> 的位置 <span
+class="math inline">\(last_{a_{r}}\)</span> 的 <span
+class="math inline">\(val_{last_{a_{r}}}\)</span> 减少 <span
+class="math inline">\(1\)</span>。那么对于一个区间 <span
+class="math inline">\([l,r]\)</span>，其的答案就是 <span
+class="math inline">\(\sum_{i=l}^{r} val_{i}\)</span>。</p>
+<p>我们将这个问题延伸到字符串上，对于一个子串 <span
+class="math inline">\(S\)</span>，它对应的是原串 <span
+class="math inline">\(A\)</span> 的 <span
+class="math inline">\([l,r]\)</span> 区间，那么当询问 <span
+class="math inline">\([L,R]\)</span> 满足 <span
+class="math inline">\(R\ge r,L\le l\)</span> 时，则会产生 <span
+class="math inline">\(1\)</span> 的贡献。而我们现在出现了另外一个子串
+<span class="math inline">\(S&#39;=S\)</span>，它对应的区间是 <span
+class="math inline">\([L&#39;,R&#39;]\)</span>，那么我们按照上道题的思路，</p>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
     
