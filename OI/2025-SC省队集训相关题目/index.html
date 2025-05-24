@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>洛谷 P10537 九月 题解 | yzljyのBlog</title>
+    <title>2025 SC省队集训相关题目 | yzljyのBlog</title>
     <meta name="author" content="yzljy" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -165,14 +165,14 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div class="article">
     <div>
-        <h1>洛谷 P10537 九月 题解</h1>
+        <h1>2025 SC省队集训相关题目</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2024/11/6
+            2025/5/24
         </span>
         
         <span class="category">
@@ -193,22 +193,8 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #ffa400">
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #e74c3c">
                     题解
-                </a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/%E4%BA%A4%E4%BA%92%E9%A2%98/" style="color: #00beff">
-                    交互题
-                </a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/%E6%9E%84%E9%80%A0/" style="color: #979a9a">
-                    构造
                 </a>
             </span>
             
@@ -217,51 +203,150 @@
     </div>
     
     <div class="content" v-pre>
-        <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P10537">题目传送门</a></p>
-<h2 id="思路">思路</h2>
-<p>这是一道交互题。</p>
-<p>交互格式在这里就不说了。</p>
-<p>考虑到：若 <span class="math inline">\([l,r]\)</span>
-这个区间是合法的，那么因为 <span class="math inline">\([1,l]\)</span>
-是合法的，所以 <span class="math inline">\([1,r]\)</span>
-是合法的，所以问题转化为，有多少个前缀是合法的。</p>
-<p>对于一段区间，若所有的数要么出现 <span
-class="math inline">\(0\)</span> 次，要么出现了 <span
-class="math inline">\(M\)</span>
-次，那么这就是合法的条件之一（要么都没记录，要么全记录）。这个可以用桶来实现。</p>
-<p>还有就是掉叶子是否合法。假如这段区间中，存在一个非叶子节点的儿子没有掉完，并且他自己要掉，那么就是非法的，这个可以通过记录每个点的未掉的儿子个数，以及这个点是否需要掉来解决。</p>
-<p>当满足以上两个条件时，这个前缀便是合法的，将答案 <span
-class="math inline">\(+1\)</span> 即可。</p>
-<p>时间复杂度 <span class="math inline">\(O(NM)\)</span>。</p>
-<h2 id="代码">代码</h2>
-<p>注意是交互题。</p>
-<pre class="cpp"><code>#include&lt;bits/stdc++.h&gt;
+        <h2 id="前言">前言</h2>
+<p>我因为太菜了，并没有参加集训，但是不影响我做题对吧。<br />
+题意什么的请自行看一下，这里就不再简述了。</p>
+<h2 id="arc070f-honestorunkind">[ARC070F] HonestOrUnkind</h2>
+<p><a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_arc070_d">Luogu链接</a><br />
+<a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc070/tasks/arc070_d">AtCoder
+链接</a></p>
+<p>神仙构造题，我是看了题解才会的。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        solution
+    </div>
+    <div class='spoiler-content'>
+        <p>首先我们考虑什么情况下需要输出<code>Impossible</code>。<br />
+坏人可以说谎，也就意味着它可以伪装成好人，那么当 <span
+class="math inline">\(a\le b\)</span> 的时候，我们让 <span
+class="math inline">\(a\)</span> 个坏人伪装成好人就无法分辨了。</p>
+<p>现在我们只需要考虑 <span class="math inline">\(a&gt;b\)</span>
+的情况。我们现在列一张表，表示向 A 询问 B 时的可能情况。</p>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>res</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Y</td>
+<td>N/Y</td>
+</tr>
+<tr>
+<td>N</td>
+<td>N</td>
+<td>N/Y</td>
+</tr>
+</tbody>
+</table>
+<p>可以发现，当回答为<code>N</code>时，两个人中至少有一个坏人。而当回答为<code>Y</code>的时候，B
+的身份一定不劣于 A。<br />
+于是我们考虑维护一个栈，栈的最顶层时我们当前已知的最好的人（这个人可能是坏人）。用栈顶的人去问当前的人
+C，如果回答为<code>N</code>，直接将这两个人都当成“坏人”就好了，因为
+<span
+class="math inline">\(a&gt;b\)</span>，所以哪怕每次回答均为<code>N</code>，也是坏人先去除完。<br />
+而回答为<code>Y</code>时，直接将其设为新的栈顶就好了。</p>
+<p>这样，最后我们的栈顶一定是好人（这个的证明是并不困难的），我们再用这个好人挨个挨个询问，就可以知道每个人的身份了。</p>
+<p>前面问至多 <span class="math inline">\(n-1\)</span> 次，后面问 <span
+class="math inline">\(n\)</span> 或者 <span
+class="math inline">\(n-1\)</span> 次，总共不多于 <span
+class="math inline">\(2n\)</span> 次，可以通过。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>// Problem: AT_arc070_d [ARC070F] HonestOrUnkind
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/AT_arc070_d
+// Memory Limit: 256 MB
+// Time Limit: 2000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
 using namespace std;
-int solve(int N,int M,vector&lt;int&gt; F,vector&lt;vector&lt;int&gt; &gt;S);
-
 const int MAXN=1e5+10;
-int cnt,cnt2,ans,son[MAXN],t[MAXN];
-bool flag[MAXN];
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x){
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+}
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y){
+    read(x),read(y...);
+}
 
-int solve(int N,int M,vector&lt;int&gt; F,vector&lt;vector&lt;int&gt; &gt;S)&#123;
-    for(int i=0;i&lt;N;i++) son[i]=t[i]=flag[i]=0;
-    for(int i=1;i&lt;N;i++) son[F[i]]++;
-    cnt=N;cnt2=ans=0;
-    for(int i=0;i&lt;N-1;i++)&#123;
-        for(int j=0;j&lt;M;j++)&#123;
-            t[S[j][i]]++;
-            if(t[S[j][i]]==1) cnt--;
-            if(t[S[j][i]]==M) cnt++;
-            if(flag[S[j][i]]) continue;
-            flag[S[j][i]]=true;
-            if(son[S[j][i]]!=0) cnt2++;
-            son[F[S[j][i]]]--;
-            if(son[F[S[j][i]]]==0&amp;&amp;flag[F[S[j][i]]]) cnt2--;
-        &#125;
-        if(cnt==N&amp;&amp;cnt2==0) ans++;
-    &#125;
-    return ans;
-&#125;</code></pre>
+int n,a,b;
+bool ans[MAXN];
+char res;
+stack&lt;int&gt; s;
+
+void query(int x,int y){
+    cout&lt;&lt;&quot;? &quot;&lt;&lt;x&lt;&lt;&quot; &quot;&lt;&lt;y&lt;&lt;endl;
+    cin&gt;&gt;res;
+}
+
+signed main(){
+    cin&gt;&gt;a&gt;&gt;b;
+    if(a&lt;=b){
+        cout&lt;&lt;&quot;Impossible&quot;;
+        return 0;
+    }
+    n=a+b;
+    for(int i=0;i&lt;n;i++){
+        if(s.empty()) s.push(i);
+        else{
+            query(s.top(),i);
+            if(res==&#39;N&#39;) s.pop();
+            else s.push(i);
+        }
+    }
+    ans[s.top()]=true;
+    for(int i=0;i&lt;n;i++){
+        if(i==s.top()) continue;
+        query(s.top(),i);
+        ans[i]=res==&#39;Y&#39;;
+    }
+    cout&lt;&lt;&quot;! &quot;;
+    for(int i=0;i&lt;n;i++) cout&lt;&lt;ans[i];
+    cout&lt;&lt;endl;
+    return 0;
+}</code></pre>
+
+    </div>
+</div>
+<h2 id="ioi-2024-消息篡改者">[IOI 2024] 消息篡改者</h2>
+<p>目前得分：29.317</p>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
     
