@@ -193,7 +193,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #e74c3c">
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #979a9a">
                     题解
                 </a>
             </span>
@@ -346,7 +346,297 @@ signed main(){
     </div>
 </div>
 <h2 id="ioi-2024-消息篡改者">[IOI 2024] 消息篡改者</h2>
-<p>目前得分：29.317</p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P11050">Luogu链接</a><br />
+<a
+target="_blank" rel="noopener" href="https://ioi.contest.codeforces.com/group/32KGsXgiKA/contest/105328/problem/B">可提交的通道（CF）</a></p>
+<p>个人最高只糊出来了 58 分。<br />
+后面的只有看题解了xwx。<br />
+太奇妙了。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        solution
+    </div>
+    <div class='spoiler-content'>
+        <h2 id="一些性质">一些性质</h2>
+<p>因为交互库有些是自适应的，所以很难利用被控制的位置来传递信息。那么对于一个数据包，我们就只能传输
+<span class="math inline">\(16\)</span> 位有效信息。<br />
+注意到如果我们发送的 <span class="math inline">\(A\)</span>
+全为同一个数，篡改后的消息 <span
+class="math inline">\(B\)</span>，我们统计一下众数，发现和 <span
+class="math inline">\(A\)</span> 的众数是一样的。</p>
+<h2 id="分做法"><span class="math inline">\(10\)</span> 分做法</h2>
+<p>根据上文性质，我们可以挨个挨个发送 <span
+class="math inline">\(M\)</span> 的内容，总共发送 <span
+class="math inline">\(S\)</span> 个数据包，可以通过第一个子任务。</p>
+<h2 id="分做法-1"><span class="math inline">\(29\)</span> 分做法</h2>
+<p>消息长度是不固定的，我们不妨将所有消息的长度补充至 <span
+class="math inline">\(1025\)</span>。具体怎么补充？我们在消息最后加入一个
+<span class="math inline">\(1\)</span> 以及一串 <span
+class="math inline">\(0\)</span>，并且令最后一个 <span
+class="math inline">\(1\)</span> 及以后的消息均无效。</p>
+<p>先前 <span class="math inline">\(10\)</span>
+分的做法太不优秀了，我们没有充分利用有效位置。如果我们已经知道了有效位置有哪些，便可以用
+<span
+class="math inline">\(\left\lceil\dfrac{1025}{16}\right\rceil=65\)</span>
+次来发送所有消息。<br />
+不难想到我们沿用 <span class="math inline">\(10\)</span> 分的做法，使用
+<span class="math inline">\(31\)</span> 次将 <span
+class="math inline">\(C\)</span> 发送出去。然后再使用 <span
+class="math inline">\(65\)</span> 次将 <span
+class="math inline">\(M\)</span> 发送过去。<br />
+总共需要发送 <span class="math inline">\(96\)</span> 次，能获得 <span
+class="math inline">\(29.317\)</span> 分。</p>
+<h2 id="分做法-2"><span class="math inline">\(58\)</span> 分做法</h2>
+<p>我能想到的最优做法。（我还是太菜了/kk）</p>
+<p>我们 <span class="math inline">\(30\)</span> 分的做法在发送完 <span
+class="math inline">\(C\)</span>
+后，才开始使用有效位置发送信息，但实际上，我们在发送出第一个有效位置后，便可以使用这个位置来发送信息了。后面解锁更多有效位置后，就可以一次发送更多有效信息。<br />
+并且我们假如当前已经发送了 <span class="math inline">\(15\)</span> 个
+<span class="math inline">\(1\)</span> 或是 <span
+class="math inline">\(16\)</span> 个 <span
+class="math inline">\(0\)</span>，也就不需要继续发送 <span
+class="math inline">\(C\)</span> 了。<br />
+根据 <span class="math inline">\(C\)</span> 的情况也可以调整顺序发送
+<span class="math inline">\(C\)</span> 或者是逆序发送 <span
+class="math inline">\(C\)</span>，最劣的情况应该是
+<code>0111111100000000000000111111110</code>，总共需要发送 <span
+class="math inline">\(\left\lceil\dfrac{1025-9}{16}\right\rceil+13+1=78\)</span>
+次。能获得 <span class="math inline">\(58.632\)</span> 分。<br />
+多一次是因为还需要发送 <span class="math inline">\(C\)</span>
+的方向。</p>
+<h2 id="分做法-3"><span class="math inline">\(66\)</span> 分做法</h2>
+<p>我们可以对上述做法进行一个优化。<br />
+我们在找到第一个有效位置前，利用的是众数的性质，此时所有有效位置均被利用了。而我们在找到第一个有效位置后，发送信息的一直是当前已知的有效位置，其他未知的有效信息并没有被利用。<br />
+实际上，我们最后在还原信息的时候，是可以重复看曾经的消息的，所以我们可以在找到第一个有效位置后，其他的有效位置也开始发送
+<span class="math inline">\(M\)</span>，等到 <span
+class="math inline">\(C\)</span>
+被彻底还原后，再去读取先前的消息即可。<br />
+我们同样可以根据 <span class="math inline">\(C\)</span>
+的情况调整发送方向，这样的最劣情况应该是
+<code>1111111000000000000000011111111</code>。需要发送 <span
+class="math inline">\(\left\lceil\dfrac{1025-58}{16}\right\rceil+13+1=75\)</span>
+次，可以获得 <span class="math inline">\(66.722\)</span> 分。</p>
+<p>不难发现，在找到第一个有效位置后，每个有效位置都发送了有效信息，如果依然按照
+<span class="math inline">\(61\)</span>
+分的做法，会很难写。我们不妨就只用一个位置来发送 <span
+class="math inline">\(C\)</span>，其余位置发送 <span
+class="math inline">\(M\)</span>，所有的有效位置依然都被使用了。次数是
+<span
+class="math inline">\(\left\lceil\dfrac{1025-23*15}{16}\right\rceil+31+1=75\)</span>
+次，得分不变。</p>
+<h2 id="分做法-4"><span class="math inline">\(83\)</span> 分做法</h2>
+<p>不难发现我们的瓶颈主要在找第一个有效位置。不难发现，我们决定好 <span
+class="math inline">\(C\)</span>
+的发送方向后，第一个有效位置一定出现在第 <span
+class="math inline">\(8\)</span>
+位即以前。于是我们便可以通过发送一个值为 <span
+class="math inline">\(0\)</span> 到 <span
+class="math inline">\(7\)</span>
+的数字的二进制来快速找到第一个有效位置，因为不知道方向，所以还需要多发送一个包。<br />
+其实也就和每次就从前往后发送 <span
+class="math inline">\(C\)</span>，第一个有效位置一定位于第 <span
+class="math inline">\(16\)</span> 位以前，发送一个值为 <span
+class="math inline">\(0\)</span> 到 <span
+class="math inline">\(15\)</span> 的数字的二进制是一样的。<br />
+可以再小小优化一下，如果第一个有效位置在第 <span
+class="math inline">\(4\)</span> 个以前，直接暴力发送前面几个位置。</p>
+<p>最劣的情况出现在第一个有效位置位于第 <span
+class="math inline">\(4\)</span> 个位置，总共发送 <span
+class="math inline">\(\left\lceil\dfrac{1025-(31-4)*15}{16}\right\rceil+4+(31-4)=70\)</span>
+次，可以获得 <span class="math inline">\(83.305\)</span> 分。</p>
+<h2 id="分做法-5"><span class="math inline">\(83\)</span> 分做法</h2>
+<p>继续优化，考虑到一次只能发送 <span class="math inline">\(16\)</span>
+个有效位置，而我们在找到第一个有效位置后，已经将所有的有效位置使用了，那么留给我们传输
+<span class="math inline">\(C\)</span> 的有效次数只有 <span
+class="math inline">\(66\times16-1025=31\)</span> 次。</p>
+<p>而我们当前的做法，只能继续优化获取第一个有效位置所需的数据包的数量。<br />
+尝试继续挖掘众数的性质，我们将 <span class="math inline">\(C\)</span>
+拆成 <span class="math inline">\(16\)</span> 和 <span
+class="math inline">\(15\)</span>
+两部分，根据鸽巢原理简单分析，一定有一个部分，其中有效位置的数量是大于无效位置数量的。</p>
+<p>我们先暴力发送是哪个区间，然后其中有效位置的位置至多为第 <span
+class="math inline">\(8\)</span>
+位，再用这个区间发送三次找到这个位置，发送这三次的同时用剩下最少 <span
+class="math inline">\(3\)</span> 个有效位置发送 <span
+class="math inline">\(M\)</span>。<br />
+最后用最多 <span class="math inline">\(28\)</span> 次发送 <span
+class="math inline">\(X\)</span>，同时用另外 <span
+class="math inline">\(15\)</span> 有效位置发送 <span
+class="math inline">\(M\)</span>。<br />
+总共需要发送 <span
+class="math inline">\(\left\lceil\dfrac{1025-3\times3-28\times15}{16}\right\rceil+1+3+28=70\)</span>
+次，看似没有优化。</p>
+<h2 id="分做法-6"><span class="math inline">\(87\)</span> 分做法</h2>
+<p>我们不妨继续拆分，拆成 <span
+class="math inline">\(8,8,8,7\)</span>，也一定有一段的有效位置的数量是大于无效位置数量的。我们先暴力发送两次找到这个区间，然后这段区间，有效位置至多为第
+<span class="math inline">\(4\)</span>
+位，和上文类似，我们直接算所需次数。<br />
+<span
+class="math inline">\(\left\lceil\dfrac{1025-8\times2-29\times15}{16}\right\rceil+2+2+29=69\)</span>
+次，可以获得 <span class="math inline">\(87.163\)</span> 分。</p>
+<h2 id="分做法-7"><span class="math inline">\(95\)</span> 分做法</h2>
+<p>继续拆，拆成 <span
+class="math inline">\(2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1\)</span>
+后，依然有一段的有效位置数量是大于无效位置数量的。<br />
+如果同样按照上文的思路，计算发现次数大约是 <span
+class="math inline">\(70\)</span> 次。<br />
+但是我们在传递哪个区间的时候，可以利用类似于二分的思路，众数表示往左边走还是往右边走，每次都可以释放一些有用位置，这样的话，我们至多会浪费
+<span class="math inline">\(16+8+4+2=30\)</span> 个位置，需要 <span
+class="math inline">\(67\)</span> 次，可以获得 <span
+class="math inline">\(95.5\)</span> 分。</p>
+<p>上面的方法利用同样的优化，应该可以做到 <span
+class="math inline">\(68\)</span> 次，也就是 <span
+class="math inline">\(91.225\)</span> 分。</p>
+<h2 id="分做法-8"><span class="math inline">\(100\)</span> 分做法</h2>
+<p>上述的做法似乎已经没有办法继续优化了。由前文可知，我们只能只用最多
+<span class="math inline">\(31\)</span> 位有效位置来传输 <span
+class="math inline">\(C\)</span>，这个是很困难的。<br />
+令人震惊的是，正解和前文的做法几乎没有关系。</p>
+<p>我们可以发现，将 <span class="math inline">\(C\)</span>
+首尾相连，形成一个环后，对于每一个有效位置，我们定义 <span
+class="math inline">\(f_{i}\)</span>，表示其距离下一个有效位置的距离。如果是无效位置，则
+<span class="math inline">\(f_{i}=0\)</span>，容易得到 <span
+class="math inline">\(\sum_{i=1}^{31} f_{i}=31\)</span>。<br />
+并且如果我们对于未被篡改的 <span class="math inline">\(C\)</span> 的所有
+<span class="math inline">\(f_{i}\not=0\)</span>，都将 <span
+class="math inline">\(i\)</span> 和 <span
+class="math inline">\(i+f_{i}\)</span> 相连，可以得到一个长度为 <span
+class="math inline">\(16\)</span> 的环。</p>
+<p>那么我们不妨对于每一个位置 <span
+class="math inline">\(i\)</span>，其前 <span
+class="math inline">\(f_{i}-1\)</span> 次的消息包，这个位置均发送 <span
+class="math inline">\(0\)</span>，而第 <span
+class="math inline">\(f_{i}\)</span> 次则发送 <span
+class="math inline">\(1\)</span>，并且我们定义每个位置第一个获取到 <span
+class="math inline">\(1\)</span> 的第几个消息包就是这个点 <span
+class="math inline">\(f_{i}\)</span> 的值。</p>
+<p>首先，对于有效位置，其 <span class="math inline">\(f_{i}\)</span>
+的值不会被篡改。对于无效位置，其 <span
+class="math inline">\(f_{i}\)</span>
+可能被篡改，那么我们依然按照先前的方法连边后，会得到一颗基环树森林。并且其中只会存在一个长度为
+<span class="math inline">\(16\)</span>
+的环，并且这个环上的点正好就是有效位置！<br />
+为什么？因为剩下 <span class="math inline">\(15\)</span>
+个无效位置无论如何都不能连成一个长度为 <span
+class="math inline">\(16\)</span> 的环，而有效位置的 <span
+class="math inline">\(f_{i}\)</span>
+又不会发生改变，原来就能连成环，现在依然可以。</p>
+<p>那么，我们一共就浪费了 <span class="math inline">\(31\)</span>
+个有效位置，刚好符合题目要求的 <span class="math inline">\(66\)</span>
+次。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>#include &quot;message.h&quot;
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int MAXN=1e5+10;
+
+//send_packet()
+
+int f[MAXN],F[MAXN],k,head[MAXN],pre[MAXN];
+bool vis[MAXN],c[MAXN];
+struct node{
+    int to,next;
+}edge[MAXN];
+
+void build(int u,int v){
+    edge[++k].to=v;
+    edge[k].next=head[u];
+    head[u]=k;
+}
+
+void send_message(vector&lt;bool&gt; M,vector&lt;bool&gt; C){
+    vector&lt;bool&gt; A[66];
+    for(int j=0;j&lt;66;j++) for(int i=0;i&lt;31;i++) A[j].push_back(0);
+    M.push_back(1);
+    while(M.size()&lt;1025) M.push_back(0);
+    int last=-1;
+    for(int i=0;i&lt;31;i++){
+        if(!C[i]){
+            if(~last) f[last]=i-last;
+            last=i;
+        }
+    }
+    for(int i=0;i&lt;31;i++){
+        if(!C[i]){
+            f[last]=i+31-last;
+            break;
+        }
+    }
+    int cnt=0;
+    for(int i=0;i&lt;31;i++){
+        if(!C[i]){
+            A[f[i]-1][i]=1;
+            for(int j=f[i];j&lt;66;j++) A[j][i]=M[cnt++];
+        }
+    }
+    for(int i=0;i&lt;66;i++) send_packet(A[i]);
+}
+
+void dfs(int u){
+    vis[u]=true;
+    for(int i=head[u];i;i=edge[i].next){
+        int v=edge[i].to;
+        if(vis[v]){
+            int pos=u,cnt=1;
+            while(pos!=-1&amp;&amp;pos!=v) cnt++,pos=pre[pos];
+            if(pos!=v) cnt=0;
+            if(cnt==16){
+                pos=u,c[v]=0;
+                while(pos!=v){
+                    c[pos]=0;
+                    pos=pre[pos];
+                }
+            }
+            continue;
+        }
+        pre[v]=u;
+        dfs(v);
+    }
+}
+
+vector&lt;bool&gt; receive_message(vector&lt;vector&lt;bool&gt; &gt; R){
+    vector&lt;bool&gt; ans,ANS;
+    for(int i=0;i&lt;31;i++){
+        for(int j=0;j&lt;66;j++){
+            if(R[j][i]){
+                F[i]=j+1;
+                break;
+            }
+        }
+    }
+    k=0;
+    for(int i=0;i&lt;31;i++) head[i]=vis[i]=0;
+    for(int i=0;i&lt;31;i++) if(F[i]) build(i,(i+F[i])%31);
+    for(int i=0;i&lt;31;i++) c[i]=1,pre[i]=-1;
+    for(int i=0;i&lt;31;i++) if(!vis[i]) dfs(i);
+    for(int i=0;i&lt;31;i++){
+        if(!c[i]){
+            for(int j=0;j&lt;66;j++){
+                if(R[j][i]){
+                    for(int p=j+1;p&lt;66;p++) ans.push_back(R[p][i]);
+                    break;
+                }
+            }
+        }
+    }
+    for(int i=ans.size()-1;i&gt;=0;i--){
+        if(ans[i]){
+            for(int j=0;j&lt;i;j++) ANS.push_back(ans[j]);
+            break;
+        }
+    }
+    return ANS;
+}</code></pre>
+
+    </div>
+</div>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
     
