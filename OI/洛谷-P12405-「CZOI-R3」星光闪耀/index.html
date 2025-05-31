@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>洛谷 P10643 嬉皮爵士 题解 | yzljyのBlog</title>
+    <title>洛谷 P12405 「CZOI-R3」星光闪耀 | yzljyのBlog</title>
     <meta name="author" content="yzljy" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -165,14 +165,14 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div class="article">
     <div>
-        <h1>洛谷 P10643 嬉皮爵士 题解</h1>
+        <h1>洛谷 P12405 「CZOI-R3」星光闪耀</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2024/11/7
+            2025/5/31
         </span>
         
         <span class="category">
@@ -193,22 +193,15 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #e74c3c">
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #a5ff4d">
                     题解
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E6%9E%84%E9%80%A0/" style="color: #00beff">
-                    构造
-                </a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/%E9%9A%8F%E6%9C%BA%E5%8C%96/" style="color: #e74c3c">
-                    随机化
+                <a href="/tags/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/" style="color: #ffa400">
+                    组合数学
                 </a>
             </span>
             
@@ -217,35 +210,239 @@
     </div>
     
     <div class="content" v-pre>
-        <h2 id="思路">思路</h2>
-<p><del>注意到标签里面有<strong>随机调整</strong>，所以随机乱搞</del></p>
-<p>好吧其实也给了一定的思路（<br />
-先随机出每个点的值。然后每次 <span class="math inline">\(O(n)\)</span>
-地去检查是否合法。<br />
-假如找到某个点 <span class="math inline">\(i\)</span> 不合法。那么将
-<span class="math inline">\(i\)</span>
-这个点反转一下。因为这种权值不合法，说明另一种权值必然是合法的（只对于这个点而言）。继续上述步骤直到合法。</p>
-<p>我并不会去证明时间复杂度，题解说至多调整 <span
-class="math inline">\(O(m)\)</span>
-次（似乎是因为每调整一次，至少都会减少 <span
-class="math inline">\(1\)</span> 对颜色相同的边，总共又是 <span
-class="math inline">\(m\)</span> 条边）。<span
-class="math inline">\(m\)</span> 至多又只有 <span
-class="math inline">\(19900\)</span> ，所以是可以通过的。</p>
+        <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P12405">题目传送门</a></p>
+<p>题意在此就不再简述了，主要是提供另一种做法。</p>
+<h2 id="观察">观察</h2>
+<p>通过观察样例解释一，不难猜想其符合杨辉三角，通过打表简单验证一下发现是正确的，具体的证明过程这里就不放了。<br />
+于是到此，你便获得了一个 <span class="math inline">\(O(\sum n)\)</span>
+的做法。<br />
+但本题只限制了 <span class="math inline">\(\sum m\)</span>
+的值，并没有限制 <span class="math inline">\(\sum
+n\)</span>，于是你只能通过 sub2，sub5，sub7，获得 <span
+class="math inline">\(35\)</span> 分。<br />
+似乎优化是没有什么前途的，但实际上，我们可以通过推式子，将其转化为 <span
+class="math inline">\(O(\sum m)\)</span> 的。</p>
+<h2 id="思路">思路</h2>
+<p>我们不妨先写出前面 <span class="math inline">\(O(\sum n)\)</span>
+的式子。</p>
+<p><span class="math display">\[
+ans=\sum_{i=0}^{n-1}
+  \begin{pmatrix}
+    m-1+i\\
+    m-1\\
+  \end{pmatrix}
+  k^{n-i}\\
+\]</span></p>
+<p>在下文中，为了方便，我们都先将 <span class="math inline">\(m\)</span>
+减少 <span class="math inline">\(1\)</span>。</p>
+<p>那么原式子就变成了：</p>
+<p><span class="math display">\[
+ans=\sum_{i=0}^{n-1}
+  \begin{pmatrix}
+    m+i\\
+    m\\
+  \end{pmatrix}
+  k^{n-i}\\
+\]</span></p>
+<p>发现这个式子类似于 <span
+class="math inline">\(\sum\limits_{i=0}^{n-1}k_{i}a^{i}\)</span>，不难想到利用类似于等比数列求和的方式来解决。<br />
+我们令：</p>
+<p><span class="math display">\[
+f(m)=\sum_{i=0}^{n-1}\begin{pmatrix}m+i\\m\\\end{pmatrix}k^{n-i}
+\]</span></p>
+<p>两边同时乘以 <span class="math inline">\(k\)</span>，得到：</p>
+<p><span class="math display">\[
+kf(m)=\sum_{i=0}^{n-1}\begin{pmatrix}m+i\\m\\\end{pmatrix}k^{n-i+1}
+\]</span></p>
+<p>这两个式子相减，得到：</p>
+<p><span class="math display">\[
+(k-1)f(m)=
+  k^{n+1}+
+  \sum_{i=0}^{n-2}
+  \left(
+  \begin{pmatrix}
+    m+i+1\\
+    m\\
+  \end{pmatrix}-
+  \begin{pmatrix}
+    m+i\\
+    m\\
+  \end{pmatrix}
+  \right)
+  k^{n-i}-
+  \begin{pmatrix}
+    m+n-1\\
+    m\\
+  \end{pmatrix}
+  k
+\]</span></p>
+<p>中间的两个组合数相减是可以化简的，等于 <span
+class="math inline">\(\begin{pmatrix}m+i\\m-1\\\end{pmatrix}\)</span>。</p>
+<p>那么我们的 <span class="math inline">\(f(m)\)</span>，也就等于：</p>
+<p><span class="math display">\[
+f(m)=
+  \dfrac{
+  k^{n+1}+
+  \sum\limits_{i=0}^{n-2}
+  \begin{pmatrix}
+    m+i\\
+    m-1\\
+  \end{pmatrix}
+  k^{n-i}-
+  \begin{pmatrix}
+    m+n-1\\
+    m\\
+  \end{pmatrix}
+  k}
+  {k-1}\\
+\]</span></p>
+<p>我们将中间的 <span
+class="math inline">\(\sum\limits_{i=0}^{n-2}\begin{pmatrix}m+i\\m-1\\\end{pmatrix}k^{n-i}\)</span>
+单独提出来考虑。</p>
+<p>发现我们枚举的范围，从 <span class="math inline">\([0,n-1]\)</span>
+变成了 <span
+class="math inline">\([0,n-2]\)</span>，同时组合数中，下面的数，也从
+<span class="math inline">\(m\)</span> 变成了 <span
+class="math inline">\(m-1\)</span>。<br />
+那么我们不妨将原来的 <span class="math inline">\(f(m)\)</span>
+改写成如下形式：</p>
+<p><span class="math display">\[
+f(m)=
+  \sum_{i=0}^{n-1-(M-m)}
+  \begin{pmatrix}
+    M+i\\
+    m\\
+  \end{pmatrix}
+  k^{n-i}\\
+\]</span></p>
+<p>其中式子中的 <span class="math inline">\(M\)</span>
+表示的是<strong>输入</strong>的 <span class="math inline">\(m\)</span>
+的值减少 <span
+class="math inline">\(1\)</span>，<strong>式子中</strong>的 <span
+class="math inline">\(m\)</span> 则表示一个自变量。</p>
+<p>重新推一下式子：</p>
+<p><span class="math display">\[
+\begin{aligned}
+  f(m)=&amp;
+  \sum_{i=0}^{n-1-(M-m)}
+  \begin{pmatrix}
+    M+i\\
+    m\\
+  \end{pmatrix}
+  k^{n-i}\\
+  kf(m)=&amp;
+  \sum_{i=0}^{n-1-(M-m)}
+  \begin{pmatrix}
+    M+i\\
+    m\\
+  \end{pmatrix}
+  k^{n-i+1}\\
+  (k-1)f(m)=&amp;
+  \begin{pmatrix}
+    M\\
+    m\\
+  \end{pmatrix}
+  k^{n+1}+
+  \sum_{i=0}^{n-2-(M-m)}
+  \left(
+  \begin{pmatrix}
+    M+i+1\\
+    m\\
+  \end{pmatrix}-
+  \begin{pmatrix}
+    M+i\\
+    m\\
+  \end{pmatrix}
+  \right)
+  k^{n-i}-
+  \begin{pmatrix}
+    m+n-1\\
+    m\\
+  \end{pmatrix}
+  k^{1+(M-m)}\\
+  (k-1)f(m)=&amp;
+  \begin{pmatrix}
+    M\\
+    m\\
+  \end{pmatrix}
+  k^{n+1}+
+  \sum_{i=0}^{n-2-(M-m)}
+  \begin{pmatrix}
+    M+i\\
+    m-1\\
+  \end{pmatrix}
+  k^{n-i}-
+  \begin{pmatrix}
+    m+n-1\\
+    m\\
+  \end{pmatrix}
+  k^{1+(M-m)}\\
+  (k-1)f(m)=&amp;
+  \begin{pmatrix}
+    M\\
+    m\\
+  \end{pmatrix}
+  k^{n+1}+
+  f(m-1)-
+  \begin{pmatrix}
+    m+n-1\\
+    m\\
+  \end{pmatrix}
+  k^{1+(M-m)}\\
+  f(m)=&amp;
+  \dfrac{
+  \begin{pmatrix}
+    M\\
+    m\\
+  \end{pmatrix}
+  k^{n+1}+
+  f(m-1)-
+  \begin{pmatrix}
+    m+n-1\\
+    m\\
+  \end{pmatrix}
+  k^{1+(M-m)}
+  }
+  {k-1}\\
+\end{aligned}
+\]</span></p>
+<p>不难发现是一个递归的形式，<span
+class="math inline">\(f(0)=\sum\limits_{i=0}^{n-M-1}k^{n-i}=\sum\limits_{i=0}^{n}k^{i}-\sum\limits_{i=0}^{M}k^{i}\)</span>，这个是可以通过两个等比数列求和公式在
+<span class="math inline">\(O(1)\)</span> 的时间内得到的。</p>
+<p>于是，我们便将原来 <span class="math inline">\(O(n)\)</span>
+的式子，转化成了递归形式的 <span class="math inline">\(O(m)\)</span>
+的式子。</p>
+<h2 id="细节">细节</h2>
+<p>首先，我们观察到 <span class="math inline">\(f(m)\)</span>
+的式子中，随着 <span class="math inline">\(m\)</span> 的降低，<span
+class="math inline">\(\sum\limits_{i=0}^{n-1-(M-m)}\)</span> 中的 <span
+class="math inline">\(n-1-(M-m)\)</span> 是在不断减少的。<br />
+那么当 <span class="math inline">\(n-1-(M-m)\)</span> 先减到 <span
+class="math inline">\(-1\)</span> 的时候，也就是当 <span
+class="math inline">\(n\le M\)</span>
+的时候，这个式子就寄掉了，但是这个时候，我们又可以用最开始的式子了。</p>
+<p>还有一处细节。<br />
+当 <span class="math inline">\(k=0\)</span> 或者 <span
+class="math inline">\(k=1\)</span>
+的时候，我们推导出来的式子也不管用了。<br />
+这时候简单推一下，可以得出 <span class="math inline">\(O(1)\)</span>
+的计算公式，这个式子我就不推了。</p>
+<p>最后，因为 <span class="math inline">\(\sum m\le 2\times
+10^7\)</span>，这是比较大的。我们要减少快速幂的使用，所以对于原先的递归式子，我们在实现的时候，写成迭代，这样在迭代求解的过程中，是可以不用到快速幂的。</p>
 <h2 id="代码">代码</h2>
-<pre class="cpp"><code>// Problem: P10643 [NordicOI 2022] 嬉皮爵士 Hipster Jazz
+<pre class="cpp"><code>// Problem: P12405 「CZOI-R3」星光闪耀
 // Contest: Luogu
-// URL: https://www.luogu.com.cn/problem/P10643
-// Memory Limit: 1 MB
+// URL: https://www.luogu.com.cn/problem/P12405
+// Memory Limit: 512 MB
 // Time Limit: 1000 ms
 // 
 // Powered by CP Editor (https://cpeditor.org)
 
 #include&lt;bits/stdc++.h&gt;
+#define int long long
 using namespace std;
-const int MAXN=1e5+10;
-const int mod1=1e9+7;
-const int mod2=998244353;
+const int MAXN=4e6+10;
+const int mod=998244353;
 const int inf_int=0x7f7f7f7f;
 const long long inf_long=0x7f7f7f7f7f7f7f7f;
 const double eps=1e-9;
@@ -265,48 +462,51 @@ inline void read(type &amp;x,args&amp;... y)&#123;
     read(x),read(y...);
 &#125;
 
-int n,m,k,head[MAXN],d[MAXN],half[MAXN];
-bool val[MAXN];
-struct node&#123;
-    int to,next;
-&#125;edge[MAXN&lt;&lt;1];
+int T,n,m,k,ans,fac[MAXN],inv[MAXN];
 
-void build(int u,int v)&#123;
-    edge[++k].to=v;
-    edge[k].next=head[u];
-    head[u]=k;
+int C(int a,int b)&#123;
+    return fac[a]*inv[b]%mod*inv[a-b]%mod;
 &#125;
 
-int chk()&#123;
-    for(int i=1;i&lt;=n;i++)&#123;
-        int cnt=0;
-        for(int j=head[i];j;j=edge[j].next)&#123;
-            int v=edge[j].to;
-            if(val[i]==val[v]) cnt++;
-        &#125;
-        if(d[i]-cnt&lt;half[i]) return i;
+int qpow(int x,int y)&#123;
+    int res=1;
+    while(y)&#123;
+        if(y&amp;1) res=res*x%mod;
+        x=x*x%mod;
+        y&gt;&gt;=1;
     &#125;
-    return 0;
+    return res;
 &#125;
 
 signed main()&#123;
-    srand(time(0));
-    read(n,m);
-    for(int i=1;i&lt;=m;i++)&#123;
-        int u,v;
-        read(u,v);
-        build(u,v);
-        build(v,u);
-        d[u]++;d[v]++;
+    read(T);
+    fac[0]=1;
+    for(int i=1;i&lt;=4e6;i++) fac[i]=fac[i-1]*i%mod;
+    inv[4000000]=qpow(fac[4000000],mod-2);
+    for(int i=4e6-1;i&gt;=0;i--) inv[i]=inv[i+1]*(i+1)%mod;
+    while(T--)&#123;
+        read(n,m,k);m--;
+        ans=0;
+        int invk=qpow(k,mod-2);
+        if(k==0) ans=0;
+        else if(k==1) ans=C(m+n,m+1);
+        else if(n&lt;=m+1)&#123;
+            int z=qpow(k,n);
+            for(int i=0;i&lt;=n-1;i++)&#123;
+                (ans+=C(m+i,i)*z%mod)%=mod;
+                z=z*invk%mod;
+            &#125;
+        &#125;
+        else&#123;
+            int val1=qpow(k,n+1),val2=qpow(k-1,mod-2),val3=qpow(k,m);
+            ans=((val1-1+mod)%mod*val2%mod-(qpow(k,m+1)-1+mod)%mod*val2%mod+mod)%mod;
+            for(int i=1;i&lt;=m;i++)&#123;
+                ans=(C(m,i)*val1%mod+ans-C(i+n-1,i)*val3%mod+mod)%mod*val2%mod;
+                val3=val3*invk%mod;
+            &#125;
+        &#125;
+        cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
     &#125;
-    for(int i=1;i&lt;=n;i++) half[i]=d[i]/2+(d[i]%2);
-    for(int i=1;i&lt;=n;i++) val[i]=rand()%2;
-    int z=chk();
-    while(z!=0)&#123;
-        val[z]^=1;
-        z=chk();
-    &#125;
-    for(int i=1;i&lt;=n;i++) cout&lt;&lt;(val[i]?&#39;P&#39;:&#39;S&#39;);
     return 0;
 &#125;</code></pre>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
