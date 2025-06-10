@@ -193,7 +193,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #ffa400">
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #00beff">
                     题解
                 </a>
             </span>
@@ -2413,6 +2413,235 @@ signed main(){
 </div>
 <h1 id="第六周20250421-20250427">第六周（2025/04/21-2025/04/27）</h1>
 <p>每周好题分享永久停办一周。</p>
+<h1 id="第七周20250602-20250608">第七周（2025/06/02-2025/06/08）</h1>
+<p>打赢复活赛了。</p>
+<h2 id="t1-5">T1</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4173">P4173
+残缺的字符串</a></p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>见：<a
+target="_blank" rel="noopener" href="https://yzljyawa.github.io/OI/使用-FFT-NTT-进行字符串匹配/">使用
+FFT/NTT 进行字符串匹配</a></p>
+
+    </div>
+</div>
+<h2 id="t2-5">T2</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P7044">P7044
+「MCOI-03」括号</a></p>
+<p>突然发现我不会组合数学，于是恶补了一下。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p><span class="math inline">\(n\)</span> 有 <span
+class="math inline">\(10^6\)</span>，非常的大，这启发我们这道题大概率是
+<span class="math inline">\(O(n)\)</span> 做法。<br />
+不妨先考虑 <span class="math inline">\(K=1\)</span> 的情况。</p>
+<p>读题，分析一下，发现所谓的 <span class="math inline">\(0\)</span>
+级偏值，也就是对括号串进行括号匹配后，剩下的左括号的数量加上右括号的数量。<br />
+于是我们便可以轻松得到一个 <span class="math inline">\(O(n^2)\)</span>
+的做法。</p>
+<p>发现我们在计算的时候，对某一个括号进行了多次重复的计算，我们不妨考虑一个括号会产生什么样的贡献。<br />
+我们使用栈进行括号匹配的时候，找到的是从中间开始的匹配，我们对于左括号记一下其右侧第一个能与其匹配的左括号的位置，记作
+<span
+class="math inline">\(nxt_{i}\)</span>，对于右括号记一下其左侧第一个能与其匹配的左括号的位置，记作
+<span class="math inline">\(pre_{i}\)</span>。<br />
+那么对于左括号 <span class="math inline">\(s_{i}\)</span>，当子串 <span
+class="math inline">\([L,R]\)</span> 满足 <span
+class="math inline">\(1\le L \le i,i\le R&lt;nxt_{i}\)</span>
+时，该左括号会产生 <span class="math inline">\(1\)</span> 的贡献。<br />
+同理，对于右括号 <span class="math inline">\(s_{i}\)</span>，当子串
+<span class="math inline">\([L,R]\)</span> 满足 <span
+class="math inline">\(pre_{i}&lt; L \le i,i\le R\le n\)</span>
+时，该右括号会产生 <span class="math inline">\(1\)</span> 的贡献。<br />
+根据 <span
+class="math inline">\(\sum\limits_{L=1}^{i}\sum\limits_{R=i}^{nxt_{i}-1}1=i(nxt_{i}-i)\)</span>，这个是可以
+<span class="math inline">\(O(1)\)</span> 计算的。 于是对于 <span
+class="math inline">\(k=1\)</span> 的情况，我们预处理出需要的 <span
+class="math inline">\(pre_{i}\)</span> 和 <span
+class="math inline">\(nxt_{i}\)</span>。再扫一遍即可。</p>
+<p>那么现在考虑 <span class="math inline">\(k&gt;1\)</span>
+的情况。<br />
+不难发现，对于子串 <span
+class="math inline">\([l,r]\)</span>，对于其上一级偏值，能产生该子串贡献的区间
+<span class="math inline">\([L,R]\)</span>，满足 <span
+class="math inline">\(1\le L\le l,r\le R\le
+n\)</span>。也就是说明，我们将计算 <span
+class="math inline">\(k\)</span> 级偏值的顺序倒过来，对于子串 <span
+class="math inline">\([l,r]\)</span>，每次就是在扩大这个区间。<br />
+我们现在只考虑 <span class="math inline">\(l\)</span>，<span
+class="math inline">\(r\)</span> 是同理的，发现其本质是一个长度为 <span
+class="math inline">\(k-1\)</span>
+的不升序列，并且序列中所有元素的值均小于等于 <span
+class="math inline">\(l\)</span>，大于等于 <span
+class="math inline">\(1\)</span>。<br />
+这个是很经典的 trick，不升序列倒过来就成了不降序列，对于一个长度为 <span
+class="math inline">\(a\)</span>，值域为 <span
+class="math inline">\([1,b]\)</span> 的不降序列，其可行方案数为 <span
+class="math inline">\(\begin{pmatrix}a+b-1\\b-1\end{pmatrix}\)</span>。</p>
+<p>那么对于这道题而言，子串 <span class="math inline">\([l,r]\)</span>
+会被计算的次数也就是</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+k-1+l-1\\
+l-1
+\end{pmatrix}
+\begin{pmatrix}
+k-1+(n-r+1)-1\\
+(n-r+1)-1
+\end{pmatrix}
+\]</span></p>
+<p>化简一下，再根据 <span
+class="math inline">\(\begin{pmatrix}a\\b\end{pmatrix}=\begin{pmatrix}a\\a-b\end{pmatrix}\)</span>。可以得到：</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+k+l-2\\
+k-1
+\end{pmatrix}
+\begin{pmatrix}
+k+n-r-1\\
+k-1
+\end{pmatrix}
+\]</span></p>
+<p>和 <span class="math inline">\(k=1\)</span>
+类似，我们同样考虑一个位置会产生什么贡献，可以得到，对于一个左括号 <span
+class="math inline">\(s_{i}\)</span>，我们要求的答案，是：</p>
+<p><span class="math display">\[
+\sum_{l=1}^{i}
+\sum_{r=i}^{nxt_{i}-1}
+\begin{pmatrix}
+k+l-2\\
+k-1
+\end{pmatrix}
+\begin{pmatrix}
+k+n-r-1\\
+k-1
+\end{pmatrix}
+\]</span></p>
+<p>这个东西可以变成</p>
+<p><span class="math display">\[
+\sum_{l=1}^{i}
+\begin{pmatrix}
+k+l-2\\
+k-1
+\end{pmatrix}
+\sum_{r=i}^{nxt_{i}-1}
+\begin{pmatrix}
+k+n-r-1\\
+k-1
+\end{pmatrix}
+\]</span></p>
+<p>前面这个东西是显然可以化简的，后面也是。<br />
+最后得到答案：</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+k+i-1\\
+k
+\end{pmatrix}
+\left(
+\begin{pmatrix}
+k+n-i\\
+k
+\end{pmatrix}-
+\begin{pmatrix}
+k+n-nxt_{i}\\
+k
+\end{pmatrix}
+\right)
+\]</span></p>
+<p>对于右括号是同理的，我就不推了。</p>
+<p>最后照着式子做就好了，时间复杂度 <span
+class="math inline">\(O(n)\)</span>。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>// Problem: P7044 「MCOI-03」括号
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/P7044
+// Memory Limit: 500 MB
+// Time Limit: 1000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int MAXN=2e6+10;
+const int mod=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x){
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+}
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y){
+    read(x),read(y...);
+}
+
+int n,k,ans,fac[MAXN],inv[MAXN],pre[MAXN],nxt[MAXN];
+string s;
+
+int qpow(int x,int y){
+    int res=1;
+    while(y){
+        if(y&amp;1) res=res*x%mod;
+        x=x*x%mod;
+        y&gt;&gt;=1;
+    }
+    return res;
+}
+
+int C(int x,int y){
+    return fac[x]*inv[y]%mod*inv[x-y]%mod;
+}
+
+signed main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cin&gt;&gt;n&gt;&gt;k&gt;&gt;s;s=&#39; &#39;+s;
+    for(int i=1;i&lt;=n;i++) if(s[i]==&#39;(&#39;) nxt[i]=n+1;
+    for(int i=1;i&lt;=n;i++) if(s[i]==&#39;)&#39;) pre[i]=0;
+    stack&lt;int&gt; sta;
+    for(int i=1;i&lt;=n;i++){
+        if(s[i]==&#39;(&#39;) sta.push(i);
+        else{
+            if(!sta.empty()&amp;&amp;s[sta.top()]==&#39;(&#39;) pre[i]=sta.top(),nxt[sta.top()]=i,sta.pop();
+            else sta.push(i);
+        }
+    }
+    fac[0]=1;
+    for(int i=1;i&lt;=2e6;i++) fac[i]=fac[i-1]*i%mod;
+    inv[2000000]=qpow(fac[2000000],mod-2);
+    for(int i=2e6-1;i&gt;=0;i--) inv[i]=inv[i+1]*(i+1)%mod;
+    for(int i=1;i&lt;=n;i++){
+        if(s[i]==&#39;(&#39;) (ans+=C(k+i-1,k)*((C(k+n-i,k)-C(k+n-nxt[i],k)+mod)%mod)%mod)%=mod;
+        else (ans+=((C(k+i-1,k)-C(k+pre[i]-1,k)+mod)%mod)*C(k+n-i,k)%mod)%=mod;
+    }
+    cout&lt;&lt;ans;
+    return 0;
+}</code></pre>
+
+    </div>
+</div>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
     
