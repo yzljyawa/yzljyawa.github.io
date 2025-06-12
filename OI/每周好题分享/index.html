@@ -193,7 +193,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #00beff">
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #979a9a">
                     题解
                 </a>
             </span>
@@ -2636,6 +2636,128 @@ signed main(){
         if(s[i]==&#39;(&#39;) (ans+=C(k+i-1,k)*((C(k+n-i,k)-C(k+n-nxt[i],k)+mod)%mod)%mod)%=mod;
         else (ans+=((C(k+i-1,k)-C(k+pre[i]-1,k)+mod)%mod)*C(k+n-i,k)%mod)%=mod;
     }
+    cout&lt;&lt;ans;
+    return 0;
+}</code></pre>
+
+    </div>
+</div>
+<h1 id="第八周20250609-20250615">第八周（2025/06/09-2025/06/15）</h1>
+<h2 id="t1-6">T1</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF930C">CF930C Teodor is
+not a liar!</a></p>
+<p>有意思的 DP 题。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>先手玩一下样例，帮助理解一下题意。<br />
+后文感觉有点跳跃，但其实我也不知道我怎么想到的。</p>
+<p>我们记 <span class="math inline">\(cnt_i\)</span> 表示对于第 <span
+class="math inline">\(i\)</span>
+个点，其在所有区间中被包含的次数。我们发现，只要我们对于所有当前询问的点，存在一种方案，使得存在某个点被某些区间包含，并且所有点被包含次数均符合，那么就是不确定的。</p>
+<p>不难想到，假如所有询问的 <span class="math inline">\(i\)</span> 的
+<span class="math inline">\(cnt_{i}\)</span>
+构成一个不降序列，则可以轻松构造出一种合法方案。同理，构成不升序列也是可行的。</p>
+<p>考虑什么时候能确定，能确定，也就是确定存在某个点，没有被所有区间包含。说明这个点的左侧存在一些完整的区间，右边也存在一些完整的区间。并且同时也不能是不降序列，不升序列或者这两个拼起来。那么只能是存在
+<span class="math inline">\(n_1,n_2,n_3\)</span> 满足 <span
+class="math inline">\(cnt_1&gt;cnt_2,cnt_3&gt;cnt_2\)</span>。</p>
+<p>那思路就很清晰了，既然不能存在上述情况，那我们对于一个点 <span
+class="math inline">\(1\)</span>，我们去找 <span
+class="math inline">\([1,i]\)</span> 的最长不降子序列，找 <span
+class="math inline">\([i+1,n]\)</span> 的最长不升子序列，此时 <span
+class="math inline">\(cnt_{i}\)</span>
+是不定的，左右也都能构造出方案使其不确定。那么我们对于所有的 <span
+class="math inline">\(i\)</span> 去求一次答案，取 <span
+class="math inline">\(\max\)</span> 就行了。<br />
+求这个东西是容易的，我们在做最长不降子序列的时候，实际上求的就是所有前缀的最长不降子序列，所以做一次就好了。后者同理，倒着做一次即可。<del>不会有人现在还不会O(nlogn)的最长不降子序列吧，不会吧，不会吧。</del></p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>// Problem: CF930C Teodor is not a liar!
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/CF930C
+// Memory Limit: 250 MB
+// Time Limit: 1000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int MAXN=1e5+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x){
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+}
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y){
+    read(x),read(y...);
+}
+
+int n,m,t[MAXN],z[MAXN],maxlen,len[MAXN],dp1[MAXN],dp2[MAXN];
+
+int lowbit(int u){return u&amp;(-u);}
+
+void update(int pos,int val){
+    while(pos&lt;=m){
+        t[pos]+=val;
+        pos+=lowbit(pos);
+    }
+}
+
+int query(int pos){
+    int res=1;
+    while(pos){
+        res+=t[pos];
+        pos-=lowbit(pos);
+    }
+    return res;
+}
+
+signed main(){
+    read(n,m);
+    for(int i=1;i&lt;=n;i++){
+        int l,r;
+        read(l,r);
+        update(l,1);
+        if(r+1&lt;=m) update(r+1,-1);
+    }
+    for(int i=1;i&lt;=m;i++) z[i]=query(i);
+    len[0]=0;maxlen=0;
+    for(int i=1;i&lt;=m;i++){
+        int pos=upper_bound(len,len+maxlen+1,z[i])-len-1;
+        dp1[i]=pos+1;
+        if(pos+1&gt;maxlen) maxlen=pos+1,len[pos+1]=z[i];
+        else len[pos+1]=min(len[pos+1],z[i]);
+    }
+    memset(len,0,sizeof(len));
+    len[0]=0;maxlen=0;
+    for(int i=m;i&gt;=1;i--){
+        int pos=upper_bound(len,len+maxlen+1,z[i])-len-1;
+        dp2[i]=pos+1;
+        if(pos+1&gt;maxlen) maxlen=pos+1,len[pos+1]=z[i];
+        else len[pos+1]=min(len[pos+1],z[i]);
+    }
+    int ans=0;
+    for(int i=1;i&lt;=m;i++) ans=max(ans,dp1[i]+dp2[i+1]);
     cout&lt;&lt;ans;
     return 0;
 }</code></pre>
