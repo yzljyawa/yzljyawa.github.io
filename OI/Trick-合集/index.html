@@ -193,7 +193,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/trick/" style="color: #e74c3c">
+                <a href="/tags/trick/" style="color: #ffa400">
                     trick
                 </a>
             </span>
@@ -236,7 +236,18 @@ class="math inline">\(m\leq 3n-6\)</span>。<br />
 </li>
 <li>若 <span class="math inline">\(ab=n^2,bc=m^2,n,m\in \mathbb
 N\)</span> 根据唯一分解定理有 <span class="math inline">\(ac=k^2,k\in
-\mathbb N\)</span>。</li>
+\mathbb N\)</span>。<br />
+</li>
+<li>阶的求法：先求出 <span
+class="math inline">\(\varphi(p)\)</span>，然后分解质因数，依次尝试去掉每个质因子，最后剩下的数就是阶。时间复杂度
+<span class="math inline">\(O(log^2p)\)</span>。<br />
+</li>
+<li>现有多条路径，每条路径有一个权值，再给定一条路径，问与给定路径有交的路径的权值和。一条路径上点数减去边数正好是
+<span
+class="math inline">\(1\)</span>。因此对于一条路径，我们将这条路径上的点权增加
+<span class="math inline">\(v\)</span>，将边权减少 <span
+class="math inline">\(v\)</span>。对于给定路径求路径上点权和加边权和即是答案。可以使用
+DFS 序+BIT 实现，当然也可以树剖。</li>
 </ol>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
