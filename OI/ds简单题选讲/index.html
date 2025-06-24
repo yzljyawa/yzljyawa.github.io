@@ -193,7 +193,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #00beff">
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #a5ff4d">
                     题解
                 </a>
             </span>
@@ -235,7 +235,7 @@ class="math inline">\(w_{i}\)</span>。定义一段区间的价值为：对于�
 次询问，每次给出一段区间 <span
 class="math inline">\([l,r]\)</span>，问其价值。给定 <span
 class="math inline">\(n,k,q\)</span>。</p>
-<p><span class="math inline">\(n\le 10^6,m\le 5\times10^5,1\le v_{i}\le
+<p><span class="math inline">\(n\le 10^6,q\le 5\times10^5,1\le v_{i}\le
 n,1\le w_{i}\le 2000\)</span>。</p>
 <h2 id="思路">思路</h2>
 <div class='spoiler collapsed'>
@@ -854,7 +854,7 @@ Array</a></p>
 <p>给定一个为 <span class="math inline">\(n\)</span> 的序列 <span
 class="math inline">\(a\)</span>，定义一个子段为<code>独特子段</code>，当且仅当其中存在某个数，恰好只出现一次。<br />
 一次操作为选择 <span class="math inline">\(a\)</span>
-种的某个数，将其修改为任意一个数，问至少多少次操作可以使 <span
+中的某个数，将其修改为任意一个数，问至少多少次操作可以使 <span
 class="math inline">\(a\)</span>
 的所有子段均为<code>独特子段</code>。</p>
 <p><span class="math inline">\(1\le n\le 3\times 10^5\)</span>。</p>
@@ -1331,7 +1331,7 @@ GSS2，其他七道，你们以你们现在学了的东西，理论上都可以�
 class="math inline">\(a\)</span>。每次询问，给定 <span
 class="math inline">\(l_1,r_1,l_2,r_2\)</span>，问左端点在 <span
 class="math inline">\([l_1,r_1]\)</span>，右端点在 <span
-class="math inline">\([l_2,r_2]\)</span> 的最大子段和。</p>
+class="math inline">\([l_2,r_2]\)</span> 的子段的和的最大值。</p>
 <p><span class="math inline">\(\left|a_{i}\right|\le 10^4，1\le n\le
 10^4,l_1\le l_2,r_1\le r_2\)</span>。</p>
 <h2 id="思路-4">思路</h2>
@@ -2311,7 +2311,78 @@ Fenwick Tree</a><br />
 CF：<a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1967/C">C.
 Fenwick Tree</a></p>
 <h2 id="题意简述-9">题意简述</h2>
+<p>对于数组 <span class="math inline">\(a\)</span>，有函数 <span
+class="math inline">\(f(a)\)</span>，设数组 <span
+class="math inline">\(s=f(a)\)</span>，则对于每一个 <span
+class="math inline">\(s_ k\)</span>​，都有：</p>
+<p><span class="math display">\[
+s_k=\left(\sum\limits_{i=k-\operatorname{lowbit}(k)+1}^{k}a_i\right)\bmod
+998\,244\,353
+\]</span></p>
+<p>对于一个正整数 <span class="math inline">\(k\)</span>，函数 <span
+class="math inline">\(f^k (a)\)</span> 定义如下：</p>
+<p><span class="math display">\[ f^k(a)= \begin{cases}
+f(a)&amp;\textrm{if }k=1\\ f(f^{k-1}(a))&amp;\textrm{otherwise.}\\
+\end{cases}  \]</span></p>
+<p>给你正整数 <span class="math inline">\(n,k\)</span> 和一个长度为
+<span class="math inline">\(n\)</span> 的数组 <span
+class="math inline">\(b\)</span> 表示 <span class="math inline">\(f ^k
+(a)\)</span>，求一个符合题意的数组 <span
+class="math inline">\(a\)</span>，可以证明答案总是存在的。</p>
+<p><span class="math inline">\(1\le n\le 2\times 10^5,1\le k\le
+10^9,0\le b_i&lt; 998\,244\,353\)</span>。</p>
 <h2 id="思路-9">思路</h2>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint1
+    </div>
+    <div class='spoiler-content'>
+        <p>手玩一下样例，你发现这道题本质上在问什么？<br />
+结合一下题面式子中的<code>lowbit</code>，你想到了什么？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint2
+    </div>
+    <div class='spoiler-content'>
+        <p>画出一个树状数组的样子，发现我们只需要算出每个叶子节点对上面节点的贡献即可。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint3
+    </div>
+    <div class='spoiler-content'>
+        <p>只考虑一个叶子对上面的某个点的贡献，怎么计算？<br />
+不妨模拟一下贡献的过程。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>假设距离上面某个点的距离为 <span
+class="math inline">\(d\)</span>，那么贡献的系数就应该是，从叶子这个点，总共往上走
+<span class="math inline">\(k\)</span>
+次，每次可以不动也可以往上一步的方案数。<br />
+这个等价于你有 <span class="math inline">\(k\)</span> 个小球，需要插
+<span class="math inline">\(d\)</span> 个板，方案数显然是 <span
+class="math inline">\(C_{d+k-1}^{k-1}\)</span>。<br />
+发现 <span class="math inline">\(k\)</span> 很大但是 BIT
+的层数很小，也就是说你每次从某个叶子节点开始，一直跳父亲，计算贡献即可。具体的，你对于当前父亲的贡献是
+<span
+class="math inline">\(C_{d+k-1}^{k-1}\)</span>，那么你对这个父亲的父亲的贡献是
+<span
+class="math inline">\(C_{d+1+k-1}^{k-1}\)</span>。将组合数展开可以得到
+<span class="math inline">\(O(1)\)</span> 的转移式子。</p>
+
+    </div>
+</div>
 <h2 id="参考代码-9">参考代码</h2>
 <div class='spoiler collapsed'>
     <div class='spoiler-title'>
@@ -2397,10 +2468,225 @@ signed main(){
 个点的树，有点权。有两种操作，修改某个点的点权，查询一段路径上的点权第
 <span class="math inline">\(k\)</span> 大。</p>
 <h2 id="思路-10">思路</h2>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint1
+    </div>
+    <div class='spoiler-content'>
+        <p>不妨考虑简单一点的问题，树是一条链怎么做？<br />
+也就是给定一个序列，修改某个点的值，查询区间第 <span
+class="math inline">\(k\)</span> 大。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint2
+    </div>
+    <div class='spoiler-content'>
+        <p>没有修改很简单对吧，就是主席树板子。<br />
+这里找到一道题：<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1533">P1533
+可怜的狗狗</a>。<br />
+有修改其实就是这道题：<a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2617">P2617 Dynamic
+Rankings</a><br />
+有两种做法，一种叫做带修主席树，一种叫做整体二分，我们两个都简单提一下。</p>
+<h3 id="带修主席树">带修主席树</h3>
+<p>所谓带修主席树，本质是树状数组套线段树。<br />
+我们来重温一下主席树是怎么用的。<br />
+本质是维护了前缀和，查询的时候两棵线段树一减，就是该区间的权值线段树。<br />
+那我们带修了后，每次就需要修改后面所有的位置的线段树，也就是单次修改就需要修改
+<span class="math inline">\(O(n\log n)\)</span> 个节点，显然会
+TLE。<br />
+那我们怎么快速维护这么一段区间的前缀和呢？</p>
+<p>树状数组可以单点修改区间查询对吧。
+那么我们不妨在树状数组上的某个点都开一棵权值线段树。<br />
+那么我们在修改的时候，只会修改 <span class="math inline">\(O(\log
+n)\)</span> 个树状数组上的点，再往下每个点又会改 <span
+class="math inline">\(O(\log n)\)</span>
+个对应权值线段树上的点，总共修改的时间复杂度就是 <span
+class="math inline">\(O(\log ^2n)\)</span>。<br />
+同样的，在查询的时候，我们也会查询 <span class="math inline">\(O(\log n
+)\)</span> 个权值线段树的和再减去 <span class="math inline">\(O(\log
+n)\)</span> 个权值线段树的和。</p>
+<p>时间复杂度 <span class="math inline">\(O(n\log^2n)\)</span>。</p>
+<h3 id="整体二分">整体二分</h3>
+<p>这是一个离线算法。<br />
+不妨先想想查询区间第 <span class="math inline">\(k\)</span>
+大怎么用二分来做。<br />
+我们二分权值来检验答案，假设当前检验的值为 <span
+class="math inline">\(mid\)</span>，统计区间内小于 <span
+class="math inline">\(mid\)</span>
+的数的个数，再决定继续往哪个区间二分。这样的时间复杂度是 <span
+class="math inline">\(O(n\log n)\)</span>。显然多次询问就爆炸了。<br />
+我们发现，假如我现在有一些询问的区间二分的过程有重复，那么我先前那样去做，就很慢了。我们对于有重复的，一起处理即可。找到区间小于某个数的个数可以使用树状数组简单求出。<br />
+然后再根据结果，把询问分成两部分，一部分下次二分区间为 <span
+class="math inline">\([l,mid]\)</span>，另一部分为 <span
+class="math inline">\([mid+1,r]\)</span>。<br />
+可以分析得出时间复杂度为 <span class="math inline">\(O((n+m)\log^2
+V)\)</span>。</p>
+<p>那么带修怎么做呢？<br />
+不难想到我们把修改同样放进二分的过程中，显然是需要按照时间顺序的依次处理的。时间复杂度不变。<br />
+细节比较多，有问题可以问我或者看看代码自行理解。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint3
+    </div>
+    <div class='spoiler-content'>
+        <p>树上怎么做呢？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>其实直接套一个树剖就好了对吧。时间复杂度 <span
+class="math inline">\(O(n\log^3n)\)</span>，能过。套带修主席树或者整体二分都是可以的。<br />
+存在使用 dfn 序改为区间修改并使用带修主席树或者整体二分的 <span
+class="math inline">\(O(n\log^2n)\)</span> 做法。<br />
+细节有亿点多。</p>
+
+    </div>
+</div>
 <h2 id="参考代码-10">参考代码</h2>
 <div class='spoiler collapsed'>
     <div class='spoiler-title'>
-        参考代码
+        带修区间第 $k$ 大整体二分参考代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>// Problem: P2617 Dynamic Rankings
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/P2617
+// Memory Limit: 512 MB
+// Time Limit: 3000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int MAXN=3e5+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x){
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+}
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y){
+    read(x),read(y...);
+}
+
+int n,m,tot,cnt,ans[MAXN],b[MAXN],t[MAXN],val[MAXN];
+struct node{
+    int type,l,r,k,pos,val,id;
+}q[MAXN],q1[MAXN],q2[MAXN];
+
+int lowbit(int u){return u&amp;(-u);}
+
+void update(int pos,int val){
+    while(pos&lt;=n){
+        t[pos]+=val;
+        pos+=lowbit(pos);
+    }
+}
+
+int query(int pos){
+    int res=0;
+    while(pos){
+        res+=t[pos];
+        pos-=lowbit(pos);
+    }
+    return res;
+}
+
+bool cmp(node n1,node n2){
+    return n1.id&lt;n2.id;
+}
+
+void work(int l,int r,int L,int R){
+    int mid=(l+r)&gt;&gt;1,cnt1=0,cnt2=0;
+    if(l==r){
+        for(int i=L;i&lt;=R;i++) if(!q[i].type) ans[q[i].id]=b[l];
+        return;
+    }
+    for(int i=L;i&lt;=R;i++){
+        if(q[i].type){
+            if(q[i].val&lt;=mid){
+                update(q[i].pos,q[i].k);
+                q1[++cnt1]=q[i];
+            }
+            else q2[++cnt2]=q[i];
+        }
+        else{
+            int val=query(q[i].r)-query(q[i].l-1);
+            if(val&gt;=q[i].k) q1[++cnt1]=q[i];
+            else q[i].k-=val,q2[++cnt2]=q[i];
+        }
+    }
+    for(int i=L;i&lt;=L+cnt1-1;i++) q[i]=q1[i-L+1];
+    for(int i=L+cnt1;i&lt;=R;i++) q[i]=q2[i-L-cnt1+1];
+    for(int i=L;i&lt;=L+cnt1-1;i++) if(q[i].type) update(q[i].pos,-q[i].k);
+    work(l,mid,L,L+cnt1-1);
+    work(mid+1,r,L+cnt1,R);
+}
+
+signed main(){
+    cin&gt;&gt;n&gt;&gt;m;
+    for(int i=1;i&lt;=n;i++) cin&gt;&gt;val[i];
+    for(int i=1;i&lt;=n;i++) q[++tot].type=1,q[tot].pos=i,q[tot].val=val[i],q[tot].id=tot,q[tot].k=1;
+    for(int i=1;i&lt;=m;i++){
+        char opt;
+        cin&gt;&gt;opt;
+        if(opt==&#39;Q&#39;){
+            q[++tot].type=0;
+            q[tot].id=tot;
+            cin&gt;&gt;q[tot].l&gt;&gt;q[tot].r&gt;&gt;q[tot].k;
+        }
+        else{
+            q[++tot].type=1;
+            q[tot].id=tot;
+            q[tot].k=1;
+            cin&gt;&gt;q[tot].pos&gt;&gt;q[tot].val;
+            q[++tot].type=1;
+            q[tot].id=tot;
+            q[tot].k=-1;
+            q[tot].pos=q[tot-1].pos;
+            q[tot].val=val[q[tot].pos];
+            swap(q[tot],q[tot-1]);
+            swap(q[tot].id,q[tot-1].id);
+            val[q[tot].pos]=q[tot].val;
+        }
+    }
+    for(int i=1;i&lt;=tot;i++) if(q[i].type) b[++cnt]=q[i].val;
+    sort(b+1,b+cnt+1);
+    cnt=unique(b+1,b+cnt+1)-b-1;
+    for(int i=1;i&lt;=tot;i++) if(q[i].type) q[i].val=lower_bound(b+1,b+cnt+1,q[i].val)-b;
+    work(1,cnt,1,tot);
+    sort(q+1,q+tot+1,cmp);
+    for(int i=1;i&lt;=tot;i++) if(!q[i].type) cout&lt;&lt;ans[i]&lt;&lt;endl;
+    return 0;
+}</code></pre>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        本题参考代码
     </div>
     <div class='spoiler-content'>
         <pre class="cpp"><code>// Problem: P4175 [CTSC2008] 网络管理
@@ -2615,7 +2901,74 @@ Willem, Chtholly and Seniorious</a><br />
 CF：<a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/896/C">C. Willem,
 Chtholly and Seniorious</a></p>
 <h2 id="题意简述-11">题意简述</h2>
+<p>给定一个长度为 <span class="math inline">\(n\)</span>
+的序列，请你维护以下四种操作：</p>
+<ul>
+<li>将 <span class="math inline">\([l,r]\)</span> 区间所有数加上 <span
+class="math inline">\(x\)</span>。</li>
+<li>将 <span class="math inline">\([l,r]\)</span> 区间所有数改成 <span
+class="math inline">\(x\)</span>。</li>
+<li>输出 <span class="math inline">\([l,r]\)</span> 区间的第 <span
+class="math inline">\(k\)</span> 小。</li>
+<li>输出 <span class="math inline">\([l,r]\)</span> 区间每个数字的 <span
+class="math inline">\(x\)</span> 次方的和模 <span
+class="math inline">\(y\)</span> 的值。</li>
+</ul>
+<p>共 <span class="math inline">\(m\)</span> 次操作。</p>
+<p><span class="math inline">\(1\le
+n,m\le10^5\)</span>，保证数据随机。</p>
 <h2 id="思路-11">思路</h2>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint1
+    </div>
+    <div class='spoiler-content'>
+        <p>随机数据！先想想暴力怎么做，并考虑优化。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint2
+    </div>
+    <div class='spoiler-content'>
+        <p>暴力很简单对吧，<span class="math inline">\(O(n^2)\)</span>。<br />
+有覆盖操作，我们不妨把相同的数统一起来处理？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>ODT，全称 Old Driver
+Tree，中文称作<code>珂朵莉数</code>或者<code>老司机树</code>，也可称为<code>颜色段均摊</code>。<br />
+在数据保证随机的情况下，并且会出现区间覆盖之类的类似操作时，会有优异的时间复杂度。</p>
+<p>因为数据随机，所以有 <span
+class="math inline">\(\dfrac{1}{4}\)</span>
+的概率会出将一段区间覆盖的操作。<br />
+我们维护一下数列中连续的相同的数，比如 <span
+class="math inline">\([l,r]\)</span> 区间都是 <span
+class="math inline">\(val\)</span>。</p>
+<p>那么我们怎么维护上述四种操作呢？<br />
+直接暴力去做就好了。<br />
+区间加，直接把 <span class="math inline">\([l,r]\)</span>
+区间内维护的所有东西拿出来，直接将 <span
+class="math inline">\(val\)</span> 增加即可。<br />
+区间覆盖，直接把 <span class="math inline">\([l,r]\)</span>
+区间内原本维护的全部删掉，插入一个新的区间为 <span
+class="math inline">\([l,r]\)</span>，值为 <span
+class="math inline">\(x\)</span> 的节点。<br />
+区间第 <span class="math inline">\(k\)</span> 小，把 <span
+class="math inline">\([l,r]\)</span>
+区间拿出来，排序，从前往后找即可。<br />
+第四个操作，同样拿出来，直接计算即可。</p>
+<p>我们发现，有时候一段区间不会完整的被拿出来，我们这时候直接将其断开，变成两个区间即可。<br />
+具体可以看代码。</p>
+
+    </div>
+</div>
 <h2 id="参考代码-11">参考代码</h2>
 <div class='spoiler collapsed'>
     <div class='spoiler-title'>
@@ -2665,6 +3018,9 @@ struct node{
     }
 };
 
+//ODT 的一个点一般就像上面那样定义。  
+//mutable 意为可变的，与 const 相反，定义了后，可以直接在 set 中改该变量的值。
+
 set&lt;node&gt; s;
 
 int next_rand(){
@@ -2702,7 +3058,7 @@ void change(int l,int r,int val){
 
 void add(int l,int r,int val){
     auto R=split(r+1),L=split(l);
-    for(auto i=L;i!=R;i++) i-&gt;val+=val;
+    for(auto i=L;i!=R;i++) i-&gt;val+=val;//这里的 val 就直接改了。
 }
 
 int kth(int l,int r,int pos){
@@ -2750,7 +3106,224 @@ signed main(){
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P10626">P10626 [JOI Open
 2024] 考试 2</a></p>
 <h2 id="题意简述-12">题意简述</h2>
+<p>（这个真不好简述。）</p>
+<p>JOI 君在 IOI 高中上学，期末考试即将来临。考试的内容是计算 <strong>IOI
+函数</strong>。IOI 函数是将 <span
+class="math inline">\([1,10^9]\)</span> 之间的整数映射到布尔值（即 <span
+class="math inline">\(\texttt{True}/\texttt{False}\)</span>）的函数。IOI
+函数可以从以下六条 IOI 高中规定的规则中构造：</p>
+<ol type="1">
+<li><p>设 <span class="math inline">\(a\)</span> 为 <span
+class="math inline">\([1,10^9]\)</span> 之间的整数，则 <span
+class="math inline">\(\texttt{[a]}\)</span> 是一个 IOI 函数。它将不小于
+<span class="math inline">\(a\)</span> 的整数映射成 <span
+class="math inline">\(\texttt{True}\)</span>，将小于 <span
+class="math inline">\(a\)</span> 的整数映射成 <span
+class="math inline">\(\texttt{False}\)</span>。</p></li>
+<li><p>记 <span class="math inline">\(\texttt{f}\)</span> 为 IOI
+函数，则 <span class="math inline">\(\texttt{(f)}\)</span> 是一个 IOI
+函数，它的映射规则与 <span class="math inline">\(\texttt{f}\)</span>
+的映射规则相同。</p></li>
+<li><p>记 <span class="math inline">\(\texttt{f}\)</span> 为 IOI
+函数，则 <span class="math inline">\(\texttt{!f}\)</span> 是一个 IOI
+函数。设 <span class="math inline">\(x\)</span> 为整数，若 <span
+class="math inline">\(\texttt{f}\)</span> 将 <span
+class="math inline">\(x\)</span> 映射为 <span
+class="math inline">\(\texttt{True}\)</span>，则 <span
+class="math inline">\(\texttt{!f}\)</span> 将 <span
+class="math inline">\(x\)</span> 映射为 <span
+class="math inline">\(\texttt{False}\)</span>；否则 <span
+class="math inline">\(\texttt{!f}\)</span> 将 <span
+class="math inline">\(x\)</span> 映射为 <span
+class="math inline">\(\texttt{True}\)</span>。</p></li>
+<li><p>记 <span class="math inline">\(\texttt{f},\texttt{g}\)</span> 为
+IOI 函数，则 <span class="math inline">\(\texttt{f\&amp;g}\)</span>
+也是一个 IOI 函数。设 <span class="math inline">\(x\)</span> 为整数，则
+<span class="math inline">\(\texttt{f\&amp;g}\)</span> 将 <span
+class="math inline">\(x\)</span> 映射为 <span
+class="math inline">\(\texttt{True}\)</span>，当且仅当 <span
+class="math inline">\(\texttt{f},\texttt{g}\)</span> 都将 <span
+class="math inline">\(x\)</span> 映射为 <span
+class="math inline">\(\texttt{True}\)</span>。</p></li>
+<li><p>记 <span class="math inline">\(\texttt{f},\texttt{g}\)</span> 为
+IOI 函数，则 <span class="math inline">\(\texttt{f\^ g}\)</span>
+也是一个 IOI 函数。设 <span class="math inline">\(x\)</span> 为整数，则
+<span class="math inline">\(\texttt{f\^ g}\)</span> 将 <span
+class="math inline">\(x\)</span> 映射为 <span
+class="math inline">\(\texttt{True}\)</span>，当且仅当 <span
+class="math inline">\(\texttt{f},\texttt{g}\)</span> 中恰好有一个将
+<span class="math inline">\(x\)</span> 映射为 <span
+class="math inline">\(\texttt{True}\)</span>。</p></li>
+<li><p>记 <span class="math inline">\(\texttt{f},\texttt{g}\)</span> 为
+IOI 函数，则 <span class="math inline">\(\texttt{f|g}\)</span> 也是一个
+IOI 函数。设 <span class="math inline">\(x\)</span> 为整数，则 <span
+class="math inline">\(\texttt{f|g}\)</span> 将 <span
+class="math inline">\(x\)</span> 映射为 <span
+class="math inline">\(\texttt{True}\)</span>，当且仅当 <span
+class="math inline">\(\texttt{f},\texttt{g}\)</span> 中至少有一个将
+<span class="math inline">\(x\)</span> 映射为 <span
+class="math inline">\(\texttt{True}\)</span>。</p></li>
+</ol>
+<p>越前面的规则优先级越高。</p>
+<p>为备战期末考试，JOI 君准备好了一个长度为 <span
+class="math inline">\(N\)</span> 的 IOI 函数 <span
+class="math inline">\(S\)</span>。他打算用 <span
+class="math inline">\(Q\)</span> 个整数 <span
+class="math inline">\(X_1,X_2,\cdots,X_Q\)</span>
+来练习他的计算技能。于是他找来了你——能够熟练处理 IOI
+函数的人，来解决这个问题。</p>
+<p>你需要写一个程序。给定 <span class="math inline">\(N,Q,S\)</span>
+以及 <span class="math inline">\(X_1,X_2,\cdots,X_Q\)</span>，对于 <span
+class="math inline">\(i=1,2=\cdots,Q\)</span>，回答 IOI 函数 <span
+class="math inline">\(S\)</span> 会将 <span
+class="math inline">\(X_i\)</span> 映射成 <span
+class="math inline">\(\texttt{True}\)</span> 还是 <span
+class="math inline">\(\texttt{False}\)</span>。</p>
+<ul>
+<li><span class="math inline">\(1 \le N \le 1\,000\,000\)</span>；</li>
+<li><span class="math inline">\(1 \le Q \le 200\,000\)</span>；</li>
+<li><span class="math inline">\(S\)</span> 为长度为 <span
+class="math inline">\(N\)</span> 的 IOI 函数；</li>
+<li><span class="math inline">\(1 \le X_i \le 10^9\)</span>（<span
+class="math inline">\(1 \le i \le Q\)</span>）；</li>
+<li><span class="math inline">\(N, Q, X_i\)</span>（<span
+class="math inline">\(1 \le i \le Q\)</span>）均为整数。</li>
+</ul>
 <h2 id="思路-12">思路</h2>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint1
+    </div>
+    <div class='spoiler-content'>
+        <p>暴力很显然吧，直接模拟即可。时间复杂度 <span
+class="math inline">\(O(nq)\)</span>。<br />
+想办法优化一点吧。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint2
+    </div>
+    <div class='spoiler-content'>
+        <p>有一个东西叫做表达式树。<br />
+我们发现将询问离线下来，并从小到大排序后，我们对于最下面每个 IOI
+函数，只会更改一次，并且会对其上一整条链修改。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint3
+    </div>
+    <div class='spoiler-content'>
+        <p>挨个挨个往上改一条链太慢了，最慢会是 <span
+class="math inline">\(O(n)\)</span> 的，有什么办法可以加速吗？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint4
+    </div>
+    <div class='spoiler-content'>
+        <p>树剖可以将树上任意一条路径拆成 <span class="math inline">\(O(\log
+n)\)</span> 段。<br />
+那么我们假如可以一次修改一整段，那么便可以只修改 <span
+class="math inline">\(O(\log n)\)</span> 次。<br />
+那么怎么一次修改一整段呢？<br />
+注意：表达式树有个特性，每个点至多有两个儿子。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint5
+    </div>
+    <div class='spoiler-content'>
+        <p>你有没有发现什么问题？对于表达式树上的一个点，其最多有一个重儿子和一个轻儿子。这俩共同决定了
+IOI
+函数的值。你在统一修改整条链的时候，轻儿子也是会产生影响的，这个影响怎么处理？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint6
+    </div>
+    <div class='spoiler-content'>
+        <p>我们不妨对于轻儿子的情况讨论一下。<br />
+假如对于当前表达式树上的某个点，其为<code>&amp;</code>。<br />
+轻儿子的值为 <span
+class="math inline">\(1\)</span>，不难定义这个点有一个函数 <span
+class="math inline">\(f(x)=x\)</span>，表示重儿子的值为 <span
+class="math inline">\(x\)</span> 时，这个点的答案是多少。<br />
+不难发现查询答案，其实就是求根所在的这条重链的所有点的函数的复合。</p>
+<blockquote>
+<p>函数的复合： 我们有 <span class="math inline">\(f(x)\)</span> 和
+<span class="math inline">\(g(x)\)</span> 两个函数，称 <span
+class="math inline">\((f \circ g)(x)\)</span> 为函数 <span
+class="math inline">\(f(x)\)</span> 与函数 <span
+class="math inline">\(g(x)\)</span> 的复合，其值等于 <span
+class="math inline">\(f(g(x))\)</span>。</p>
+</blockquote>
+<p>那么我们怎么去求这么多函数的复合呢？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <h3 id="ddp动态-dp">DDP（动态 DP）</h3>
+<p>动态 DP 可以用于解决上述问题，通常基于普通的树形 DP。<br />
+我们在写出朴素的树形 DP
+式子后，发现题目中要求你修改值，如果你暴力重新从下面往上重新计算 DP
+值，时间复杂度就爆炸了。此时，你可以考虑一下 DDP。</p>
+<p>具体过程大致如下：</p>
+<ul>
+<li>改写 DP 式：将原本树形 DP
+式子拆开（原本通常是枚举所有儿子进行转移），拆成轻儿子和重儿子两部分。那么我们在更改的时候，只会更改这一条重链的信息。<br />
+</li>
+<li>改写成矩阵乘法：如上文所言，我们发现要求函数的复合，矩阵乘法可以做到这一点。这里的矩阵乘法可能并不是传统意义上的矩阵乘法，而是广义上的，比如
+DDP 模板题就不是传统的矩阵乘法。</li>
+</ul>
+<h4 id="广义矩阵乘法">广义矩阵乘法</h4>
+<p>一般的矩阵乘法，我们不妨称其为<code>乘-加矩阵运算</code>，回忆矩阵乘法的步骤你们就可以明白含义。<br />
+有时候我们根据题目写出的 DP
+式子，可能一般的矩阵乘法不能做到，我们就可以修改一下，比如改成<code>加-max矩阵运算</code>，类比上面的，你应该能明白是什么意思。<br />
+这就叫做广义矩阵乘法。<br />
+需要注意的是，并不是随便怎么运算都是可行的。需要满足结合律才可行。一般而言，如果你两个运算都具有结合律就行了，最好的话，可以自己严谨带参算一下。</p>
+<p>对于我们这道题而言，你可能说他不是 DP 式子，但实际上可以说是。<br />
+我们计算某个点，其实就是前面举例中的 <span
+class="math inline">\(f(x)=x\)</span>，这其实也是 DP 式，并且我们前面
+Hint 中提到它会根据轻儿子变化来改变。</p>
+<p>我们第一步就已经做到了。接下来就是写矩乘了。<br />
+我们不妨定义一个 <span class="math inline">\(2\times2\)</span>
+的矩阵来表达状态，第一行中 <span
+class="math inline">\(\begin{bmatrix}0&amp;1\end{bmatrix}\)</span>
+表示这个点的值为 <span class="math inline">\(1\)</span>，<span
+class="math inline">\(\begin{bmatrix}1&amp;0\end{bmatrix}\)</span>
+表示这个点的值为 <span class="math inline">\(0\)</span>。<br />
+我们来举一个例子即可，其他的自行尝试推导一下。<br />
+假如当前点符号为<code>&amp;</code>，轻儿子为 <span
+class="math inline">\(1\)</span>，那么我们的矩阵可以选择朴素的矩乘，转移矩阵就是
+<span
+class="math inline">\(\begin{bmatrix}1&amp;0\\0&amp;1\end{bmatrix}\)</span>。</p>
+<p>那么我们从下往上修改的时候，因为矩乘具有结合律，直接修改值，在线段树上合并一下，得出新的复合矩阵。下一步该是跳链了，我们根据当前所在的链的复合结果，来决定链顶的父亲的矩阵是否需要修改。</p>
+<p>最后查询直接查询根所在的重链的复合即可。</p>
+<p>细节有亿点点多。</p>
+<hr />
+<p>其实有一种更简单的线段树合并的做法，这个你们可以自行思考一下。</p>
+<p>至于建表达式树，类似于表达式求值那样即可，用两个栈来维护。</p>
+<p>这道题目中的<code>!</code>有点烦人，我调了很久都是因为这个东西，有两种处理方式：<br />
+1. 定义矩阵的时候多定义一倍的矩阵。<br />
+2. 将<code>!</code>也加入表达式树中。</p>
+<p>我写的时候写的是第一种，就会出现更多的细节，建议使用第二种。</p>
+
+    </div>
+</div>
 <h2 id="参考代码-12">参考代码</h2>
 <div class='spoiler collapsed'>
     <div class='spoiler-title'>
@@ -3085,7 +3658,102 @@ signed main(){
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5693">P5693 EI
 的第六分块</a></p>
 <h2 id="题意简述-13">题意简述</h2>
+<p>给定一个长度为 <span class="math inline">\(n\)</span> 的整数序列
+<span class="math inline">\(a\)</span>，<span
+class="math inline">\(q\)</span> 次操作，有以下两种：</p>
+<ul>
+<li>给区间 <span class="math inline">\([l,r]\)</span> 中每个数加上 <span
+class="math inline">\(x\)</span><br />
+</li>
+<li>查询区间 <span class="math inline">\([l,r]\)</span>
+的最大子段和（可以为空）</li>
+</ul>
+<p><span class="math inline">\(1\le n,q \le 4\times 10^5\)</span>，<span
+class="math inline">\(|a_i| \le 10^9\)</span>，<span
+class="math inline">\(1 \le x \le 10^6\)</span>。</p>
 <h2 id="思路-13">思路</h2>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint1
+    </div>
+    <div class='spoiler-content'>
+        <p>最大子段和都会对吧。但是现在区间加怎么做呢？<br />
+最大子段和，最大前缀和，最大后缀和也能一起加吗？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint2
+    </div>
+    <div class='spoiler-content'>
+        <p>显然是不可以的对吧。<br />
+比如这么个序列<code>5 4 -3 2 1</code>。我将 <span
+class="math inline">\([3,5]\)</span> 区间增加 <span
+class="math inline">\(100\)</span>，那么区间 <span
+class="math inline">\([2,3]\)</span> 的最大子段和从先前的 <span
+class="math inline">\([2,2]\)</span> 和为 <span
+class="math inline">\(4\)</span> 变成了现在的 <span
+class="math inline">\([2,3]\)</span> 和为 <span
+class="math inline">\(101\)</span>。<br />
+那么你怎么去去掉这个影响或者维护这个影响呢？<br />
+<del>其实你们要能自己想出来就有国集水平了。</del></p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint3
+    </div>
+    <div class='spoiler-content'>
+        <p>我们发现，对于一段区间的最大子段和，我们假如将这个区间内所有数增加
+<span class="math inline">\(x\)</span>，那么这个区间的最大子段和就会增加
+<span class="math inline">\(kx\)</span>。（<span
+class="math inline">\(k\)</span> 是区间长度）也就是一个 <span
+class="math inline">\(y=kx+b\)</span> 的形式，其中，<span
+class="math inline">\(b\)</span> 式是当前的最大子段和，<span
+class="math inline">\(k\)</span> 是区间长度，<span
+class="math inline">\(x\)</span> 是区间统一增加的值，<span
+class="math inline">\(y\)</span> 是增加后的最大子段和。<br />
+同样的，前缀最大和，后缀最大和，和，都可以表示成 <span
+class="math inline">\(kx+b\)</span> 的形式。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>回忆我们求最大子段和的过程。我们就拿其中一种情况举例。<br />
+我们现在要合并左子树和右子树，我们合并后的最大子段和可能是这两段的最大子段和取
+<span
+class="math inline">\(\max\)</span>，我们就拿这个举例，其他几种情况是类似的。</p>
+<p>按前文所讲，我们这个最大子段和是可以表示成 <span
+class="math inline">\(kx+b\)</span> 的形式的，那么这两条直线取 <span
+class="math inline">\(\max\)</span> 有两种情况：</p>
+<ul>
+<li>在这个区间内不相交：那么说明在上面那条后面无论再加多少都一定优于下面那条，直接取上面那条即可。<br />
+</li>
+<li>在这个区间内相交了：说明在加到某一时刻时，原本更劣的会变成更优的，我们把这个位置需要记录下来。</li>
+</ul>
+<p>那么在全局增加的时候，也就是等价于这个转化点往左挪动了，假如挪到小于等于
+<span class="math inline">\(0\)</span>
+的位置了，就说明某条线段一定优于另一条了。这时候，我们需要去将原本的最优线段替换掉，暴力往下递归处理即可。</p>
+<p>查询即找到区间内最优线段的 <span
+class="math inline">\(b\)</span>。</p>
+<p>原论文证明了时间复杂度至多为是 <span class="math inline">\(O(n\log^3
+n)\)</span>，但能卡满 <span class="math inline">\(O(n\log^3 n)\)</span>
+的数据极其难造，一般情况均可看作 <span
+class="math inline">\(O(n\log^2n)\)</span> 的。</p>
+<p>不妨思考一下为什么这道题中 <span class="math inline">\(x\)</span>
+保证了大于 <span class="math inline">\(0\)</span>。<br />
+总结一下，假如你发现你需要维护的东西可以写成 <span
+class="math inline">\(kx+b\)</span>
+的形式的时候，区间加，并且是取最值的时候，走投无路之时可以尝试想一想。</p>
+
+    </div>
+</div>
 <h2 id="参考代码-13">参考代码</h2>
 <div class='spoiler collapsed'>
     <div class='spoiler-title'>
@@ -3249,6 +3917,15 @@ signed main(){
 
     </div>
 </div>
+<h1 id="总结">总结</h1>
+<p>总共选了 <span class="math inline">\(15\)</span> 道题，后 <span
+class="math inline">\(4\)</span>
+道我认为能听懂是最好的，能写出来就更好了，不做强行要求，因为确实是有难度的。<br />
+前面的题大家还是尽量写一写。<br />
+希望你能从这 <span class="math inline">\(15\)</span>
+道题中学到很多有用的内容。<br />
+比如知道一些新的套路啊，trick 啊之类的。<br />
+总之感谢大家的倾听。</p>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
     
