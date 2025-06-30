@@ -193,7 +193,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/trick/" style="color: #e74c3c">
+                <a href="/tags/trick/" style="color: #ffa400">
                     trick
                 </a>
             </span>
@@ -247,7 +247,16 @@ class="math inline">\(\varphi(p)\)</span>，然后分解质因数，依次尝试
 class="math inline">\(1\)</span>。因此对于一条路径，我们将这条路径上的点权增加
 <span class="math inline">\(v\)</span>，将边权减少 <span
 class="math inline">\(v\)</span>。对于给定路径求路径上点权和加边权和即是答案。可以使用
-DFS 序+BIT 实现，当然也可以树剖。</li>
+DFS 序+BIT 实现，当然也可以树剖。<br />
+</li>
+<li>矩乘优化 DP 通常是一个向量乘上一个矩阵，时间复杂度是 <span
+class="math inline">\(O(n^3\log n)\)</span> 的，但假如需要算 <span
+class="math inline">\(m\)</span> 次，时间复杂度变为 <span
+class="math inline">\(O(n^3m\log
+n)\)</span>，有时候无法接受，此时可以预处理转移矩阵的 <span
+class="math inline">\(2\)</span>
+的整数次幂的幂，并且计算时用向量乘以矩阵，此时时间复杂度变为 <span
+class="math inline">\(O(n^3\log n+n^2m\log n)\)</span>。</li>
 </ol>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
