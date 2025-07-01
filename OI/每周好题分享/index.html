@@ -193,7 +193,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #979a9a">
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #ffa400">
                     题解
                 </a>
             </span>
@@ -2642,7 +2642,8 @@ signed main(){
 
     </div>
 </div>
-<h1 id="第八周20250609-20250615">第八周（2025/06/09-2025/06/15）</h1>
+<h1 id="第八周20250609-20250629">第八周（2025/06/09-2025/06/29）</h1>
+<p>（因一些原因，上周和上上周没有讲）</p>
 <h2 id="t1-6">T1</h2>
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF930C">CF930C Teodor is
 not a liar!</a></p>
@@ -2759,6 +2760,255 @@ signed main(){
     int ans=0;
     for(int i=1;i&lt;=m;i++) ans=max(ans,dp1[i]+dp2[i+1]);
     cout&lt;&lt;ans;
+    return 0;
+}</code></pre>
+
+    </div>
+</div>
+<h2 id="t2-6">T2</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P11113">P11113 [ROI 2024]
+2026 (Day 1)</a></p>
+<p>比较显然的一道紫题。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>首先不难发现，对于连续的相同操作或是相反操作，我们可以简化为一次操作，比如
+<code>LRRRLLLR</code> 可以简化为 <code>R</code>。<br />
+然后手玩一下，发现，至多两次操作后，所有的方块都堆到了角落，并且接下来的操作中，只要转到这个角落，形态是不变的。<br />
+有一些操作仍是无效的，比如此时方块均在左上角，那么 <code>L</code> 和
+<code>U</code>
+操作均是无效的。我们将这些无效操作删除后，可能又会出现相反或是相同的操作，我们也同样去掉这些操作，发现这类似于括号匹配，用一个栈即可维护。<br />
+发现剩下来的操作，要么是顺时针旋转，要么是逆时针旋转。<br />
+于是我们先暴力跑两次操作，到达墙角后，我们按操作来顺时针或是逆时针旋转，并且得到原本位置和旋转后的位置的一一对应关系，再使用诸如倍增或是其他办法来快速进行操作，最后对于剩下直接暴力即可。<br />
+暴力显然是 <span class="math inline">\(O(N^2)\)</span> 的（<span
+class="math inline">\(N=n\times m\)</span>），暴力操作至多进行 <span
+class="math inline">\(9\)</span> 次，剩下的时间复杂度是 <span
+class="math inline">\(O(N^2\log q)\)</span> 的。轻松通过。<br />
+难点主要在模拟，有一些细节。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        代码
+    </div>
+    <div class='spoiler-content'>
+        <pre class="cpp"><code>// Problem: P11113 [ROI 2024] 2026 (Day 1)
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/P11113
+// Memory Limit: 512 MB
+// Time Limit: 2000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int MAXN=1e6+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x){
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+}
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y){
+    read(x),read(y...);
+}
+
+int n,t,m,q,cnt=-1,pos,to[MAXN][21],mp[MAXN];
+string op,newop;
+vector&lt;int&gt; ch[MAXN],num[MAXN];
+
+void work(char op){
+    if(op==&#39;U&#39;){
+        for(int j=1;j&lt;=m;j++){
+            int cnt=1;
+            for(int i=1;i&lt;=n;i++){
+                if(ch[i][j]==-1) continue;
+                swap(ch[cnt][j],ch[i][j]);
+                cnt++;
+            }
+        }
+    }
+    if(op==&#39;D&#39;){
+        for(int j=1;j&lt;=m;j++){
+            int cnt=n;
+            for(int i=n;i&gt;=1;i--){
+                if(ch[i][j]==-1) continue;
+                swap(ch[cnt][j],ch[i][j]);
+                cnt--;
+            }
+        }
+    }
+    if(op==&#39;L&#39;){
+        for(int i=1;i&lt;=n;i++){
+            int cnt=1;
+            for(int j=1;j&lt;=m;j++){
+                if(ch[i][j]==-1) continue;
+                swap(ch[i][cnt],ch[i][j]);
+                cnt++;
+            }
+        }
+    }
+    if(op==&#39;R&#39;){
+        for(int i=1;i&lt;=n;i++){
+            int cnt=m;
+            for(int j=m;j&gt;=1;j--){
+                if(ch[i][j]==-1) continue;
+                swap(ch[i][cnt],ch[i][j]);
+                cnt--;
+            }
+        }
+    }
+}
+
+void print(){
+    for(int i=1;i&lt;=n;i++){
+        for(int j=1;j&lt;=m;j++){
+            if(ch[i][j]==-1) cout&lt;&lt;&#39;.&#39;;
+            else cout&lt;&lt;(char)(ch[i][j]);
+        }
+        cout&lt;&lt;endl;
+    }
+}
+
+signed main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cin&gt;&gt;t;
+    while(t--){
+        cin&gt;&gt;n&gt;&gt;m;
+        newop=&quot;&quot;;
+        for(int i=1;i&lt;=cnt;i++) for(int j=0;j&lt;=20;j++) to[i][j]=0;
+        cnt=-1;
+        for(int i=1;i&lt;=n;i++){
+            ch[i].clear();
+            ch[i].push_back(0);
+            for(int j=1;j&lt;=m;j++){
+                char OP;
+                cin&gt;&gt;OP;
+                if(OP==&#39;.&#39;) ch[i].push_back(-1);
+                else ch[i].push_back(OP);
+            }
+        }
+        cin&gt;&gt;op;
+        // for(int i=0;i&lt;q;i++) work(op[i]);
+        // for(int i=1;i&lt;=n;i++){
+            // for(int j=1;j&lt;=m;j++) cout&lt;&lt;(char)(ch[i][j]);
+            // cout&lt;&lt;endl;
+        // }
+        // return 0;
+        newop+=op[0];cnt++;
+        for(int i=1;i&lt;op.length();i++){
+            if((op[i-1]==&#39;U&#39;||op[i-1]==&#39;D&#39;)&amp;&amp;(op[i]==&#39;U&#39;||op[i]==&#39;D&#39;)) newop[cnt]=op[i];
+            else if((op[i-1]==&#39;L&#39;||op[i-1]==&#39;R&#39;)&amp;&amp;(op[i]==&#39;L&#39;||op[i]==&#39;R&#39;)) newop[cnt]=op[i];
+            else newop+=op[i],cnt++;
+        }
+        // cout&lt;&lt;newop&lt;&lt;endl;
+        work(newop[0]);
+        if(cnt==0){
+            print();
+            continue;
+        }
+        work(newop[1]);
+        if(cnt==1){
+            print();
+            continue;
+        }
+        if(newop[0]==&#39;U&#39;&amp;&amp;newop[1]==&#39;L&#39;) pos=1;
+        if(newop[0]==&#39;U&#39;&amp;&amp;newop[1]==&#39;R&#39;) pos=2;
+        if(newop[0]==&#39;D&#39;&amp;&amp;newop[1]==&#39;L&#39;) pos=4;
+        if(newop[0]==&#39;D&#39;&amp;&amp;newop[1]==&#39;R&#39;) pos=3;
+        if(newop[0]==&#39;L&#39;&amp;&amp;newop[1]==&#39;U&#39;) pos=1;
+        if(newop[0]==&#39;R&#39;&amp;&amp;newop[1]==&#39;U&#39;) pos=2;
+        if(newop[0]==&#39;L&#39;&amp;&amp;newop[1]==&#39;D&#39;) pos=4;
+        if(newop[0]==&#39;R&#39;&amp;&amp;newop[1]==&#39;D&#39;) pos=3;
+        op=newop;q=cnt;
+        newop=&quot;&quot;;cnt=-1;
+        deque&lt;char&gt; s;
+        for(int i=2;i&lt;=q;i++){
+            int lastpos=pos;
+            if(pos==1&amp;&amp;op[i]==&#39;D&#39;) pos=4;
+            if(pos==1&amp;&amp;op[i]==&#39;R&#39;) pos=2;
+            if(pos==2&amp;&amp;op[i]==&#39;D&#39;) pos=3;
+            if(pos==2&amp;&amp;op[i]==&#39;L&#39;) pos=1;
+            if(pos==3&amp;&amp;op[i]==&#39;U&#39;) pos=2;
+            if(pos==3&amp;&amp;op[i]==&#39;L&#39;) pos=4;
+            if(pos==4&amp;&amp;op[i]==&#39;U&#39;) pos=1;
+            if(pos==4&amp;&amp;op[i]==&#39;R&#39;) pos=3;
+            if(!s.empty()){
+                if(s.back()==&#39;U&#39;&amp;&amp;op[i]==&#39;D&#39;){s.pop_back();continue;}
+                if(s.back()==&#39;D&#39;&amp;&amp;op[i]==&#39;U&#39;){s.pop_back();continue;}
+                if(s.back()==&#39;L&#39;&amp;&amp;op[i]==&#39;R&#39;){s.pop_back();continue;}
+                if(s.back()==&#39;R&#39;&amp;&amp;op[i]==&#39;L&#39;){s.pop_back();continue;}
+            }
+            s.push_back(op[i]);
+            if(lastpos==1&amp;&amp;(s.back()==&#39;U&#39;||s.back()==&#39;L&#39;)){s.pop_back();continue;}
+            if(lastpos==2&amp;&amp;(s.back()==&#39;U&#39;||s.back()==&#39;R&#39;)){s.pop_back();continue;}
+            if(lastpos==3&amp;&amp;(s.back()==&#39;D&#39;||s.back()==&#39;R&#39;)){s.pop_back();continue;}
+            if(lastpos==4&amp;&amp;(s.back()==&#39;D&#39;||s.back()==&#39;L&#39;)){s.pop_back();continue;}
+        }
+        while(!s.empty()){
+            newop+=s.front();
+            s.pop_front();
+        }
+        // cout&lt;&lt;newop&lt;&lt;endl;
+        if(newop.length()&lt;=4){
+            for(int i=0;i&lt;newop.length();i++) work(newop[i]);
+            print();
+            continue;
+        }
+        cnt=0;
+        mp[0]=0;
+        for(int i=1;i&lt;=n;i++){
+            num[i].clear();
+            num[i].push_back(0);
+            for(int j=1;j&lt;=m;j++){
+                if(ch[i][j]!=-1){
+                    mp[++cnt]=ch[i][j];
+                    ch[i][j]=cnt;
+                    num[i].push_back(cnt);
+                }
+                else ch[i][j]=-1,num[i].push_back(-1);
+            }
+        }
+        // for(int i=1;i&lt;=n;i++){
+            // for(int j=1;j&lt;=m;j++) cout&lt;&lt;ch[i][j]&lt;&lt;&quot; &quot;;
+            // cout&lt;&lt;endl;
+        // }
+        for(int i=0;i&lt;4;i++) work(newop[i]);
+        for(int i=1;i&lt;=n;i++) for(int j=1;j&lt;=m;j++) if(num[i][j]!=-1) to[num[i][j]][0]=ch[i][j];
+        for(int i=1;i&lt;=20;i++) for(int j=1;j&lt;=cnt;j++) to[j][i]=to[to[j][i-1]][i-1];
+        int len=newop.length()/4;
+        for(int i=1;i&lt;=n;i++){
+            for(int j=1;j&lt;=m;j++){
+                if(num[i][j]==-1){
+                    ch[i][j]=num[i][j];
+                    continue;
+                }
+                for(int p=0;(1&lt;&lt;p)&lt;=len;p++){
+                    if(len&amp;(1&lt;&lt;p)){
+                        num[i][j]=to[num[i][j]][p];
+                    }
+                }
+                ch[i][j]=mp[num[i][j]];
+            }
+        }
+        for(int i=len*4;i&lt;newop.length();i++) work(newop[i]);
+        print();
+    }
     return 0;
 }</code></pre>
 
