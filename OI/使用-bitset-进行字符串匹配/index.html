@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>成长 | yzljyのBlog</title>
+    <title>使用 bitset 进行字符串匹配 | yzljyのBlog</title>
     <meta name="author" content="yzljy" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -43,9 +43,6 @@
 
 <script src="/js/lib/preview.js"></script>
 
-
-<script src="https://s4.zstatic.net/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
-<script src="/js/lib/crypto.js"></script>
 
 
 
@@ -168,22 +165,22 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div class="article">
     <div>
-        <h1>成长</h1>
+        <h1>使用 bitset 进行字符串匹配</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2025/3/17
+            2025/7/10
         </span>
         
         <span class="category">
-            <a href="/categories/%E6%84%8F%E8%AF%86%E6%B5%81/">
+            <a href="/categories/OI/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
-                意识流
+                OI
             </a>
         </span>
         
@@ -196,8 +193,15 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E6%96%87%E7%AB%A0/" style="color: #ffa400">
-                    文章
+                <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" style="color: #e74c3c">
+                    字符串
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/bitset/" style="color: #ffa400">
+                    bitset
                 </a>
             </span>
             
@@ -205,20 +209,136 @@
         
     </div>
     
-    
-    <input
-        id="crypto"
-        :class="['input', cryptoStatus]"
-        :disabled="cryptoStatus === 'success'"
-        ref="crypto"
-        placeholder="文章被加密，请输入密码"
-        data-encrypted="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"
-        data-shasum="bd34fdd666aa1131aa8b2d678699dfe1c1c149e62b4e15048d46c0e29857d356"
-        v-model="crypto"
-    />
-    <transition name="fade">
-        <div class="content" ref="content" v-show="cryptoStatus === 'success'"></div>
-    </transition>
+    <div class="content" v-pre>
+        <h2 id="背景">背景</h2>
+<p>2025-07-10 的时候，随机跳题跳到一道字符串的题，一开始以为是
+FFT，思考后未果，瞟了眼题解发现了这个神秘的字符串匹配方法。</p>
+<h2 id="题面描述">题面描述</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4465">P4465 [国家集训队]
+JZPSTR</a><br />
+维护一个字符串，需要支持区间删除，从某个位置插入字符串，查询某个区间与给定字符串的匹配数量。</p>
+<p>这道题本身正解是 SAM+分块链表，很显然我不会，代码长达
+9kb。但是有神仙发现 bitset 可过，于是便有了这篇博客。<br />
+<del>原本是黑题，似乎因为这个做法降紫了。</del></p>
+<h2 id="具体做法">具体做法</h2>
+<p>首先，我们发现此题字符集很小，仅有 <span
+class="math inline">\(m=10\)</span> 种字符。我们对每种字符开一个长度为
+<span class="math inline">\(N\)</span> 的 bitset，记作 <span
+class="math inline">\(b_{i}\)</span>，然后我们遍历字符串 <span
+class="math inline">\(S\)</span>，将 <span
+class="math inline">\(b_{S_{i}}\)</span> 的第 <span
+class="math inline">\(i\)</span> 位设为<code>True</code>。</p>
+<h3 id="插入操作">插入操作</h3>
+<p>设插入的字符串为 <span class="math inline">\(S\)</span>。
+不妨暴力一点，我们对于每种字符，我们将 <span
+class="math inline">\(x\)</span> 及以后的位置均往后挪动 <span
+class="math inline">\(\left|S\right|\)</span>
+位。然后再按照前面所说的暴力去设置新的位置的值即可。<br />
+总共的时间复杂度为 <span
+class="math inline">\(O(\dfrac{N\sum\left|S\right|}{w})\)</span>。实际上还要小很多。</p>
+<h3 id="删除操作">删除操作</h3>
+<p>类似于前面，我们只需要把前 <span class="math inline">\(x-1\)</span>
+位提取出来，再把第 <span class="math inline">\(y\)</span>
+位及以后的拿出来，两个拼到一起就行了。时间复杂度 <span
+class="math inline">\(O(\dfrac{N}{w})\)</span>。</p>
+<h3 id="匹配">匹配</h3>
+<p>设匹配的字符串为 <span class="math inline">\(S\)</span>。</p>
+<p>我们一样暴力一点，尝试一位一位来进行匹配，我们先设置一个 bitset，称作
+<span class="math inline">\(ans\)</span>，其 <span
+class="math inline">\([x,y-\left|S\right|+1]\)</span>
+为<code>True</code>，其他位置均为<code>False</code>，<code>True</code>
+表示以该位置为起点可以匹配上。</p>
+<p>然后我们枚举 <span class="math inline">\(S\)</span> 的每个字符 <span
+class="math inline">\(S_{i}\)</span>，不难发现假如某个起始位置能匹配上该字符，当且仅当
+<span class="math inline">\(b_{S_{i}}\)</span> 右移 <span
+class="math inline">\(i\)</span>
+位后与上该起始位置仍为<code>True</code>。下标从 <span
+class="math inline">\(0\)</span> 开始。</p>
+<p>最后整个 <span class="math inline">\(ans\)</span>
+中<code>True</code>的数量即为匹配数量。</p>
+<p>时间复杂度 <span
+class="math inline">\(O(\dfrac{N\sum\left|S\right|}{w})\)</span>。</p>
+<h2 id="一些细节">一些细节</h2>
+<p>以上操作涉及到对 bitset 以及位运算的较熟练运用。</p>
+<p>比如将 <span class="math inline">\([x,N-1]\)</span>
+这段区间提取出来，可以先设置一个全为<code>True</code>的 bitset，将其左移
+<span class="math inline">\(x\)</span>
+位再与上原数组便是这段区间。<br />
+类似的，提取 <span class="math inline">\([0,x-1]\)</span>
+就是上述操作，但是左移后先取反再与。</p>
+<p>数<code>True</code>的数量可以用 bitset
+的<code>count()</code>函数简单实现。</p>
+<h3 id="代码">代码</h3>
+<pre class="cpp"><code>// Problem: P4465 [国家集训队] JZPSTR
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/P4465
+// Memory Limit: 250 MB
+// Time Limit: 3000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int MAXN=1e6+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x)&#123;
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+&#125;
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y)&#123;
+    read(x),read(y...);
+&#125;
+
+int m;
+bitset&lt;MAXN&gt; b[10],all;
+
+signed main()&#123;
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cin&gt;&gt;m;
+    for(int i=0;i&lt;=1000000;i++) all[i]=1;
+    for(int i=1;i&lt;=m;i++)&#123;
+        int opt,x,y;string s;
+        cin&gt;&gt;opt;
+        if(opt==0)&#123;
+            cin&gt;&gt;x&gt;&gt;s;
+            for(int i=0;i&lt;10;i++) b[i]=(((all&lt;&lt;x)&amp;b[i])&lt;&lt;s.length())|((~(all&lt;&lt;x))&amp;b[i]);
+            for(int i=0;i&lt;s.length();i++) b[s[i]-&#39;0&#39;][i+x]=1;
+        &#125;
+        if(opt==1)&#123;
+            cin&gt;&gt;x&gt;&gt;y;
+            for(int i=0;i&lt;10;i++) b[i]=(((all&lt;&lt;y)&amp;b[i])&gt;&gt;(y-x))|((~(all&lt;&lt;x))&amp;b[i]);
+        &#125;
+        if(opt==2)&#123;
+            cin&gt;&gt;x&gt;&gt;y&gt;&gt;s;
+            if(y-x&lt;s.length())&#123;
+                cout&lt;&lt;0&lt;&lt;&#39;\n&#39;;
+                continue;
+            &#125;
+            bitset&lt;MAXN&gt; ans;
+            ans=(all&lt;&lt;x)^(all&lt;&lt;y-s.length()+1);
+            for(int i=0;i&lt;s.length();i++) ans&amp;=(b[s[i]-&#39;0&#39;]&gt;&gt;i);
+            cout&lt;&lt;ans.count()&lt;&lt;&#39;\n&#39;;
+        &#125;
+    &#125;
+    return 0;
+&#125;</code></pre>
+<p>感觉现在怎么越写题解越不像人话了。（？<br />
+有看不懂或者或者发现错误的，可以在评论区指出。</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
     
     
     
