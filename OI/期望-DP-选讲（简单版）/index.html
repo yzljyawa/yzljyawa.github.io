@@ -1,0 +1,896 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>期望 DP 选讲（简单版） | yzljyのBlog</title>
+    <meta name="author" content="yzljy" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/yzljy.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>YZLJYのBLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;首页</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;关于</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;归档</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;分类</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;标签</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;YZLJYのBLOG</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">首页</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">关于</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">归档</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">分类</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">标签</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>期望 DP 选讲（简单版）</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/7/11
+        </span>
+        
+        <span class="category">
+            <a href="/categories/OI/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                OI
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/%E6%9C%9F%E6%9C%9B/" style="color: #ffa400">
+                    期望
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E6%95%B0%E5%AD%A6/" style="color: #a5ff4d">
+                    数学
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="color: #979a9a">
+                    动态规划
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1 id="前置部分">前置部分</h1>
+<p>首先，我们来了解一些期望的基本式子。</p>
+<p><span class="math inline">\(P(x)\)</span> 表示 <span
+class="math inline">\(x\)</span> 这个事件发生的概率，<span
+class="math inline">\(E(x)\)</span> 为 <span
+class="math inline">\(x\)</span> 这个事件的数学期望，<span
+class="math inline">\(D(x)\)</span> 表示 <span
+class="math inline">\(x\)</span> 这个事件与平均情况的方差，<span
+class="math inline">\(C\)</span> 为常数。</p>
+<p><span class="math inline">\(E(C)=C\)</span><br />
+<span class="math inline">\(E(Cx)=CE(x)\)</span><br />
+<span class="math inline">\(E(x+y)=E(x)+E(y)\)</span><br />
+<span class="math inline">\(E(x)=\frac{1}{P(x)}\)</span><br />
+<span class="math inline">\(E(xy)=E(x)E(y)\)</span>（<span
+class="math inline">\(x\)</span> 和 <span
+class="math inline">\(y\)</span> 相互独立）<br />
+<span class="math inline">\(D(x)=E(x^2)+E(x)^2\)</span></p>
+<p>这些题大多代码都比较简单，就不放代码了。</p>
+<h1 id="t1">T1</h1>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P8774">P8774 [蓝桥杯 2022
+省 A] 爬树的甲壳虫</a></p>
+<h2 id="题意简述">题意简述</h2>
+<p>从起点 <span class="math inline">\(0\)</span> 开始，每尝试从 <span
+class="math inline">\(i-1\)</span> 走到 <span
+class="math inline">\(i\)</span> 都有 <span
+class="math inline">\(P_{i}\)</span>
+的概率回到起点，问走到终点期望走多少步。</p>
+<p><span class="math inline">\(n\le 10^5\)</span>。</p>
+<h2 id="思路">思路</h2>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint
+    </div>
+    <div class='spoiler-content'>
+        <p>尽可能尝试写出一个式子。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>我们不妨设 <span class="math inline">\(f_{i}\)</span> 表示走到 <span
+class="math inline">\(i\)</span> 的期望步数。<br />
+怎么转移来？有两种可能，从 <span class="math inline">\(i-1\)</span>
+走一步过来，这个的概率是 <span
+class="math inline">\(1-P_{i}\)</span>，走了 <span
+class="math inline">\(f_{i-1}+1\)</span> 步。<br />
+第二种是掉回起点重新走过来，概率是 <span
+class="math inline">\(P_{i}\)</span> 这样需要走 <span
+class="math inline">\(f_{i-1}+1+f_{i}\)</span> 步。<br />
+于是我们便可以写出一个式子长这样 <span
+class="math inline">\(f_{i}=(f_{i-1}+1)(1-P_{i})+(f_{i-1}+1+f_{i})P_{i}\)</span>。<br />
+我们来化简一下：</p>
+<p><span class="math display">\[
+\begin{aligned}
+    f_{i}&amp;=(f_{i-1}+1)(1-P_{i})+(f_{i-1}+1+f_{i})P_{i}\\
+    f_{i}&amp;=f_{i-1}+1-f_{i-1}P_{i}-P_{i}+f_{i-1}P_{i}+P_{i}+f_{i}P_{i}\\
+    (1-P_{i})f_{i}&amp;=f_{i-1}+1\\
+    f_{i}&amp;=\dfrac{f_{i-1}+1}{1-P_{i}}
+\end{aligned}
+\]</span></p>
+<p>非常的 amazing 啊，我们就成功地推出了式子。<br />
+因此，以后先大胆写出式子，看看能不能转化一下，推导出正确式子。</p>
+
+    </div>
+</div>
+<h1 id="t2">T2</h1>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P11415">P11415 [EPXLQ2024
+fall round] 如今走过这世间</a></p>
+<h2 id="题意简述-1">题意简述</h2>
+<p>有 <span class="math inline">\(n\)</span>
+个视频要发布，每个视频可以是 <span class="math inline">\(t\)</span>
+个分类中的一种。初始时有 <span class="math inline">\(k\)</span>
+分。每次发布一个类型为 <span class="math inline">\(j\)</span>
+的视频，设上一个发布的视频类型为 <span
+class="math inline">\(i\)</span>，则分数会在发布这个视频后立刻乘上 <span
+class="math inline">\(d_{i,j}\)</span>（如果是第 <span
+class="math inline">\(1\)</span> 个视频，分数不会变化）。然后，设当前有
+<span class="math inline">\(x\)</span> 分，则会得 <span
+class="math inline">\(b_j\times x\)</span> 的收益。</p>
+<p>每次会等概率随机选择一个视频的类型（除了第一个视频的类型固定为 <span
+class="math inline">\(v\)</span>）。问能获得总收益的期望。</p>
+<p><span class="math inline">\(n\le 10^9,t\le 200\)</span>。</p>
+<h2 id="思路-1">思路</h2>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint1
+    </div>
+    <div class='spoiler-content'>
+        <p>先想想 <span class="math inline">\(n\)</span>
+比较小的时候怎么做。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint2
+    </div>
+    <div class='spoiler-content'>
+        <p>不难想到设计状态 <span class="math inline">\(f_{i,j}\)</span> 表示第
+<span class="math inline">\(i\)</span> 个视频发第 <span
+class="math inline">\(j\)</span> 种类型后的期望分数。转移是容易的 <span
+class="math inline">\(f_{i,j}=\dfrac{\sum\limits_{k=1}^{t}f_{i-1,k}d_{k,j}}{t}\)</span>。<br />
+但是我们要求的是收益，于是再设 <span
+class="math inline">\(g_{i,j}\)</span> 表示第 <span
+class="math inline">\(i\)</span> 个视频发布第 <span
+class="math inline">\(j\)</span> 种类型后的期望收益，容易得到 <span
+class="math inline">\(g_{i,j}=\dfrac{\sum\limits_{k=1}^{t}g_{i-1,k}}{t}+f_{i,j}b_{j}\)</span>。</p>
+<p>至此你得到了一个 <span class="math inline">\(O(nt^3)\)</span>
+的做法，可以获得 <span class="math inline">\(15\)</span>
+分，继续优化。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint3
+    </div>
+    <div class='spoiler-content'>
+        <p>我们设 <span
+class="math inline">\(ans_{i}=\dfrac{\sum\limits_{j=1}^{t}g_{i,j}}{t}\)</span>
+也就是发布第 <span class="math inline">\(i\)</span>
+个视频后的总收益期望。<br />
+我们发现先前的式子可以简写成 <span
+class="math inline">\(g_{i,j}=ans_{i-1}+f_{i,j}b_{j}\)</span>。我们显然要从
+<span class="math inline">\(ans_{i-1}\)</span> 推到 <span
+class="math inline">\(ans_{i}\)</span>。</p>
+<p><span class="math display">\[
+\begin{aligned}
+    ans_{i}&amp;=\sum_{j=1}^{t}\dfrac{ans_{i-1}+f_{i,j}b_{j}}{t}\\
+    &amp;=ans_{i-1}+\dfrac{\sum\limits_{j=1}^{t}f_{i,j}b_{j}}{t}
+\end{aligned}
+\]</span></p>
+<p>最后的答案显然是 <span class="math inline">\(ans_{n}\)</span>。</p>
+<p>至此，我们的复杂度为 <span
+class="math inline">\(O(nt^2)\)</span>。可以获得 <span
+class="math inline">\(32\)</span> 分（不算特殊性质之类的。）<br />
+还能怎么优化？注意到 <span class="math inline">\(n\)</span> 很大。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>考虑矩阵快速幂优化，我们可以写出这么一个矩阵：</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+  f_{i-1,1}&amp;f_{i-1,2}&amp;\cdots&amp;f_{i-1,t}&amp;sum_{i-1}\\
+\end{bmatrix}\times
+\begin{bmatrix}
+  \dfrac{d_{1,1}}{t}&amp;\dfrac{d_{1,2}}{t}&amp;\cdots&amp;\dfrac{d_{1,t}}{t}&amp;\dfrac{\sum_{j=1}^{t}d_{1,j}b_{j}}{t^2}\\
+  \dfrac{d_{2,1}}{t}&amp;\dfrac{d_{2,2}}{t}&amp;\cdots&amp;\dfrac{d_{2,t}}{t}&amp;\dfrac{\sum_{j=1}^{t}d_{2,j}b_{j}}{t^2}\\
+  \vdots&amp;\vdots&amp;\ddots&amp;\vdots&amp;\vdots\\
+  \dfrac{d_{t,1}}{t}&amp;\dfrac{d_{t,2}}{t}&amp;\cdots&amp;\dfrac{d_{t,t}}{t}&amp;\dfrac{\sum_{j=1}^{t}d_{t,j}b_{j}}{t^2}\\
+  0&amp;0&amp;0&amp;0&amp;1\\
+\end{bmatrix}\\=
+\begin{bmatrix}
+  f_{i,1}&amp;f_{i,2}&amp;\cdots&amp;f_{i,t}&amp;sum_{i}\\
+\end{bmatrix}
+\]</span></p>
+<p>我们重点讲解一下最后一列前 <span class="math inline">\(t\)</span>
+项。</p>
+<p>我们将上一个 Hint 中的转移式子继续展开。（把 <span
+class="math inline">\(ans_{i-1}\)</span> 先扔了）</p>
+<p><span class="math display">\[
+\begin{aligned}
+     &amp;\dfrac{\sum\limits_{j=1}^{t}f_{i,j}b_{j}}{t}\\
+    =&amp;\dfrac{\sum\limits_{j=1}^{t}b_{j}\sum\limits_{k=1}^{t}f_{i-1,k}d_{k,j}}{t^2}\\
+    =&amp;\dfrac{\sum\limits_{k=1}^{t}b_{k}\sum\limits_{j=1}^{t}f_{i-1,j}d_{j,k}}{t^2}\\
+    =&amp;\sum\limits_{j=1}^{t}f_{i-1,j}\left(\dfrac{\sum\limits_{k=1}^{t}b_{k}d_{j,k}}{t^2}\right)\\
+\end{aligned}
+\]</span></p>
+<p>后面的括号中将 <span class="math inline">\(j\)</span> 从 <span
+class="math inline">\(1\)</span> 枚举到 <span
+class="math inline">\(t\)</span> 的时候便依次是矩阵中的那 <span
+class="math inline">\(t\)</span> 项。</p>
+<p>时间复杂度 <span class="math inline">\(O(t^3\log
+n)\)</span>，可以通过。<br />
+注意一下 <span class="math inline">\(n=1\)</span>
+的时候特判一下，以及开始是 <span class="math inline">\(v\)</span> 不是
+<span class="math inline">\(1\)</span>。</p>
+
+    </div>
+</div>
+<h1 id="t3">T3</h1>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6046">P6046
+纯粹容器</a></p>
+<h2 id="题意简述-2">题意简述</h2>
+<p>有 <span class="math inline">\(n\)</span> 个容器，第 <span
+class="math inline">\(i\)</span> 个容器的强度为 <span
+class="math inline">\(a_i\)</span>，保证 <span
+class="math inline">\(a_i\)</span> 互不相同。进行 <span
+class="math inline">\(n-1\)</span>
+轮操作，每轮操作中，他会等概率随机挑选两个 <strong>位置相邻</strong> 且
+<strong>未被击倒</strong>
+的容器，令它们进行决斗，在一次决斗中，强度较小的容器将会被击倒并移出队列。</p>
+<p>请你对每个容器求出它存活轮数的期望。答案对 <span
+class="math inline">\(998244353\)</span> 取模。</p>
+<p>一个容器的存活轮数为最大的非负整数 <span class="math inline">\(x &lt;
+n\)</span> 满足它在第 <span class="math inline">\(x\)</span>
+轮未被击倒。</p>
+<p>两个容器 <span class="math inline">\(i\)</span> 和 <span
+class="math inline">\(j\)</span> 位置相邻当且仅当不存在 <span
+class="math inline">\(k\)</span> 满足 <span
+class="math inline">\(i&lt;k&lt;j\)</span> 且 <span
+class="math inline">\(k\)</span> 号容器未被击倒。</p>
+<p><span class="math inline">\(1 \leq n \leq 50\)</span>，<span
+class="math inline">\(1 \leq a_i \leq n\)</span>，<span
+class="math inline">\(a_i\)</span> 两两不同。</p>
+<h2 id="思路-2">思路</h2>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint1
+    </div>
+    <div class='spoiler-content'>
+        <p>期望有这么一个式子 <span class="math inline">\(E(x)=\sum_{i\ge
+1}P(i&gt;x)\)</span>，对于这道题，<span
+class="math inline">\(P(i&gt;x)\)</span> 也就是 <span
+class="math inline">\(i\)</span> 轮后依然存活的概率，<span
+class="math inline">\(n\)</span> 很小，不妨暴力一点。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint2
+    </div>
+    <div class='spoiler-content'>
+        <p>考虑一个容器什么时候必然会被击倒，再尝试计算一下。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>我们先预处理对于每一个位置前面第一个比其强的，以及后面第一个比其强的。<br />
+不难发现，我们要存活 <span class="math inline">\(a\)</span> 轮，必须决斗
+<span class="math inline">\(a\)</span>
+次，决斗又可能是其到前面第一个比其强的之间的某两个，也有可能是其到后面第一个比其强的之间的某两个，也又可能是除了这两个区间的某两个。<br />
+假设到前面的第一个比其大的位置可以合并 <span
+class="math inline">\(x\)</span> 次，后面的可以合并 <span
+class="math inline">\(y\)</span> 次，那么剩下的有 <span
+class="math inline">\(n-1-x-y\)</span> 次。不难得到合法方案数为：</p>
+<p><span class="math display">\[
+a!\sum_{i+j+k=a,0\le i\le x,0\le j\le y,0\le
+k}\binom{x}{i}\binom{y}{j}\binom{n-1-x-y}{k}
+\]</span></p>
+<p>总的方案数不难算出是 <span
+class="math inline">\(\binom{n-1}{a}a!\)</span>，两者一除便是存活 <span
+class="math inline">\(a\)</span>
+轮的概率，最后加起来便是该点的答案。</p>
+<p>找前面第一个比其强的可以使用单调栈，但我们后面都是 <span
+class="math inline">\(O(n^4)\)</span> 的了，这里暴力就行。</p>
+<p>ps：此题有 <span class="math inline">\(O(n)\)</span>
+做法，但涉及到生成函数或是较复杂的容斥，这里不作展开。</p>
+
+    </div>
+</div>
+<h1 id="t4">T4</h1>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1654">P1654 OSU!</a></p>
+<h2 id="题意简述-3">题意简述</h2>
+<p>一共有 <span class="math inline">\(n\)</span>
+次操作，每次操作只有成功与失败之分，成功对应 <span
+class="math inline">\(1\)</span>，失败对应 <span
+class="math inline">\(0\)</span>，<span class="math inline">\(n\)</span>
+次操作对应为 <span class="math inline">\(1\)</span> 个长度为 <span
+class="math inline">\(n\)</span> 的 01 串。在这个串中连续的 <span
+class="math inline">\(X\)</span> 个 <span
+class="math inline">\(1\)</span> 可以贡献 <span
+class="math inline">\(X^3\)</span> 的分数，这 <span
+class="math inline">\(X\)</span> 个 <span
+class="math inline">\(1\)</span> 不能被其他连续的 <span
+class="math inline">\(1\)</span> 所包含（也就是极长的一串 <span
+class="math inline">\(1\)</span>）</p>
+<p>现在给出 <span
+class="math inline">\(n\)</span>，以及每个操作的成功率，请你输出期望分数，输出四舍五入后保留
+<span class="math inline">\(1\)</span> 位小数。</p>
+<p><span class="math inline">\(n\le 10^5\)</span>。</p>
+<h2 id="思路-3">思路</h2>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint1
+    </div>
+    <div class='spoiler-content'>
+        <p><span class="math inline">\(E(x^3)=E(x)^3\)</span>
+吗？显然不等于，因为 <span class="math inline">\(x\)</span> 和 <span
+class="math inline">\(x^2\)</span> 之间并不是相互独立的。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint2
+    </div>
+    <div class='spoiler-content'>
+        <p>注意到每次贡献只会有 <span class="math inline">\(1\)</span>。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>我们计算一下对贡献的增量。</p>
+<p><span class="math display">\[
+\begin{aligned}
+     &amp;E((x+1)^3)\\
+    =&amp;E(x^3+3x^2+3x+1)\\
+    =&amp;E(x^3)+E(3x^2)+E(3x)+E(1)\\
+    =&amp;E(x^3)+3E(x^2)+3E(x)+1\\
+\end{aligned}
+\]</span></p>
+<p>于是我们只需要额外维护 <span class="math inline">\(E(x^2)\)</span> 和
+<span class="math inline">\(E(x)\)</span> 即可，<span
+class="math inline">\(E(x^2)\)</span> 维护是类似的。</p>
+<p>时间复杂度 <span class="math inline">\(O(n)\)</span>。</p>
+
+    </div>
+</div>
+<h1 id="t5">T5</h1>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3924">P3924
+康娜的线段树</a></p>
+<h2 id="题意简述-4">题意简述</h2>
+<p>建一棵线段树，但是每次区间加的时候暴力处理（即每次变成单点改）。问每次区间加操作后，从根节点等概率选择一个节点进入直到叶节点，累加路径上所有结点的权值和，求这个权值和的期望。</p>
+<p><span class="math inline">\(1\le n,m\le 10^6\)</span>。</p>
+<h2 id="思路-4">思路</h2>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint1
+    </div>
+    <div class='spoiler-content'>
+        <p>先不考虑修改，怎么算？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint2
+    </div>
+    <div class='spoiler-content'>
+        <p>不难发现，因为是线段树，所以每个点走到的概率始终是 <span
+class="math inline">\(\dfrac{1}{2}\)</span>。我们定义深度为该节点在线段树上到根节点的距离，那么对于深度相同的，每个点到达的概率是相同的，直接将一行的和加起来乘上概率即可。<br />
+接着不妨考虑一下增加后的贡献，可以把线段树的样子画出来看看。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p><img src="/images/P3924例图.png" /><br />
+我们以 <span class="math inline">\(n=5\)</span>
+为例，考虑每个位置的贡献，我们发现其会对从叶子节点到根的整条路经产生贡献。并且概率依次是
+<span
+class="math inline">\(1,\dfrac{1}{2},\dfrac{1}{4},\cdots,\dfrac{1}{2^{dep_{i}}}\)</span>。加起来的和显然是
+<span
+class="math inline">\(2-\dfrac{1}{2^{dep_{i}}}\)</span>。那么一个点增加
+<span class="math inline">\(val\)</span> 的权值，产生的贡献也就是 <span
+class="math inline">\(val\times(2-\dfrac{1}{2^{dep_{i}}})\)</span>，而区间加，也就是
+<span
+class="math inline">\(val+\sum\limits_{i=l}^{r}\left(2-\dfrac{1}{2^{dep_{i}}}\right)\)</span>。容易发现这个可以用前缀和快速求出。<br />
+时间复杂度 <span class="math inline">\(O(n\log{n}+m)\)</span>。</p>
+<p>有一道加强版，你们可以自行思考一下：<a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4927">P4927 [1007]
+梦美与线段树</a></p>
+
+    </div>
+</div>
+<h1 id="t6">T6</h1>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3232">P3232 [HNOI2013]
+游走</a></p>
+<h2 id="题意简述-5">题意简述</h2>
+<p>给一张无向连通图，无重边和自环，保证从 <span
+class="math inline">\(1\)</span> 号结点出发可以到达所有节点。从 <span
+class="math inline">\(1\)</span> 号点出发，初始得分为 <span
+class="math inline">\(0\)</span>，每次随机选择一个相邻的点走过去，并获得对应的边的编号的得分，边权可重复获得，走到
+<span class="math inline">\(n\)</span>
+号点就结束。请给出一种方案使得期望得分尽可能小。</p>
+<p><span class="math inline">\(2\le n\le 500,1\le m\le
+125000\)</span>。</p>
+<h2 id="思路-5">思路</h2>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint1
+    </div>
+    <div class='spoiler-content'>
+        <p>有向无环图怎么做？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint2
+    </div>
+    <div class='spoiler-content'>
+        <p>不难想到，我们先求出每条边期望经过次数，贪心的标号，经过次数多的标小的号。<br />
+那么问题就变成如何求每条边的期望经过次数。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint3
+    </div>
+    <div class='spoiler-content'>
+        <p>不难想到，对于一条边，其期望经过次数和两端的点有关，假设分别为 <span
+class="math inline">\(u\)</span> 和 <span
+class="math inline">\(v\)</span>，<span
+class="math inline">\(f_{i}\)</span> 表示 <span
+class="math inline">\(i\)</span> 这个点的期望经过次数，<span
+class="math inline">\(d_{i}\)</span> 表示 <span
+class="math inline">\(i\)</span>
+这个点的度数，那么这条边期望经过次数显然为 <span
+class="math inline">\(\dfrac{f_{u}}{d_{u}}+\dfrac{f_{v}}{d_{v}}\)</span>。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint4
+    </div>
+    <div class='spoiler-content'>
+        <p>那么对于有向无环图，我们只需要拓扑排序一下，便可以简单的求出每个点的期望经过次数。<br />
+但是我们发现无向图可能会走过来走过去，这个该如何处理？不妨还是尝试写出式子。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>类似于有向图，我们发现与 <span class="math inline">\(u\)</span>
+这个点相邻的所有点都可以转移到 <span
+class="math inline">\(u\)</span>，也就是：</p>
+<p><span class="math display">\[
+f_{u}=\sum_{v}\dfrac{f_{v}}{d_{v}}
+\]</span></p>
+<p>这个诈一看感觉不可求，实际上，我们将每个点的方程都列出来。发现这是一个
+<span class="math inline">\(n\)</span> 元方程组，并且恰好有 <span
+class="math inline">\(n\)</span> 个方程。<br />
+于是我们便可以使用高斯消元来求出每个 <span
+class="math inline">\(f_{i}\)</span> 的值，剩下的便和前面一样了。ljx
+说给你们讲过高斯消元了，我这里就不再赘述。</p>
+<p>注意对于 <span class="math inline">\(n\)</span>
+号点要特殊处理，因为走到 <span class="math inline">\(n\)</span>
+后就不会再走了。</p>
+
+    </div>
+</div>
+<h1 id="t7">T7</h1>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6835">P6835 [Cnoi2020]
+线形生物</a></p>
+<h2 id="题意简述-6">题意简述</h2>
+<p>给定一条从 <span class="math inline">\(1\)</span> 到 <span
+class="math inline">\(n+1\)</span> 的链，还有 <span
+class="math inline">\(m\)</span> 条返祖边 <span
+class="math inline">\(u_{i}\to v_{i}()u_{i}\ge v_{i}\)</span>。<br />
+每次等概率选择一条边走，问走到 <span class="math inline">\(n+1\)</span>
+的期望步数。</p>
+<p><span class="math inline">\(1\le n,m\le 10^6\)</span>。</p>
+<h2 id="思路-6">思路</h2>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint1
+    </div>
+    <div class='spoiler-content'>
+        <p>是不是感觉有点眼熟？</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint2
+    </div>
+    <div class='spoiler-content'>
+        <p>和 T1 很像对吧，不妨也类似的写出式子。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>类似 T1，我们令 <span class="math inline">\(dp_{i}\)</span> 表示走到
+<span class="math inline">\(i\)</span> 所需的期望步数。
+根据期望的线性性，从 <span class="math inline">\(i\)</span> 走到 <span
+class="math inline">\(j\)</span> 所需的期望步数也就是 <span
+class="math inline">\(dp_{j}-dp_{i}\)</span>。</p>
+<p><span class="math display">\[
+\begin{aligned}
+  dp_{i}&amp;=\dfrac{dp_{i-1}+1}{d_{i-1}}+\sum_{u}\dfrac{dp_{i}-dp_{u}+dp_{i-1}+1}{d_{i-1}}\\
+&amp;=dp_{i-1}+1+\dfrac{(d_{i-1}-1)dp_{i}}{d_{i-1}}+\sum_{u}\dfrac{-dp_{u}+1}{d_{i-1}}\\
+&amp;=dp_{i-1}+\dfrac{(d_{i-1}-1)dp_{i}}{d_{i-1}}+1-\sum_{u}\dfrac{dp_{u}}{d_{i-1}}\\
+\dfrac{dp_{i}}{d_{i-1}}&amp;=dp_{i-1}+1-\sum_{u}\dfrac{dp_{u}}{d_{i-1}}\\
+dp_{i}&amp;=dp_{i-1}d_{i-1}+d_{i-1}-\sum_{u}dp_{u}\\
+\end{aligned}
+\]</span></p>
+<p>照着式子做就行了。</p>
+
+    </div>
+</div>
+<h1 id="t8">T8</h1>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P8043">P8043 [COCI
+2016/2017 #7] KLAVIR</a></p>
+<h2 id="题意简述-7">题意简述</h2>
+<p>每次等概率选择 <span class="math inline">\(1\)</span> 到 <span
+class="math inline">\(N\)</span> 中的一个数，现有连续的 <span
+class="math inline">\(M\)</span> 个数 <span
+class="math inline">\(A_1,A_2,\dots,A_M\)</span>，求对于所有的 <span
+class="math inline">\(1\leqslant i\leqslant
+M\)</span>，求第一次出现连续的 <span
+class="math inline">\(A_1,A_2,\dots,A_i\)</span> 的期望次数，答案对
+<span class="math inline">\(10^9+7\)</span> 取模。</p>
+<p><span class="math inline">\(1\leqslant N\leqslant 100\)</span>，<span
+class="math inline">\(1\leqslant M\leqslant 10^6\)</span>，<span
+class="math inline">\(1\leqslant A_i\leqslant N\)</span>。</p>
+<h2 id="思路-7">思路</h2>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint1
+    </div>
+    <div class='spoiler-content'>
+        <p>假如对于<code>1 2 1 2</code>这么个数组，假如你现在在求 <span
+class="math inline">\(i=4\)</span> 的答案，在第 <span
+class="math inline">\(4\)</span>
+个位置失配了，并不会完全重新匹配，而是会继续从第 <span
+class="math inline">\(2\)</span> 个点继续匹配。<br />
+你想到了什么。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint2
+    </div>
+    <div class='spoiler-content'>
+        <p>发现这个过程十分类似于 KMP，一个位置失配了不会重新匹配，而会从其在
+KMP 上的 Fail 指针处继续跳。<br />
+发现这非常类似于上一道题的返祖边操作，可以选择每个点最多会往回连 <span
+class="math inline">\(N\)</span> 条边，但是会爆炸。而且对于 Fail 指针的
+Fail 指针也会出现一定的问题。怎么处理这些问题。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Hint3
+    </div>
+    <div class='spoiler-content'>
+        <p>首先，我们并不需要真正的连 <span class="math inline">\(N\)</span>
+条边，对于前面的影响我们也可以从前往后写出式子来消元之类的来处理。<br />
+你们可以自行尝试一下这个做法，我这里介绍一个更加巧妙的做法。</p>
+
+    </div>
+</div>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>我们先对单独一个前缀求答案，假设这个前缀为 <span
+class="math inline">\(S\)</span>。<br />
+每个时刻可以支付 <span class="math inline">\(k\)</span>
+元来猜下一个位置是哪个字符，猜对了返还 <span
+class="math inline">\(Nk\)</span> 元。（<span
+class="math inline">\(N\)</span> 为字符集大小）<br />
+显然这个的期望是 <span class="math inline">\(Nk/N-k=0\)</span>。</p>
+<p>我们现在有若每一时刻有一个新的人来猜，每个人都会按照 <span
+class="math inline">\(S\)</span> 的顺序来猜，每个人初始都有 <span
+class="math inline">\(1\)</span> 元，假如其猜中了，其会将得到的所有钱
+<span class="math inline">\(N\)</span> 来猜 <span
+class="math inline">\(S\)</span>
+的下一个字符；如果输了，他就会离开。</p>
+<p>在某一时刻，假如这个时刻是 <span
+class="math inline">\(M\)</span>，某个人 <span
+class="math inline">\(i\)</span> 将这个 <span
+class="math inline">\(S\)</span> 猜完了，此时显然这个 <span
+class="math inline">\(M\)</span> 就是答案。这个人 <span
+class="math inline">\(i\)</span> 获得了 <span
+class="math inline">\(N^{\left|S\right|}\)</span>
+元，除了这个人，还有人获得钱，比如<code>121</code>这个串，显然第 <span
+class="math inline">\(i+2\)</span> 个人最后猜中了 <span
+class="math inline">\(1\)</span> 这个字符，我们发现，有猜中的人都是
+<span class="math inline">\(S\)</span> 的公共前后缀，这个是可以简单的由
+KMP 求出。</p>
+<p>因为我们前面证明了期望是 <span
+class="math inline">\(0\)</span>，说明这些人赚的钱，都是从前面所有的人输掉的钱得来的，每个人初始又只有
+<span class="math inline">\(1\)</span> 元，也就说明 <span
+class="math inline">\(M=N^{\left|S\right|}+\cdots\)</span>。</p>
+<p>所以我们对于一个前缀，只需要一直跳 Fail
+指针，即可求出答案。而对于其他前缀，我们设 <span
+class="math inline">\(f_{i}\)</span> 表示 <span
+class="math inline">\([1,i]\)</span> 这个前缀的期望。可以得到 <span
+class="math inline">\(f_{i}=f_{Fail_{i}}+N^{i}\)</span>。</p>
+<p>时间复杂度 <span class="math inline">\(O(M\log M)\)</span>。</p>
+
+    </div>
+</div>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+    
+    
+    
+    
+    <div id="comment">
+        <div id="giscus-container" class="giscus"></div>
+    </div>
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2024 - 2025 yzljyのBlog
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;yzljy
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+<script
+    src="https://giscus.app/client.js"
+    data-repo="yzljyawa/yzljyawa.github.io"
+    data-repo-id="R_kgDOMbAUfA"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOMbAUfM4CiQYe"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin
+    async
+></script>
+
+
+
+
+
+    
+</body>
+</html>
