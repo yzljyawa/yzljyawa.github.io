@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>这只是一个为了建站而建的文章awa | yzljyのBlog</title>
+    <title>未来 | yzljyのBlog</title>
     <meta name="author" content="yzljy" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -43,6 +43,9 @@
 
 <script src="/js/lib/preview.js"></script>
 
+
+<script src="https://s4.zstatic.net/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+<script src="/js/lib/crypto.js"></script>
 
 
 
@@ -165,22 +168,22 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div class="article">
     <div>
-        <h1>这只是一个为了建站而建的文章awa</h1>
+        <h1>未来</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2024/7/26
+            2025/7/28
         </span>
         
         <span class="category">
-            <a href="/categories/%E6%B5%8B%E8%AF%95/">
+            <a href="/categories/%E6%84%8F%E8%AF%86%E6%B5%81/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
-                测试
+                意识流
             </a>
         </span>
         
@@ -193,8 +196,8 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E6%B5%8B%E8%AF%95/" style="color: #ffa400">
-                    测试
+                <a href="/tags/%E6%96%87%E7%AB%A0/" style="color: #a5ff4d">
+                    文章
                 </a>
             </span>
             
@@ -202,10 +205,20 @@
         
     </div>
     
-    <div class="content" v-pre>
-        <p>你看，是不是真的什么都没有awa</p>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
-    </div>
+    
+    <input
+        id="crypto"
+        :class="['input', cryptoStatus]"
+        :disabled="cryptoStatus === 'success'"
+        ref="crypto"
+        placeholder="文章被加密，请输入密码"
+        data-encrypted="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"
+        data-shasum="1d7a0fb9242ac1f4c9d4212dfc8951c824232acc2c7f87919e38a2731bfd85d8"
+        v-model="crypto"
+    />
+    <transition name="fade">
+        <div class="content" ref="content" v-show="cryptoStatus === 'success'"></div>
+    </transition>
     
     
     

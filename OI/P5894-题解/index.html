@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>这只是一个为了建站而建的文章awa | yzljyのBlog</title>
+    <title>P5894 题解 | yzljyのBlog</title>
     <meta name="author" content="yzljy" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -165,22 +165,22 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div class="article">
     <div>
-        <h1>这只是一个为了建站而建的文章awa</h1>
+        <h1>P5894 题解</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2024/7/26
+            2025/8/11
         </span>
         
         <span class="category">
-            <a href="/categories/%E6%B5%8B%E8%AF%95/">
+            <a href="/categories/OI/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
-                测试
+                OI
             </a>
         </span>
         
@@ -193,8 +193,15 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E6%B5%8B%E8%AF%95/" style="color: #ffa400">
-                    测试
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #979a9a">
+                    题解
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E8%B4%AA%E5%BF%83/" style="color: #00beff">
+                    贪心
                 </a>
             </span>
             
@@ -203,7 +210,160 @@
     </div>
     
     <div class="content" v-pre>
-        <p>你看，是不是真的什么都没有awa</p>
+        <p>这是一篇单 log 的做法，总用时仅有 2.57s，远超 rk2，希望大家能 hack
+或者给出严谨的证明。</p>
+<h2 id="思路">思路</h2>
+<p>首先有一个思路，我们以某种顺序来考虑每一个玩具，找出能搬运它的所有机器人，选择当前搬运次数最少的来搬运，最后答案就是搬运次数最多的机器人的搬运次数。<br />
+那现在我们的问题就是以什么顺序来考虑每一个玩具，怎么找到每个玩具被哪些机器人搬运，等等。</p>
+<p>首先，我们来想想怎么找当前哪个玩具应该被放到哪里。<br />
+显然是找一堆数中，最小值的位置。乍一看似乎很难做，因为能覆盖某个玩具的机器人，似乎是很多个不连续的点。</p>
+<p>我们将每个玩具放到二维平面上，发现每一种机器人的限制，本质上就是对左边一片区域进行覆盖，或者对下面一片区域进行覆盖。<br />
+对每种机器人按从小到大排序后，发现能够覆盖某个玩具的机器人是连续的，一直到结尾的一段。于是，前面的问题变成了区间找最小值位置，这个可以使用线段树简单实现。<br />
+与此同时，我们还可以求出每个玩具被覆盖的次数。</p>
+<p>可以想到一个很显然的贪心，按照被覆盖次数从少到多的次数来进行放置，为什么？</p>
+<p>设当前要放的玩具是 A 和 B，A 可以放在 a 和 b，B 可以放在 b 。<br />
+从多到少放，先放 A，假如你放在了 b 上，那么你后面放 B 的时候，就只能放在
+b 上，b 就被放了 2 次。 显然，在实际上， A 可以放在 a，B 放在
+b，每个只被放一次。</p>
+<p>有人会说了：那我一开始把 A 放在 a 不就好了。<br />
+但在实际实现中，你是很难去考虑后面的没被放置的东西的情况的。<br />
+因此从少的往多的放肯定是不劣的。</p>
+<p>这样就好了吗？并没有，因为我们有两种机器人，考虑这么一种情况。</p>
+<p>a 玩具可以放在 A1 上。<br />
+b 玩具可以放在 A3，B1，B2 上。<br />
+c 玩具可以放在 A2，A3，B1 上。 d 玩具可以放在 A1，A2，A3 上。</p>
+<p>我们就按 a，b，c，d
+的顺序放，有多个能放的位置取最前面那个，放置过程如下：<br />
+a 放在 A1 上，b 放在 A3 上，C 放在 A2 上，d 放在 A1 上。</p>
+<p>我们发现，A1 被放了 2 次，实际上，我们只需要按照 a，d，c，b
+的顺序，以相同的策略放置，即可做到最多的只被放置一次。</p>
+<p>为什么会出现这种问题呢？其实和上面差不多，怎么解决呢？我们假设有一种最优的放置方案，我们只需要让后面放置的，能弥补前面放置的不优的地方即可。<br />
+我们可以按照被两种机器人总覆盖次数为第一关键字，被第一种机器人覆盖次数为第二关键字来排序，并且每次取得时候，优先取第一种机器人中能取的最前面的，再去取第二种机器人中最前面能取的。<br />
+这样就好了。</p>
+<h2 id="代码">代码</h2>
+<pre class="cpp"><code>#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int MAXN=1e6+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x)&#123;
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+&#125;
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y)&#123;
+    read(x),read(y...);
+&#125;
+
+bool awa;
+int A,B,T,x[MAXN],y[MAXN],p[MAXN];
+struct node&#123;
+    int w,s,cnt,x,y;
+&#125;s[MAXN];
+struct node2&#123;
+    int minval,minpos;
+&#125;tree[MAXN&lt;&lt;2];
+
+node2 merge(node2 n1,node2 n2)&#123;
+    node2 res=n1;
+    if(n1.minval&lt;=n2.minval)&#123;
+        res.minval=n1.minval;
+        res.minpos=n1.minpos;
+    &#125;
+    else&#123;
+        res.minval=n2.minval;
+        res.minpos=n2.minpos;
+    &#125;
+    return res;
+&#125;
+
+void pushup(int id)&#123;
+    tree[id]=merge(tree[id*2],tree[id*2+1]);
+&#125;
+
+void build(int id,int l,int r)&#123;
+    tree[id].minval=0;
+    if(l==r)&#123;
+        tree[id].minpos=l;
+        return;
+    &#125;
+    int mid=(l+r)&gt;&gt;1;
+    build(id*2,l,mid);
+    build(id*2+1,mid+1,r);
+    pushup(id);
+&#125;
+
+void update(int id,int l,int r,int pos)&#123;
+    if(l==r)&#123;
+        tree[id].minval++;
+        return;
+    &#125;
+    int mid=(l+r)&gt;&gt;1;
+    if(pos&lt;=mid) update(id*2,l,mid,pos);
+    else update(id*2+1,mid+1,r,pos);
+    pushup(id);
+&#125;
+
+node2 query(int id,int l,int r,int L,int R)&#123;
+    node2 res;
+    res.minval=1e9,res.minpos=-1;
+    if(r&lt;L||R&lt;l) return res;
+    if(L&lt;=l&amp;&amp;r&lt;=R) return tree[id];
+    int mid=(l+r)&gt;&gt;1;
+    if(L&lt;=mid) res=merge(res,query(id*2,l,mid,L,R));
+    if(R&gt;mid) res=merge(res,query(id*2+1,mid+1,r,L,R));
+    return res;
+&#125;
+
+bool cmp(node n1,node n2)&#123;
+    if(n1.cnt!=n2.cnt) return n1.cnt&lt;n2.cnt;
+    if(n1.x!=n2.x) return n1.x&gt;n2.x;
+    return n1.y&gt;n2.y;
+&#125;
+bool qwq;
+
+signed main()&#123;
+    // freopen(&quot;clear.in&quot;,&quot;r&quot;,stdin);
+    // freopen(&quot;clear.out&quot;,&quot;w&quot;,stdout);
+    // cout&lt;&lt;(&amp;awa-&amp;qwq)/1024.0/1024.0&lt;&lt;endl;
+    read(A,B,T);
+    for(int i=1;i&lt;=A;i++) read(x[i]);
+    for(int i=1;i&lt;=B;i++) read(y[i]);
+    for(int i=1;i&lt;=T;i++) read(s[i].w,s[i].s);
+    sort(x+1,x+A+1);sort(y+1,y+B+1);
+    for(int i=1;i&lt;=T;i++)&#123;
+        //注意是严格偏序。
+        s[i].x=upper_bound(x+1,x+A+1,s[i].w)-x;
+        s[i].cnt+=A-s[i].x+1;
+        s[i].y=upper_bound(y+1,y+B+1,s[i].s)-y;
+        s[i].cnt+=B-s[i].y+1;
+    &#125;
+    sort(s+1,s+T+1,cmp);
+    if(s[1].cnt==0)&#123;
+        cout&lt;&lt;-1;
+        return 0;
+    &#125;
+    //这里把第一种机器人和第二种放在一起处理了，能方便地选择放置位置。
+    build(1,1,A+B);
+    int ans=0;
+    for(int i=1;i&lt;=T;i++)&#123;
+        node2 now=merge(query(1,1,A+B,s[i].x,A),query(1,1,A+B,s[i].y+A,A+B));
+        ans=max(ans,now.minval+1);
+        update(1,1,A+B,now.minpos);
+    &#125;
+    cout&lt;&lt;ans;
+    return 0;
+&#125;</code></pre>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
     
