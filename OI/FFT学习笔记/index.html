@@ -250,7 +250,7 @@ class="math inline">\(a\mathrm{i}-b\mathrm{i}=(a-b)\mathrm{i}\)</span><br />
 <li><span class="math inline">\(a\mathrm{i}\times
 b\mathrm{i}=ab\mathrm{i}^{2}=-ab\)</span></li>
 <li><span class="math inline">\(a\mathrm{i}\div
-b\mathrm{i}=\dfrac{a}{b}\mathrm{i}\)</span></li>
+b\mathrm{i}=\dfrac{a}{b}\)</span></li>
 </ul>
 <p>而<code>复数</code>则是一个<code>实数</code>加上一个<code>虚数</code>，一般表示为
 <span class="math inline">\(a+b\mathrm{i}\)</span>。其中，<span
@@ -295,10 +295,9 @@ class="math inline">\((a+c\mathrm{i})+(b+d\mathrm{i})=(a+b)+(c+d)\mathrm{i}\)</s
 <li><span
 class="math inline">\((a+c\mathrm{i})-(b+d\mathrm{i})=(a-b)+(c-d)\mathrm{i}\)</span></li>
 </ul>
-<p>容易发现，复数的加减法是满足交换律和结合律的。也就是：</p>
+<p>容易发现，复数的加法是满足交换律和结合律的。也就是：</p>
 <ul>
-<li><span
-class="math inline">\(z_{1}+z_{2}+z_{3}=z_{1}+z_{3}+z_{2}\)</span><br />
+<li><span class="math inline">\(z_{1}+z_{2}=z_{2}+z_{1}\)</span><br />
 </li>
 <li><span
 class="math inline">\(z_{1}+z_{2}+z_{3}=z_{1}+(z_{2}+z_{3})\)</span></li>
@@ -424,8 +423,7 @@ class="math inline">\(x=x_{0},x_{1},\dotsb,x_{n}\)</span>
 的。</p>
 </blockquote>
 <p>那我们我们现在有了已经转化为点值表示的多项式，我们怎么把它转化为系数表示呢？<br />
-我们可以使用一种叫做 拉格朗日插值法
-的方法，但是我也不会，重点也不在这里，毕竟我们要讲的是
+我们可以使用一种叫做<strong>拉格朗日插值法</strong>的方法，但是我也不会，重点也不在这里，毕竟我们要讲的是
 FFT。但你可以知道的是，这个方法的时间复杂度也是 <span
 class="math inline">\(O(n^{2})\)</span> 的。（虽然有个东西叫做
 多项式快速插值，但时间复杂度也是 <span
@@ -435,10 +433,11 @@ class="math inline">\(O(n^2)\)</span>
 的吗？和暴力有什么区别，还麻烦的多。你先别急，我们要讲的
 FFT，便是优化这一过程的。</p>
 <h3 id="快速傅里叶变换fft">快速傅里叶变换（FFT）</h3>
-<p>FFT 的全称，准确说应该叫做
-快速离散傅里叶变换。离散傅里叶变换：DFT。FFT 可以在 <span
-class="math inline">\(O(n\log n)\)</span> 的时间复杂度下，将一个
-系数表示 的多项式，转化为 点值表示。</p>
+<p>FFT
+的全称，准确说应该叫做<strong>快速离散傅里叶变换</strong>。离散傅里叶变换：DFT。FFT
+可以在 <span class="math inline">\(O(n\log n)\)</span>
+的时间复杂度下，将一个<strong>系数表示</strong>的多项式，转化为
+点值表示。</p>
 <p>我们现在有一个多项式 <span
 class="math inline">\(f(x)=a_{0}+a_{1}x+a_{2}x^{2}+a_{3}x^{3}+\dotsb+a_{n-1}x^{n-1}\)</span>。<br />
 我们现在又有两个多项式： <span class="math display">\[
@@ -492,8 +491,9 @@ class="math inline">\(2\)</span>，为了防止出现小数，一开始应该将
 class="math inline">\(T(n)=T(\dfrac{n}{2})+O(n)\)</span>
 可得时间复杂度为 <span class="math inline">\(O(n\log n)\)</span>。</p>
 <h3 id="快速傅里叶逆变换ifft">快速傅里叶逆变换（IFFT）</h3>
-<p>和 FFT 很像，FFT 的全称准确说应该是：快速离散傅里叶逆变换。而
-离散傅里叶逆变换，则是 IDFT。</p>
+<p>和 FFT 很像，FFT
+的全称准确说应该是：快速离散傅里叶逆变换。而<strong>离散傅里叶逆变换</strong>，则是
+IDFT。</p>
 <p>我们先来尝试证明一个定理：</p>
 <blockquote>
 <p>我们现在有多项式 <span
