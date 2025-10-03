@@ -258,7 +258,12 @@ class="math inline">\(2\)</span>
 的整数次幂的幂，并且计算时用向量乘以矩阵，此时时间复杂度变为 <span
 class="math inline">\(O(n^3\log n+n^2m\log n)\)</span>。<br />
 </li>
-<li>二分图上博弈，先手必胜当且仅当起点一定在二分图的最大匹配上（需要在所有可能的最大匹配方案上）。</li>
+<li>二分图上博弈，先手必胜当且仅当起点一定在二分图的最大匹配上（需要在所有可能的最大匹配方案上）。<br />
+</li>
+<li>对一条路径上的边权整体异或一个权值 <span
+class="math inline">\(x\)</span>，可以转化为，将每个点设置点权为：所有以其为端点的边的异或和。这样，异或一整条路径的边权就变成了对两个点的点权进行异或。见：<a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_apc001_f">AT_apc001_f XOR
+Tree</a>。</li>
 </ol>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
