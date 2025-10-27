@@ -193,7 +193,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/trick/" style="color: #e74c3c">
+                <a href="/tags/trick/" style="color: #00beff">
                     trick
                 </a>
             </span>
@@ -263,7 +263,16 @@ class="math inline">\(O(n^3\log n+n^2m\log n)\)</span>。<br />
 <li>对一条路径上的边权整体异或一个权值 <span
 class="math inline">\(x\)</span>，可以转化为，将每个点设置点权为：所有以其为端点的边的异或和。这样，异或一整条路径的边权就变成了对两个点的点权进行异或。见：<a
 target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_apc001_f">AT_apc001_f XOR
-Tree</a>。</li>
+Tree</a>。<br />
+</li>
+<li><span
+class="math inline">\(n^m=\sum\limits_{i=0}^{n}\begin{Bmatrix}m\\
+i\end{Bmatrix}\dbinom{n}{i}i!\)</span>，考虑将 <span
+class="math inline">\(m\)</span> 个不同的小球扔进 <span
+class="math inline">\(n\)</span>
+个不同的盒子，盒子可以为空。从两种方向考虑即可得到这个式子。（ps:枚举范围无论是
+<span class="math inline">\(n\)</span> 还是 <span
+class="math inline">\(m\)</span> 都是可以的）</li>
 </ol>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>

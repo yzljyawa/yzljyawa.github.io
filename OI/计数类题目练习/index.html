@@ -193,14 +193,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/DP/" style="color: #e74c3c">
+                <a href="/tags/DP/" style="color: #ffa400">
                     DP
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E8%AE%A1%E6%95%B0/" style="color: #ffa400">
+                <a href="/tags/%E8%AE%A1%E6%95%B0/" style="color: #e74c3c">
                     计数
                 </a>
             </span>
@@ -214,8 +214,14 @@
 target="_blank" rel="noopener" href="https://www.luogu.com.cn/training/880161">计数类练习</a></p>
 <hr />
 <p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1118/F2">CF1118F2
-Tree Cutting (Hard Version)</a> *2700<br />
-感觉思路挺清晰的，先注意到只能 <span class="math inline">\(k-1\)</span>
+Tree Cutting (Hard Version)</a> *2700</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>感觉思路挺清晰的，先注意到只能 <span
+class="math inline">\(k-1\)</span>
 次划分，所以每种颜色必然在同一连通块。<br />
 树上简单路径唯一，所以可以想到将颜色相同的，先按照最短路径缩成一个点。加入存在某两种颜色的连通块有交，则此时必然无解。<br />
 缩成点后，则变成了，给定一棵树，分成 <span
@@ -226,11 +232,19 @@ class="math inline">\(k\)</span>
 往下走所在的连通块中是否存在有颜色的点，分类讨论进行转移即可。<br />
 时间复杂度 <span class="math inline">\(O(n\log n)\)</span>，瓶颈在于
 LCA。</p>
+
+    </div>
+</div>
 <hr />
 <p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/51/E">CF51E
 Pentagon</a> *2400<br />
-神秘无向图五元环计数。<br />
-注意到 <span class="math inline">\(n\)</span> 虽然有 <span
+神秘无向图五元环计数。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>注意到 <span class="math inline">\(n\)</span> 虽然有 <span
 class="math inline">\(700\)</span>，但是时限 10s 啊，所以考虑 <span
 class="math inline">\(O(n^3)\)</span> 做法。<br />
 考虑把五元环拆成三段，长度依次为
@@ -245,13 +259,21 @@ class="math inline">\(mid\)</span>，那么数量就是 <span
 class="math inline">\(f_{u,mid}\times
 f_{v,mid}\)</span>。发现有很多重。<br />
 去重是容易的，这里就不写了。（懒）</p>
+
+    </div>
+</div>
 <hr />
 <p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/2115/C">CF2115C
-Gellyfish and Eternal Violet</a> *2700<br />
-这场我还 VP 了的，当时太糖了，场上只过了 ABC，D 后面补了，E
+Gellyfish and Eternal Violet</a> *2700</p>
+<p>这场我还 VP 了的，当时太糖了，场上只过了 ABC，D 后面补了，E
 突然就这么难。<br />
 很有意思也很有难度的一道概率 DP 题。看了题解才看懂的xwx。</p>
-<p>首先考虑这个“最优策略”应该大概是什么样的。我们设 <span
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>首先考虑这个“最优策略”应该大概是什么样的。我们设 <span
 class="math inline">\(h\)</span> 序列的最小值为 <span
 class="math inline">\(p\)</span>，然后比 <span
 class="math inline">\(p\)</span> 大的 <span
@@ -291,6 +313,161 @@ class="math inline">\(s\)</span> 时的概率。容易得到答案等于 <span
 class="math inline">\(\sum_{i=s}^{m}f_{i-1,1}(1-P)dp_{m-i,\max(p-(i-s),1),0}\)</span>。<br />
 <span class="math inline">\(f\)</span>
 的转移是容易的，这里就不说了。</p>
+
+    </div>
+</div>
+<hr />
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1528/E">CF1528E
+Mashtali and Hagh Trees</a> *2900<br />
+高难题目出现了！<br />
+我距离做出来，就差一个去重xwx。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>观察限制条件以及题目中的图例，可以比较简单的发现，满足条件的树仅有两类。</p>
+<ol type="1">
+<li>一颗“类”二叉树，仅有根可以有三个儿子。<br />
+</li>
+<li>中间一条链，两端放两个二叉树（二叉树的根必须为两个儿子）。</li>
+</ol>
+<p>至于边的方向，对于第一种情况，要么是一个内向树，要么是一个外向树。对于第二种情况，必须是一个内向树连向一个内向树。</p>
+<p>好，我们接下来考虑计数即可。<br />
+我们先考虑第一种情况，我们发现根可以放三个很烦，所以不妨先也规定根也最多只能有两个儿子。<br />
+设 <span class="math inline">\(dp_{i}\)</span> 表示最长有向路径的长度为
+<span class="math inline">\(i\)</span> 时的二叉树的数量，<span
+class="math inline">\(s_{i}=\sum_{j=0}^{i} dp_{j}\)</span>。<br />
+分三种情况转移：</p>
+<ol type="1">
+<li>根仅有一个儿子：<span
+class="math inline">\(dp_{i-1}\)</span>。<br />
+</li>
+<li>根有两个儿子，其中一个的有向最长路径的长度为 <span
+class="math inline">\(i-1\)</span>，另一个小于 <span
+class="math inline">\(i-1\)</span>：<span
+class="math inline">\(dp_{i-1}s_{i-2}\)</span>。<br />
+</li>
+<li>根有两个儿子，两个的有向路径长度均为 <span
+class="math inline">\(i-1\)</span>：<span
+class="math inline">\(\dfrac{dp_{i-1}(dp_{i-1}+1)}{2}\)</span>。</li>
+</ol>
+<p>具体为什么要分这三种，以及每一种的贡献为什么是这么多，建议仔细思考一下。主要目的是去重。</p>
+<p>至于最后的答案，我们根可以是三叉的，就比较麻烦啊，但依然可以分讨来做到不重不漏。</p>
+<ol type="1">
+<li>根只有 1/2 个儿子：<span
+class="math inline">\(dp_{n}\)</span>。<br />
+</li>
+<li>根有 3 个儿子，且其中一个长度为 <span
+class="math inline">\(n-1\)</span>，另外两个均小于 <span
+class="math inline">\(n-1\)</span>：<span
+class="math inline">\(\dfrac{dp_{n-1}s_{n-2}(s_{n-2}+1)}{2}\)</span>。<br />
+</li>
+<li>根有 3 个儿子，且其中两个长度为 <span
+class="math inline">\(n-1\)</span>，另外一个小于 <span
+class="math inline">\(n-1\)</span>：<span
+class="math inline">\(\dfrac{s_{n-2}dp_{n-1}(dp_{n-1}+1)}{2}\)</span>。<br />
+</li>
+<li>根有 3 个儿子，且每个的长度均为 <span
+class="math inline">\(n-1\)</span>：<span
+class="math inline">\(\dfrac{dp_{n-1}(dp_{n-1}+1)(dp_{n-1}+2)}{6}\)</span>。</li>
+</ol>
+<p>这几个的思路和前面 <span class="math inline">\(dp_{i}\)</span>
+的转移其实差不多。 因为树有两种方向，所以我们得乘 <span
+class="math inline">\(2\)</span>，然后出现链的时候，两个方向是同构的，所以得减
+<span class="math inline">\(1\)</span>。</p>
+<p>好，那我们第一类也就做完了。第二类怎么做呢？</p>
+<p>首先，我们发现，假如两端的二叉树的根的儿子均为一个的话，那么中间这条链的长度有很多种方式组合，会出现很多重复。<br />
+于是我们不妨钦定一段的二叉树必须有两个儿子。值很显然也就是 <span
+class="math inline">\(dp_{i}-dp_{i-1}\)</span>，前面转移弄懂了这一步是容易的。<br />
+另外一端的根为 1/2
+个儿子均可。注意假如这一端为链的时候，也就变成第一种情况了，需要去掉。<br />
+那么贡献的答案也就很简单了，我们枚举一端有多长，另一端的长度也可以计算出来。</p>
+<p><span class="math display">\[
+\sum_{i=1}^{n-2}(dp_{i}-dp_{i-1})(dp_{n-1-i}-1)
+\]</span></p>
+<p>（<span class="math inline">\(i=0\)</span> 和 <span
+class="math inline">\(i=n-1\)</span> 时，一个前者无意义，一个后者为
+<span class="math inline">\(0\)</span>，所以可以忽略。）</p>
+<p>好，最后把两部分加起来就是答案了，时间复杂度 <span
+class="math inline">\(O(n)\)</span>。</p>
+
+    </div>
+</div>
+<hr />
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/932/E">CF932E Team
+Work</a> *2400</p>
+<p>知道一个东西的话，就很简单的，所以只有
+*2400，不知道大概率是搓不出来的？</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>主要就是第二类斯特林数的一个式子，我记录在 trick
+合集里面了，会的话就随便推出来了。</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;\sum_{i=1}^{n}\binom{n}{i}i^{k}\\
+=&amp;\sum_{i=0}^{n}\dfrac{n!}{i!(n-i)!}\sum_{j=0}^{k}\begin{Bmatrix}k\\
+j\end{Bmatrix}\binom{i}{j}j!\\
+=&amp;\sum_{i=0}^{n}\dfrac{n!}{i!(n-i)!}\sum_{j=0}^{k}\begin{Bmatrix}k\\
+j\end{Bmatrix}\frac{i!}{j!(i-j)!}j!\\
+=&amp;\sum_{i=0}^{n}\dfrac{n!}{(n-i)!}\sum_{j=0}^{k}\begin{Bmatrix}k\\
+j\end{Bmatrix}\frac{1}{(i-j)!}\\
+=&amp;\sum_{i=0}^{n}\sum_{j=0}^{k}\begin{Bmatrix}k\\
+j\end{Bmatrix}\dfrac{n!}{(n-i)!(i-j)!}\\
+=&amp;\sum_{j=0}^{k}\begin{Bmatrix}k\\
+j\end{Bmatrix}\sum_{i=0}^{n}\dfrac{(n-j)!}{(n-i)!(i-j)!}\times\dfrac{n!}{(n-j)!}\\
+=&amp;\sum_{j=0}^{k}\begin{Bmatrix}k\\
+j\end{Bmatrix}\dfrac{n!}{(n-j)!}\sum_{i=0}^{n}\binom{n-j}{n-i}\\
+=&amp;\sum_{j=0}^{k}\begin{Bmatrix}k\\
+j\end{Bmatrix}\dfrac{n!}{(n-j)!}2^{n-j}\\
+\end{aligned}
+\]</span></p>
+<p>直接 <span class="math inline">\(O(k^2)\)</span>
+预处理第二类斯特林数，<span class="math inline">\(O(k)\)</span>
+计算即可。<br />
+存在 <span class="math inline">\(O(k)\)</span> 的做法。</p>
+
+    </div>
+</div>
+<hr />
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1278/F">CF1278F
+Cards</a> *2600</p>
+<p>和上一题很类似的，此题并不是随机跳题。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>和上面差不多一样推式子即可，最后一步是二项式定理，<span
+class="math inline">\(((m-1)+(1))^{n-j}\)</span>。</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;\sum_{i=0}^{n}\binom{n}{i}\left(\frac{1}{m}\right)^i\left(\frac{m-1}{m}\right)^{n-i}i^k\\
+=&amp;\sum_{i=0}^{n}\binom{n}{i}\frac{(m-1)^{n-i}}{m^n}i^k\\
+=&amp;\frac{1}{m^n}\sum_{i=0}^{n}\binom{n}{i}(m-1)^{n-i}i^k\\
+=&amp;\frac{1}{m^n}\sum_{i=0}^{n}\dfrac{n!}{i!(n-i)!}(m-1)^{n-i}\sum_{j=0}^{k}\begin{Bmatrix}k\\
+j\end{Bmatrix}\binom{i}{j}j!\\
+=&amp;\frac{1}{m^n}\sum_{i=0}^{n}\dfrac{n!}{i!(n-i)!}(m-1)^{n-i}\sum_{j=0}^{k}\begin{Bmatrix}k\\
+j\end{Bmatrix}\frac{i!}{j!(i-j)!}j!\\
+=&amp;\frac{1}{m^n}\sum_{i=0}^{n}\dfrac{n!}{(n-i)!}(m-1)^{n-i}\sum_{j=0}^{k}\begin{Bmatrix}k\\
+j\end{Bmatrix}\frac{1}{(i-j)!}\\
+=&amp;\frac{1}{m^n}\sum_{i=0}^{n}\sum_{j=0}^{k}\begin{Bmatrix}k\\
+j\end{Bmatrix}(m-1)^{n-i}\dfrac{n!}{(n-i)!(i-j)!}\\
+=&amp;\frac{1}{m^n}\sum_{j=0}^{k}\begin{Bmatrix}k\\
+j\end{Bmatrix}\sum_{i=0}^{n}\dfrac{(n-j)!}{(n-i)!(i-j)!}\times\dfrac{n!}{(n-j)!}(m-1)^{n-i}\\
+=&amp;\frac{1}{m^n}\sum_{j=0}^{k}\begin{Bmatrix}k\\
+j\end{Bmatrix}\dfrac{n!}{(n-j)!}\sum_{i=0}^{n}\binom{n-j}{n-i}(m-1)^{n-i}\\
+=&amp;\frac{1}{m^n}\sum_{j=0}^{k}\begin{Bmatrix}k\\
+j\end{Bmatrix}\dfrac{n!}{(n-j)!}m^{n-j}\\
+\end{aligned}
+\]</span></p>
+
+    </div>
+</div>
+<hr />
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
     
