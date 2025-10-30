@@ -200,7 +200,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E8%AE%A1%E6%95%B0/" style="color: #e74c3c">
+                <a href="/tags/%E8%AE%A1%E6%95%B0/" style="color: #979a9a">
                     计数
                 </a>
             </span>
@@ -215,13 +215,13 @@ target="_blank" rel="noopener" href="https://www.luogu.com.cn/training/880161">�
 <hr />
 <p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1118/F2">CF1118F2
 Tree Cutting (Hard Version)</a> *2700</p>
+<p>感觉思路挺清晰的。</p>
 <div class='spoiler collapsed'>
     <div class='spoiler-title'>
         Solution
     </div>
     <div class='spoiler-content'>
-        <p>感觉思路挺清晰的，先注意到只能 <span
-class="math inline">\(k-1\)</span>
+        <p>先注意到只能 <span class="math inline">\(k-1\)</span>
 次划分，所以每种颜色必然在同一连通块。<br />
 树上简单路径唯一，所以可以想到将颜色相同的，先按照最短路径缩成一个点。加入存在某两种颜色的连通块有交，则此时必然无解。<br />
 缩成点后，则变成了，给定一棵树，分成 <span
@@ -464,6 +464,202 @@ j\end{Bmatrix}\dfrac{n!}{(n-j)!}\sum_{i=0}^{n}\binom{n-j}{n-i}(m-1)^{n-i}\\
 j\end{Bmatrix}\dfrac{n!}{(n-j)!}m^{n-j}\\
 \end{aligned}
 \]</span></p>
+
+    </div>
+</div>
+<hr />
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1608/D">CF1608D
+Dominoes</a> *2400</p>
+<p>喵喵题。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>首先需要观察性质，得出一些结论。</p>
+<ol type="1">
+<li>一个合法的染色方案一定有 <span class="math inline">\(n\)</span>
+个白色和 <span class="math inline">\(n\)</span> 个黑色。<br />
+</li>
+<li>假设不存在全黑或者全白的骨牌，则合法的方案一定为左侧全黑/全白，右侧相反。<br />
+</li>
+<li>假设存在 <span class="math inline">\(k\)</span> 块全白/黑，则一定有
+<span class="math inline">\(k\)</span>
+块对应的全相反颜色的骨牌，并且剩下的位置在满足第一条下可随意安排。</li>
+</ol>
+<p>有了这三条结论后，就很简单了。<br />
+假设初始情况有 <span class="math inline">\(a\)</span> 个白色，<span
+class="math inline">\(b\)</span>
+个黑色。假如初始存在全黑/白，那么可行方案数为 <span
+class="math inline">\(\dbinom{2n-a-b}{n-a}\)</span>，这是容易理解的。<br />
+假如不存在呢，那么我们需要减掉不合法的方案，也就是填完所有问号后，依然不存在全黑/白的骨牌，并且不满足第二条的方案数。<br />
+容易发现上述不合法方案数为 <span class="math inline">\(2\)</span>
+的全问号骨牌数的幂。<br />
+最后再加上可能出现的第二条即可。<br />
+难点主要在观察性质。<br />
+注意求组合数的不合法情况。</p>
+<p>时间复杂度 <span class="math inline">\(O(n)\)</span> 或者 <span
+class="math inline">\(O(n\log n)\)</span>，区别在于求解阶乘的逆元。</p>
+
+    </div>
+</div>
+<hr />
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1285/F">CF1285F
+Classical?</a> *2900</p>
+<p>小 trick
+题，虽然说其实是可以推出来的，但是我功力太差了，没推出来，但会了后以后大概率还是有用的。<br />
+ps:这道题 171 个测试点，然后我某次等了 7 分钟后，171 WA 了…………</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>正如题名所说，这道题一眼看过去，确实感觉就很 classical。<br />
+我们知道 <span
+class="math inline">\(\operatorname{lcm}(a,b)=\dfrac{ab}{\gcd(a,b)}\)</span>，所以可以很自然的想到，枚举
+<span class="math inline">\(gcd\)</span> 的值，然后去找到除掉 <span
+class="math inline">\(\gcd\)</span>
+后乘积最大的两个互质的数，这俩会贡献一个答案。<br />
+那么现在问题来了，怎么找到这俩值。</p>
+<p>暴力做显然是不行的，时间复杂度会是 <span
+class="math inline">\(O\left(\sum\limits_{i=1}^{V}\left(\dfrac{V}{i}\right)^2\right)\)</span>，显然在
+<span class="math inline">\(i=1\)</span> 的时候就已经 <span
+class="math inline">\(V^2\)</span> 了，不可接受。</p>
+<p>接下来也可以比较自然的想到，从大到小枚举，当前枚举到 <span
+class="math inline">\(x\)</span>，假如 <span
+class="math inline">\(x\)</span> 与前面枚举过的一个数 <span
+class="math inline">\(y\)</span> 互质，那么对于满足 <span
+class="math inline">\(x&lt;z&lt;y\)</span> 的数 <span
+class="math inline">\(z\)</span>，在后面一定不会产生贡献。<br />
+那么我们可以维护一个栈，如果对于当前的 <span
+class="math inline">\(x\)</span> 存在这么一个 <span
+class="math inline">\(y\)</span>，则一直弹栈到 <span
+class="math inline">\(y\)</span> 即可。</p>
+<p>那么问题还是在于，怎么知道当前栈内是否存在与 <span
+class="math inline">\(x\)</span> 互质的数 <span
+class="math inline">\(y\)</span>。这是你要是依然暴力，显然复杂度还是不变的。</p>
+<p>考虑容斥。令 <span class="math inline">\(p(x)\)</span> 为 <span
+class="math inline">\(x\)</span> 的质因子集合，可以写出式子 <span
+class="math inline">\(\sum\limits_{s\in p(x)} (-1)^{\left|s\right|}
+cnt_{\prod\limits_{i\in s}i}\)</span>。其中 <span
+class="math inline">\(cnt_{x}\)</span> 表示数列中为 <span
+class="math inline">\(x\)</span> 的整数倍的数的数量。<br />
+我们发现这个是难以计算的，但我们可以联想到 <span
+class="math inline">\(\mu(x)\)</span>，我们发现 <span
+class="math inline">\(\mu(x)\)</span> 的定义，恰好满足我们的需求。<br />
+于是式子改写为 <span class="math inline">\(\sum\limits_{d\mid
+x}\mu(d)cnt_{d}\)</span>。非常的简洁，并且只需要 <span
+class="math inline">\(d(x)\)</span>
+的时间就可以判断是否存在互质的数。</p>
+<p>于是我们只需要先预处理出 <span class="math inline">\(1\)</span> 到
+<span class="math inline">\(V\)</span> 的每个数的因子，这个是 <span
+class="math inline">\(O(n\log n)\)</span> 的，然后枚举 <span
+class="math inline">\(\gcd\)</span>
+的值，照着上文说的那样做就行了，时间复杂度 <span
+class="math inline">\(O(V\log^2 V)\)</span>，其实就够了。</p>
+<p>但这样未免麻烦了，我们根据 <span
+class="math inline">\(\operatorname{lca}\)</span>
+的式子，可以知道，一定存在 <span class="math inline">\(a,b\)</span> 满足
+<span class="math inline">\(\gcd(a,b)=1,a\mid A,b\mid
+B,\operatorname{lca}(A,B)=\operatorname{lca}(a,b)\)</span>。于是我们直接将输入的所有数的因子拿出来，去个重，跑一遍就可，时间复杂度也就是
+<span class="math inline">\(O(V\log V)\)</span>，也很好写。</p>
+<p>注意细节有点多，比如假如你像我一样先把所有因子丢进去，sort 一下再
+unique 一下的话，那么你最大需要开 <span
+class="math inline">\(128\)</span> 倍的空间。</p>
+
+    </div>
+</div>
+<hr />
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/383/E">CF383E
+Vowels</a> *2700</p>
+<p>这玩意儿真有 2700？</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>首先注意到他算的是平方的异或，所以大概率只能先求出这 <span
+class="math inline">\(2^{24}\)</span>
+种情况各自的答案后，再算答案。<br />
+然后我们发现，假如对于一个元音集合 <span
+class="math inline">\(s\)</span> 可以使得单词 <span
+class="math inline">\(a\)</span> 合法，那么对于 <span
+class="math inline">\(s\)</span> 所有的超集 <span
+class="math inline">\(S\)</span>
+都是合法的，所以这启示我们只需要找出最小的合法情况，再对每个集合算其子集的和即可。<br />
+每个单词还有个小小的容斥，每个单词很短，可以直接暴力枚举可能性对每种状态设置初值即可。那么此时复杂度为
+<span class="math inline">\(O(3^24)\)</span> 显然无法通过。<br />
+有个经典的 trick，枚举子集的和可以使用高维前缀和做到 <span
+class="math inline">\(O(n2^n)\)</span>，不会的可以去学一下。那么就做完了，不知道为啥有
+2700，可能因为这道题是 div1 的 E 吧。<br />
+时间复杂度 <span class="math inline">\(O(24\times 2^{24})\)</span>。</p>
+
+    </div>
+</div>
+<hr />
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1097/G">CF1097G
+Vladislav and a Great Legend</a> *3000</p>
+<p>第一个最高难度题目，但其实偷瞄了一眼题解第一步就会了（？）。</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>一眼看过去会想到枚举 <span
+class="math inline">\(\operatorname{lca}\)</span>，然后用
+DP，怎么怎么转移之类的，但你会发现，合并信息的时候，你需要二项式定理，并且你记录状态肯定需要记录选了几个点，空间都炸了，更别说时间。<br />
+好，我们发现 <span class="math inline">\(k\)</span> 只有 <span
+class="math inline">\(200\)</span>，很小。并且这个恰好是 <span
+class="math inline">\(a^b\)</span>
+的形式，我们将其拆一下。（这里也就是题解的第一步，偷瞟了一眼就会了xwx，但我觉得正常做很难想到拆这个啊。）</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;\sum_{X\subseteq{1,2,\dots,n},X\not =\varnothing}(f(X))^k\\
+=&amp;\sum_{X\subseteq{1,2,\dots,n},X\not
+=\varnothing}\sum_{i=0}^{k}\begin{Bmatrix}k\\ i
+\end{Bmatrix}\binom{f(X)}{i}i!\\
+=&amp;\sum_{i=0}^{k}\begin{Bmatrix}k\\ i
+\end{Bmatrix}i!\sum_{X\subseteq{1,2,\dots,n},X\not
+=\varnothing}\binom{f(X)}{i}\\
+\end{aligned}
+\]</span></p>
+<p>后面的组合数可以看作，选出一些边集，从中选出 <span
+class="math inline">\(i\)</span> 条边的方案数。<br />
+这个显然可以设 <span class="math inline">\(dp_{i,j}\)</span>
+表示，当前考虑到 <span class="math inline">\(i\)</span>
+为根的子树，其中所有可能的选出的点的集合构成的虚树中选出 <span
+class="math inline">\(j\)</span> 条边的方案数。</p>
+<p>这个的转移显然是 <span
+class="math inline">\(dp_{u,i}=\sum_{j=0}^{i}dp_{u,j}dp_{v,i-j}\)</span>。<br />
+但是具体的实现中有很多细节，视实现方式不同细节可能也会不同，所以我这里就不展开了，仔细想想什么情况需要去掉，什么情况不需要去掉就行了。</p>
+
+    </div>
+</div>
+<hr />
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1612/G">CF1612G
+Max Sum Array</a> *2500</p>
+<p>被小怪打死了。（x）</p>
+<div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        Solution
+    </div>
+    <div class='spoiler-content'>
+        <p>主要其实还是推式子……<br />
+我们不妨设同一种整数的位置为 <span class="math inline">\(p\)</span>
+数组，那么对于这一种整数贡献的答案也就是：<span
+class="math inline">\(\sum\limits_{i=1}^{c}\sum\limits_{j=i}^{c}p_{j}-p_{i}\)</span>。<br />
+我们发现对于单一位置 <span
+class="math inline">\(p_{i}\)</span>，贡献的值为：<span
+class="math inline">\(p_{i}(i-1-(c_{i}-i))=p_{i}(2i-c_{i}-1)\)</span>。<br />
+于是我们将所有 <span class="math inline">\(\sum c_{i}\)</span>
+个数按照括号里的这一块排序，有一个显然的贪心：按排序结果从大到小依次从
+<span class="math inline">\(n\)</span> 到 <span
+class="math inline">\(1\)</span> 赋编号。<br />
+至于方案数，排序值相同的显然对于任意一种排列方式均是可以的，乘上若干个阶乘就行了。</p>
+<p>这样直接做的复杂度是 <span class="math inline">\(O(\sum
+c_{i})\)</span> 的，会爆。<br />
+我们发现对于排序值相同的，其实贡献是排序值乘上一个等差数列的和，所以直接拿个桶存一下，加上一个差分就好了。<br />
+时间复杂度 <span class="math inline">\(O(V)\)</span>。</p>
 
     </div>
 </div>
