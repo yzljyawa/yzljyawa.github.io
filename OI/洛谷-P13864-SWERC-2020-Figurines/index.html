@@ -1,0 +1,459 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>洛谷 P13864 [SWERC 2020] Figurines | yzljyのBlog</title>
+    <meta name="author" content="yzljy" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/yzljy.PNG" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>YZLJYのBLOG</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;首页</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;关于</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;归档</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;分类</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;标签</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;YZLJYのBLOG</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">首页</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">关于</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">归档</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">分类</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">标签</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>洛谷 P13864 [SWERC 2020] Figurines</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/11/19
+        </span>
+        
+        <span class="category">
+            <a href="/categories/OI/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                OI
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/%E9%A2%98%E8%A7%A3/" style="color: #979a9a">
+                    题解
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/DS/" style="color: #00beff">
+                    DS
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E4%B8%BB%E5%B8%AD%E6%A0%91/" style="color: #979a9a">
+                    主席树
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p><del>读题是难点</del></p>
+<h2 id="题意">题意</h2>
+<p>有 <span class="math inline">\(N+1\)</span> 个集合 <span
+class="math inline">\(S(0),S(1),\cdots,S(N)\)</span>，满足 <span
+class="math inline">\(S(0)\)</span> 为空集，<span
+class="math inline">\(S(N)\)</span> 为空集，<span
+class="math inline">\(\forall 1\le i\le N,S(i)\)</span> 均为 <span
+class="math inline">\(S(i-1)\)</span> 增加和删除某些元素后得到。<br />
+现有 <span class="math inline">\(N\)</span> 次询问，每次询问给出 <span
+class="math inline">\(d_i\)</span>，有一个长为 <span
+class="math inline">\(n+1\)</span> 的序列 <span
+class="math inline">\(x\)</span>，<span
+class="math inline">\(x_0=0\)</span>，<span
+class="math inline">\(\forall 0\le i &lt;N,x_{i+1}=x_i+\sum_{y\in
+S(d_i)}[y\ge x_i]\)</span>，求 <span
+class="math inline">\(x_n\)</span>。</p>
+<h2 id="思路">思路</h2>
+<p>了解题意后，我们发现需要维护两个东西，单点修改，求某个版本中大于等于给定数的数量。<br />
+由于每个版本均是从上一个版本更改来的，所以对于某一个版本内的数，也就是更改序列的某个"前缀和"。</p>
+<p>于是可以使用主席树，每次修改会对一条链新开节点，查询直接找到对应版本求区间和就行了。</p>
+<p>注意题目中没有对修改次数限制，不要误以为最多只有两次操作。（但是感觉不限制的话，每次也有可能至多开一整棵树？）<br />
+注意下标从 <span class="math inline">\(0\)</span> 开始。<br />
+剩下就是板子了。时间复杂度 <span class="math inline">\(O(n\log
+n)\)</span>。</p>
+<h2 id="参考代码">参考代码</h2>
+<pre class="cpp"><code>// Problem: P13864 [SWERC 2020] Figurines
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/P13864
+// Memory Limit: 256 MB
+// Time Limit: 3000 ms
+// 
+// Powered by CP Editor (https://cpeditor.org)
+
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int MAXN=1e5+10;
+const int mod1=1e9+7;
+const int mod2=998244353;
+const int inf_int=0x7f7f7f7f;
+const long long inf_long=0x7f7f7f7f7f7f7f7f;
+const double eps=1e-9;
+char Buf[1&lt;&lt;23],*P1=Buf,*P2=Buf;
+#define getchar() (P1==P2&amp;&amp;(P2=(P1=Buf)+fread(Buf,1,1&lt;&lt;23,stdin),P1==P2)?EOF:*P1++)
+template&lt;typename type&gt;
+inline void read(type &amp;x)&#123;
+    x=0;
+    bool f=false;
+    char ch=getchar();
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+&#125;
+template&lt;typename type,typename... args&gt;
+inline void read(type &amp;x,args&amp;... y)&#123;
+    read(x),read(y...);
+&#125;
+
+int n,cnt,root[MAXN];
+struct node&#123;
+    int cnt,lson,rson,id;
+&#125;tree[MAXN*50];
+
+void pushup(int id)&#123;
+    tree[id].cnt=tree[tree[id].lson].cnt+tree[tree[id].rson].cnt;
+&#125;
+
+void build(int id,int l,int r)&#123;
+    if(l==r) return;
+    int mid=(l+r)&gt;&gt;1;
+    tree[id].lson=++cnt;
+    build(tree[id].lson,l,mid);
+    tree[id].rson=++cnt;
+    build(tree[id].rson,mid+1,r);
+&#125;
+
+void update(int old,int now,int l,int r,int pos,int val)&#123;
+    // cout&lt;&lt;old&lt;&lt;&#39; &#39;&lt;&lt;now&lt;&lt;&#39; &#39;&lt;&lt;l&lt;&lt;&#39; &#39;&lt;&lt;r&lt;&lt;&#39; &#39;&lt;&lt;pos&lt;&lt;&#39; &#39;&lt;&lt;val&lt;&lt;endl;
+    if(l==r)&#123;
+        tree[now].cnt+=val;
+        return;
+    &#125;
+    int mid=(l+r)&gt;&gt;1;
+    if(pos&lt;=mid)&#123;
+        if(tree[tree[now].lson].id!=tree[now].id)&#123;
+            tree[now].lson=++cnt;
+            tree[cnt]=tree[tree[old].lson];
+            tree[cnt].id=tree[now].id;
+        &#125;
+        update(tree[old].lson,tree[now].lson,l,mid,pos,val);
+    &#125;
+    else&#123;
+        if(tree[tree[now].rson].id!=tree[now].id)&#123;
+            tree[now].rson=++cnt;
+            tree[cnt]=tree[tree[old].rson];
+            tree[cnt].id=tree[now].id;
+        &#125;
+        update(tree[old].rson,tree[now].rson,mid+1,r,pos,val);
+    &#125;
+    pushup(now);
+&#125;
+
+int query(int id,int l,int r,int L,int R)&#123;
+    // cout&lt;&lt;id&lt;&lt;&#39; &#39;&lt;&lt;l&lt;&lt;&#39; &#39;&lt;&lt;r&lt;&lt;&#39; &#39;&lt;&lt;L&lt;&lt;&quot; &quot;&lt;&lt;R&lt;&lt;&#39; &#39;&lt;&lt;tree[id].cnt&lt;&lt;endl;
+    if(id==0||r&lt;L||R&lt;l) return 0;
+    if(L&lt;=l&amp;&amp;r&lt;=R) return tree[id].cnt;
+    int mid=(l+r)&gt;&gt;1,res=0;
+    if(L&lt;=mid) res+=query(tree[id].lson,l,mid,L,R);
+    if(R&gt;mid) res+=query(tree[id].rson,mid+1,r,L,R);
+    return res;
+&#125;
+
+int read()&#123;
+    char ch=getchar();
+    int f=0,x=0;
+    while(ch&lt;&#39;0&#39;||ch&gt;&#39;9&#39;) f|=ch==&#39;-&#39;,ch=getchar();
+    while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;) x=x*10+(ch^48),ch=getchar();
+    if(f) x=-x;
+    return x;
+&#125;
+
+signed main()&#123;
+    n=read();
+    root[0]=++cnt;
+    build(root[0],0,n-1);
+    for(int i=1;i&lt;=n;i++)&#123;
+        char ch=&#39;#&#39;;
+        root[i]=++cnt;
+        tree[root[i]]=tree[root[i-1]];
+        tree[cnt].id=i;
+        while(ch!=&#39;\n&#39;)&#123;
+            ch=getchar();
+            // cout&lt;&lt;ch;
+            if(ch==&#39;\n&#39;) break;
+            if(ch==&#39;+&#39;)&#123;
+                ch=getchar();
+                // cout&lt;&lt;ch;
+                int val=0;
+                while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;)&#123;
+                    val=val*10+ch-&#39;0&#39;;
+                    ch=getchar();
+                    // cout&lt;&lt;ch;
+                &#125;
+                update(root[i-1],root[i],0,n-1,val,1);
+            &#125;
+            else&#123;
+                ch=getchar();
+                // cout&lt;&lt;ch;
+                int val=0;
+                while(ch&gt;=&#39;0&#39;&amp;&amp;ch&lt;=&#39;9&#39;)&#123;
+                    val=val*10+ch-&#39;0&#39;;
+                    ch=getchar();
+                    // cout&lt;&lt;ch;
+                &#125;
+                update(root[i-1],root[i],0,n-1,val,-1);
+            &#125;
+        &#125;
+    &#125;
+    int y=0;
+    // for(int i=0;i&lt;=n;i++)&#123;
+        // for(int j=0;j&lt;n;j++) cout&lt;&lt;query(root[i],0,n-1,j,j)&lt;&lt;&#39; &#39;;
+        // cout&lt;&lt;endl;
+    // &#125;
+    for(int i=1;i&lt;=n;i++)&#123;
+        int p=read();
+        // cout&lt;&lt;p&lt;&lt;&#39; &#39;&lt;&lt;query(root[p],0,n-1,y,n-1)&lt;&lt;&#39; &#39;;
+        (y+=query(root[p],0,n-1,y,n-1))%=n;
+        // cout&lt;&lt;y&lt;&lt;endl;
+    &#125;
+    cout&lt;&lt;y;
+    return 0;
+&#125;</code></pre>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+    
+    
+    
+    
+    <div id="comment">
+        <div id="giscus-container" class="giscus"></div>
+    </div>
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2024 - 2025 yzljyのBlog
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;yzljy
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+<script
+    src="https://giscus.app/client.js"
+    data-repo="yzljyawa/yzljyawa.github.io"
+    data-repo-id="R_kgDOMbAUfA"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOMbAUfM4CiQYe"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin
+    async
+></script>
+
+
+
+
+
+    
+</body>
+</html>
